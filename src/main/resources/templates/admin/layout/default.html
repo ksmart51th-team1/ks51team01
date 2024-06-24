@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/admin/assets/imgs/theme/favicon.svg}" />
+    <!-- Template CSS -->
+    <link th:href="@{/resource/admin/assets/css/main.css?v=1.1}" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div id="wrapper">
+    <!-- 왼쪽메뉴 -->
+    <div th:replace="~{admin/fragments/aside :: asideFragment}"></div>
 
+    <!-- ~{논리경로("src/main/resources/templates/" + fragments/header + ".html") :: 조각이름} -->
+    <div th:replace="~{admin/fragments/header :: headerFragment}"></div>
+
+
+        <!--/* <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                    <span></span> Pages <span></span> My Account
+                </div>
+            </div>
+        </div> */-->
+
+        <th:block layout:fragment="customContent">
+        </th:block>
+    <!-- 상단메뉴 -->
+
+
+</div>
+
+<!-- Vendor JS-->
+<script th:src="@{/resource/admin/assets/js/vendors/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/resource/admin/assets/js/vendors/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/resource/admin/assets/js/vendors/select2.min.js}"></script>
+<script th:src="@{/resource/admin/assets/js/vendors/perfect-scrollbar.js}"></script>
+<script th:src="@{/resource/admin/assets/js/vendors/jquery.fullscreen.min.js}"></script>
+<script th:src="@{/resource/admin/assets/js/vendors/chart.js}"></script>
+<!-- Main Script -->
+<script th:src="@{/resource/admin/assets/js/main.js?v=1.1}" type="text/javascript"></script>
+<script th:src="@{/resource/admin/assets/js/custom-chart.js}" type="text/javascript"></script>
+
+<!-- 사용자정의 js 파일  -->
+<th:block layout:fragment="customJsFile">
+
+</th:block>
+<!-- 사용자정의 script -->
+<th:block layout:fragment="customJs">
+
+</th:block>
 </body>
 </html>
