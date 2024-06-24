@@ -231,15 +231,17 @@
                             <div class="login_wrap widget-taber-content background-white">
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
-                                        <h1 class="mb-5">Login</h1>
-                                        <p class="mb-30">Don't have an account? <a href="page-register.html">Create here</a></p>
+                                        <div class="logo logo-width-1">
+                                            <a th:href="@{/}" class="logoNew">약수터</a>
+                                        </div>
+                                        <p class="mb-30"><a></a></p>
                                     </div>
                                     <form method="post">
                                         <div class="form-group">
-                                            <input type="text" required="" name="email" placeholder="Username or Email *">
+                                            <input type="text" required="" name="email" placeholder="회원아이디를 입력하세요. *">
                                         </div>
                                         <div class="form-group">
-                                            <input required="" type="password" name="password" placeholder="Your password *">
+                                            <input required="" type="password" name="password" placeholder="비밀번호를 입력하세요 *">
                                         </div>
 
                                         <div class="login_footer form-group mb-50">
@@ -249,10 +251,10 @@
                                                     <label class="form-check-label" for="exampleCheckbox1"><span>로그인 상태 유지</span></label>
                                                 </div>
                                             </div>
-                                            <a class="text-muted" href="#">Forgot password?</a>
+                                            <a class="text-muted" href="#">비밀번호를 잊었나요?</a>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>
+                                            <button type="submit" class="btn btn-heading btn-block hover-up" name="login">로그인</button>
                                         </div>
                                     </form>
                                 </div>
