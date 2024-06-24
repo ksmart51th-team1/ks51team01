@@ -15,7 +15,8 @@ public class adminController {
 
     @GetMapping("/adminMain")
     public String adminMain(Model model) {
-
+        model.addAttribute("title", "메인 대쉬보드");
+        model.addAttribute("content", "여기가 메인");
         return "admin/adminMain";
     }
 
