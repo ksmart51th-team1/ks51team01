@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html   xmlns:th="http://www.thymeleaf.org"
-        class="js sizes websockets customelements history postmessage webworkers picture pointerevents webanimations webgl srcset flexbox cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside" lang="en"><head>
+        class="js sizes websockets customelements history postmessage webworkers picture pointerevents webanimations webgl srcset flexbox cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside" lang="en">
+<head>
     <meta charset="utf-8">
     <title th:text="${title}"></title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -265,7 +266,7 @@
             </div>
         </div>
     </div>
-    <div th:replace="~{/user/pharmacy/fragments/footer :: footerFragment}"></div>
+    <div th:replace="~{user/pharmacy/fragments/footer :: footerFragment}"></div>
     </div>
 </main>
 
