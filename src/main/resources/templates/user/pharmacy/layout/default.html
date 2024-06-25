@@ -11,15 +11,15 @@
 <div id="wrapper">
     <!-- 상단메뉴 -->
     <!-- ~{논리경로("src/main/resources/templates/" + fragments/header + ".html") :: 조각이름} -->
-    <div th:replace="~{/user/pharmacy/fragments/header :: headerFragment}"></div>
+    <div th:replace="~{user/pharmacy/fragments/header :: headerFragment}"></div>
 
     <!-- 왼쪽메뉴 -->
-    <div th:replace="~{/user/pharmacy/fragments/aside :: asideFragment}"></div>
+    <div th:replace="~{user/pharmacy/fragments/aside :: asideFragment}"></div>
 
 
 
     <!-- 하단메뉴 -->
-    <div th:replace="~{/user/pharmacy/fragments/footer :: footerFragment}"></div>
+    <div th:replace="~{user/pharmacy/fragments/footer :: footerFragment}"></div>
 </div>
 
 <!-- 사용자정의 js 파일  -->
