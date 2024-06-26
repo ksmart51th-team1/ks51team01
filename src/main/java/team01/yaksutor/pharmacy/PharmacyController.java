@@ -1,4 +1,4 @@
-package team01.yaksutor.pharmacy;
+package team01.yaksutor.pharmacy.pharmstrock.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

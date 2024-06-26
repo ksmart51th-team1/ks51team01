@@ -13,6 +13,9 @@ public class Member {
     private String memberBirth;
     private String memberPhone;
     private String memberAddrSido;
-
+    private String memberAddrSigungu;
+    private String memberAddrDong;
+    private String memberPostCode;
+    private String memberAddr;
 
 }
