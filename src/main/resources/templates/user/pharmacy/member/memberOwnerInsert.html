@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      class="js sizes websockets customelements history postmessage webworkers picture pointerevents webanimations webgl srcset flexbox cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${title}"></title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/resource/user/assets/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/resource/user/assets/css/main.css?v=5.6">
+</head>
+<body>
+<main class="main pages">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb d-flex justify-content-center align-items-center">
+                <div class="logo logo-width-1 ">
+                    <a th:href="@{/}" class="logoNew">약수터</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-content pt-150 pb-150">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-md-8">
+                            <div class="login_wrap widget-taber-content background-white">
+                                <div class="padding_eight_all bg-white">
+                                    <div class="heading_s1">
+                                        <h1 class="mb-5">회원 가입</h1>
+                                        <p class="mb-30">이미 계정이 있으신가요? <a th:href="@{/}">로그인하러가기</a></p>
+                                    </div>
+                                    <form th:action="@{member/}" method="post">
+                                        <div class="form-group">
+                                            <input type="text" required="" name="memberId" id="memberId" placeholder="회원아이디">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required="" name="memberPw" id="memberPw" placeholder="회원비밀번호">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required="" name="memberName" id="memberName" placeholder="회원이름">
+                                        </div>
+
+                                        <div class="form-group payment_option mb-50">
+                                            <div class="custome-radio">
+                                                <input class="form-check-input" required="" type="radio" name="gender" id="exampleRadios1" checked="">
+                                                <label class="form-check-label" for="exampleRadios1" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">남성</label>
+                                                <input class="form-check-input" required="" type="radio" name="gender" id="exampleRadios2" checked="">
+                                                <label class="form-check-label" for="exampleRadios2" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">여성</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-fill-out btn-block hover-up font-weight-bold mb-10" onclick="sample6_execDaumPostcode()">주소검색</button>
+                                            <input class="mb-1" type="text" required="" name="memberAddr" id="sample6_postcode" placeholder="우편번호" />
+                                            <input class="mb-1" type="text" required="" name="memberAddr"  id="sample6_address" placeholder="도로명주소" />
+                                            <input type="text" required="" name="memberAddr"  id="sample6_detailAddress" placeholder="상세주소" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" required="" name="memberEmail" id="memberEmail" placeholder="이메일주소">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>생년월일</label>
+                                            <input type="date" required="" name="memberBirth" id="memberBirth" placeholder="생년월일">
+                                        </div>
+                                        <div class="form-group mb-50">
+                                            <input type="text" required="" name="memberPhone" id="memberPhone" placeholder="핸드폰번호( '-' 없이 입력해주세요)">
+                                        </div>
+                                        <div class="form-group mb-50">
+                                            <label style="font-size: 20px">약사면허 입력</label>
+                                            <input class="mb-3" type="text" required="" name="licenceNum" id="licenceNum" placeholder="약사면허 입력">
+                                            <label>면허취득일자</label>
+                                            <input type="date" name="licenceGetDate" id="licenceGetDate" >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label style="font-size: 20px">약국정보 입력하기</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required="" name="pharmName" id="pharmName" placeholder="약국이름">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required="" name="pharmBusinNum" id="pharmBusinNum" placeholder="사업자번호">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>개업일자</label>
+                                            <input type="date" required="" name="openDate" id="openDate" >
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-fill-out btn-block hover-up font-weight-bold mb-10" onclick="sample7_execDaumPostcode()">약국주소등록</button>
+                                            <input class="mb-1" type="text" required="" name="memberAddr" id="sample7_postcode" placeholder="우편번호" />
+                                            <input class="mb-1" type="text" required="" name="memberAddr"  id="sample7_address" placeholder="도로명주소" />
+                                            <input type="text" required="" name="memberAddr"  id="sample7_detailAddress" placeholder="상세주소" />
+                                        </div>
+
+
+
+
+                                        <div class="form-group mb-30">
+                                            <button type="submit" class="btn btn-fill-out btn-block hover-up font-weight-bold" name="login">회원가입하기</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+
+    function sample7_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample7_postcode').value = data.zonecode;
+                document.getElementById("sample7_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample7_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
+</html>
