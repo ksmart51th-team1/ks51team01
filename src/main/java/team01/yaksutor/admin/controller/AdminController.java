@@ -1,4 +1,4 @@
-package team01.yaksutor.admin;
+package team01.yaksutor.admin.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
