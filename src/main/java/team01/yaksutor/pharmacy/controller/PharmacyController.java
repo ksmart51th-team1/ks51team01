@@ -59,6 +59,16 @@ public class PharmacyController {
 
         return "user/pharmacy/myPage/myDelivery";
     }
+    @GetMapping("/liveOrder")
+    public String liveOrder() {
+
+        return "user/pharmacy/order/liveOrder";
+    }
+    @GetMapping("/liveOrderList")
+    public String liveOrderList() {
+
+        return "user/pharmacy/order/liveOrderList";
+    }
 
 
 }

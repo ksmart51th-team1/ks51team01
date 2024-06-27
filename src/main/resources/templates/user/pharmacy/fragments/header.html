@@ -185,14 +185,14 @@
                                         <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-compare.svg}" />
                                         <span class="pro-count blue">3</span>
                                     </a>
-                                    <a href="#"><span class="lable ml-0">긴급의약품요청</span></a>
+                                    <a th:href="@{/pharm/liveOrder}"><span class="lable ml-0">긴급의약품요청</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
-                                                <a href="#"><i class="fi fi-rs-receipt mr-10"></i>실시간 요청 목록</a>
+                                                <a th:href="@{/pharm/liveOrder}"><i class="fi fi-rs-receipt mr-10"></i>실시간 요청 목록</a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="fi fi-rs-redo mr-10"></i>요청 조회</a>
+                                                <a th:href="@{/pharm/liveOrderList}"><i class="fi fi-rs-redo mr-10"></i>요청 조회</a>
                                             </li>
                                         </ul>
                                     </div>
