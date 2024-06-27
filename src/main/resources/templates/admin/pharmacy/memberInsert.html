@@ -7,14 +7,14 @@
 
 <th:block layout:fragment="customContent">
   <section class="content-main">
-    <form id="addMedicine" th:action="@{/admin/medicine/medicineInsert}" method="post">
+    <form id="addMedicine" th:action="@{/admin/member/memberInsert}" method="post">
       <div class="row">
         <div class="col-6">
           <div class="content-header">
-            <h2 class="content-title" th:text="${content}">의약품 등록</h2>
+            <h2 class="content-title" th:text="${content}">새로운 회원 등록</h2>
             <div>
               <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">등록 취소</button>
-              <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="의약품 등록" />
+              <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="회원 등록" />
             </div>
           </div>
         </div>
@@ -25,72 +25,37 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-3">
-                  <h6>1. 의약품 정보</h6>
+                  <h6>1. 회원정보입력</h6>
                 </div>
                 <div class="col-md-9">
                   <div class="mb-4">
-                    <label class="form-label" for="regMId">판매자</label>
-                    <input type="text" placeholder="판매자를 입력해주세요" name="regMId" id="regMId" class="form-control" >
+                    <label class="form-label" for="mId">회원아이디</label>
+                    <input type="text" placeholder="아이디를 입력해주세요" name="mId" id="mId" class="form-control" >
                   </div>
                   <div class="mb-4">
-                    <label class="form-label" for="mediName">의약품 이름</label>
-                    <input type="text" placeholder="의약품 이름을 적어주세요" name="mediName" id="mediName" class="form-control" >
+                    <label class="form-label" for="mPw">회원비밀번호</label>
+                    <input type="text" placeholder="비밀번호를 입력해주세요." name="mPw" id="mPw" class="form-control" >
                   </div>
                   <div class="mb-4">
-                    <label class="form-label" for="mediDrugform">제형</label>
-                    <input type="text" placeholder="예시(정제, 액체, 연고, 경질캡슐 등)" name="mediDrugform"  id="mediDrugform" class="form-control">
-                  </div>
-                  <div class="mb-4">
-                    <label class="form-label" for="mediState">포장 상태</label>
-                    <input type="text" placeholder="예시(10정/상자, 30정/병 등)" name="mediState"  id="mediState" class="form-control">
-                  </div>
-                  <div class="mb-4">
-                    <label class="form-label" for="mediUsebydate">소비기한</label>
-                    <input type="date" name="mediUsebydate"  id="mediUsebydate" class="form-control">
-                  </div>
-                  <div class="mb-4">
-                    <label class="form-label" for="mediDrugtype">의약품 분류</label>
-                    <select name="mediDrugtype" id="mediDrugtype" class="form-select">
-                      <option value=""> --선택해 주세요-- </option>
-                      <option value="일반의약품"> 일반의약품 </option>
-                      <option value="전문의약품"> 전문의약품 </option>
+                    <label class="form-label" for="level">약사등급선택</label>
+                    <select class="form-select" name="level" id="level">
+                      <option>약사등급 선택</option>
+                      <option value="1">1.개국약사</option>
+                      <option value="2">2.관리약사</option>
                     </select>
                   </div>
-                  <div id="ingredientBox" class="mb-4">
-                    <label class="form-label">의약품 성분</label><br>
-                    <table class="table table-bordered">
-                      <thead>
-                      <tr class="align-baseline">
-                        <th>이름</th>
-                        <th>함량</th>
-                        <th>항목 추가</th>
-                      </tr>
-                      </thead>
-                      <tbody id="ingrTbody">
-                      <tr>
-                        <td><input type="text" name="ingredient" class="form-control"></td>
-                        <td><input type="text" name="content" class="form-control"></td>
-                        <td><button type="button" class="btn btn-md rounded font-sm hover-up ingrAddBtn">추가</button></td>
-                      </tr>
-                      </tbody>
-                    </table>
+                  <div class="mb-4">
+                    <label class="form-label" for="Name">회원이름</label>
+                    <input type="text" placeholder="이름을 입력해주세요" name="Name"  id="Name" class="form-control">
                   </div>
-                  <div id="efficacyBox" class="mb-4">
-                    <label class="form-label" for="efficacy">의약품 효능</label><br>
-                    <table class="table table-bordered">
-                      <thead>
-                      <tr>
-                        <th>효능</th>
-                        <th>항목 추가</th>
-                      </tr>
-                      </thead>
-                      <tbody id="effiTbody">
-                      <tr>
-                        <td><input type="text" name="efficacy" id="efficacy" class="form-control"></td>
-                        <td class="float-end"><button type="button" id="effiAddBtn" class="btn btn-md rounded font-sm hover-up effiAddBtn">추가</button></td>
-                      </tr>
-                      </tbody>
-                    </table>
+                  <div class="mb-4">
+                    <label class="form-label" for="Email">이메일</label>
+                    <input type="text" placeholder="이메일을 입력해주세요" name="Email"  id="Email" class="form-control">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label mr-30" >성별</label>
+                    <input class="mr-5"type="radio" name="Gender"/>남
+                    <input class="ml-5 mr-5"type="radio" name="Gender"/>여
                   </div>
                 </div> <!-- col.// -->
               </div> <!-- row.// -->
