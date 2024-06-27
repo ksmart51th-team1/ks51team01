@@ -14,8 +14,13 @@
     <div th:replace="~{user/pharmacy/fragments/header :: headerFragment}"></div>
 
     <!-- 왼쪽메뉴 -->
-    <div th:replace="~{user/pharmacy/fragments/aside :: asideFragment}"></div>
+    <!--<div th:replace="~{user/pharmacy/fragments/aside :: asideFragment}"></div>-->
 
+    <!-- 콘텐츠 영역 -->
+    <div id="content" style="overflow: auto;">
+        <th:block layout:fragment="customContent">
+        </th:block>
+    </div>
 
 
     <!-- 하단메뉴 -->
