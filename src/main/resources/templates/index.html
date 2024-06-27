@@ -208,22 +208,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-lg-6 pr-30 d-none d-lg-block">
-                            <div class="guide-banner"><div class="list-banner-box">
-                                <div class="banner-img-box">
-                                    <a>
-                                        <img th:src="@{#}" alt="개국약사 이용 하러 가기">
-                                    </a>
-                                </div>
+                            <div class="guide-banner">
+                                <div class="list-banner-box">
+                                    <div class="logo logo-width-1 mb-3">
+                                        <a th:href="@{/member/memberInsert/owner}" class="logoNew" style="font-size:2rem">개국약사 가입 하러 가기</a>
+                                    </div>
                                 <div class="banner-img-box" >
-                                    <a>
-                                        <img th:src="@{#}" alt="관리약사 이용 하러 가기">
-                                    </a>
+                                    <div class="logo logo-width-1 mb-3" >
+                                        <a th:href="@{/member/memberInsert/staff}" class="logoNew" style="font-size:2rem">관리약사 가입 하러 가기</a>
+                                    </div>
                                 </div>
                                 <div class="banner-img-box">
-                                    <a target="_blank" rel="noreferrer"><img th:src="@{#}" alt="약수터 파트너 제휴 문의">
-                                    </a>
+                                    <div class="logo logo-width-1 mb-3">
+                                        <a th:href="@{/}" class="logoNew" style="font-size:2rem">약수터 파트너 제휴 문의</a>
+                                    </div>
                                 </div>
                             </div>
                             </div>
