@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/pharmacy/layout/default}">
+<head>
+    <title th:text="${title}"></title>
+    <style>
+        input{
+            width: 150px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<th:block layout:fragment="customContent">
+    <div class="row ">
+        <div class="col-lg-9  m-auto" >
+            <h3 class="mb-10 mt-30">재고 조사</h3>
+            <h6 class="mb-30">마지막 날짜로 부터 6개월이 지난 보유 의약품들만 확인 하실 수 있습니다.</h6>
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th>의약품 이름</th>
+                        <th>전산 수량</th>
+                        <th>실제 수량</th>
+                        <th>사유</th>
+                        <th>재고업데이트</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>타이레놀정 500mg</td>
+                        <td>3,014</td>
+                        <td>
+                            <input type="text" />
+                        </td>
+                        <td>
+                            <input type="text" placeholder="사유 입력"/>
+                        </td>
+                        <td><a href="#" class="btn-small d-block">재고조사 저장</a></td>
+                    </tr>
+                    <tr>
+                        <td> 노루모에프내복액</td>
+                        <td>1,024</td>
+                        <td>
+                            <input type="text" />
+                        </td>
+                        <td>
+                            <input type="text" placeholder="사유 입력"/>
+                        </td>
+                        <td><a href="#" class="btn-small d-block">재고조사 저장</a></td>
+                    </tr>
+                    <tr>
+                        <td>알로테드정 1mg</td>
+                        <td>802</td>
+                        <td>
+                            <input type="text" />
+                        </td>
+                        <td>
+                            <input type="text" placeholder="사유 입력"/>
+                        </td>
+                        <td><a href="#" class="btn-small d-block">재고조사 저장</a></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+</th:block>
+</html>
