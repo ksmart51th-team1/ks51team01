@@ -24,18 +24,18 @@
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/admin/assets/imgs/theme/favicon.svg}" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/supplier/assets/imgs/theme/favicon.svg}" />
     <!-- Template CSS -->
-    <link th:href="@{/resource/admin/assets/css/main.css?v=1.1}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/resource/supplier/assets/css/main.css?v=1.1}" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
     <!-- 왼쪽메뉴 -->
-    <div th:replace="~{admin/fragments/aside :: asideFragment}"></div>
+    <div th:replace="~{user/supplier/fragments/aside :: asideFragment}"></div>
 
     <!-- ~{논리경로("src/main/resources/templates/" + fragments/header + ".html") :: 조각이름} -->
     <!-- 상단메뉴 -->
-    <div th:replace="~{admin/fragments/header :: headerFragment}"></div>
+    <div th:replace="~{user/supplier/fragments/header :: headerFragment}"></div>
 
 
     <!--/* <div class="page-header breadcrumb-wrap">
@@ -51,15 +51,15 @@
 
 
 <!-- Vendor JS-->
-<script th:src="@{/resource/admin/assets/js/vendors/jquery-3.6.0.min.js}"></script>
-<script th:src="@{/resource/admin/assets/js/vendors/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/resource/admin/assets/js/vendors/select2.min.js}"></script>
-<script th:src="@{/resource/admin/assets/js/vendors/perfect-scrollbar.js}"></script>
-<script th:src="@{/resource/admin/assets/js/vendors/jquery.fullscreen.min.js}"></script>
-<script th:src="@{/resource/admin/assets/js/vendors/chart.js}"></script>
+<script th:src="@{/resource/supplier/assets/js/vendors/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/resource/supplier/assets/js/vendors/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/resource/supplier/assets/js/vendors/select2.min.js}"></script>
+<script th:src="@{/resource/supplier/assets/js/vendors/perfect-scrollbar.js}"></script>
+<script th:src="@{/resource/supplier/assets/js/vendors/jquery.fullscreen.min.js}"></script>
+<script th:src="@{/resource/supplier/assets/js/vendors/chart.js}"></script>
 <!-- Main Script -->
-<script th:src="@{/resource/admin/assets/js/main.js?v=1.1}" type="text/javascript"></script>
-<script th:src="@{/resource/admin/assets/js/custom-chart.js}" type="text/javascript"></script>
+<script th:src="@{/resource/supplier/assets/js/main.js?v=1.1}" type="text/javascript"></script>
+<script th:src="@{/resource/supplier/assets/js/custom-chart.js}" type="text/javascript"></script>
 
 <!-- 사용자정의 js 파일  -->
 <th:block layout:fragment="customJsFile">

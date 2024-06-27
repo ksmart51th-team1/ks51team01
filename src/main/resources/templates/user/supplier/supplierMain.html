@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/supplier/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+    <h1 th:text="${content}"></h1>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+</th:block>
+</html>
