@@ -203,7 +203,7 @@
                                         <img alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-cart.svg}" />
                                         <span class="pro-count blue">2</span>
                                     </a>
-                                    <a href="shop-cart.html"><span class="lable">장바구니</span></a>
+                                    <a th:href="@{/pharm/cart}"><span class="lable">장바구니</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                         <ul>
                                             <li>
@@ -246,7 +246,7 @@
                                     <a href="page-account.html">
                                         <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-heart.svg}" />
                                     </a>
-                                    <a href="page-account.html"><span class="lable ml-0">주문 내역</span></a>
+                                    <a th:href="@{/pharm/myOrderList}"><span class="lable ml-0">주문 내역</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
@@ -265,7 +265,7 @@
                                     <a href="page-account.html">
                                         <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}" />
                                     </a>
-                                    <a href="page-account.html"><span class="lable ml-0">마이페이지</span></a>
+                                    <a th:href="@{/pharm/myPage}"><span class="lable ml-0">마이페이지</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
@@ -327,11 +327,11 @@
 
                                     </li>
                                     <li>
-                                        <a href="#">고객센터 </a>
+                                        <a th:href="@{/pharm/contact}">고객센터 </a>
                                         <ul class="sub-menu">
-                                            <li><a href="#">공지사항</a></li>
-                                            <li><a href="#">1:1문의</a></li>
-                                            <li><a href="#">자주하는 질문</a></li>
+                                            <li><a th:href="@{/pharm/notice}">공지사항</a></li>
+                                            <li><a th:href="@{/pharm/qna}">1:1문의</a></li>
+                                            <li><a th:href="@{/pharm/faq}">자주하는 질문</a></li>
                                         </ul>
                                     </li>
 
