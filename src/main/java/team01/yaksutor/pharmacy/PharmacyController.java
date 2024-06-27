@@ -13,5 +13,10 @@ public class PharmacyController {
         model.addAttribute("content", "유저 메인.");
         return "user/pharmacy/pharmMain";
     }
+    @GetMapping("/board")
+    public String board(Model model) {
+        model.addAttribute("content", "커뮤니티");
+        return "user/pharmacy/board/boardList";
+    }
 
 }
