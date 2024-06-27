@@ -18,8 +18,6 @@ import team01.yaksutor.admin.medicine.dto.SellMedicine;
 @Slf4j
 public class AdMedicineController {
 
-
-
     @GetMapping("/medicine/medicineInsert")
     public String medicineInsert(Model model) {
         model.addAttribute("title", "의약품 등록");
