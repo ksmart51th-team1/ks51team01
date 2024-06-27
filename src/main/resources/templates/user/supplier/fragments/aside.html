@@ -5,7 +5,7 @@
     <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
             <a th:href="@{#}" class="brand-wrap">
-                <img th:src="@{/resource/admin/assets/imgs/theme/logo.svg}" class="logo" alt="Nest Dashboard" />
+                <img th:src="@{/resource/supplier/assets/imgs/theme/logo.svg}" class="logo" alt="Nest Dashboard" />
             </a>
             <div>
                 <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
@@ -21,39 +21,13 @@
                 </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">약국 관리</span>
-                    </a>
-                    <div class="submenu">
-                        <a th:href="@{#}">약국 추가</a>
-                        <a th:href="@{#}">약국 검색</a>
-                    </div>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-store"></i>
-                        <span class="text">납품업체 관리</span>
-                    </a>
-                    <div class="submenu">
-                        <a th:href="@{#}">납품업체 추가</a>
-                        <a th:href="@{#}">납품업체 검색</a>
-                    </div>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" th:href="@{#}">
                         <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">의약품 관리</span>
                     </a>
                     <div class="submenu">
-                        <a th:href="@{/admin/medicine/medicineInsert}">의약품 추가</a>
-                        <a th:href="@{/admin/medicine/medicineSearchList}">의약품 검색</a>
+                        <a th:href="@{#}">내 의약품 추가</a>
+                        <a th:href="@{#}">내 의약품 검색</a>
                     </div>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-add_box"></i>
-                        <span class="text">로그인 이력 조회</span>
-                    </a>
                 </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" th:href="@{#}">
@@ -61,10 +35,8 @@
                         <span class="text">주문 및 결제 관리</span>
                     </a>
                     <div class="submenu">
-                        <a th:href="@{#}">장바구니에 의약품 추가</a>
                         <a th:href="@{#}">주문 검색</a>
                         <a th:href="@{#}">주문 취소</a>
-                        <a th:href="@{#}">결제 수단 등록</a>
                         <a th:href="@{#}">결제 확인</a>
                     </div>
                 </li>
@@ -87,27 +59,6 @@
                     <div class="submenu">
                         <a th:href="@{#}">배송 등록</a>
                         <a th:href="@{#}">배송 조회</a>
-                    </div>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-person"></i>
-                        <span class="text">약국 재고 관리</span>
-                    </a>
-                    <div class="submenu">
-                        <a th:href="@{#}">재고 등록</a>
-                        <a th:href="@{#}">재고 조회</a>
-                        <a th:href="@{#}">약국 재고조사 후 실수량 입력</a>
-                    </div>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-person"></i>
-                        <span class="text">약국 간 긴급 의약품 거래</span>
-                    </a>
-                    <div class="submenu">
-                        <a th:href="@{#}">긴급 의약품 요청</a>
-                        <a th:href="@{#}">긴급 의약품 요청 조회</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
@@ -136,7 +87,6 @@
                         <span class="text">공지사항 관리</span>
                     </a>
                     <div class="submenu">
-                        <a th:href="@{#}">공지사항 등록</a>
                         <a th:href="@{#}">공지사항 조회</a>
                     </div>
                 </li>
@@ -146,7 +96,6 @@
                         <span class="text">자주하는 질문 관리</span>
                     </a>
                     <div class="submenu">
-                        <a th:href="@{#}">자주하는 질문 등록</a>
                         <a th:href="@{#}">자주하는 질문 조회</a>
                     </div>
                 </li>
