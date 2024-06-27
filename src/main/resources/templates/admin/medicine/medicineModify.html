@@ -11,10 +11,10 @@
             <div class="row">
                 <div class="col-6">
                     <div class="content-header">
-                        <h2 class="content-title" th:text="${content}">의약품 등록</h2>
+                        <h2 class="content-title" th:text="${content}">의약품 수정</h2>
                         <div>
-                            <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">등록 취소</button>
-                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="의약품 등록" />
+                            <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">수정 취소</button>
+                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="의약품 수정" />
                         </div>
                     </div>
                 </div>
@@ -60,18 +60,18 @@
                                         <label class="form-label">의약품 성분</label><br>
                                         <table class="table table-bordered">
                                             <thead>
-                                                <tr class="align-baseline">
-                                                    <th>이름</th>
-                                                    <th>함량</th>
-                                                    <th>항목 추가</th>
-                                                </tr>
+                                            <tr class="align-baseline">
+                                                <th>이름</th>
+                                                <th>함량</th>
+                                                <th>항목 추가</th>
+                                            </tr>
                                             </thead>
                                             <tbody id="ingrTbody">
-                                                <tr>
-                                                    <td><input type="text" name="ingredient" class="form-control"></td>
-                                                    <td><input type="text" name="content" class="form-control"></td>
-                                                    <td><button type="button" class="btn btn-md rounded font-sm hover-up ingrAddBtn">추가</button></td>
-                                                </tr>
+                                            <tr>
+                                                <td><input type="text" name="ingredient" class="form-control"></td>
+                                                <td><input type="text" name="content" class="form-control"></td>
+                                                <td><button type="button" class="btn btn-md rounded font-sm hover-up ingrAddBtn">추가</button></td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -79,16 +79,16 @@
                                         <label class="form-label" for="efficacy">의약품 효능</label><br>
                                         <table class="table table-bordered">
                                             <thead>
-                                                <tr>
-                                                    <th>효능</th>
-                                                    <th>항목 추가</th>
-                                                </tr>
+                                            <tr>
+                                                <th>효능</th>
+                                                <th>항목 추가</th>
+                                            </tr>
                                             </thead>
                                             <tbody id="effiTbody">
-                                                <tr>
-                                                    <td><input type="text" name="efficacy" id="efficacy" class="form-control"></td>
-                                                    <td class="float-end"><button type="button" id="effiAddBtn" class="btn btn-md rounded font-sm hover-up effiAddBtn">추가</button></td>
-                                                </tr>
+                                            <tr>
+                                                <td><input type="text" name="efficacy" id="efficacy" class="form-control"></td>
+                                                <td class="float-end"><button type="button" id="effiAddBtn" class="btn btn-md rounded font-sm hover-up effiAddBtn">추가</button></td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>

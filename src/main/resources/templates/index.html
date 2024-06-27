@@ -237,7 +237,7 @@
                                         </div>
                                         <p class="mb-30"><a></a></p>
                                     </div>
-                                    <form method="post">
+                                    <form th:action="@{pharm/main}" method="get">
                                         <div class="form-group">
                                             <input type="text" required="" name="email" placeholder="회원아이디를 입력하세요. *">
                                         </div>
@@ -256,6 +256,9 @@
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-heading btn-block hover-up" name="login">로그인</button>
+                                        </div>
+                                        <div>
+                                            <a th:href="@{/admin/adminMain}">(테스트용 추후 삭제)관리자화면</a>
                                         </div>
                                     </form>
                                 </div>
