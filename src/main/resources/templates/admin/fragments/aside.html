@@ -4,9 +4,9 @@
     <div class="screen-overlay"></div>
     <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
-            <a th:href="@{#}" class="brand-wrap">
-                <img th:src="@{/resource/admin/assets/imgs/theme/logo.svg}" class="logo" alt="Nest Dashboard" />
-            </a>
+
+                <a th:href="@{/admin/adminMain}" class="logoNew brand-wrap" style="font-family: Cafe24Ssurround; color: pink; font-size: 2rem">약수터</a>
+
             <div>
                 <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
             </div>
@@ -22,9 +22,11 @@
                 <li class="menu-item has-submenu">
                     <a class="menu-link" th:href="@{#}">
                         <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">약국 관리</span>
+                        <span class="text">회원 및 약국 관리</span>
                     </a>
                     <div class="submenu">
+                        <a th:href="@{/admin/member/memberInsert}">회원 추가</a>
+                        <a th:href="@{/admin/member/memberSearchList}">회원 검색</a>
                         <a th:href="@{#}">약국 추가</a>
                         <a th:href="@{#}">약국 검색</a>
                     </div>
