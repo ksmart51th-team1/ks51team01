@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+    <section class="content-main">
+        <div class="content-header">
+            <h2 class="content-title" th:text="${content}"></h2>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row gx-5">
+                    <div class="col-lg-9">
+                        <section class="content-body p-xl-4">
+                            <form>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="row gx-3">
+                                            <div class="col-6 mb-3">
+                                                <label class="form-label">First name</label>
+                                                <input class="form-control" type="text" placeholder="Type here" />
+                                            </div>
+                                            <!-- col .// -->
+                                            <div class="col-6 mb-3">
+                                                <label class="form-label">Last name</label>
+                                                <input class="form-control" type="text" placeholder="Type here" />
+                                            </div>
+                                            <!-- col .// -->
+                                            <div class="col-lg-6 mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input class="form-control" type="email" placeholder="example@mail.com" />
+                                            </div>
+                                            <!-- col .// -->
+                                            <div class="col-lg-6 mb-3">
+                                                <label class="form-label">Phone</label>
+                                                <input class="form-control" type="tel" placeholder="+1234567890" />
+                                            </div>
+                                            <!-- col .// -->
+                                            <div class="col-lg-12 mb-3">
+                                                <label class="form-label">Address</label>
+                                                <input class="form-control" type="text" placeholder="Type here" />
+                                            </div>
+                                            <!-- col .// -->
+                                            <div class="col-lg-6 mb-3">
+                                                <label class="form-label">Birthday</label>
+                                                <input class="form-control" type="date" />
+                                            </div>
+                                            <!-- col .// -->
+                                        </div>
+                                        <!-- row.// -->
+                                    </div>
+                                    <!-- col.// -->
+                                    <aside class="col-lg-4">
+                                        <figure class="text-lg-center">
+                                            <img class="img-lg mb-3 img-avatar" src="assets/imgs/people/avatar-1.png" alt="User Photo" />
+                                            <figcaption>
+                                                <a class="btn btn-light rounded font-md" href="#"> <i class="icons material-icons md-backup font-md"></i> Upload </a>
+                                            </figcaption>
+                                        </figure>
+                                    </aside>
+                                    <!-- col.// -->
+                                </div>
+                                <!-- row.// -->
+                                <br />
+                                <button class="btn btn-primary" type="submit">Save changes</button>
+                            </form>
+                            <hr class="my-5" />
+                            <div class="row" style="max-width: 920px">
+                                <div class="col-md">
+                                    <article class="box mb-3 bg-light">
+                                        <a class="btn float-end btn-light btn-sm rounded font-md" href="#">Change</a>
+                                        <h6>Password</h6>
+                                        <small class="text-muted d-block" style="width: 70%">You can reset or change your password by clicking here</small>
+                                    </article>
+                                </div>
+                                <!-- col.// -->
+                                <div class="col-md">
+                                    <article class="box mb-3 bg-light">
+                                        <a class="btn float-end btn-light rounded btn-sm font-md" href="#">Deactivate</a>
+                                        <h6>Remove account</h6>
+                                        <small class="text-muted d-block" style="width: 70%">Once you delete your account, there is no going back.</small>
+                                    </article>
+                                </div>
+                                <!-- col.// -->
+                            </div>
+                            <!-- row.// -->
+                        </section>
+                        <!-- content-body .// -->
+                    </div>
+                    <!-- col.// -->
+                </div>
+                <!-- row.// -->
+            </div>
+            <!-- card body end// -->
+        </div>
+        <!-- card end// -->
+    </section>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('#resetBtn').click(e => {
+            e.preventDefault();
+            location.href = '/admin/adminMain';
+        });
+
+        $('#submitBtn').click(function(){
+            let isSubmit = true;
+            $('#addMedicine input, #addMedicine select').each((idx, element) => {
+                const id = element.id;
+                const value = element.value;
+                if(!value){
+                    alert(`${id}는(은) 필수 입력 항목입니다`);
+                    $(element.focus());
+                    isSubmit = false;
+                    return false;
+                }
+            });
+            if(isSubmit) $('#addMedicine').submit();
+        });
+
+        const createIngrRow = () => {
+            const ingrContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'Ingredient' },
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $tr = $('<tr></tr>');
+            ingrContent.forEach(item => {
+                const $td = $('<td></td>');
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $td.append($element);
+                $tr.append($td);
+            });
+            return $tr;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.ingrAddBtn', function(){
+            $('#ingrTbody button:last').addClass('ingrDelBtn')
+                .removeClass('ingrAddBtn')
+                .text('삭제');
+            const $row = createIngrRow();
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-md rounded font-sm hover-up ingrAddBtn')
+                .text('추가');
+            $('#ingrTbody').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.ingrDelBtn', function(){
+            $(this).closest('tr').remove();
+        });
+
+        const createEffiRow = () => {
+            const ingrContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'efficacy' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $tr = $('<tr></tr>');
+            ingrContent.forEach(item => {
+                const $td = $('<td></td>');
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $td.append($element);
+                $tr.append($td);
+            });
+            return $tr;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.effiAddBtn', function(){
+            $('#effiTbody button:last').addClass('effiDelBtn')
+                .removeClass('effiAddBtn')
+                .text('삭제');
+            const $row = createEffiRow();
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-md rounded font-sm hover-up float-end effiAddBtn')
+                .text('추가');
+            $('#effiTbody').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.effiDelBtn', function(){
+            $(this).closest('tr').remove();
+        });
+    </script>
+</th:block>
+</html>
+
