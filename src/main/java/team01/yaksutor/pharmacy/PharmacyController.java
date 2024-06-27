@@ -54,6 +54,11 @@ public class PharmacyController {
 
         return "user/pharmacy/myPage/myOrderList";
     }
+    @GetMapping("/myDelivery")
+    public String myDelivery() {
+
+        return "user/pharmacy/myPage/myDelivery";
+    }
 
 
 }
