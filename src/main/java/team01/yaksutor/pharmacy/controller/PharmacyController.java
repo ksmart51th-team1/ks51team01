@@ -69,6 +69,11 @@ public class PharmacyController {
 
         return "user/pharmacy/order/liveOrderList";
     }
+    @GetMapping("/hotDeal")
+    public String hotDeal() {
+
+        return "user/pharmacy/order/hotDeal";
+    }
 
 
 }

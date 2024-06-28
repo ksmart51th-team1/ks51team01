@@ -1,0 +1,27 @@
+.font-1 {
+    font-family: 'Pretendard-Regular';
+}
+.font-2 {
+    font-family: 'GmarketSans';
+}
+
+
+.cover-1 {
+    background-color: #A1DCD8;
+}
+
+
+.cover-2 {
+    background-color: #FFE8A5;
+}
+
+.newItemsBorder {
+    border-bottom: 1px solid #dddddd;
+    padding: 10px;
+}
+
+.newItems {
+    font-size: 1rem;
+
+
+}
