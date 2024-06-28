@@ -4,15 +4,17 @@
 .font-2 {
     font-family: 'GmarketSans';
 }
-
-
 .cover-1 {
     background-color: #A1DCD8;
 }
-
-
 .cover-2 {
     background-color: #FFE8A5;
+}
+.cover-3{
+    background-color: #009C86;
+}
+.cover-4{
+    background-color: #1595D4;
 }
 
 .newItemsBorder {
@@ -22,6 +24,4 @@
 
 .newItems {
     font-size: 1rem;
-
-
 }

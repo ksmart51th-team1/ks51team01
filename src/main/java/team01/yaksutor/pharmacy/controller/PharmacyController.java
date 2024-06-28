@@ -13,11 +13,7 @@ public class PharmacyController {
         model.addAttribute("content", "유저 메인.");
         return "user/pharmacy/pharmMain";
     }
-    @GetMapping("/board")
-    public String board() {
 
-        return "user/pharmacy/board/boardList";
-    }
     @GetMapping("/contact")
     public String contact() {
 
