@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/pharmacy/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+    <main class="main pages">
+        <div class="page-content pt-150 pb-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="dashboard-menu">
+                                    <ul class="nav flex-column" role="tablist">
+                                        <li class="nav-item">
+                                            <p class="nav-link text-center" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true" th:text="${content}"></p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="tab-content account dashboard-content pl-50">
+                                    <div class="" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>재고 정보</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" name="enq">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6">
+                                                            <label>의약품 이름 <span class="required">*</span></label>
+                                                            <input required="" class="form-control" name="name" type="text" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>제조사 <span class="required">*</span></label>
+                                                            <input required="" class="form-control" name="text" type="text" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>제조일자 <span class="required">*</span></label>
+                                                            <input required="" class="form-control" name="dname" type="date" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>소비기한 <span class="required">*</span></label>
+                                                            <input required="" class="form-control" name="email" type="date" />
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-5">
+                                                                <label>성분</label>
+                                                            </div>
+                                                            <div class="form-group col-md-5">
+                                                                <label>함량</label>
+                                                            </div>
+                                                            <div class="form-group col-md-2">
+                                                                <label>성분 추가</label>
+                                                            </div>
+                                                        </div>
+                                                        <div id="ingrBox">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-5">
+                                                                    <input class="form-control" name="ingredient" type="text" />
+                                                                </div>
+                                                                <div class="form-group col-md-5">
+                                                                    <input class="form-control" name="content" type="text" />
+                                                                </div>
+                                                                <div class="form-group col-md-2">
+                                                                    <button type="button" class="btn btn-fill-out submit font-weight-bold ingrAddBtn">추가</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-10">
+                                                                <label>효능</label>
+                                                            </div>
+                                                            <div class="form-group col-md-2">
+                                                                <label>효능 추가</label>
+                                                            </div>
+                                                        </div>
+                                                        <div id="effiBox">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-10">
+                                                                    <input class="form-control" name="efficacy" type="text" />
+                                                                </div>
+                                                                <div class="form-group col-md-2">
+                                                                    <button type="button" class="btn btn-fill-out submit font-weight-bold effiAddBtn">추가</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>제형 <span class="required">*</span></label>
+                                                            <input required="" class="form-control" name="gagosipuh" type="text" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>포장상태 <span class="required">*</span></label>
+                                                            <input required="" class="form-control" name="jib" type="text" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>의약품 구분 <span class="required">*</span></label>
+                                                            <select required="" class="form-control" name="un">
+                                                                <option value="">선택해주세요</option>
+                                                                <option value="일반의약품">일반 의약품</option>
+                                                                <option value="전문의약품">전문 의약품</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>재고 수량 <span class="required">*</span></label>
+                                                            <input required="" class="form-control" name="qty" type="text" />
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <button type="button" class="btn btn-fill-out submit font-weight-bold" name="submitBtn" id="submitBtn">재고 등록</button>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <button type="reset" class="btn btn-fill-out submit font-weight-bold" name="resetBtn" id="resetBtn" style="background-color: white; color:green">등록취소</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+
+        $('#submitBtn').click(function(){
+            let isSubmit = true;
+            $('#addMedicine input, #addMedicine select').each((idx, element) => {
+                const id = element.id;
+                const value = element.value;
+                if(!value){
+                    alert(`${id}는(은) 필수 입력 항목입니다`);
+                    $(element.focus());
+                    isSubmit = false;
+                    return false;
+                }
+            });
+            if(isSubmit) $('#addMedicine').submit();
+        });
+
+        const createIngrRow = () => {
+            const ingrContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'ingredient' },
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $div = $('<div></div>');
+            $div.addClass('row');
+            ingrContent.forEach(item => {
+                const $innerDiv = $('<div></div>');
+                if(item.tagName == 'input'){
+                    $innerDiv.addClass('form-group col-md-5');
+                }else{
+                    $innerDiv.addClass('form-group col-md-2');
+                }
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $innerDiv.append($element);
+                $div.append($innerDiv);
+            });
+            return $div;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.ingrAddBtn', function(){
+            $('#ingrBox button:last').addClass('ingrDelBtn')
+                .removeClass('ingrAddBtn')
+                .text('삭제');
+            const $row = createIngrRow();
+            console.log($row);
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-fill-out submit font-weight-bold ingrAddBtn')
+                .text('추가');
+            $('#ingrBox').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.ingrDelBtn', function(){
+            $(this).closest('div.row').remove();
+        });
+
+        const createEffiRow = () => {
+            const effiContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'efficacy' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $div = $('<div></div>');
+            $div.addClass('row');
+            effiContent.forEach(item => {
+                const $innerDiv = $('<div></div>');
+                if(item.tagName == 'input'){
+                    $innerDiv.addClass('form-group col-md-10');
+                }else{
+                    $innerDiv.addClass('form-group col-md-2');
+                }
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $innerDiv.append($element);
+                $div.append($innerDiv);
+            });
+            return $div;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.effiAddBtn', function(){
+            $('#effiBox button:last').addClass('effiDelBtn')
+                .removeClass('effiAddBtn')
+                .text('삭제');
+            const $row = createEffiRow();
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-fill-out submit font-weight-bold effiAddBtn')
+                .text('추가');
+            $('#effiBox').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.effiDelBtn', function(){
+            $(this).closest('div.row').remove();
+        });
+    </script>
+</th:block>
+</html>
+

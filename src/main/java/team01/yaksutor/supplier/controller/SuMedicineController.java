@@ -45,5 +45,12 @@ public class SuMedicineController {
         return "user/supplier/medicine/myMedicineDelete";
     }
 
+    @GetMapping("/myMedicineDetailView")
+    public String myMedicineDetailView(Model model) {
+        model.addAttribute("title", "내 의약품 상세");
+        model.addAttribute("content", "내 의약품 상세");
+
+        return "user/supplier/medicine/myMedicineDetailView";
+    }
 
 }

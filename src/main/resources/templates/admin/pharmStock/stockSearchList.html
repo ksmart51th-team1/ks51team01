@@ -1,10 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
 </head>
-<body>
 
-</body>
+<th:block layout:fragment="customContent">
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title" th:text="${content}"></h2>
+                <p>약국 재고 리스트</p>
+            </div>
+            <div>
+                <a th:href="@{/admin/stockInsert}" class="btn btn-primary btn-sm rounded">새 재고 추가</a>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <header class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                        <select class="form-select">
+                            <option selected value="">모든 의약품</option>
+                            <option value="일반의약품">일반 의약품</option>
+                            <option value="전문의약품">전문 의약품</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <input type="date" class="form-control" />
+                    </div>
+                    <!--<div class="col-md-2 col-6">
+                        <select class="form-select">
+                            <option selected value="">판매 상태</option>
+                            <option value="판매중">판매중</option>
+                            <option value="매진">매진</option>
+                            <option value="판매중단">판매 중단</option>
+                        </select>
+                    </div>-->
+                </div>
+            </header>
+            <!-- card-header end// -->
+            <div class="card-body">
+                <article class="mb-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                            <a class="itemside" th:href="@{#}">
+                                <div class="info">
+                                    <h6 class="mb-0">의약품 이름</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>재고량</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-status">
+                            <span class="mb-0">재고조사 여부</span>
+                        </div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-date">
+                            <span>재고조사 일자</span>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-center">
+                            <span>수정/삭제</span>
+                        </div>
+                    </div>
+                    <!-- row .// -->
+                </article>
+                <article class="itemlist">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                            <a class="itemside" th:href="@{#}">
+                                <div class="info">
+                                    <h6 class="mb-0">후시딘 연고</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>200개</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-status">
+                            <span class="badge rounded-pill alert-success">재고조사 불필요</span>
+                        </div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-date">
+                            <span>2024.06.24</span>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-center">
+                            <a th:href="@{/admin/stockModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
+                            <a th:href="@{/admin/stockDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                        </div>
+                    </div>
+                    <!-- row .// -->
+                </article>
+                <!-- itemlist  .// -->
+                <article class="itemlist">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                            <a class="itemside" th:href="@{#}">
+                                <div class="info">
+                                    <h6 class="mb-0">Gortons Beer Battered Fish Fillets</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>$76.99</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-status">
+                            <span class="badge rounded-pill alert-warning">Archived</span>
+                        </div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-date">
+                            <span>02.11.2021</span>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-center">
+                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
+                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                        </div>
+                    </div>
+                    <!-- row .// -->
+                </article>
+                <!-- itemlist  .// -->
+                <article class="itemlist">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                            <a class="itemside" th:href="@{#}">
+                                <div class="info">
+                                    <h6 class="mb-0">Blue Diamond Almonds Lightly Salted</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>$76.99</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-status">
+                            <span class="badge rounded-pill alert-danger">Disabled</span>
+                        </div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-date">
+                            <span>02.11.2021</span>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-center">
+                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
+                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                        </div>
+                    </div>
+                    <!-- row .// -->
+                </article>
+                <!-- itemlist  .// -->
+            </div>
+            <!-- card-body end// -->
+        </div>
+        <!-- card end// -->
+        <div class="pagination-area mt-30 mb-50">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start">
+                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">16</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
 </html>
