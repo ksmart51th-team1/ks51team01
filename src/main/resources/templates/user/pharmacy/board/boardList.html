@@ -33,7 +33,7 @@
             </header>
             <!-- card-header end// -->
             <div class="card-body">
-                <article class="itemlist">
+                <article class="itemlist" th:if="${boardList != null}" th:each="b : ${boardList}">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#">
@@ -41,223 +41,19 @@
                                     <img src="assets/imgs/items/1.jpg" class="img-sm img-thumbnail" alt="Item">
                                 </div>
                                 <div class="info">
-                                    <h6 class="mb-0">Seeds of Change Organic Quinoa</h6>
+                                    <h6 th:text="${b.boardTitle}"  class="mb-0"></h6>
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-price"><span>글쓴이1</span></div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
+                            <span th:text="${b.boardDate}"></span>
                         </div>
 
                     </div>
                     <!-- row .// -->
                 </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
 
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/2.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">All Natural Italian-Style Chicken</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>글쓴이2</span></div>
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/3.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Gortons Beer Battered Fish Fillets</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>ㅋㅋ</span></div>
-
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/4.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Foster Farms Takeout Crispy Classic Buffalo</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>최성식123</span></div>
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/3.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Blue Diamond Almonds Lightly Salted</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>ㅎㅇㅎㅇ</span></div>
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/5.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Chobani Complete Vanilla Greek Yogurt</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>ㄱㄴㄷ</span></div>
-
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/6.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Canada Dry Ginger Ale 2 L Bottle</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>관리자</span></div>
-
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/4.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Gortons Beer Battered Fish Fillets</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>전주사랑약국</span></div>
-
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/3.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Gortons Beer Battered Fish Fillets</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>광주우리약국</span></div>
-
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-
-                        <div class="col-lg-3 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/4.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Haagen-Dazs Caramel Cone Ice</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>$180.99</span></div>
-
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
             </div>
             <!-- card-body end// -->
         </div>

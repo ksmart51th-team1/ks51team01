@@ -1,48 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div id="header" th:fragment="headerFragment">
-    <!-- Modal -->
-    <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-body">
-                    <div class="deal">
-                        <div class="deal-top">
-                            <h6 class="mb-10 text-brand-2">Deal of the Day</h6>
-                        </div>
-                        <div class="deal-content detail-info">
-                            <h4 class="product-title"><a href="#" class="text-heading">Organic fruit for your family's health</a></h4>
-                            <div class="clearfix product-price-cover">
-                                <div class="product-price primary-color float-left">
-                                    <span class="current-price text-brand">$38</span>
-                                    <span>
-                                        <span class="save-price font-md color3 ml-15">26% Off</span>
-                                        <span class="old-price font-md ml-15">$52</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="deal-bottom">
-                            <p class="mb-20">Hurry Up! Offer End In:</p>
-                            <div class="deals-countdown pl-5" data-countdown="2025/03/25 00:00:00">
-                                <span class="countdown-section"><span class="countdown-amount hover-up">03</span><span class="countdown-period"> days </span></span><span class="countdown-section"><span class="countdown-amount hover-up">02</span><span class="countdown-period"> hours </span></span><span class="countdown-section"><span class="countdown-amount hover-up">43</span><span class="countdown-period"> mins </span></span><span class="countdown-section"><span class="countdown-amount hover-up">29</span><span class="countdown-period"> sec </span></span>
-                            </div>
-                            <div class="product-detail-rating">
-                                <div class="product-rate-cover text-end">
-                                    <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 90%"></div>
-                                    </div>
-                                    <span class="font-small ml-5 text-muted"> (32 rates)</span>
-                                </div>
-                            </div>
-                            <a href="#" class="btn hover-up">Shop Now <i class="fi-rs-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- Quick view -->
     <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -185,14 +144,14 @@
                                         <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-compare.svg}" />
                                         <span class="pro-count blue">3</span>
                                     </a>
-                                    <a href="#"><span class="lable ml-0">긴급의약품요청</span></a>
+                                    <a th:href="@{/pharm/liveOrder}"><span class="lable ml-0">긴급의약품요청</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
-                                                <a href="#"><i class="fi fi-rs-receipt mr-10"></i>실시간 요청 목록</a>
+                                                <a th:href="@{/pharm/liveOrder}"><i class="fi fi-rs-receipt mr-10"></i>실시간 요청 목록</a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="fi fi-rs-redo mr-10"></i>요청 조회</a>
+                                                <a th:href="@{/pharm/liveOrderList}"><i class="fi fi-rs-redo mr-10"></i>요청 조회</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -266,23 +225,7 @@
                                         <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}" />
                                     </a>
                                     <a th:href="@{/pharm/myPage}"><span class="lable ml-0">마이페이지</span></a>
-                                    <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                                        <ul>
-                                            <li>
-                                                <a href="#"><i class="fi fi-rs-user mr-10"></i>내 정보</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fi fi-rs-money mr-10"></i>결제관리</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fi fi-rs-comment mr-10"></i>문의내역</a>
-                                            </li>
 
-                                            <li>
-                                                <a href="#"><i class="fi fi-rs-sign-out mr-10"></i>로그아웃</a>
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -301,7 +244,7 @@
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                             <nav>
                                 <ul>
-                                    <li class="hot-deals"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-hot-white.svg}" alt="hot deals" /><a href="shop-grid-right.html">오늘특가</a></li>
+                                    <li class="hot-deals"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-hot-white.svg}" alt="hot deals" /> <a th:href="@{/pharm/hotDeal}">오늘특가</a></li>
                                     <li>
                                         <a th:href="@{/pharm/main}">　홈　</a>
                                     </li>
