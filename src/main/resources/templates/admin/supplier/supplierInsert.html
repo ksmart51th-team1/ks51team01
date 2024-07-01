@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+  <section class="content-main">
+    <form id="addMember" th:action="@{/admin/member/memberInsert}" method="post">
+      <div class="row">
+        <div class="col-6">
+          <div class="content-header">
+            <h2 class="content-title" th:text="${content}">새로운 회원 등록</h2>
+            <div>
+              <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">등록 취소</button>
+              <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="회원 등록" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <h6 class="fs-5">1. 회원정보입력</h6>
+                </div>
+                <div class="col-md-9">
+                  <div class="mb-4">
+                    <label class="form-label fs-6" for="memberId">회원아이디</label>
+                    <input type="text" placeholder="아이디를 입력해주세요" name="memberId" id="memberId" class="form-control w-50" >
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label fs-6" for="memberPw">회원비밀번호</label>
+                    <input type="text" placeholder="비밀번호를 입력해주세요." name="memberPw" id="memberPw" class="form-control w-50" >
+                  </div>
+
+                  <div class="mb-4">
+                    <label class="form-label fs-6 " for="memberName">회원이름</label>
+                    <input type="text" placeholder="이름을 입력해주세요" name="memberName"  id="memberName" class="form-control w-50">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label fs-6" for="memberEmail">이메일</label>
+                    <input type="text" placeholder="이메일을 입력해주세요" name="memberEmail"  id="memberEmail" class="form-control w-50">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label fs-6" for="memberBirth">생일</label>
+                    <input type="date"  name="memberBirth"  id="memberBirth" class="form-control w-50">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label fs-6" for="memberPhone">핸드폰</label>
+                    <input type="text" placeholder="이메일을 입력해주세요" name="memberPhone"  id="memberPhone" class="form-control w-50">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label mr-30 fs-6" >성별</label>
+                    <input class="mr-5 fs-5" type="radio" name="Gender"/>남
+                    <input class="ml-5 mr-5 fs-5" type="radio" name="Gender"/>여
+                  </div>
+                  <div >
+                    <div class="mb-4 d-flex">
+                      <label class="form-label mr-30 fs-6" >회원주소입력</label>
+                      <button type="button" id="addrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
+                    </div>
+                    <input class="form-control mb-3 w-25" type="text" required="" name="memberAddr" id="memberPostcode" placeholder="우편번호" />
+                    <input class="form-control mb-3" type="text" required="" name="memberAddr" id="memberAddress" placeholder="도로명주소" />
+                    <input class="form-control mb-3" type="text" required="" name="memberAddr" id="memberDetailAddress" placeholder="상세주소" />
+                  </div>
+                </div> <!-- col.// -->
+              </div> <!-- row.// -->
+              <hr class="mb-4 mt-0">
+              <div class="row">
+                <div class="col-md-3">
+                  <h6 class="fs-5">2. 업체 정보 입력</h6>
+                </div>
+                <div class="col-md-9">
+                  <div class="mb-4">
+                    <label class="form-label fs-6 " for="supName">업체명</label>
+                    <input type="text" placeholder="업체명을 입력해주세요" name="supName"  id="supName" class="form-control w-50">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label fs-6" for="supTell">업체전화번호</label>
+                    <input type="date" placeholder="이메일을 입력해주세요" name="supTell"  id="supTell" class="form-control w-50">
+                  </div>
+                  <div >
+                    <div class="mb-4 d-flex">
+                      <label class="form-label mr-30 fs-6" >사업장주소입력</label>
+                      <button type="button" id="supAddrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
+                    </div>
+                    <input class="form-control mb-3 w-25" type="text" required="" name="supAddr" id="supPostcode" placeholder="우편번호" />
+                    <input class="form-control mb-3" type="text" required="" name="supAddr" id="supAddress" placeholder="도로명주소" />
+                    <input class="form-control mb-3" type="text" required="" name="supAddr" id="supDetailAddress" placeholder="상세주소" />
+                  </div>
+
+                </div> <!-- col.// -->
+              </div> <!-- row.// -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section> <!-- content-main end// -->
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script th:inline="javascript">
+    function searchAddress(searchObj) {
+      new daum.Postcode({
+        oncomplete: function(data) {
+          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+          // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+          var addr = ''; // 주소 변수
+
+          //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+          if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+            data.address = data.roadAddress;
+          } else { // 사용자가 지번 주소를 선택했을 경우(J)
+            data.address = data.jibunAddress;
+          }
+
+          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+
+          if(searchObj != null){
+            const valueArr = searchObj.value;
+            for(const key in searchObj){
+              if(key === 'focus'){
+                document.getElementById(searchObj[key]).focus();
+                continue;
+              }
+              document.getElementById(searchObj[key]).value = data[key];
+            }
+          }
+
+          /*
+          document.getElementById('memberPostcode').value = data.zonecode;
+          document.getElementById("memberAddress").value = addr;
+          // 커서를 상세주소 필드로 이동한다.
+          document.getElementById("memberDetailAddress").focus();
+
+           */
+        }
+      }).open();
+    }
+
+    //회원 주소 객체
+    $('#addrBtn').click(function(){
+      const searchObj = {
+        zonecode : 'memberPostcode',
+        address: 'memberAddress',
+        focus : 'memberDetailAddress'
+      }
+      searchAddress(searchObj);
+    });
+    //납품업체주소객체
+    $('#pAddrBtn').click(function(){
+      const searchObj = {
+        zonecode : 'supPostcode',
+        address: 'supAddress',
+        focus : 'supDetailAddress'
+      }
+      searchAddress(searchObj);
+    });
+
+    $('#resetBtn').click(e => {
+      e.preventDefault();
+      location.href = '/admin/adminMain';
+    });
+
+    $('#submitBtn').click(function(){
+      let isSubmit = true;
+      $('#addMedicine input, #addMedicine select').each((idx, element) => {
+        const id = element.id;
+        const value = element.value;
+        if(!value){
+          alert(`${id}는(은) 필수 입력 항목입니다`);
+          $(element.focus());
+          isSubmit = false;
+          return false;
+        }
+      });
+      if(isSubmit) $('#addMedicine').submit();
+    });
+
+    //약사의 권한에 따라 약국정보추가 혹은 소속약국등록 div 보이게 만드는 자바스크립트
+    function togglePharmacyInfo() {
+      var memberLevel = document.getElementById('memberLevelNum').value;
+      var ownerDiv = document.getElementById('owner');
+      var staffDiv = document.getElementById('staff');
+
+      if (memberLevel === "1") {
+        ownerDiv.classList.remove('d-none');
+        staffDiv.classList.add('d-none');
+      } else if (memberLevel === "2") {
+        ownerDiv.classList.add('d-none');
+        staffDiv.classList.remove('d-none');
+      } else {
+        ownerDiv.classList.add('d-none');
+        staffDiv.classList.add('d-none');
+      }
+    }
+
+    //약국검색 모달창 띄우기
+    function openModal() {
+      const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      myModal.show();
+    }
+
+  </script>
+</th:block>
+</html>
