@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+    <section class="content-main">
+        <form id="addMedicine" th:action="@{/admin/medicine/medicineInsert}" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <div class="content-header">
+                        <h2 class="content-title" th:text="${content}">의약품 수정</h2>
+                        <div>
+                            <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">수정 취소</button>
+                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="의약품 수정" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>1. 의약품 정보</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="regMId">판매자</label>
+                                        <input type="text" placeholder="판매자를 입력해주세요" name="regMId" id="regMId" class="form-control" >
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediName">의약품 이름</label>
+                                        <input type="text" placeholder="의약품 이름을 적어주세요" name="mediName" id="mediName" class="form-control" >
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediDrugform">제형</label>
+                                        <input type="text" placeholder="예시(정제, 액체, 연고, 경질캡슐 등)" name="mediDrugform"  id="mediDrugform" class="form-control">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediState">포장 상태</label>
+                                        <input type="text" placeholder="예시(10정/상자, 30정/병 등)" name="mediState"  id="mediState" class="form-control">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediUsebydate">소비기한</label>
+                                        <input type="date" name="mediUsebydate"  id="mediUsebydate" class="form-control">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediDrugtype">의약품 분류</label>
+                                        <select name="mediDrugtype" id="mediDrugtype" class="form-select">
+                                            <option value=""> --선택해 주세요-- </option>
+                                            <option value="일반의약품"> 일반의약품 </option>
+                                            <option value="전문의약품"> 전문의약품 </option>
+                                        </select>
+                                    </div>
+                                    <div id="ingredientBox" class="mb-4">
+                                        <label class="form-label">의약품 성분</label><br>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr class="align-baseline">
+                                                <th>이름</th>
+                                                <th>함량</th>
+                                                <th>항목 추가</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="ingrTbody">
+                                            <tr>
+                                                <td><input type="text" name="ingredient" class="form-control"></td>
+                                                <td><input type="text" name="content" class="form-control"></td>
+                                                <td><button type="button" class="btn btn-md rounded font-sm hover-up ingrAddBtn">추가</button></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div id="efficacyBox" class="mb-4">
+                                        <label class="form-label" for="efficacy">의약품 효능</label><br>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>효능</th>
+                                                <th>항목 추가</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="effiTbody">
+                                            <tr>
+                                                <td><input type="text" name="efficacy" id="efficacy" class="form-control"></td>
+                                                <td class="float-end"><button type="button" id="effiAddBtn" class="btn btn-md rounded font-sm hover-up effiAddBtn">추가</button></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+                            <hr class="mb-4 mt-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>2. 의약품 판매 정보</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediDetail">의약품 상세 설명</label>
+                                        <textarea placeholder="의약품에 관한 설명을 적어주세요" name="mediDetail" id="mediDetail" class="form-control" rows="4"></textarea>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="mediPrice" class="form-label">판매 가격</label>
+                                        <sub class="float-end">단위 : 원</sub>
+                                        <input type="text" name="mediPrice" id="mediPrice" class="form-control">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="regQty" class="form-label">판매 수량</label>
+                                        <sub class="float-end">단위 : 개</sub>
+                                        <input type="text" name="regQty" id="regQty" class="form-control">
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+                            <hr class="mb-4 mt-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>3. 이미지 파일</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label for="mediImg" class="form-label">의약품 이미지</label>
+                                        <input name="mediImg" id="mediImg" class="form-control" type="file">
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- .row end// -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section> <!-- content-main end// -->
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('#resetBtn').click(e => {
+            e.preventDefault();
+            location.href = '/admin/adminMain';
+        });
+
+        $('#submitBtn').click(function(){
+            let isSubmit = true;
+            $('#addMedicine input, #addMedicine select').each((idx, element) => {
+                const id = element.id;
+                const value = element.value;
+                if(!value){
+                    alert(`${id}는(은) 필수 입력 항목입니다`);
+                    $(element.focus());
+                    isSubmit = false;
+                    return false;
+                }
+            });
+            if(isSubmit) $('#addMedicine').submit();
+        });
+
+        const createIngrRow = () => {
+            const ingrContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'Ingredient' },
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $tr = $('<tr></tr>');
+            ingrContent.forEach(item => {
+                const $td = $('<td></td>');
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $td.append($element);
+                $tr.append($td);
+            });
+            return $tr;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.ingrAddBtn', function(){
+            $('#ingrTbody button:last').addClass('ingrDelBtn')
+                .removeClass('ingrAddBtn')
+                .text('삭제');
+            const $row = createIngrRow();
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-md rounded font-sm hover-up ingrAddBtn')
+                .text('추가');
+            $('#ingrTbody').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.ingrDelBtn', function(){
+            $(this).closest('tr').remove();
+        });
+
+        const createEffiRow = () => {
+            const ingrContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'efficacy' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $tr = $('<tr></tr>');
+            ingrContent.forEach(item => {
+                const $td = $('<td></td>');
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $td.append($element);
+                $tr.append($td);
+            });
+            return $tr;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.effiAddBtn', function(){
+            $('#effiTbody button:last').addClass('effiDelBtn')
+                .removeClass('effiAddBtn')
+                .text('삭제');
+            const $row = createEffiRow();
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-md rounded font-sm hover-up float-end effiAddBtn')
+                .text('추가');
+            $('#effiTbody').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.effiDelBtn', function(){
+            $(this).closest('tr').remove();
+        });
+    </script>
+</th:block>
+</html>

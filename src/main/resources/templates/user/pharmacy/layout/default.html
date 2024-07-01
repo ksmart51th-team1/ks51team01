@@ -6,6 +6,9 @@
     <title th:text="${title}"></title>
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/plugins/animate.min.css}" />
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/main.css?v=5.6}" />
+    <!--<link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/admin/assets/imgs/theme/favicon.svg}" />
+    &lt;!&ndash; Template CSS &ndash;&gt;
+    <link th:href="@{/resource/admin/assets/css/main.css?v=1.1}" rel="stylesheet" type="text/css" />-->
 </head>
 <body>
 <div id="wrapper">
@@ -14,40 +17,45 @@
     <div th:replace="~{user/pharmacy/fragments/header :: headerFragment}"></div>
 
     <!-- 왼쪽메뉴 -->
-    <div th:replace="~{user/pharmacy/fragments/aside :: asideFragment}"></div>
+    <!--<div th:replace="~{user/pharmacy/fragments/aside :: asideFragment}"></div>-->
 
+    <!-- 콘텐츠 영역 -->
+    <div id="content" style="overflow: auto;">
+        <th:block layout:fragment="customContent">
+        </th:block>
+    </div>
 
 
     <!-- 하단메뉴 -->
     <div th:replace="~{user/pharmacy/fragments/footer :: footerFragment}"></div>
 </div>
 
+<script type="text/javascript" th:src="@{/js/cssandjs/actions.js}"></script>
+<!-- Vendor JS-->
+<script th:src="@{/resource/user/assets/js/vendor/modernizr-3.6.0.min.js}"></script>
+<script th:src="@{/resource/user/assets/js/vendor/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/resource/user/assets/js/vendor/jquery-migrate-3.3.0.min.js}"></script>
+<script th:src="@{/resource/user/assets/js/vendor/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/slick.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/jquery.syotimer.min.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/waypoints.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/wow.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/perfect-scrollbar.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/magnific-popup.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/select2.min.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/counterup.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/jquery.countdown.min.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/images-loaded.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/isotope.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/scrollup.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/jquery.vticker-min.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/jquery.theia.sticky.js}"></script>
+<script th:src="@{/resource/user/assets/js/plugins/jquery.elevatezoom.js}"></script>
+<!-- TemplateJS -->
+<script th:src="@{/resource/user/assets/js/main.js?v=5.6}" type="text/javascript"></script>
+<script th:src="@{/resource/user/assets/js/shop.js?v=5.6}" type="text/javascript"></script>
 <!-- 사용자정의 js 파일  -->
 <th:block layout:fragment="customJsFile">
-    <script type="text/javascript" th:src="@{/js/cssandjs/actions.js}"></script>
-    <!-- Vendor JS-->
-    <script th:src="@{/resource/user/assets/js/vendor/modernizr-3.6.0.min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/vendor/jquery-3.6.0.min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/vendor/jquery-migrate-3.3.0.min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/vendor/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/slick.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/jquery.syotimer.min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/waypoints.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/wow.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/perfect-scrollbar.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/magnific-popup.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/select2.min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/counterup.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/jquery.countdown.min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/images-loaded.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/isotope.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/scrollup.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/jquery.vticker-min.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/jquery.theia.sticky.js}"></script>
-    <script th:src="@{/resource/user/assets/js/plugins/jquery.elevatezoom.js}"></script>
-    <!-- TemplateJS -->
-    <script th:src="@{/resource/user/assets/js/main.js?v=5.6}"></script>
-    <script th:src="@{/resource/user/assets/js/shop.js?v=5.6}"></script>
 
 </th:block>
 <!-- 사용자정의 script -->
