@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.pharmacy.mapper.PhBoardMapper">
+    <resultMap type="Board" id="boardResultMap">
+        <id column="cm_num" 			property="boardCode" />
+        <result column="cm_title" 		property="boardTitle"/>
+        <result column="cm_content" 		property="boardContent"/>
+        <result column="cm_date" 	property="boardDate"/>
+    </resultMap>
+
+
+    <select id="getBoardList" resultMap="boardResultMap">
+        /* 게시판 목록 */
+        SELECT
+            cm_num,
+            cm_title,
+            cm_content,
+            cm_date
+        FROM
+            community;
+    </select>
+
+
+
+</mapper>

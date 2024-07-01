@@ -13,11 +13,7 @@ public class PharmacyController {
         model.addAttribute("content", "유저 메인.");
         return "user/pharmacy/pharmMain";
     }
-    @GetMapping("/board")
-    public String board() {
 
-        return "user/pharmacy/board/boardList";
-    }
     @GetMapping("/contact")
     public String contact() {
 
@@ -58,6 +54,21 @@ public class PharmacyController {
     public String myDelivery() {
 
         return "user/pharmacy/myPage/myDelivery";
+    }
+    @GetMapping("/liveOrder")
+    public String liveOrder() {
+
+        return "user/pharmacy/order/liveOrder";
+    }
+    @GetMapping("/liveOrderList")
+    public String liveOrderList() {
+
+        return "user/pharmacy/order/liveOrderList";
+    }
+    @GetMapping("/hotDeal")
+    public String hotDeal() {
+
+        return "user/pharmacy/order/hotDeal";
     }
 
 
