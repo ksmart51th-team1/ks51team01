@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{admin/layout/default}">
+      layout:decorate="~{user/supplier/layout/default}">
 <head>
 </head>
 
@@ -13,7 +13,7 @@
                 <p>의약품 리스트</p>
             </div>
             <div>
-                <a th:href="@{/admin/medicine/medicineInsert}" class="btn btn-primary btn-sm rounded">새 의약품 추가</a>
+                <a th:href="@{/supplier/myMedicineInsert}" class="btn btn-primary btn-sm rounded">새 의약품 추가</a>
             </div>
         </div>
         <div class="card mb-4">
@@ -44,9 +44,9 @@
                 <article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/admin/medicine/medicineDetailView}">
+                            <a class="itemside" th:href="@{/supplier/myMedicineDetailView}">
                                 <div class="left">
-                                    <img th:src="@{/resource/admin/assets/imgs/items/1.jpg}" class="img-sm img-thumbnail" alt="Item" />
+                                    <img th:src="@{/resource/supplier/assets/imgs/items/1.jpg}" class="img-sm img-thumbnail" alt="Item" />
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-0">Seeds of Change Organic Quinoa</h6>
@@ -61,8 +61,8 @@
                             <span>02.11.2021</span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            <a th:href="@{/supplier/myMedicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
+                            <a th:href="@{/supplier/myMedicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                         </div>
                     </div>
                     <!-- row .// -->
@@ -71,9 +71,9 @@
                 <article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/admin/medicine/medicineDetailView}">
+                            <a class="itemside" th:href="@{/supplier/myMedicineDetailView}">
                                 <div class="left">
-                                    <img th:src="@{/resource/admin/assets/imgs/items/3.jpg}" class="img-sm img-thumbnail" alt="Item" />
+                                    <img th:src="@{/resource/supplier/assets/imgs/items/3.jpg}" class="img-sm img-thumbnail" alt="Item" />
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-0">Gortons Beer Battered Fish Fillets</h6>
@@ -88,8 +88,8 @@
                             <span>02.11.2021</span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            <a th:href="@{/supplier/myMedicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
+                            <a th:href="@{/supplier/myMedicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                         </div>
                     </div>
                     <!-- row .// -->
@@ -98,9 +98,9 @@
                 <article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/admin/medicine/medicineDetailView}">
+                            <a class="itemside" th:href="@{/supplier/myMedicineDetailView}">
                                 <div class="left">
-                                    <img th:src="@{/resource/admin/assets/imgs/items/3.jpg}" class="img-sm img-thumbnail" alt="Item" />
+                                    <img th:src="@{/resource/supplier/assets/imgs/items/3.jpg}" class="img-sm img-thumbnail" alt="Item" />
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-0">Blue Diamond Almonds Lightly Salted</h6>
@@ -115,8 +115,8 @@
                             <span>02.11.2021</span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            <a th:href="@{/supplier/myMedicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
+                            <a th:href="@{/supplier/myMedicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                         </div>
                     </div>
                     <!-- row .// -->

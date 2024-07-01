@@ -13,19 +13,19 @@ import team01.yaksutor.dto.Medicine;
 import team01.yaksutor.dto.SellMedicine;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/medicine")
 @RequiredArgsConstructor
 @Slf4j
 public class AdMedicineController {
 
-    @GetMapping("/medicine/medicineInsert")
+    @GetMapping("/medicineInsert")
     public String medicineInsert(Model model) {
         model.addAttribute("title", "의약품 등록");
         model.addAttribute("content", "의약품 등록");
         return "admin/medicine/medicineInsert";
     }
 
-    @PostMapping("/medicine/medicineInsert")
+    @PostMapping("/medicineInsert")
     public String medicineInsert(Medicine medicine,
                                  SellMedicine sellMedicine,
                                  Ingredient ingredient,
@@ -38,22 +38,38 @@ public class AdMedicineController {
         return "redirect:/admin/adminMain";
     }
 
-    @GetMapping("/medicine/medicineSearchList")
+    @GetMapping("/medicineSearchList")
     public String medicineSearchList(Model model) {
         model.addAttribute("title", "의약품 리스트");
-        model.addAttribute("content", "의약품리스트");
+        model.addAttribute("content", "의약품 리스트");
 
         return "admin/medicine/medicineSearchList";
     }
 
-    @GetMapping("/medicine/medicineModify")
+    @GetMapping("/medicineModify")
     public String medicineModify(Model model) {
+
+        model.addAttribute("title", "의약품 수정");
+        model.addAttribute("content", "의약품 수정");
 
         return "admin/medicine/medicineModify";
     }
 
-    @GetMapping("/medicine/medicineDelete")
+    @GetMapping("/medicineDelete")
     public String medicineDelete(Model model) {
+
+        model.addAttribute("title", "의약품 삭제");
+        model.addAttribute("content", "의약품 삭제");
+
         return "admin/medicine/medicineDelete";
+    }
+
+    @GetMapping("/medicineDetailView")
+    public String medicineDetailView(Model model) {
+
+        model.addAttribute("title", "의약품 상세");
+        model.addAttribute("content", "의약품 상세");
+
+        return "admin/medicine/medicineDetailView";
     }
 }

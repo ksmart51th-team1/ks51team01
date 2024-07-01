@@ -19,4 +19,12 @@ public class PhMedicineController {
         model.addAttribute("content", "의약품 목록");
         return "user/pharmacy/order/orderMedicine";
     }
+
+    @GetMapping("/order/orderMedicineDetailView")
+    public String orderMedicineDetailView(Model model) {
+        model.addAttribute("title", "의약품 상세");
+        model.addAttribute("content", "의약품 상세");
+        return "user/pharmacy/order/orderMedicineDetailView";
+    }
+
 }
