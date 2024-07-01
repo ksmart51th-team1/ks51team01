@@ -25,3 +25,13 @@
 .newItems {
     font-size: 1rem;
 }
+
+.btn-modal1 {
+    background-color: #ff8c9f;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: "Pretendard-Regular", sans-serif;
+    padding: 10px;
+    margin: 10px;
+}

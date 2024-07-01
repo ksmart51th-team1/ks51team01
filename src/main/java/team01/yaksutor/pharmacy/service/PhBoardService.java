@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team01.yaksutor.pharmacy.dto.Board;
+import team01.yaksutor.pharmacy.dto.QuestionCenter;
 import team01.yaksutor.pharmacy.mapper.PhBoardMapper;
 
 import java.util.List;
@@ -18,7 +19,11 @@ public class PhBoardService {
 
     public List<Board> getBoardList() {
         List<Board> boardList = phBoardMapper.getBoardList();
-
         return boardList;
+    }
+
+    public List<QuestionCenter> getQuestionCenterList(){
+        List<QuestionCenter> questionCenterList = phBoardMapper.getQuestionCenterList();
+        return questionCenterList;
     }
 }

@@ -7,7 +7,7 @@
 </head>
 
 <th:block layout:fragment="customContent">
-    <section class="content-main m-5" >
+    <section class="content-main m-5">
         <div class="content-header">
             <div>
                 <h2 class="content-title card-title">커뮤니티</h2>
@@ -19,7 +19,6 @@
         <div class="card mb-4">
             <header class="card-header">
                 <div class="row align-items-center">
-
                     <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
                         <select class="form-select">
                             <option selected="">전체</option>
@@ -27,8 +26,6 @@
                             <option>제품후기</option>
                         </select>
                     </div>
-
-
                 </div>
             </header>
             <!-- card-header end// -->
@@ -36,24 +33,22 @@
                 <article class="itemlist" th:if="${boardList != null}" th:each="b : ${boardList}">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" href="#">
+                            <a class="itemside" href="#" data-toggle="modal" data-target="#boardContentModal" th:data-content="${b.boardContent}" th:data-title="${b.boardTitle}">
                                 <div class="left">
                                     <img src="assets/imgs/items/1.jpg" class="img-sm img-thumbnail" alt="Item">
                                 </div>
                                 <div class="info">
-                                    <h6 th:text="${b.boardTitle}"  class="mb-0"></h6>
+                                    <h6 th:text="${b.boardTitle}" class="mb-0"></h6>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>글쓴이1</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${b.MId}"></span></div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
                             <span th:text="${b.boardDate}"></span>
                         </div>
-
                     </div>
                     <!-- row .// -->
                 </article>
-
             </div>
             <!-- card-body end// -->
         </div>
@@ -74,11 +69,38 @@
         </div>
     </section>
 
+    <!-- 모달 -->
+    <div class="modal fade" id="boardContentModal" tabindex="-1" aria-labelledby="boardContentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="boardContentModalLabel"></h5>
+                </div>
+                <div class="modal-body" id="boardContentModalBody">
+                </div>
+                <button type="button" class="btn-modal1" data-dismiss="modal" aria-label="Close">닫기
+                </button>
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsFile">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script>
+        $('#boardContentModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // 모달을 트리거한 버튼
+            var content = button.data('content'); // data-content 속성에서 콘텐츠를 가져옴
+            var title = button.data('title'); // data-title 속성에서 제목을 가져옴
+
+            var modal = $(this);
+            modal.find('.modal-title').text(title);
+            modal.find('.modal-body').text(content);
+        });
+    </script>
 </th:block>
 </html>

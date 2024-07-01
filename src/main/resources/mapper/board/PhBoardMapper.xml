@@ -5,6 +5,7 @@
 <mapper namespace="team01.yaksutor.pharmacy.mapper.PhBoardMapper">
     <resultMap type="Board" id="boardResultMap">
         <id column="cm_num" 			property="boardCode" />
+        <result column="m_id" 		property="mId"/>
         <result column="cm_title" 		property="boardTitle"/>
         <result column="cm_content" 		property="boardContent"/>
         <result column="cm_date" 	property="boardDate"/>
@@ -15,6 +16,7 @@
         /* 게시판 목록 */
         SELECT
             cm_num,
+            m_id,
             cm_title,
             cm_content,
             cm_date
@@ -22,6 +24,26 @@
             community;
     </select>
 
+
+
+    <resultMap type="QuestionCenter" id="questionCenterResultMap">
+        <id column="m_id" 			property="mId" />
+        <result column="question_title" 		property="questionTitle"/>
+        <result column="question_content" 		property="questionContent"/>
+        <result column="question_date" 	property="questionDate"/>
+    </resultMap>
+
+
+    <select id="getQuestionCenterList" resultMap="questionCenterResultMap">
+        /* 게시판 목록 */
+        SELECT
+            m_id,
+            question_title,
+            question_content,
+            question_date
+        FROM
+            question_center;
+    </select>
 
 
 </mapper>

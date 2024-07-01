@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import team01.yaksutor.pharmacy.dto.Board;
+import team01.yaksutor.pharmacy.dto.QuestionCenter;
 import team01.yaksutor.pharmacy.service.PhBoardService;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class PhBoardController {
 
 
         return "user/pharmacy/board/boardList";
+    }
+
+    @GetMapping("/pharm/faq")
+    public String getQuestionCenterList(Model model) {
+        List<QuestionCenter> questionCenterList = phBoardService.getQuestionCenterList();
+
+        model.addAttribute("questionCenterList", questionCenterList);
+        return "user/pharmacy/board/faq";
     }
 
 }
