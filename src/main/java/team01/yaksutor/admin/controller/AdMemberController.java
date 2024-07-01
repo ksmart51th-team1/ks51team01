@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/admin/member")
 public class AdMemberController {
     @GetMapping("/memberInsert")
     public String memberInsert(Model model) {
         model.addAttribute("title","약사회원추가");
+        model.addAttribute("content","약사회원등록");
         return "admin/pharmacy/memberInsert";
     }
 }
