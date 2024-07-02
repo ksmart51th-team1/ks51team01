@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import team01.yaksutor.dto.Member;
+import team01.yaksutor.pharmacy.dto.Member;
 
 @Controller
 @RequestMapping("/member")

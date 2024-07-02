@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="team01/yaksutor/common/mapper/MemberMapper">
+
+    <!-- AS 매번 하기 귀찮으니까 아래 resultMap을 사용함   -->
+    <resultMap id="memberResultMap" type="Member">
+        <!-- PK칼럼과 일반칼럼을 주의해야한다. -->
+        <id column="m_id" property="memberId" />
+        <result column="level" property="memberLevelNum"/>
+        <result column="level_name" property="memberLevelName"/>
+        <result column="pw" property="memberPw"/>
+        <result column="name" property="memberName"/>
+        <result column="gender" property="memberGender"/>
+        <result column="email" property="memberEmail"/>
+        <result column="birth" property="memberBirth"/>
+        <result column="phone" property="memberPhone"/>
+        <result column="sido" property="memberAddrSido"/>
+        <result column="sigungu" property="memberAddrSigungu"/>
+        <result column="dong" property="memberAddrDong"/>
+        <result column="pst_code" property="memberPostCode"/>
+        <result column="addr" property="memberAddr"/>
+    </resultMap>
+
+    <resultMap id="memberLevelResultMap" type="Level">
+        <id column="level_num" property="levelNum"/>
+        <result column="level_name" property="levelName"/>
+        <result column="level_reg_date" property="levelRegDate"/>
+    </resultMap>
+
+    <sql id="memberSearch">
+        SELECT
+        m.m_id,
+        m.`level`,
+        m.pw,
+        l.level_name,
+        m.`name`,
+        m.gender,
+        m.email,
+        m.birth,
+        m.phone,
+        m.sido,
+        m.sigungu,
+        m.dong,
+        m.pst_code,
+        m.addr
+        FROM member AS m
+        INNER join
+        `level` AS l
+        on
+        m.`level` = l.level_num
+    </sql>
+    
+    <select id="findRolesByMemberId" resultType="String">
+        /*특정회원의 권한이름 조회*/
+        SELECT
+        l.level_name
+        FROM `member` AS m
+        INNER join
+        `level` AS l
+        on
+        m.`level` = l.level_num
+        WHERE
+        m.m_id=#{memberId};
+    </select>
+
+    <select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
+        /* 특정회원정보조회 */
+        <include refid="memberSearch"> </include>
+        WHERE
+        m.m_id = #{memberId};
+    </select>
+
+    <select id="idCheck" parameterType="string" resultType="boolean">
+        SELECT
+        COUNT(m_id)
+        FROM
+        `member`
+        WHERE
+        m_id = #{memberId};
+    </select>
+    
+    
+
+    <select id="getMemberLevelList" resultMap="memberLevelResultMap">
+        /*회원 등급 조회*/
+        SELECT
+        level_num,
+        level_name,
+        level_date
+        FROM
+        `level`
+    </select>
+
+
+    <select id="getMemberList" resultMap="memberResultMap">
+        /* 회원조회 */
+        <include refid="memberSearch"> </include>
+        ORDER BY m_id;
+
+    </select>
+</mapper>
+
+
