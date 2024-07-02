@@ -18,26 +18,50 @@ import java.util.List;
 public class PhBoardService {
     private final PhBoardMapper phBoardMapper;
 
+    /* -----커뮤니티---------*/
+    // 조회
     public List<Board> getBoardList() {
         List<Board> boardList = phBoardMapper.getBoardList();
         return boardList;
     }
-
+    // 추가
+    public void addBoard(Board board){
+        phBoardMapper.addBoard(board);
+    }
+    // 수정
+    public int modifyBoard(Board board){
+        return phBoardMapper.modifyBoard(board);
+    }
+    
+    /* -----자주하는 질문---------*/
+    // 조회
     public List<QuestionCenter> getQuestionCenterList(){
         List<QuestionCenter> questionCenterList = phBoardMapper.getQuestionCenterList();
         return questionCenterList;
     }
+    // 추가
     public void addQuestionCenter(QuestionCenter questionCenter) {
         log.info("questionCenter :{}", questionCenter);
         phBoardMapper.addQuestionCenter(questionCenter);
     }
+    // 수정
+    public int modifyQuestionCenter(QuestionCenter questionCenter){
+        return phBoardMapper.modifyQuestionCenter(questionCenter);
+    }
 
+    
+    /* -----공지사항---------*/
+    // 조회
     public List<Notice> getNoticeList(){
         List<Notice> noticeList = phBoardMapper.getNoticeList();
         return noticeList;
     }
-
+    // 추가
     public void addNotice(Notice notice){
         phBoardMapper.addNotice(notice);
+    }
+    // 수정
+    public int modifyNotice(Notice notice){
+        return phBoardMapper.modifyNotice(notice);
     }
 }

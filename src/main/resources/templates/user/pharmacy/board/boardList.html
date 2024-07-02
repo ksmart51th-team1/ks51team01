@@ -12,9 +12,7 @@
             <div>
                 <h2 class="content-title card-title">커뮤니티</h2>
             </div>
-            <div>
-                <a href="#" class="btn btn-light rounded font-md">글쓰기</a>
-            </div>
+
         </div>
         <div class="card mb-4">
             <header class="card-header">
@@ -67,6 +65,9 @@
                 </ul>
             </nav>
         </div>
+        <div>
+            <a href="#" class="btn btn-light rounded font-md" data-toggle="modal" data-target="#writeBoardModal">글쓰기</a>
+        </div>
     </section>
 
     <!-- 모달 -->
@@ -80,6 +81,34 @@
                 </div>
                 <button type="button" class="btn-modal1" data-dismiss="modal" aria-label="Close">닫기
                 </button>
+            </div>
+        </div>
+    </div>
+    <!-- 질문 작성 모달 -->
+    <div class="modal fade" id="writeBoardModal" tabindex="-1" aria-labelledby="writeBoardModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="writeBoardModalLabel">글 남기기</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="addBoardForm" th:action="@{/pharm/boardAdd}" method="post">
+                        <div class="form-group">
+                            <label for="boardTitle">제목</label>
+                            <input type="text" class="form-control" id="boardTitle" name="boardTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="boardContent">내용</label>
+                            <textarea class="form-control" id="boardContent" name="boardContent" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="mId">회원아이디(아직은 admin으로 등록됨.)</label>
+                            <input class="form-control" id="mId" name="mId" value="admin" readonly>
+                            <input id="boardView" name="boardView" value="0" hidden="hidden">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">제출</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

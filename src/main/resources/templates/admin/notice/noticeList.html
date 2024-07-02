@@ -57,8 +57,11 @@
                             <td th:text="${n.mId}"></td>
                             <td th:text="${n.noticeDate}"></td>
                             <td class="text-end">
-                                <a href="#" class="btn btn-md rounded font-sm">수정</a>
-                                <a href="#" class="btn btn-md rounded font-sm">삭제</a>
+                                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editNoticeModal"
+                                   th:data-notice-id="${n.noticeNum}"
+                                   th:data-notice-title="${n.noticeTitle}"
+                                   th:data-notice-content="${n.noticeContent}">수정</a>
+                                <a href="#" class="btn btn-md rounded font-sm" style="background-color: #920000">삭제</a>
                                 <!-- dropdown //end -->
                             </td>
                         </tr>
@@ -86,15 +89,54 @@
         </div>
     </section>
 
+    <!-- 수정 모달 -->
+    <div class="modal fade" id="editNoticeModal" tabindex="-1" aria-labelledby="editNoticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editNoticeModalLabel">질문 수정</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editNoticeForm" th:action="@{/admin/noticeList/modify}" method="post">
+                        <input type="hidden" id="editNoticeId" name="noticeNum">
+                        <div class="form-group">
+                            <label for="editNoticeTitle">제목</label>
+                            <input type="text" class="form-control" id="editNoticeTitle" name="noticeTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editNoticeContent">내용</label>
+                            <textarea class="form-control" id="editNoticeContent" name="noticeContent" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">수정</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsFile">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </th:block>
 
-<img src="../../../../../../../../AppData/Local/Temp/cake2.png"/>
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+        $('#editNoticeModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var noticeId = button.data('notice-id');
+            var noticeTitle = button.data('notice-title');
+            var noticeContent = button.data('notice-content');
 
+            var modal = $(this);
+            modal.find('#editNoticeId').val(noticeId);
+            modal.find('#editNoticeTitle').val(noticeTitle);
+            modal.find('#editNoticeContent').val(noticeContent);
+        });
     </script>
 </th:block>
 </html>

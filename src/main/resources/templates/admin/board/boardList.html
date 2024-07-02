@@ -57,8 +57,11 @@
                             <td th:text="${b.mId}"></td>
                             <td th:text="${b.boardDate}"></td>
                             <td class="text-end">
-                                <a href="#" class="btn btn-md rounded font-sm">수정</a>
-                                <a href="#" class="btn btn-md rounded font-sm">삭제</a>
+                                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editBoardModal"
+                                   th:data-board-id="${b.boardCode}"
+                                   th:data-board-title="${b.boardTitle}"
+                                   th:data-board-content="${b.boardContent}">수정</a>
+                                <a href="#" class="btn btn-md rounded font-sm" style="background-color: #920000">삭제</a>
                                 <!-- dropdown //end -->
                             </td>
                         </tr>
@@ -86,15 +89,54 @@
         </div>
     </section>
 
+    <!-- 수정 모달 -->
+    <div class="modal fade" id="editBoardModal" tabindex="-1" aria-labelledby="editBoardModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editBoardModalLabel">질문 수정</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editBoardForm" th:action="@{/admin/boardList/modify}" method="post">
+                        <input type="hidden" id="editBoardId" name="boardCode">
+                        <div class="form-group">
+                            <label for="editBoardTitle">제목</label>
+                            <input type="text" class="form-control" id="editBoardTitle" name="boardTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editBoardContent">내용</label>
+                            <textarea class="form-control" id="editBoardContent" name="boardContent" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">수정</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsFile">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </th:block>
 
-<img src="../../../../../../../../AppData/Local/Temp/cake2.png"/>
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+        $('#editBoardModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var boardId = button.data('board-id');
+            var boardTitle = button.data('board-title');
+            var boardContent = button.data('board-content');
 
+            var modal = $(this);
+            modal.find('#editBoardId').val(boardId);
+            modal.find('#editBoardTitle').val(boardTitle);
+            modal.find('#editBoardContent').val(boardContent);
+        });
     </script>
 </th:block>
 </html>

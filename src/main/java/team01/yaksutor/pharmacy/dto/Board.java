@@ -9,6 +9,7 @@ public class Board {
     private String mId;
     private String boardTitle;
     private String boardContent;
+    private String boardView;
     private String boardDate;
 
 }

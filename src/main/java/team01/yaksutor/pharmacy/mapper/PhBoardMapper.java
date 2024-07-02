@@ -10,17 +10,26 @@ import java.util.List;
 
 @Mapper
 public interface PhBoardMapper {
-    // 커뮤니티 조회
+    //  조회
     List<Board> getBoardList();
     List<QuestionCenter> getQuestionCenterList();
     List<Notice> getNoticeList();
 
+    // 커뮤니티 등록
+    int addBoard(Board board);
+
+    // 커뮤니티 수정
+    int modifyBoard(Board board);
+
    // 자주하는 질문 등록
     int addQuestionCenter(QuestionCenter questionCenter);
 
-    // 자주하는 질문 삭제
-    int removeQuestionCenterByNum(String questionNum);
+    // 자주하는 질문 수정
+    int modifyQuestionCenter(QuestionCenter questionCenter);
 
     // 공지사항 등록
     int addNotice(Notice notice);
+
+    // 공지사항 수정
+    int modifyNotice(Notice notice);
 }

@@ -57,8 +57,11 @@
                             <td th:text="${q.MId}"></td>
                             <td th:text="${q.questionDate}"></td>
                             <td class="text-end">
-                                <a href="#" class="btn btn-md rounded font-sm">수정</a>
-                                <a href="#" class="btn btn-md rounded font-sm">삭제</a>
+                                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editQuestionModal"
+                                   th:data-question-id="${q.questionNum}"
+                                   th:data-question-title="${q.questionTitle}"
+                                   th:data-question-content="${q.questionContent}">수정</a>
+                                <a href="#" class="btn btn-md rounded font-sm" style="background-color: #920000">삭제</a>
                                 <!-- dropdown //end -->
                             </td>
                         </tr>
@@ -86,14 +89,54 @@
         </div>
     </section>
 
+    <!-- 수정 모달 -->
+    <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editQuestionModalLabel">질문 수정</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editQuestionForm" th:action="@{/admin/faqList/modify}" method="post">
+                        <input type="hidden" id="editQuestionId" name="questionNum">
+                        <div class="form-group">
+                            <label for="editQuestionTitle">제목</label>
+                            <input type="text" class="form-control" id="editQuestionTitle" name="questionTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editQuestionContent">내용</label>
+                            <textarea class="form-control" id="editQuestionContent" name="questionContent" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">수정</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsFile">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+        $('#editQuestionModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var questionId = button.data('question-id');
+            var questionTitle = button.data('question-title');
+            var questionContent = button.data('question-content');
 
+            var modal = $(this);
+            modal.find('#editQuestionId').val(questionId);
+            modal.find('#editQuestionTitle').val(questionTitle);
+            modal.find('#editQuestionContent').val(questionContent);
+        });
     </script>
 </th:block>
 </html>
