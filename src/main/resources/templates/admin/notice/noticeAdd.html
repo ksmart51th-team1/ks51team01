@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">공지사항 등록</h2>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <!-- card-header end// -->
+            <div class="card-body">
+                <form id="addQuestionCenterForm" th:action="@{/admin/noticeAdd}" method="post">
+                    <div class="form-group">
+                        <label for="noticeTitle">제목</label>
+                        <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="noticeContent">내용</label>
+                        <textarea class="form-control" id="noticeContent" name="noticeContent" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="mId">작성자</label>
+                        <input class="form-control" id="mId" name="mId" value="admin" readonly/>
+                        <label for="noticeView">조회수</label>
+                        <input class="form-control" type="number" id="noticeView" name="noticeView" value="0"/>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">등록</button>
+                </form>
+                <!-- table-responsive//end -->
+            </div>
+            <!-- card-body end// -->
+        </div>
+
+    </section>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
+</html>

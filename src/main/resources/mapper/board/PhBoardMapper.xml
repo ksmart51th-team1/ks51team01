@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.pharmacy.mapper.PhBoardMapper">
+
+
+    <!--커뮤니티-->
     <resultMap type="Board" id="boardResultMap">
         <id column="cm_num" 			property="boardCode" />
         <result column="m_id" 		property="mId"/>
@@ -25,7 +28,7 @@
     </select>
 
 
-
+    <!--자주하는 질문-->
     <resultMap type="QuestionCenter" id="questionCenterResultMap">
 
         <id column="question_num" 			property="questionNum" />
@@ -37,7 +40,6 @@
 
 
     <select id="getQuestionCenterList" resultMap="questionCenterResultMap">
-        /* 게시판 목록 */
         SELECT
             question_num,
             m_id,
@@ -48,9 +50,6 @@
             question_center;
     </select>
 
-
-
-    <!--등록-->
     <insert id="addQuestionCenter" parameterType="QuestionCenter">
         <selectKey keyProperty="questionNum" resultType="String" order="BEFORE">
             SELECT
@@ -73,8 +72,6 @@
 
     </insert>
 
-
-    <!-- 삭제 -->
     <delete id="removeQuestionCenterByNum" parameterType="String">
         /*  삭제 */
         DELETE
@@ -83,4 +80,49 @@
         WHERE
             question_num = #{questionNum};
     </delete>
+
+
+    <!--공지사항-->
+    <resultMap type="Notice" id="noticeResultMap">
+        <id column="notice_num" 			property="noticeNum" />
+        <result column="m_id" 		property="mId"/>
+        <result column="notice_title" 		property="noticeTitle"/>
+        <result column="notice_content" 		property="noticeContent"/>
+        <result column="notice_view" 	property="noticeView"/>
+        <result column="notice_date" 	property="noticeDate"/>
+    </resultMap>
+
+    <select id="getNoticeList" resultMap="noticeResultMap">
+        SELECT
+            notice_num,
+            m_id,
+            notice_title,
+            notice_content,
+            notice_view,
+            notice_date
+        FROM
+            notice_center;
+    </select>
+    <insert id="addNotice" parameterType="Notice">
+        <selectKey keyProperty="noticeNum" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(notice_num) = 0 THEN 'noti_1'
+            ELSE
+            CONCAT(
+            'noti_',
+            MAX(CAST(SUBSTRING_INDEX(notice_num, 'noti_', -1) AS UNSIGNED)) +1)
+            END AS noticeNum
+            FROM
+            notice_center;
+        </selectKey>
+
+        /* 등록 */
+        INSERT INTO notice_center
+        (notice_num, m_id, notice_title, notice_content, notice_view, notice_date)
+        values
+        (#{noticeNum}, #{mId}, #{noticeTitle}, #{noticeContent}, #{noticeView}, CURDATE());
+
+    </insert>
+
 </mapper>

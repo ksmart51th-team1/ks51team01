@@ -28,7 +28,7 @@
             </header>
             <!-- card-header end// -->
             <div class="card-body">
-                <article class="itemlist" th:if="${questionCenterList != null}" th:each="q : ${questionCenterList}">
+                <article class="itemlist m-3" th:if="${questionCenterList != null}" th:each="q : ${questionCenterList}">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#" data-toggle="modal" data-target="#questionContentModal" th:data-content="${q.questionContent}" th:data-title="${q.questionTitle}">
