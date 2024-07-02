@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import team01.yaksutor.pharmacy.dto.Board;
 import team01.yaksutor.pharmacy.dto.QuestionCenter;
@@ -36,6 +38,30 @@ public class PhBoardController {
 
         model.addAttribute("questionCenterList", questionCenterList);
         return "user/pharmacy/board/faq";
+    }
+    @GetMapping("/admin/faqList")
+    public String getQuestionCenterList2(Model model) {
+        List<QuestionCenter> questionCenterList = phBoardService.getQuestionCenterList();
+
+        model.addAttribute("questionCenterList", questionCenterList);
+        return "admin/questionCenter/faqList";
+    }
+    @GetMapping("/admin/faqAdd")
+    public String addQuestionCenter(Model model) {
+        List<QuestionCenter> questionCenterList = phBoardService.getQuestionCenterList();
+
+        model.addAttribute("questionCenterList", questionCenterList);
+        return "admin/questionCenter/faqAdd";
+    }
+
+
+
+
+    @PostMapping("/admin/faqAdd")
+    public String addQuestionCenter(QuestionCenter questionCenter){
+        phBoardService.addQuestionCenter(questionCenter);
+        return "redirect:/admin/faqList";
+
     }
 
 }

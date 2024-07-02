@@ -27,7 +27,9 @@
 
 
     <resultMap type="QuestionCenter" id="questionCenterResultMap">
-        <id column="m_id" 			property="mId" />
+
+        <id column="question_num" 			property="questionNum" />
+        <result column="m_id" 			property="mId" />
         <result column="question_title" 		property="questionTitle"/>
         <result column="question_content" 		property="questionContent"/>
         <result column="question_date" 	property="questionDate"/>
@@ -37,6 +39,7 @@
     <select id="getQuestionCenterList" resultMap="questionCenterResultMap">
         /* 게시판 목록 */
         SELECT
+            question_num,
             m_id,
             question_title,
             question_content,
@@ -46,4 +49,38 @@
     </select>
 
 
+
+    <!--등록-->
+    <insert id="addQuestionCenter" parameterType="QuestionCenter">
+        <selectKey keyProperty="questionNum" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(question_num) = 0 THEN 'ques_1'
+            ELSE
+            CONCAT(
+            'ques_',
+            MAX(CAST(SUBSTRING_INDEX(question_num, 'ques_', -1) AS UNSIGNED)) +1)
+            END AS questionNum
+            FROM
+            question_center;
+        </selectKey>
+
+        /* 등록 */
+        INSERT INTO question_center
+        (question_num, m_id, question_title, question_content, question_date)
+        values
+        (#{questionNum}, #{mId}, #{questionTitle}, #{questionContent}, CURDATE());
+
+    </insert>
+
+
+    <!-- 삭제 -->
+    <delete id="removeQuestionCenterByNum" parameterType="String">
+        /*  삭제 */
+        DELETE
+        FROM
+            question_center
+        WHERE
+            question_num = #{questionNum};
+    </delete>
 </mapper>

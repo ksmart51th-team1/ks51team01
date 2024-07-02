@@ -26,4 +26,8 @@ public class PhBoardService {
         List<QuestionCenter> questionCenterList = phBoardMapper.getQuestionCenterList();
         return questionCenterList;
     }
+    public void addQuestionCenter(QuestionCenter questionCenter) {
+        log.info("questionCenter :{}", questionCenter);
+        phBoardMapper.addQuestionCenter(questionCenter);
+    }
 }
