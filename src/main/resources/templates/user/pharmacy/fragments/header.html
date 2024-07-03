@@ -212,7 +212,7 @@
                                                 <a th:href="@{/pharm/myOrderList}"><i class="fi fi-rs-receipt mr-10"></i>주문 목록</a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="fi fi-rs-redo mr-10"></i>반품/취소</a>
+                                                <a th:href="@{/pharm/myRefundSearchList}"><i class="fi fi-rs-redo mr-10"></i>반품/취소</a>
                                             </li>
                                             <li>
                                                 <a th:href="@{/pharm/myDelivery}"><i class="fi fi-rs-rocket mr-10"></i>배송 조회</a>
@@ -255,8 +255,8 @@
                                     <li>
                                         <a href="#">재고관리 </a>
                                         <ul class="sub-menu">
-                                            <li><a href="#">재고관리</a></li>
-                                            <li><a href="#">출고관리</a></li>
+                                            <li><a th:href="@{/pharm/myStockSearchList}">재고관리</a></li>
+                                            <li><a th:href="@{/pharm/myStockHistory}">입출고기록</a></li>
                                             <li><a th:href="@{/pharm/checkMedi}">재고조사</a></li>
                                         </ul>
                                     </li>

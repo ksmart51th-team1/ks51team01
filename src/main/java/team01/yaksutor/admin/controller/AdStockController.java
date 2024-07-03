@@ -47,4 +47,40 @@ public class AdStockController {
 
         return "admin/pharmStock/stockDelete";
     }
+
+    @GetMapping("/stockHistoryList")
+    public String stockHistoryList(Model model) {
+
+        model.addAttribute("title", "입출고 기록");
+        model.addAttribute("content", "입출고 기록");
+
+        return "admin/pharmStock/stockHistoryList";
+    }
+    
+    @GetMapping("/stockHistoryInsert")
+    public String stockHistoryInsert(Model model) {
+
+        model.addAttribute("title", "입출고 기록 추가");
+        model.addAttribute("content", "입출고 기록 추가");
+        
+        return "admin/pharmStock/stockHistoryInsert";
+    }
+
+    @GetMapping("/stockHistoryModify")
+    public String stockHistoryModify(Model model) {
+
+        model.addAttribute("title", "입출고 기록 수정");
+        model.addAttribute("content", "입출고 기록 수정");
+
+        return "admin/pharmStock/stockHistoryModify";
+    }
+
+    @GetMapping("/stockHistoryDelete")
+    public String stockHistoryDelete(Model model) {
+
+        model.addAttribute("title", "입출고 기록 삭제");
+        model.addAttribute("content", "입출고 기록 삭제");
+
+        return "admin/pharmStock/stockHistoryDelete";
+    }
 }

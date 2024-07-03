@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+    <section class="content-main">
+        <form id="addMedicine" th:action="@{/admin/pharmStock/stockInsert}" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <div class="content-header">
+                        <h2 class="content-title" th:text="${content}">약국 재고 등록</h2>
+                        <div>
+                            <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">수정 취소</button>
+                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="입출고 기록 수정" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>1. 입출고 기록 정보</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="regMId">약국코드</label>
+                                        <input type="text" placeholder="판매자를 입력해주세요" name="regMId" id="regMId" class="form-control" >
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediName">의약품 코드</label>
+                                        <input type="text" placeholder="의약품 이름을 적어주세요" name="mediName" id="mediName" class="form-control" >
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="compacy">입출고 전 재고량</label>
+                                        <input type="text" placeholder="제조사를 적어주세요" name="company" id="compacy" class="form-control" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediDrugform">실제 입출고 수량</label>
+                                        <input type="text" placeholder="예시(정제, 액체, 연고, 경질캡슐 등)" name="mediDrugform"  id="mediDrugform" class="form-control">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediState">주문한 입출고 수량</label>
+                                        <input type="text" placeholder="예시(10정/상자, 30정/병 등)" name="mediState"  id="mediState" class="form-control">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label mr-30 fs-6" >입출고 여부</label>
+                                        <input class="mr-5 fs-5" type="radio" name="inoutType"/>입고
+                                        <input class="ml-5 mr-5 fs-5" type="radio" name="inoutType"/>출고
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediState">최종 입출고 수량</label>
+                                        <input type="text" placeholder="예시(10정/상자, 30정/병 등)" name="mediState"  id="medi" class="form-control">
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section> <!-- content-main end// -->
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('#resetBtn').click(e => {
+            e.preventDefault();
+            location.href = '/admin/adminMain';
+        });
+
+        $('#submitBtn').click(function(){
+            let isSubmit = true;
+            $('#addMedicine input, #addMedicine select').each((idx, element) => {
+                const id = element.id;
+                const value = element.value;
+                if(!value){
+                    alert(`${id}는(은) 필수 입력 항목입니다`);
+                    $(element.focus());
+                    isSubmit = false;
+                    return false;
+                }
+            });
+            if(isSubmit) $('#addMedicine').submit();
+        });
+
+        const createIngrRow = () => {
+            const ingrContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'Ingredient' },
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $tr = $('<tr></tr>');
+            ingrContent.forEach(item => {
+                const $td = $('<td></td>');
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $td.append($element);
+                $tr.append($td);
+            });
+            return $tr;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.ingrAddBtn', function(){
+            $('#ingrTbody button:last').addClass('ingrDelBtn')
+                .removeClass('ingrAddBtn')
+                .text('삭제');
+            const $row = createIngrRow();
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-md rounded font-sm hover-up ingrAddBtn')
+                .text('추가');
+            $('#ingrTbody').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.ingrDelBtn', function(){
+            $(this).closest('tr').remove();
+        });
+
+        const createEffiRow = () => {
+            const ingrContent = [
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'efficacy' },
+                { 'tagName' : 'button', 'type' : 'button' }
+            ];
+            const $tr = $('<tr></tr>');
+            ingrContent.forEach(item => {
+                const $td = $('<td></td>');
+                const tagName = item.tagName;
+                delete item.tagName;
+                const $element = $('<' + tagName + ' />', item);
+                $td.append($element);
+                $tr.append($td);
+            });
+            return $tr;
+        }
+        // 3. 행의 추가 버튼
+        $(document).on('click', '.effiAddBtn', function(){
+            $('#effiTbody button:last').addClass('effiDelBtn')
+                .removeClass('effiAddBtn')
+                .text('삭제');
+            const $row = createEffiRow();
+            $row.find('input').addClass('form-control');
+            $row.find('button').addClass('btn btn-md rounded font-sm hover-up float-end effiAddBtn')
+                .text('추가');
+            $('#effiTbody').append($row);
+        });
+        // 4. 행의 삭제 버튼
+        $(document).on('click', '.effiDelBtn', function(){
+            $(this).closest('tr').remove();
+        });
+    </script>
+</th:block>
+</html>
