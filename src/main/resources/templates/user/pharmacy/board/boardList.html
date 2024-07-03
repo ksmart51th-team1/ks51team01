@@ -3,7 +3,19 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/pharmacy/layout/default}">
 <head>
-
+    <style>
+        .content-hidden {
+            display: none;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .comment-section {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <th:block layout:fragment="customContent">
@@ -15,33 +27,27 @@
                     <a class="btn btn-md m-3" data-toggle="modal" data-target="#writeBoardModal" style="background-color: #ff8c9f; font-family: 'Pretendard-Regular'; border-radius: 15px;">
                         📜글쓰기
                     </a>
-
                 </div>
                 <div class="card mb-4">
-                    <header class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                                <select class="form-select">
-                                    <option selected="">전체</option>
-                                    <option>자유게시판</option>
-                                    <option>제품후기</option>
-                                </select>
-                            </div>
-                        </div>
-                    </header>
-                    <!-- card-header end// -->
                     <div class="card-body">
-                        <article class="itemlist" th:if="${boardList != null}" th:each="b : ${boardList}">
+                        <article class="itemlist m-3" th:if="${boardList != null}" th:each="b : ${boardList}">
                             <div class="row align-items-center">
                                 <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                    <a class="itemside" href="#" data-toggle="modal" data-target="#boardContentModal" th:data-content="${b.boardContent}" th:data-title="${b.boardTitle}">
-                                        <div class="left">
-                                            <img src="assets/imgs/items/1.jpg" class="img-sm img-thumbnail" alt="Item">
-                                        </div>
+                                    <a class="itemside board-title" href="#" th:data-content="${b.boardContent}">
                                         <div class="info">
                                             <h6 th:text="${b.boardTitle}" class="mb-0"></h6>
                                         </div>
                                     </a>
+                                    <div class="content-hidden" th:text="${b.boardContent}"></div>
+                                    <div class="comment-section content-hidden">
+                                        <form th:action="@{/pharm/commentAdd}" method="post">
+                                            <div class="form-group">
+                                                <label for="commentContent">댓글</label>
+                                                <textarea class="form-control" id="commentContent" name="commentContent" rows="2" required></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-sm btn-primary mt-2">댓글 등록</button>
+                                        </form>
+                                    </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${b.MId}"></span></div>
                                 <div class="col-lg-1 col-sm-2 col-4 col-date">
@@ -53,20 +59,6 @@
                     </div>
                     <!-- card-body end// -->
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- 모달 -->
-    <div class="modal fade" id="boardContentModal" tabindex="-1" aria-labelledby="boardContentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="boardContentModalLabel"></h5>
-                </div>
-                <div class="modal-body" id="boardContentModalBody">
-                </div>
-                <button type="button" class="btn-modal1" data-dismiss="modal" aria-label="Close">닫기
-                </button>
             </div>
         </div>
     </div>
@@ -101,20 +93,28 @@
 </th:block>
 
 <th:block layout:fragment="customJsFile">
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
     <script>
-        $('#boardContentModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // 모달을 트리거한 버튼
-            var content = button.data('content'); // data-content 속성에서 콘텐츠를 가져옴
-            var title = button.data('title'); // data-title 속성에서 제목을 가져옴
+        $(document).ready(function() {
+            $('.board-title').on('click', function(event) {
+                event.preventDefault();
+                var contentDiv = $(this).siblings('.content-hidden');
+                var commentSection = $(this).siblings('.comment-section');
 
-            var modal = $(this);
-            modal.find('.modal-title').text(title);
-            modal.find('.modal-body').text(content);
+                // 슬라이드가 두 번 일어나지 않도록 설정
+                if (!contentDiv.is(':visible')) {
+                    contentDiv.stop(true, true).slideDown();
+                    commentSection.stop(true, true).slideDown();
+                } else {
+                    contentDiv.stop(true, true).slideUp();
+                    commentSection.stop(true, true).slideUp();
+                }
+            });
         });
     </script>
 </th:block>
