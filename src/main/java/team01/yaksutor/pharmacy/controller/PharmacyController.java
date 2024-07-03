@@ -19,16 +19,7 @@ public class PharmacyController {
 
         return "user/pharmacy/board/contact";
     }
-    @GetMapping("/notice")
-    public String notice() {
 
-        return "user/pharmacy/board/notice";
-    }
-    @GetMapping("/faq")
-    public String faq() {
-
-        return "user/pharmacy/board/faq";
-    }
     @GetMapping("/qna")
     public String qna() {
 
