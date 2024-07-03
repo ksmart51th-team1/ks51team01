@@ -23,15 +23,14 @@
                         <h1 class="heading-2 mb-10" th:text="${content}"></h1>
                     </div>
                     <div class="table-responsive shopping-summery">
-                        <a class="btn btn-sm float-end mb-5" th:href="@{/pharm/myStockInsert}">새 재고 등록</a>
                         <table class="table table-wishlist">
                             <thead>
                             <tr class="main-heading">
                                 <th scope="col" class="custome-checkbox start pl-30">의약품 이름</th>
                                 <th scope="col">수량</th>
-                                <th scope="col" style="text-align: center">재고조사 여부</th>
-                                <th scope="col" style="text-align: center">재고조사 일자</th>
-                                <th scope="col" class="end">출고처리</th>
+                                <th scope="col" style="text-align: center">입출고 여부</th>
+                                <th scope="col" style="text-align: center">입출고 일자</th>
+                                <th scope="col" class="end">입출고 후 재고량</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -43,7 +42,7 @@
                                     <h3 class="text-brand">50개</h3>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
-                                    <span class="stock-status in-stock mb-0"> 재고조사 불필요 </span>
+                                    <span class="stock-status in-stock mb-0"> 입고 </span>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15">
@@ -51,7 +50,7 @@
                                     </div>
                                 </td>
                                 <td class="text-right" data-title="Cart">
-                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease}">출고</a>
+                                    <span>250개</span>
                                 </td>
                             </tr>
                             <tr>
@@ -62,7 +61,7 @@
                                     <h3 class="text-brand">300개</h3>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
-                                    <span class="stock-status out-stock mb-0"> 재고조사 필요 </span>
+                                    <span class="stock-status out-stock mb-0"> 출고 </span>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15">
@@ -70,7 +69,7 @@
                                     </div>
                                 </td>
                                 <td class="text-right" data-title="Cart">
-                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease}">출고</a>
+                                    <span>50개</span>
                                 </td>
                             </tr>
                             </tbody>

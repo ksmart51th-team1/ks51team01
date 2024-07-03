@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/supplier/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+    <section class="content-main">
+        <form id="addMedicine" th:action="@{#}" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <div class="content-header">
+                        <h2 class="content-title" th:text="${content}"></h2>
+                        <div>
+                            <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">삭제취소</button>
+                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="주문 삭제" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>1. 주문 정보</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mediName">주문 번호</label>
+                                        <input type="text" value="의약품이름" name="mediName" id="mediName" class="form-control" >
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="writeName">삭제조건</label>
+                                        <input type="text" placeholder="주문번호를 적어주세요" name="writeName" id="writeName" class="form-control" >
+                                    </div>
+                                </div> <!-- col.// -->
+                            </div> <!-- row.// -->
+                            <!-- .row end// -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section> <!-- content-main end// -->
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
+</html>
