@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.pharmacy.dto.Board;
 import team01.yaksutor.pharmacy.dto.Notice;
 import team01.yaksutor.pharmacy.dto.QuestionCenter;
+import team01.yaksutor.pharmacy.dto.Repl;
 import team01.yaksutor.pharmacy.service.PhBoardService;
 
 import java.util.List;
@@ -21,13 +22,15 @@ public class PhBoardController {
 
     private final PhBoardService phBoardService;
 
-    /* ------------------커뮤니티------------------------------*/
+    /* ------------------커뮤니티 + 댓글------------------------------*/
 
-    // 커뮤니티 조회 (사용자)
+    // 커뮤니티 + 댓글 조회 (사용자)
     @GetMapping("/pharm/board")
     public String getBoardList(Model model) {
         List<Board> boardList = phBoardService.getBoardList();
+        List<Repl> replList = phBoardService.getReplList();
         model.addAttribute("boardList", boardList);
+        model.addAttribute("replList", replList);
 
         return "user/pharmacy/board/boardList";
     }

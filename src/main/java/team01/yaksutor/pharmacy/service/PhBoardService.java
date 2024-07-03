@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import team01.yaksutor.pharmacy.dto.Board;
 import team01.yaksutor.pharmacy.dto.Notice;
 import team01.yaksutor.pharmacy.dto.QuestionCenter;
+import team01.yaksutor.pharmacy.dto.Repl;
 import team01.yaksutor.pharmacy.mapper.PhBoardMapper;
 
 import java.util.List;
@@ -37,7 +38,17 @@ public class PhBoardService {
         phBoardMapper.deleteBoard(boardCode);
     }
 
-    
+    /* -----커뮤니티 댓글---------*/
+    // 조회
+    public List<Repl> getReplList() {
+        List<Repl> replList = phBoardMapper.getReplList();
+        return replList;
+    }
+
+
+
+
+
     /* -----자주하는 질문---------*/
     // 조회
     public List<QuestionCenter> getQuestionCenterList(){
