@@ -106,11 +106,10 @@
                             <div class="header-action-2">
 
                                 <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="shop-cart.html">
+                                    <a th:href="@{/pharm/cart}">
                                         <img alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-cart.svg}" />
                                         <span class="pro-count blue">2</span>
                                     </a>
-                                    <a th:href="@{/pharm/cart}"><span class="lable"></span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                         <ul>
                                             <li>
@@ -150,10 +149,9 @@
                                     </div>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a href="page-account.html">
+                                    <a th:href="@{/pharm/myOrderList}">
                                         <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-heart.svg}" />
                                     </a>
-                                    <a th:href="@{/pharm/myOrderList}"><span class="lable ml-0"></span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
@@ -169,10 +167,10 @@
                                     </div>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a href="page-account.html">
+                                    <a th:href="@{/pharm/myPage}">
                                         <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}" />
                                     </a>
-                                    <a th:href="@{/pharm/myPage}"><span class="lable ml-0"></span></a>
+
 
                                 </div>
                             </div>
