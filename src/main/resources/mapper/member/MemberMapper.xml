@@ -52,7 +52,7 @@
         m.`level` = l.level_num
     </sql>
     
-    <select id="findByMemberId" parameterType="String" resultMap="memberResultMap">
+    <select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
         <include refid="memberSearch">
         </include>
         WHERE
