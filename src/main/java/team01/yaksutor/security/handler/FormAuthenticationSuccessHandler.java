@@ -31,19 +31,21 @@ public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         int start = memberInfo.indexOf("memberLevelName=") + "memberLevelName=".length();
         String memberLevel = memberInfo.substring(start);
         memberLevel = memberLevel.substring(0, memberLevel.indexOf(","));
-        System.out.println(memberLevel);
+
         String defaultPath = "/";
 
         switch (memberLevel){
-            case ""
+            case "관리자" -> defaultPath = "/admin/adminMain";
+            case "개국약사" -> defaultPath = "/pharm/main";
+            case "관리약사" -> defaultPath = "/pharm/main";
+            case "납품업체" -> defaultPath = "/supplier/supplierMain";
         }
-        setDefaultTargetUrl("/");
+        setDefaultTargetUrl(defaultPath);
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 
         if(savedRequest!=null) {
-            String targetUrl = savedRequest.getRedirectUrl();
-            redirectStrategy.sendRedirect(request, response, targetUrl);
+            redirectStrategy.sendRedirect(request, response, defaultPath);
         }
         else {
             redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
