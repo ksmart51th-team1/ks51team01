@@ -3,15 +3,16 @@ package team01.yaksutor.common.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class CommonController {
 
-    @PostMapping("/login")
-    public String post() {
-        //로그인 비즈니스 로직 구현 해야함
-        return "redirect:/pharm/main";
+    @GetMapping("/login")
+    public String login() {
+
+        return "index";
     }
 
 

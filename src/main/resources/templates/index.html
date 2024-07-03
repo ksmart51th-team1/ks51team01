@@ -239,10 +239,10 @@
                                     </div>
                                     <form th:action="@{/login}" method="post">
                                         <div class="form-group">
-                                            <input type="text" required="" name="memberId" id="memberId" placeholder="회원아이디를 입력하세요. *">
+                                            <input type="text"  name="username" id="memberId" placeholder="회원아이디를 입력하세요. *">
                                         </div>
                                         <div class="form-group">
-                                            <input required="" type="password" name="password" placeholder="비밀번호를 입력하세요 *">
+                                            <input  type="password" name="password" id="memberPw" placeholder="비밀번호를 입력하세요 *">
                                         </div>
 
                                         <div class="login_footer form-group mb-50">
@@ -259,6 +259,12 @@
                                         </div>
                                         <div>
                                             <a th:href="@{/admin/adminMain}">(테스트용 추후 삭제)관리자화면</a>
+                                        </div>
+                                        <div>
+                                            <a th:href="@{/admin/loginPage}">관리자 로그인 화면</a>
+                                        </div>
+                                        <div>
+                                            <a th:href="@{/supplier/loginPage}">납품업체 로그인 화면</a>
                                         </div>
                                     </form>
                                 </div>

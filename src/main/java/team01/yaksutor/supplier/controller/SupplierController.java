@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class SupplierController {
 
+    @GetMapping("/loginPage")
+    public String loginPage() {
+        return "user/supplier/login/supplierLogin";
+    }
+
     @GetMapping("/supplierMain")
     public String supplierMain() {
         return "user/supplier/supplierMain";

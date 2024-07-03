@@ -18,4 +18,9 @@ public class AdminController {
         model.addAttribute("content", "여기가 메인");
         return "admin/adminMain";
     }
+
+    @GetMapping("/loginPage")
+    public String loginPage(Model model) {
+        return "admin/login/adminLogin";
+    }
 }
