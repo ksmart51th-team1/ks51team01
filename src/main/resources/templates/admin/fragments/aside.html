@@ -63,8 +63,9 @@
                         <span class="text">주문 및 결제 관리</span>
                     </a>
                     <div class="submenu">
-                        <a th:href="@{#}">장바구니에 의약품 추가</a>
-                        <a th:href="@{#}">주문 검색</a>
+                        <a th:href="@{/admin/addShoppingCart}">장바구니에 의약품 추가</a>
+                        <a th:href="@{/admin/orderInsert}">주문 등록</a>
+                        <a th:href="@{/admin/orderSearchList}">주문 검색</a>
                         <a th:href="@{#}">주문 취소</a>
                         <a th:href="@{#}">결제 수단 등록</a>
                         <a th:href="@{#}">결제 확인</a>
@@ -77,7 +78,7 @@
                     </a>
                     <div class="submenu">
                         <a th:href="@{#}">반품 신청</a>
-                        <a th:href="@{#}">반품 신청 내역 조회</a>
+                        <a th:href="@{/admin/refundSearchList}">반품 신청 내역 조회</a>
                         <a th:href="@{#}">반품 요청 수락</a>
                     </div>
                     </li>
@@ -99,6 +100,7 @@
                     <div class="submenu">
                         <a th:href="@{/admin/stockInsert}">재고 등록</a>
                         <a th:href="@{/admin/stockSearchList}">재고 조회</a>
+                        <a th:href="@{/admin/stockHistoryList}">입출고 기록</a>
                         <a th:href="@{#}">약국 재고조사 후 실수량 입력</a>
                     </div>
                 </li>

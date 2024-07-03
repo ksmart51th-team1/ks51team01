@@ -47,6 +47,7 @@
 	<!-- 프로젝트 패키지 안 클래스에 설정된 로그 출력 -->
 	<logger name="team01.yaksutor" level="INFO" additivity="false">
 		<appender-ref ref="ROLLING_FILE" />
+		<appender-ref ref="STDOUT" />
 	</logger>
 
 	<!-- log4jdbc 옵션 설정 -->
