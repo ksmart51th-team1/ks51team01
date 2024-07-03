@@ -47,6 +47,7 @@
         values
             (#{boardCode}, #{mId}, #{boardTitle}, #{boardContent},#{boardView}, CURDATE());
     </insert>
+
     <!--커뮤니티 수정-->
     <update id="modifyBoard" parameterType="Board">
         UPDATE community
@@ -61,6 +62,12 @@
         WHERE
         cm_num = #{boardCode}
     </update>
+
+    <!--커뮤니티 삭제-->
+    <delete id="deleteBoard" parameterType="String">
+        DELETE FROM community
+        WHERE cm_num = #{boardCode}
+    </delete>
 
 
 
@@ -122,6 +129,11 @@
         WHERE
         question_num = #{questionNum}
     </update>
+    <!--자주하는 질문 삭제-->
+    <delete id="deleteQuestionCenter" parameterType="String">
+        DELETE FROM question_center
+        WHERE  question_num = #{questionNum}
+    </delete>
 
 
     <!-- =================공지사항==========================-->
@@ -181,6 +193,11 @@
         WHERE
         notice_num = #{noticeNum}
     </update>
+    <!--공지사항 삭제-->
+    <delete id="deleteNotice" parameterType="String">
+        DELETE FROM notice_center
+        WHERE  notice_num = #{noticeNum}
+    </delete>
 
 
 </mapper>

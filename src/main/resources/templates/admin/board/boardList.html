@@ -61,7 +61,11 @@
                                    th:data-board-id="${b.boardCode}"
                                    th:data-board-title="${b.boardTitle}"
                                    th:data-board-content="${b.boardContent}">수정</a>
-                                <a href="#" class="btn btn-md rounded font-sm" style="background-color: #920000">삭제</a>
+                                <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
+                                    <input type="hidden" name="boardCode" th:value="${b.boardCode}">
+                                    <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
+                                </form>
+
                                 <!-- dropdown //end -->
                             </td>
                         </tr>
@@ -136,6 +140,15 @@
             modal.find('#editBoardId').val(boardId);
             modal.find('#editBoardTitle').val(boardTitle);
             modal.find('#editBoardContent').val(boardContent);
+        });
+
+        document.querySelectorAll('.delete-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                if (confirm('정말로 삭제할까요?')) {
+                    var form = event.target.closest('.delete-form');
+                    form.submit();
+                }
+            });
         });
     </script>
 </th:block>

@@ -17,19 +17,23 @@ public interface PhBoardMapper {
 
     // 커뮤니티 등록
     int addBoard(Board board);
-
     // 커뮤니티 수정
     int modifyBoard(Board board);
+    // 커뮤니티 삭제
+    int deleteBoard(String boardCode);
+
 
    // 자주하는 질문 등록
     int addQuestionCenter(QuestionCenter questionCenter);
-
     // 자주하는 질문 수정
     int modifyQuestionCenter(QuestionCenter questionCenter);
+    // 자주하는 질문 삭제
+    int deleteQuestionCenter(String questionNum);
 
     // 공지사항 등록
     int addNotice(Notice notice);
-
     // 공지사항 수정
     int modifyNotice(Notice notice);
+    // 공지사항 삭제
+    int deleteNotice(String noticeNum);
 }

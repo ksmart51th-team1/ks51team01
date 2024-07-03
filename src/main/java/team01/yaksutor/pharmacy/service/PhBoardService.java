@@ -32,6 +32,11 @@ public class PhBoardService {
     public int modifyBoard(Board board){
         return phBoardMapper.modifyBoard(board);
     }
+    // 삭제
+    public void deleteBoard(String boardCode){
+        phBoardMapper.deleteBoard(boardCode);
+    }
+
     
     /* -----자주하는 질문---------*/
     // 조회
@@ -48,8 +53,12 @@ public class PhBoardService {
     public int modifyQuestionCenter(QuestionCenter questionCenter){
         return phBoardMapper.modifyQuestionCenter(questionCenter);
     }
+    // 삭제
+    public void deleteQuestionCenter(String questionNum){
+        phBoardMapper.deleteQuestionCenter(questionNum);
+    }
 
-    
+
     /* -----공지사항---------*/
     // 조회
     public List<Notice> getNoticeList(){
@@ -63,5 +72,9 @@ public class PhBoardService {
     // 수정
     public int modifyNotice(Notice notice){
         return phBoardMapper.modifyNotice(notice);
+    }
+    // 삭제
+    public void deleteNotice(String noticeNum){
+        phBoardMapper.deleteNotice(noticeNum);
     }
 }

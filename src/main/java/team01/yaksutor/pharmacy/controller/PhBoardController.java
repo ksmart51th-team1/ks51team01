@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.pharmacy.dto.Board;
 import team01.yaksutor.pharmacy.dto.Notice;
 import team01.yaksutor.pharmacy.dto.QuestionCenter;
@@ -65,6 +66,13 @@ public class PhBoardController {
         phBoardService.modifyBoard(board);
         return "redirect:/admin/boardList";
     }
+    // 커뮤니티 삭제 (관리자)
+    @PostMapping("/admin/boardList/delete")
+    public String deleteBoard(@RequestParam String boardCode){
+        phBoardService.deleteBoard(boardCode);
+        return "redirect:/admin/boardList";
+    }
+
 
 
     /* ------------------자주하는 질문------------------------------*/
@@ -105,6 +113,12 @@ public class PhBoardController {
         phBoardService.modifyQuestionCenter(questionCenter);
         return "redirect:/admin/faqList";
     }
+    // 자주하는 질문 삭제 (관리자)
+    @PostMapping("/admin/faqList/delete")
+    public String deleteQuestionCenter(@RequestParam String questionNum){
+        phBoardService.deleteQuestionCenter(questionNum);
+        return "redirect:/admin/faqList";
+    }
 
 
     /* ------------------공지사항------------------------------*/
@@ -142,7 +156,12 @@ public class PhBoardController {
         phBoardService.modifyNotice(notice);
         return "redirect:/admin/noticeList";
     }
-
+    // 공지사항 삭제 (관리자)
+    @PostMapping("/admin/noticeList/delete")
+    public String deleteNotice(@RequestParam String noticeNum){
+        phBoardService.deleteNotice(noticeNum);
+        return "redirect:/admin/noticeList";
+    }
 
 
 }

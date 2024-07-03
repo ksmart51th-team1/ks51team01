@@ -61,8 +61,10 @@
                                    th:data-question-id="${q.questionNum}"
                                    th:data-question-title="${q.questionTitle}"
                                    th:data-question-content="${q.questionContent}">수정</a>
-                                <a href="#" class="btn btn-md rounded font-sm" style="background-color: #920000">삭제</a>
-                                <!-- dropdown //end -->
+                                <form th:action="@{/admin/faqList/delete}" method="post" style="display:inline;" class="delete-form">
+                                    <input type="hidden" name="questionNum" th:value="${q.questionNum}">
+                                    <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
+                                </form>
                             </td>
                         </tr>
 
@@ -136,6 +138,15 @@
             modal.find('#editQuestionId').val(questionId);
             modal.find('#editQuestionTitle').val(questionTitle);
             modal.find('#editQuestionContent').val(questionContent);
+        });
+
+        document.querySelectorAll('.delete-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                if (confirm('정말로 삭제할까요?')) {
+                    var form = event.target.closest('.delete-form');
+                    form.submit();
+                }
+            });
         });
     </script>
 </th:block>
