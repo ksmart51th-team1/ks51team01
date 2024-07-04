@@ -3,25 +3,201 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.pharmacy.mapper.PhBoardMapper">
+
+
+    <!-- =================커뮤니티==========================-->
+
+    <!--커뮤니티 조회-->
     <resultMap type="Board" id="boardResultMap">
         <id column="cm_num" 			property="boardCode" />
+        <result column="m_id" 		property="mId"/>
         <result column="cm_title" 		property="boardTitle"/>
         <result column="cm_content" 		property="boardContent"/>
+        <result column="cm_view" 		property="boardView"/>
         <result column="cm_date" 	property="boardDate"/>
     </resultMap>
 
-
     <select id="getBoardList" resultMap="boardResultMap">
-        /* 게시판 목록 */
         SELECT
             cm_num,
+            m_id,
             cm_title,
             cm_content,
+            cm_view,
             cm_date
         FROM
             community;
     </select>
+    <!--커뮤니티 등록-->
+    <insert id="addBoard" parameterType="Board">
+        <selectKey keyProperty="boardCode" resultType="String" order="BEFORE">
+            SELECT
+                CASE
+                WHEN COUNT(cm_num) = 0 THEN 'comm_1'
+                ELSE
+                CONCAT(
+                'comm_',
+                MAX(CAST(SUBSTRING_INDEX(cm_num, 'comm_', -1) AS UNSIGNED)) +1)
+                END AS boardCode
+            FROM
+                community;
+        </selectKey>
+        INSERT INTO community
+            (cm_num, m_id, cm_title, cm_content, cm_view, cm_date)
+        values
+            (#{boardCode}, #{mId}, #{boardTitle}, #{boardContent},#{boardView}, CURDATE());
+    </insert>
 
+    <!--커뮤니티 수정-->
+    <update id="modifyBoard" parameterType="Board">
+        UPDATE community
+        <set>
+            <if test="boardTitle != null and boardTitle != ''">
+                cm_title = #{boardTitle},
+            </if>
+            <if test="boardContent != null and boardContent != ''">
+                cm_content = #{boardContent},
+            </if>
+        </set>
+        WHERE
+        cm_num = #{boardCode}
+    </update>
+
+    <!--커뮤니티 삭제-->
+    <delete id="deleteBoard" parameterType="String">
+        DELETE FROM community
+        WHERE cm_num = #{boardCode}
+    </delete>
+
+
+
+
+
+    <!-- =================자주하는 질문==========================-->
+
+    <!--자주하는 질문 조회-->
+    <resultMap type="QuestionCenter" id="questionCenterResultMap">
+
+        <id column="question_num" 			property="questionNum" />
+        <result column="m_id" 			property="mId" />
+        <result column="question_title" 		property="questionTitle"/>
+        <result column="question_content" 		property="questionContent"/>
+        <result column="question_date" 	property="questionDate"/>
+    </resultMap>
+
+
+    <select id="getQuestionCenterList" resultMap="questionCenterResultMap">
+        SELECT
+            question_num,
+            m_id,
+            question_title,
+            question_content,
+            question_date
+        FROM
+            question_center;
+    </select>
+    <!--자주하는 질문 등록-->
+    <insert id="addQuestionCenter" parameterType="QuestionCenter">
+        <selectKey keyProperty="questionNum" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(question_num) = 0 THEN 'ques_1'
+            ELSE
+            CONCAT(
+            'ques_',
+            MAX(CAST(SUBSTRING_INDEX(question_num, 'ques_', -1) AS UNSIGNED)) +1)
+            END AS questionNum
+            FROM
+            question_center;
+        </selectKey>
+        INSERT INTO question_center
+        (question_num, m_id, question_title, question_content, question_date)
+        values
+        (#{questionNum}, #{mId}, #{questionTitle}, #{questionContent}, CURDATE());
+    </insert>
+    <!--자주하는 질문 수정-->
+    <update id="modifyQuestionCenter" parameterType="QuestionCenter">
+        UPDATE question_center
+        <set>
+            <if test="questionTitle != null and questionTitle != ''">
+                question_title = #{questionTitle},
+            </if>
+            <if test="questionContent != null and questionContent != ''">
+                question_content = #{questionContent},
+            </if>
+        </set>
+        WHERE
+        question_num = #{questionNum}
+    </update>
+    <!--자주하는 질문 삭제-->
+    <delete id="deleteQuestionCenter" parameterType="String">
+        DELETE FROM question_center
+        WHERE  question_num = #{questionNum}
+    </delete>
+
+
+    <!-- =================공지사항==========================-->
+    <!--공지사항 조회-->
+    <resultMap type="Notice" id="noticeResultMap">
+        <id column="notice_num" 			property="noticeNum" />
+        <result column="m_id" 		property="mId"/>
+        <result column="notice_title" 		property="noticeTitle"/>
+        <result column="notice_content" 		property="noticeContent"/>
+        <result column="notice_view" 	property="noticeView"/>
+        <result column="notice_date" 	property="noticeDate"/>
+    </resultMap>
+
+    <select id="getNoticeList" resultMap="noticeResultMap">
+        SELECT
+            notice_num,
+            m_id,
+            notice_title,
+            notice_content,
+            notice_view,
+            notice_date
+        FROM
+            notice_center;
+    </select>
+    <insert id="addNotice" parameterType="Notice">
+        <selectKey keyProperty="noticeNum" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(notice_num) = 0 THEN 'noti_1'
+            ELSE
+            CONCAT(
+            'noti_',
+            MAX(CAST(SUBSTRING_INDEX(notice_num, 'noti_', -1) AS UNSIGNED)) +1)
+            END AS noticeNum
+            FROM
+            notice_center;
+        </selectKey>
+
+        /* 등록 */
+        INSERT INTO notice_center
+        (notice_num, m_id, notice_title, notice_content, notice_view, notice_date)
+        values
+        (#{noticeNum}, #{mId}, #{noticeTitle}, #{noticeContent}, #{noticeView}, CURDATE());
+
+    </insert>
+    <!--공지사항 수정-->
+    <update id="modifyNotice" parameterType="Notice">
+        UPDATE notice_center
+        <set>
+            <if test="noticeTitle != null and noticeTitle != ''">
+                notice_title = #{noticeTitle},
+            </if>
+            <if test="noticeContent != null and noticeContent != ''">
+                notice_content = #{noticeContent},
+            </if>
+        </set>
+        WHERE
+        notice_num = #{noticeNum}
+    </update>
+    <!--공지사항 삭제-->
+    <delete id="deleteNotice" parameterType="String">
+        DELETE FROM notice_center
+        WHERE  notice_num = #{noticeNum}
+    </delete>
 
 
 </mapper>

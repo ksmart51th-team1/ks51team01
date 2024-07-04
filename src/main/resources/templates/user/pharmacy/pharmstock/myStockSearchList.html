@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/pharmacy/layout/default}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
 </head>
-<body>
 
-</body>
+<th:block layout:fragment="customContent">
+    <main class="main">
+        <!-- <div class="page-header breadcrumb-wrap">
+           <div class="container">
+               <div class="breadcrumb">
+                   <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                   <span></span> Shop <span></span> Fillter
+               </div>
+           </div>
+       </div> -->
+        <div class="container mb-30 mt-50">
+            <div class="row">
+                <div class="col-xl-10 col-lg-12 m-auto">
+                    <div class="mb-50">
+                        <h1 class="heading-2 mb-10" th:text="${content}"></h1>
+                    </div>
+                    <div class="table-responsive shopping-summery">
+                        <a class="btn btn-sm float-end mb-5" th:href="@{/pharm/myStockInsert}">새 재고 등록</a>
+                        <table class="table table-wishlist">
+                            <thead>
+                            <tr class="main-heading">
+                                <th scope="col" class="custome-checkbox start pl-30">의약품 이름</th>
+                                <th scope="col">수량</th>
+                                <th scope="col" style="text-align: center">재고조사 여부</th>
+                                <th scope="col" style="text-align: center">재고조사 일자</th>
+                                <th scope="col" class="end">출고처리</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="pt-30">
+                                <td class="product-des product-name pl-30">
+                                    <h6><a class="product-name mb-10" th:href="@{/pharm/order/orderMedicineDetailView}">알로테드 정</a></h6>
+                                </td>
+                                <td class="price" data-title="Price">
+                                    <h3 class="text-brand">50개</h3>
+                                </td>
+                                <td class="text-center detail-info" data-title="Stock">
+                                    <span class="stock-status in-stock mb-0"> 재고조사 불필요 </span>
+                                </td>
+                                <td class="text-center detail-info" data-title="Stock">
+                                    <div class="detail-extralink mr-15">
+                                        2024.03.01
+                                    </div>
+                                </td>
+                                <td class="text-right" data-title="Cart">
+                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease}">출고</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-des product-name pl-30">
+                                    <h6><a class="product-name mb-10" href="shop-product-right.html">후시딘 연고</a></h6>
+                                </td>
+                                <td class="price" data-title="Price">
+                                    <h3 class="text-brand">300개</h3>
+                                </td>
+                                <td class="text-center detail-info" data-title="Stock">
+                                    <span class="stock-status out-stock mb-0"> 재고조사 필요 </span>
+                                </td>
+                                <td class="text-center detail-info" data-title="Stock">
+                                    <div class="detail-extralink mr-15">
+                                        2024.06.01
+                                    </div>
+                                </td>
+                                <td class="text-right" data-title="Cart">
+                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease}">출고</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
 </html>
