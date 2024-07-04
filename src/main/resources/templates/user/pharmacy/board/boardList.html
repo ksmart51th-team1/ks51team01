@@ -6,14 +6,6 @@
     <style>
         .content-hidden {
             display: none;
-            background-color: #f8f9fa;
-            padding: 15px;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .comment-section {
-            margin-top: 10px;
         }
     </style>
 </head>
@@ -34,11 +26,14 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                                     <a class="itemside board-title" href="#" th:data-content="${b.boardContent}">
-                                        <div class="info">
+                                        <div class="info card-header">
                                             <h6 th:text="${b.boardTitle}" class="mb-0"></h6>
                                         </div>
                                     </a>
-                                    <div class="content-hidden" th:text="${b.boardContent}"></div>
+                                    <div class="content-hidden card-body" th:text="${b.boardContent}"></div>
+                                    <div class="content-hidden card-footer" th:each="r : ${replList}" th:if="${r.cmNum} == ${b.boardCode}">
+                                        <div class="comment-content" th:text="${r.mId + '님의 댓글: ' + r.replContent} "></div>
+                                    </div>
                                     <div class="comment-section content-hidden">
                                         <form th:action="@{/pharm/commentAdd}" method="post">
                                             <div class="form-group">
