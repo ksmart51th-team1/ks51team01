@@ -7034,6 +7034,8 @@ h6.post-title {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .header-wrap .header-nav {
@@ -7066,21 +7068,18 @@ h6.post-title {
   align-items: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-right: 5rem;
 }
 
 .logo a {
   display: block;
 }
 
+
+
 .logo.logo-width-1 {
   margin-right: 70px;
-}
-.logoNew {
-  font-family: "Cafe24Ssurround";
-  color: pink;
-  font-size: 3rem;
-
 }
 
 .logo.logo-width-1 a img {
@@ -7235,9 +7234,7 @@ h6.post-title {
   padding: 0;
 }
 
-.header-action-right {
-  display: none;
-}
+
 
 .header-action-right .search-location {
   display: none;
@@ -7542,8 +7539,7 @@ h6.post-title {
   left: 0;
   -webkit-transition: all .3s ease 0s;
   transition: all .3s ease 0s;
-  border-bottom: 2px solid #FDC040;
-  background: #fff;
+  background-color: #fcc0c5;
 }
 
 .sticky-bar.stick.sticky-white-bg {
@@ -8205,9 +8201,14 @@ h6.post-title {
 }
 
 /* Header style 1 */
+#headers {
+  background-color: #fcc0c5;
+  color: white;
+}
 .header-style-1 {
   position: relative;
   overflow-x: clip;
+
 }
 
 .header-style-1.header-height-2 {
@@ -8224,7 +8225,7 @@ h6.post-title {
 }
 
 .header-style-1 .header-middle-ptb-1 {
-  padding: 30px 0;
+  padding: 10px 0;
 }
 
 .header-style-1 .select2-container {
@@ -8345,13 +8346,6 @@ h6.post-title {
   margin-left: 20px;
   background-color: #fff;
   border: none;
-}
-
-.header-style-1 .header-bottom-bg-color {
-  background-color: #ff8c9f;
-  border-top: 1px solid #ececec;
-  border-bottom: 1px solid #ececec;
-  color:white;
 }
 
 .header-style-1 .main-categori-wrap > a {

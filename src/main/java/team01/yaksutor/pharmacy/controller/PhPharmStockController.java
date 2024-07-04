@@ -33,21 +33,21 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/myStockSearchList";
     }
 
-    @GetMapping("/myStockModify")
-    public String myStockModify(Model model) {
+    @GetMapping("/myStockRelease")
+    public String myStockRelease(Model model) {
 
-        model.addAttribute("title", "재고 수정");
-        model.addAttribute("content", "재고 수정");
+        model.addAttribute("title", "출고");
+        model.addAttribute("content", "출고");
 
-        return "user/pharmacy/pharmstock/myStockModify";
+        return "user/pharmacy/pharmstock/myStockRelease";
     }
 
-    @GetMapping("/myStockDelete")
-    public String myStockDelete(Model model) {
+    @GetMapping("/myStockHistory")
+    public String myStockHistory(Model model) {
 
-        model.addAttribute("title", "재고 삭제");
-        model.addAttribute("content", "재고 삭제");
+        model.addAttribute("title", "입출고 기록");
+        model.addAttribute("content", "입출고 기록");
 
-        return "user/pharmacy/pharmstock/myStockDelete";
+        return "user/pharmacy/pharmstock/myStockHistory";
     }
 }

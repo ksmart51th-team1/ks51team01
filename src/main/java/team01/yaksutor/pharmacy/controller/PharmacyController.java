@@ -1,13 +1,20 @@
 package team01.yaksutor.pharmacy.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/pharm")
 @Controller
 public class PharmacyController {
+
     @GetMapping("/main")
     public String pharmMain(Model model) {
         model.addAttribute("content", "유저 메인.");
@@ -19,16 +26,7 @@ public class PharmacyController {
 
         return "user/pharmacy/board/contact";
     }
-    @GetMapping("/notice")
-    public String notice() {
 
-        return "user/pharmacy/board/notice";
-    }
-    @GetMapping("/faq")
-    public String faq() {
-
-        return "user/pharmacy/board/faq";
-    }
     @GetMapping("/qna")
     public String qna() {
 

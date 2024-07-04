@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/pharmacy/layout/default}">
+<head>
+    <title th:text="${title}"></title>
+</head>
+
+<th:block layout:fragment="customContent">
+    <main class="main">
+        <!-- <div class="page-header breadcrumb-wrap">
+           <div class="container">
+               <div class="breadcrumb">
+                   <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                   <span></span> Shop <span></span> Fillter
+               </div>
+           </div>
+       </div> -->
+        <div class="container mb-30 mt-50">
+            <div class="row">
+                <div class="col-xl-10 col-lg-12 m-auto">
+                    <div class="mb-50">
+                        <h1 class="heading-2 mb-10" th:text="${content}"></h1>
+                    </div>
+                    <div class="table-responsive shopping-summery">
+                        <table class="table table-wishlist">
+                            <thead>
+                            <tr class="main-heading">
+                                <th scope="col" class="custome-checkbox start pl-30">반품번호</th>
+                                <th scope="col">주문번호</th>
+                                <th scope="col">반품총액</th>
+                                <th scope="col" style="text-align: center">반품신청 일자</th>
+                                <th scope="col" class="end text-center">반품상태</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="pt-30">
+                                <td class="product-des product-name pl-30">
+                                    <h6><a class="product-name mb-10" th:href="@{/pharm/myRefundDetailView}">코드1</a></h6>
+                                </td>
+                                <td class="price" data-title="Price">
+                                    <h3 class="text-brand">코드1</h3>
+                                </td>
+                                <td class="text-right" data-title="Cart">
+                                    <span>20000원</span>
+                                </td>
+                                <td class="text-center detail-info" data-title="Stock">
+                                    <div class="detail-extralink mr-15">
+                                        2024.03.01
+                                    </div>
+                                </td>
+                                <td class="text-center detail-info" data-title="Stock">
+                                    <span class="stock-status in-stock mb-0"> 신청 승인 </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
+</html>

@@ -15,192 +15,18 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/user/assets/imgs/theme/favicon.svg}">
     <!-- Template CSS -->
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/main.css?v=5.6}">
+    <style>
+        .logoNew {
+            font-family: "Cafe24Ssurround";
+            color: pink;
+            font-size: 3rem;
+        }
+    </style>
+
 </head>
 
 <body style="overflow: visible;"><div class="body-overlay-1"></div>
 
-<div class="mobile-header-active mobile-header-wrapper-style">
-    <div class="mobile-header-wrapper-inner">
-        <div class="mobile-header-top">
-            <div class="mobile-header-logo">
-                <a href="index.html"><img th:src="@{/resource/user/assets/imgs/theme/logo.svg}" alt="logo"></a>
-            </div>
-            <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                <button class="close-style search-close">
-                    <i class="icon-top"></i>
-                    <i class="icon-bottom"></i>
-                </button>
-            </div>
-        </div>
-        <div class="mobile-header-content-area">
-            <div class="mobile-search search-style-3 mobile-header-border">
-                <form action="#">
-                    <input type="text" placeholder="Search for items…">
-                    <button type="submit"><i class="fi-rs-search"></i></button>
-                </form>
-            </div>
-            <div class="mobile-menu-wrap mobile-header-border">
-                <!-- mobile menu start -->
-                <nav>
-                    <ul class="mobile-menu font-heading">
-                        <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                            <a href="index.html">Home</a>
-                            <ul class="dropdown" style="display: none;">
-                                <li><a href="index.html">Home 1</a></li>
-                                <li><a href="index-2.html">Home 2</a></li>
-                                <li><a href="index-3.html">Home 3</a></li>
-                                <li><a href="index-4.html">Home 4</a></li>
-                                <li><a href="index-5.html">Home 5</a></li>
-                                <li><a href="index-6.html">Home 6</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                            <a href="shop-grid-right.html">shop</a>
-                            <ul class="dropdown" style="display: none;">
-                                <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
-                                <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
-                                <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
-                                <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
-                                <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
-                                <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                                    <a href="#">Single Product</a>
-                                    <ul class="dropdown" style="display: none;">
-                                        <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
-                                        <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
-                                        <li><a href="shop-product-full.html">Product – No sidebar</a></li>
-                                        <li><a href="shop-product-vendor.html">Product – Vendor Infor</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
-                                <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                <li><a href="shop-compare.html">Shop – Compare</a></li>
-                                <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                                    <a href="#">Shop Invoice</a>
-                                    <ul class="dropdown" style="display: none;">
-                                        <li><a href="shop-invoice-1.html">Shop Invoice 1</a></li>
-                                        <li><a href="shop-invoice-2.html">Shop Invoice 2</a></li>
-                                        <li><a href="shop-invoice-3.html">Shop Invoice 3</a></li>
-                                        <li><a href="shop-invoice-4.html">Shop Invoice 4</a></li>
-                                        <li><a href="shop-invoice-5.html">Shop Invoice 5</a></li>
-                                        <li><a href="shop-invoice-6.html">Shop Invoice 6</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                            <a href="#">Vendors</a>
-                            <ul class="dropdown" style="display: none;">
-                                <li><a href="vendors-grid.html">Vendors Grid</a></li>
-                                <li><a href="vendors-list.html">Vendors List</a></li>
-                                <li><a href="vendor-details-1.html">Vendor Details 01</a></li>
-                                <li><a href="vendor-details-2.html">Vendor Details 02</a></li>
-                                <li><a href="vendor-dashboard.html">Vendor Dashboard</a></li>
-                                <li><a href="vendor-guide.html">Vendor Guide</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                            <a href="#">Mega menu</a>
-                            <ul class="dropdown" style="display: none;">
-                                <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                                    <a href="#">Women's Fashion</a>
-                                    <ul class="dropdown" style="display: none;">
-                                        <li><a href="shop-product-right.html">Dresses</a></li>
-                                        <li><a href="shop-product-right.html">Blouses &amp; Shirts</a></li>
-                                        <li><a href="shop-product-right.html">Hoodies &amp; Sweatshirts</a></li>
-                                        <li><a href="shop-product-right.html">Women's Sets</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                                    <a href="#">Men's Fashion</a>
-                                    <ul class="dropdown" style="display: none;">
-                                        <li><a href="shop-product-right.html">Jackets</a></li>
-                                        <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
-                                        <li><a href="shop-product-right.html">Genuine Leather</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                                    <a href="#">Technology</a>
-                                    <ul class="dropdown" style="display: none;">
-                                        <li><a href="shop-product-right.html">Gaming Laptops</a></li>
-                                        <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
-                                        <li><a href="shop-product-right.html">Tablets</a></li>
-                                        <li><a href="shop-product-right.html">Laptop Accessories</a></li>
-                                        <li><a href="shop-product-right.html">Tablet Accessories</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                            <a href="blog-category-fullwidth.html">Blog</a>
-                            <ul class="dropdown" style="display: none;">
-                                <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
-                                <li><a href="blog-category-list.html">Blog Category List</a></li>
-                                <li><a href="blog-category-big.html">Blog Category Big</a></li>
-                                <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
-                                <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                                    <a href="#">Single Product Layout</a>
-                                    <ul class="dropdown" style="display: none;">
-                                        <li><a href="blog-post-left.html">Left Sidebar</a></li>
-                                        <li><a href="blog-post-right.html">Right Sidebar</a></li>
-                                        <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                            <a href="#">Pages</a>
-                            <ul class="dropdown" style="display: none;">
-                                <li><a href="page-about.html">About Us</a></li>
-                                <li><a href="page-contact.html">Contact</a></li>
-                                <li><a href="page-account.html">My Account</a></li>
-                                <li><a href="page-login.html">Login</a></li>
-                                <li><a href="page-register.html">Register</a></li>
-                                <li><a href="page-forgot-password.html">Forgot password</a></li>
-                                <li><a href="page-reset-password.html">Reset password</a></li>
-                                <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="page-terms.html">Terms of Service</a></li>
-                                <li><a href="page-404.html">404 Page</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children"><span class="menu-expand"><i class="fi-rs-angle-small-down"></i></span>
-                            <a href="#">Language</a>
-                            <ul class="dropdown" style="display: none;">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- mobile menu end -->
-            </div>
-            <div class="mobile-header-info-wrap">
-                <div class="single-mobile-header-info">
-                    <a href="page-contact.html"><i class="fi-rs-marker"></i> Our location </a>
-                </div>
-                <div class="single-mobile-header-info">
-                    <a href="page-login.html"><i class="fi-rs-user"></i>Log In / Sign Up </a>
-                </div>
-                <div class="single-mobile-header-info">
-                    <a href="#"><i class="fi-rs-headphones"></i>(+01) - 2345 - 6789 </a>
-                </div>
-            </div>
-            <div class="mobile-social-icon mb-50">
-                <h6 class="mb-15">Follow Us</h6>
-                <a href="#"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-facebook-white.svg}" alt=""></a>
-                <a href="#"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-twitter-white.svg}" alt=""></a>
-                <a href="#"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-instagram-white.svg}" alt=""></a>
-                <a href="#"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-pinterest-white.svg}" alt=""></a>
-                <a href="#"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-youtube-white.svg}" alt=""></a>
-            </div>
-            <div class="site-copyright">Copyright 2022 © Nest. All rights reserved. Powered by AliThemes.</div>
-        </div>
-    </div>
-</div>
 <!--End header-->
 <main class="main pages">
 
@@ -222,7 +48,7 @@
                                 </div>
                                 <div class="banner-img-box">
                                     <div class="logo logo-width-1 mb-3">
-                                        <a th:href="@{/}" class="logoNew" style="font-size:2rem">약수터 파트너 제휴 문의</a>
+                                        <a th:href="@{https://forms.gle/1VRReEqFk24heS8q8}" class="logoNew" style="font-size:2rem">약수터 파트너 제휴 문의</a>
                                     </div>
                                 </div>
                             </div>
@@ -238,11 +64,12 @@
                                         <p class="mb-30"><a></a></p>
                                     </div>
                                     <form th:action="@{/login}" method="post">
+                                        <input type="hidden" th:value="secret" name="secret_key" />
                                         <div class="form-group">
-                                            <input type="text" required="" name="memberId" id="memberId" placeholder="회원아이디를 입력하세요. *">
+                                            <input type="text"  name="memberId" id="memberId" placeholder="회원아이디를 입력하세요. *">
                                         </div>
                                         <div class="form-group">
-                                            <input required="" type="password" name="password" placeholder="비밀번호를 입력하세요 *">
+                                            <input  type="password" name="memberPw" id="memberPw" placeholder="비밀번호를 입력하세요 *">
                                         </div>
 
                                         <div class="login_footer form-group mb-50">
