@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.common.mapper.MemberMapper">
+
+    <!-- AS 매번 하기 귀찮으니까 아래 resultMap을 사용함   -->
+    <resultMap id="memberResultMap" type="team01.yaksutor.dto.Member">
+        <!-- PK칼럼과 일반칼럼을 주의해야한다. -->
+        <id column="m_id" property="memberId" />
+        <result column="level" property="memberLevelNum"/>
+        <result column="level_name" property="memberLevelName"/>
+        <result column="pw" property="memberPw"/>
+        <result column="name" property="memberName"/>
+        <result column="gender" property="memberGender"/>
+        <result column="email" property="memberEmail"/>
+        <result column="birth" property="memberBirth"/>
+        <result column="phone" property="memberPhone"/>
+        <result column="sido" property="memberAddrSido"/>
+        <result column="sigungu" property="memberAddrSigungu"/>
+        <result column="dong" property="memberAddrDong"/>
+        <result column="pst_code" property="memberPostCode"/>
+        <result column="addr" property="memberAddr"/>
+    </resultMap>
+
+    <resultMap id="memberLevelResultMap" type="team01.yaksutor.dto.Level">
+        <id column="level_num" property="levelNum"/>
+        <result column="level_name" property="levelName"/>
+        <result column="level_date" property="levelDate"/>
+    </resultMap>
+
+    <sql id="memberSearch">
+        SELECT
+        m.m_id,
+        m.`level`,
+        l.level_name,
+        m.pw,
+        m.`name`,
+        m.gender,
+        m.email,
+        m.birth,
+        m.phone,
+        m.sido,
+        m.sigungu,
+        m.dong,
+        m.pst_code,
+        m.addr
+        FROM `member` AS m
+        INNER JOIN `level` AS l
+        ON
+        m.`level` = l.level_num
+    </sql>
+    
+    <select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
+        <include refid="memberSearch">
+        </include>
+        WHERE
+            m.m_id = #{memberId}
+    </select>
+    
+</mapper>

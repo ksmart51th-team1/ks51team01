@@ -2,10 +2,13 @@ package team01.yaksutor.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Member {
     private String memberId;
     private int memberLevelNum;
+    private String memberLevelName;
     private String memberPw;
     private String memberName;
     private String memberGender;

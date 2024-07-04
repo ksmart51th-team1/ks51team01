@@ -16,12 +16,6 @@ import team01.yaksutor.dto.Member;
 public class PhMemberController {
 
 
-    @PostMapping("/memberInsert")
-    public String insertMember(Member member) {
-        //개국 관리
-        return "redirect:/";
-    }
-
     /**
      * 관리약사 가입페이지로 이동
      * @param model
