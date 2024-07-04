@@ -30,7 +30,8 @@
                                 <div class="col-md-9">
                                     <div class="mb-4">
                                         <label class="form-label" for="regMId">판매자</label>
-                                        <input type="text" placeholder="판매자를 입력해주세요" name="regMId" id="regMId" class="form-control" >
+                                        <input type="text" placeholder="판매자를 입력해주세요" name="regMId" id="regMId" class="form-control mb-3">
+                                        <button type="button" class="btn btn-md rounded font-sm" id="authBtn">id 판매자 인증</button>
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label" for="mediName">의약품 이름</label>
@@ -149,7 +150,7 @@
 
         $('#submitBtn').click(function(){
             let isSubmit = true;
-            $('#addMedicine input, #addMedicine select').each((idx, element) => {
+            /*$('#addMedicine input, #addMedicine select').each((idx, element) => {
                 const id = element.id;
                 const value = element.value;
                 if(!value){
@@ -158,7 +159,7 @@
                     isSubmit = false;
                     return false;
                 }
-            });
+            });*/
             if(isSubmit) $('#addMedicine').submit();
         });
 
@@ -225,6 +226,35 @@
         // 4. 행의 삭제 버튼
         $(document).on('click', '.effiDelBtn', function(){
             $(this).closest('tr').remove();
+        });
+
+        // id 판매자 인증
+        $('#authBtn').click(function(){
+            const regMId = $('#regMId').val();
+
+            const request = $.ajax({
+                url : '/admin/medicine/checkLevel',
+                method : 'POST',
+                data : { 'regMId' : regMId },
+                dataType : 'json'
+            });
+            request.done(response => {
+                const midLevel = response;
+                console.log(midLevel);
+                if(midLevel == 2){
+                    alert('납품업체의 아이디가 맞습니다');
+                    $('#submitBtn').prop('disabled', false);
+                }
+                else{
+                    alert('납품업체 아이디가 아닙니다');
+                    $('#submitBtn').prop('disabled', true);
+                    $('#regMId').val('');
+                    $('#regMId').focus();
+                }
+            });
+            request.fail((jqXHR, textStatus, error) => {
+                console.log(jqXHR, textStatus, error);
+            });
         });
     </script>
 </th:block>
