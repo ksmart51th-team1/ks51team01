@@ -30,7 +30,8 @@ public class SecurityConfig {
     private final AuthenticationFailureHandler failureHandler;
 
     private static final String[] BASIC_LIST = {
-            "/", "/index","/resource/**","/member/memberInsert/**"
+            "/", "/index","/resource/**","/member/memberInsert/**",
+
     };
 
     @Bean
@@ -66,6 +67,7 @@ public class SecurityConfig {
                         )
                         .maximumSessions(1)
                         .expiredUrl("/login?expired=true")
+
         )
                 .logout(logout -> logout
                 .logoutUrl("/logout")
