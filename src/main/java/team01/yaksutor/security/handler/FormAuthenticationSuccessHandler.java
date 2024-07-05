@@ -27,7 +27,18 @@ public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
     @Override
     public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
 
+        Member sessionMember = (Member) authentication.getPrincipal();
+        System.out.println(sessionMember);
+        request.getSession().setAttribute("S_ID", sessionMember.getMemberId());
+        request.getSession().setAttribute("S_LEVEL", sessionMember.getMemberLevelName());
+        request.getSession().setAttribute("S_NAME", sessionMember.getMemberName());
+        System.out.println("1. " + request.getSession().getAttribute("S_ID"));
+        System.out.println("2. " + request.getSession().getAttribute("S_LEVEL"));
+        System.out.println("3. " + request.getSession().getAttribute("S_NAME"));
+
         String memberInfo = authentication.getName();
+
+
         int start = memberInfo.indexOf("memberLevelName=") + "memberLevelName=".length();
         String memberLevel = memberInfo.substring(start);
         memberLevel = memberLevel.substring(0, memberLevel.indexOf(","));

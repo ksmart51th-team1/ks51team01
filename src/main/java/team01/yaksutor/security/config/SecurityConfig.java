@@ -58,7 +58,23 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .exceptionHandling(exception -> exception
                         .accessDeniedHandler(new FormAccessDeniedHandler("/denied"))
-                );
+                )
+                .sessionManagement(sessionManagement ->
+                sessionManagement
+                        .sessionFixation(sessionFixation ->
+                                sessionFixation.newSession()
+                        )
+                        .maximumSessions(1)
+                        .expiredUrl("/login?expired=true")
+        )
+                .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/index")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+        );
+
 
         return http.build();
     }
