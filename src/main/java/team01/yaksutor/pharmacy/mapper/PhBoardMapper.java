@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import team01.yaksutor.pharmacy.dto.Board;
 import team01.yaksutor.pharmacy.dto.Notice;
 import team01.yaksutor.pharmacy.dto.QuestionCenter;
+import team01.yaksutor.pharmacy.dto.Repl;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public interface PhBoardMapper {
     //  조회
     List<Board> getBoardList();
+    List<Repl> getReplList();
     List<QuestionCenter> getQuestionCenterList();
     List<Notice> getNoticeList();
 
@@ -21,6 +23,7 @@ public interface PhBoardMapper {
     int modifyBoard(Board board);
     // 커뮤니티 삭제
     int deleteBoard(String boardCode);
+
 
 
    // 자주하는 질문 등록
