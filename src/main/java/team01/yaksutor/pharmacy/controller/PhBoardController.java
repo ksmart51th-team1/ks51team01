@@ -75,6 +75,13 @@ public class PhBoardController {
         phBoardService.deleteBoard(boardCode);
         return "redirect:/admin/boardList";
     }
+    // 커뮤니티 댓글 등록 (사용자)
+    @PostMapping("/pharm/replAdd")
+    public String addRepl(Repl repl){
+        phBoardService.addRepl(repl);
+        return "redirect:/pharm/board";
+
+    }
 
 
 

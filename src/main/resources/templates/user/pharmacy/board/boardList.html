@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{user/pharmacy/layout/default}">
 <head>
     <style>
@@ -11,7 +11,7 @@
 </head>
 
 <th:block layout:fragment="customContent">
-    <div class="container mb-30 mt-50">
+    <div class="container mb-30 mt-50 font-1">
         <div class="row">
             <div class="col-xl-10 col-lg-12 m-auto">
                 <div class="mb-50">
@@ -22,31 +22,70 @@
                 </div>
                 <div class="card mb-4">
                     <div class="card-body">
-                        <article class="itemlist m-3" th:if="${boardList != null}" th:each="b : ${boardList}">
+                        <article class="itemlist m-3 border-bottom" th:if="${boardList != null}" th:each="b : ${boardList}">
                             <div class="row align-items-center">
                                 <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                    <a class="itemside board-title" href="#" th:data-content="${b.boardContent}">
-                                        <div class="info card-header">
-                                            <h6 th:text="${b.boardTitle}" class="mb-0"></h6>
-                                        </div>
-                                    </a>
-                                    <div class="content-hidden card-body" th:text="${b.boardContent}"></div>
-                                    <div class="content-hidden card-footer" th:each="r : ${replList}" th:if="${r.cmNum} == ${b.boardCode}">
-                                        <div class="comment-content" th:text="${r.mId + '님의 댓글: ' + r.replContent} "></div>
-                                    </div>
-                                    <div class="comment-section content-hidden">
-                                        <form th:action="@{/pharm/commentAdd}" method="post">
-                                            <div class="form-group">
-                                                <label for="commentContent">댓글</label>
-                                                <textarea class="form-control" id="commentContent" name="commentContent" rows="2" required></textarea>
+                                    <div class="col-lg-12 comments-review">
+                                        <div class="user-comments-profile">
+                                            <div style="display: inline-block;">
+                                                <img src="https://picpac.kr/common/img/default_profile.png" style="width: 50px; height: 50px; border-radius: 30px;">
                                             </div>
-                                            <button type="submit" class="btn btn-sm btn-primary mt-2">댓글 등록</button>
-                                        </form>
+                                            <div style="display: inline-block; width: auto; height: 100%; color: black; font-weight: bold; margin-left: 15px; top: -20px; position: relative">
+                                                <span class="font-1 board-title" th:text="${b.boardTitle}"></span><i class="board-date" th:text="${b.boardDate}"></i>
+                                            </div>
+                                            <br>
+                                            <div style="display: inline-block; width: auto; height: 100%; color: black; font-weight: bold; margin-left: 5px; top: 10%">
+                                                <p th:text="${b.mId}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12" style="height: 10px"></div>
+                                        <div style="background: #f9fafb; border-radius: 5px; padding: 10px; min-height: 60px; margin-bottom: 10px;">
+                                            <div>
+                                                <div class="donation-comments" style="color: black; font-size: 16px;" th:text="${b.boardContent}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="reply" style="display: inline-block; cursor: pointer">
+                                            <span class="bi bi-chat"></span>
+                                        </div>
+                                        <div class="comments-reply" style="width: 100%; display: none">
+                                            <div style="display: flex; margin-bottom: 10px; margin-top: 12px">
+                                                <div style="display: inline-block; top: 0; margin-right: 5px; margin-bottom: 5px;">
+                                                    <img src="https://picpac.kr/common/img/default_profile.png" style="width: 40px; height: 40px; border-radius: 30px;">
+                                                    <br>
+                                                    <p th:text="${session.S_ID}"></p>
+                                                    <span style="color: black; margin-left: 5px; font-weight: bold"></span>
+
+                                                </div>
+
+                                                <div style="display: flex">
+
+                                                    <textarea id="replContent" name="replContent" class="replyArea" minlength="10" maxlength="200" th:placeholder="${b.mId} +  '님에게 댓글 추가...'" required></textarea>
+                                                    <a type="submit" class="replyBtn btn btn-primary"><i class="bi bi-cursor replyCursor"></i></a>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="reply" style="display: flex; margin-bottom: 15px" th:each="r : ${replList}" th:if="${r.cmNum} == ${b.boardCode}">
+                                                <div style="top: 0; margin-right: 5px;">
+                                                    <img src="https://picpac.kr/common/img/default_profile.png" style="width: 40px; height: 40px; border-radius: 30px;">
+                                                    <br>
+                                                    <p th:text="${r.mId}"></p>
+                                                </div>
+                                                <div style="background: #f9fafb; border-radius: 5px; padding: 10px; width: 40%">
+                                                    <div>
+                                                        <div class="reply-user-id" style="font-size: 12px" th:text="${r.replDate}"></div>
+                                                        <div class="donation-comments" style="color: black; font-size: 15px" th:text="${r.replContent}"></div>
+                                                        <div class="rlSize" hidden="hidden">2</div>
+                                                        <div hidden="hidden">com_20231204_0001</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12" style="height: 20px"></div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${b.MId}"></span></div>
-                                <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                    <span th:text="${b.boardDate}"></span>
                                 </div>
                             </div>
                             <!-- row .// -->
@@ -75,8 +114,8 @@
                             <textarea class="form-control" id="boardContent" name="boardContent" rows="4" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="mId">회원아이디(아직은 admin으로 등록됨.)</label>
-                            <input class="form-control" id="mId" name="mId" value="admin" readonly>
+                            <label for="mId">회원아이디</label>
+                            <input class="form-control" id="mId" name="mId" th:value="${session.S_ID}" readonly>
                             <input id="boardView" name="boardView" value="0" hidden="hidden">
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">제출</button>
@@ -88,27 +127,16 @@
 </th:block>
 
 <th:block layout:fragment="customJsFile">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
     <script>
-        $(document).ready(function() {
-            $('.board-title').on('click', function(event) {
-                event.preventDefault();
-                var contentDiv = $(this).siblings('.content-hidden');
-                var commentSection = $(this).siblings('.comment-section');
-
-                // 슬라이드가 두 번 일어나지 않도록 설정
-                if (!contentDiv.is(':visible')) {
-                    contentDiv.stop(true, true).slideDown();
-                    commentSection.stop(true, true).slideDown();
-                } else {
-                    contentDiv.stop(true, true).slideUp();
-                    commentSection.stop(true, true).slideUp();
-                }
+        $(document).ready(function () {
+            $('.bi-chat').on('click', function () {
+                $(this).closest('.comments-review').find('.comments-reply').slideToggle();
             });
         });
     </script>

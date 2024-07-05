@@ -49,3 +49,44 @@
     line-height: 20px;
     background-color: #1f6feb;
 }
+.board-title {
+    color: black;
+    font-size: 1.25rem;
+}
+
+.reply span {
+    font-size: 23px;
+    color: #0a0a18;
+}
+.reply span:hover::before {
+    background-color: rgba(252,192,197,.7);
+    border-radius: 80px;
+    transition: all 0.5s ease;
+}
+.replyArea {
+    width: 480px;
+    resize: none;
+    outline-color: #235FD9;
+    outline-width: 1px;
+    border-radius: 20px;
+    min-height: 50px;
+}
+
+.replyBtn {
+    background-color: #235FD9;
+    margin-left: 1%;
+    width: 10px;
+    border-radius: 40px;
+    height: 50px;
+    border: none;
+}
+.replyCursor{
+    font-size: 20px;
+    left: -7px;
+    position: relative;
+}
+.board-date {
+    font-size: 12px;
+    margin: 30px;
+    color: darkgray;
+}

@@ -50,6 +50,7 @@
         INNER JOIN `level` AS l
         ON
         m.`level` = l.level_num
+
     </sql>
     
     <select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">

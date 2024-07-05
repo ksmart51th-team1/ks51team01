@@ -89,7 +89,25 @@
         FROM
             repl;
     </select>
-
+    <!--커뮤니티 댓글 등록-->
+    <insert id="addRepl" parameterType="Repl">
+        <selectKey keyProperty="replNum" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(repl_num) = 0 THEN 'repl_num_1'
+            ELSE
+            CONCAT(
+            'repl_num_',
+            MAX(CAST(SUBSTRING_INDEX(repl_num, 'repl_num_', -1) AS UNSIGNED)) +1)
+            END AS replNum
+            FROM
+            repl;
+        </selectKey>
+        INSERT INTO repl
+        (repl_num, m_id, cm_num, repl_content, repl_date)
+        values
+        (#{replNum}, #{mId}, #{cmNum}, #{replContent}, CURDATE());
+    </insert>
 
 
     <!-- =================자주하는 질문==========================-->
