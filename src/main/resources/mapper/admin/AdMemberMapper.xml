@@ -4,4 +4,93 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.admin.mapper.AdMemberMapper">
 
+    <!-- AS 매번 하기 귀찮으니까 아래 resultMap을 사용함   -->
+    <resultMap id="memberResultMap" type="team01.yaksutor.dto.Member">
+        <!-- PK칼럼과 일반칼럼을 주의해야한다. -->
+        <id column="m_id" property="memberId" />
+        <result column="level" property="memberLevelNum"/>
+        <result column="level_name" property="memberLevelName"/>
+        <result column="pw" property="memberPw"/>
+        <result column="name" property="memberName"/>
+        <result column="gender" property="memberGender"/>
+        <result column="email" property="memberEmail"/>
+        <result column="birth" property="memberBirth"/>
+        <result column="phone" property="memberPhone"/>
+        <result column="sido" property="memberAddrSido"/>
+        <result column="sigungu" property="memberAddrSigungu"/>
+        <result column="dong" property="memberAddrDong"/>
+        <result column="pst_code" property="memberPostCode"/>
+        <result column="addr" property="memberAddr"/>
+    </resultMap>
+
+    <resultMap id="pharmacyResultMap" type="team01.yaksutor.dto.Pharmacy">
+        <id column="phar_code" property="pharCode" />
+        <result column="phar_Id" property="pharId"/>
+        <result column="p_name" property="pName"/>
+        <result column="busin_num" property="businNum"/>
+        <result column="p_addr_do" property="pAddrDo"/>
+        <result column="p_addr_si" property="pAddrSi"/>
+        <result column="p_addr_dong" property="pAddrDong"/>
+        <result column="p_addr" property="pAddr"/>
+        <result column="p_post_code" property="pPostCode"/>
+        <result column="open_date" property="openDate"/>
+    </resultMap>
+
+    <resultMap id="LicenseResultMap" type="team01.yaksutor.dto.License">
+        <id column="lice_code" property="liceCode" />
+        <result column="pharmacist_id" property="pharmacistId"/>
+        <result column="license_num" property="licenseNum"/>
+        <result column="license_get_date" property="licenseGetDate"/>
+    </resultMap>
+
+    <resultMap id="memberLevelResultMap" type="team01.yaksutor.dto.Level">
+        <id column="level_num" property="levelNum"/>
+        <result column="level_name" property="levelName"/>
+        <result column="level_date" property="levelDate"/>
+    </resultMap>
+
+    <sql id="memberSearch">
+        SELECT
+        m.m_id,
+        m.`level`,
+        l.level_name,
+        m.pw,
+        m.`name`,
+        m.gender,
+        m.email,
+        m.birth,
+        m.phone,
+        m.sido,
+        m.sigungu,
+        m.dong,
+        m.pst_code,
+        m.addr
+        FROM `member` AS m
+        INNER JOIN `level` AS l
+        ON
+        m.`level` = l.level_num
+    </sql>
+    
+    <insert id="memberInsert" parameterType="Member">
+
+    </insert>
+    
+
+    <select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
+        <include refid="memberSearch">
+        </include>
+        WHERE
+        m.m_id = #{memberId}
+    </select>
+
+    <select id="idCheck" parameterType="String" resultType="boolean">
+        SELECT
+        COUNT(m_id)
+        FROM
+        member
+        WHERE
+        m_id=#{memberId};
+
+    </select>
+
 </mapper>
