@@ -65,11 +65,23 @@ public class PhBoardController {
         return "redirect:/admin/boardList";
 
     }
+    // 커뮤니티 수정 (사용자)
+    @PostMapping("/pharm/board/modify")
+    public String modifyBoard2(Board board){
+        phBoardService.modifyBoard(board);
+        return "redirect:/pharm/board";
+    }
     // 커뮤니티 수정 (관리자)
     @PostMapping("/admin/boardList/modify")
     public String modifyBoard(Board board){
         phBoardService.modifyBoard(board);
         return "redirect:/admin/boardList";
+    }
+    // 커뮤니티 삭제 (사용자)
+    @PostMapping("/pharm/board/delete")
+    public String deleteBoard2(@RequestParam String boardCode){
+        phBoardService.deleteBoard(boardCode);
+        return "redirect:/pharm/board";
     }
     // 커뮤니티 삭제 (관리자)
     @PostMapping("/admin/boardList/delete")

@@ -7,6 +7,9 @@
         .content-hidden {
             display: none;
         }
+        .content-hidden2 {
+            display: none;
+        }
     </style>
 </head>
 
@@ -45,7 +48,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12" style="height: 10px"></div>
-                                        <div style="background: #f9fafb; border-radius: 5px; padding: 10px; min-height: 60px; margin-bottom: 10px;">
+                                        <div style="background: #f9fafb; border-radius: 25px; padding: 10px; min-height: 60px; margin-bottom: 10px;">
                                             <div>
                                                 <div class="donation-comments" style="color: black; font-size: 16px;" th:text="${b.boardContent}">
                                                 </div>
@@ -55,9 +58,23 @@
                                         <div class="reply" style="display: inline-block; cursor: pointer">
                                             <i class="bi bi-heart" style="color: red; margin-right: 10px; position: relative; top: 2px; font-size: 23px"></i>
                                             <span class="bi bi-chat"></span>
-
-
+                                            <mark class="bi bi-three-dots" style="color: black; font-size: 23px; background:none; margin-left: 10px" ></mark>
                                         </div>
+                                        <div class="comlist-menu">
+                                            <a class="comlist-edit" style="color: black" data-toggle="modal" data-target="#editBoardModal"
+                                               th:data-board-id="${b.boardCode}"
+                                               th:data-board-title="${b.boardTitle}"
+                                               th:data-board-content="${b.boardContent}"
+                                               th:data-board-mid="${b.mId}"
+                                               th:data-session-id="${session.S_ID}"><i class="bi bi-pen"></i>수정</a>
+                                            <div style="border-bottom: 1px solid #f0f5f5"></div>
+
+                                            <a class="comlist-delete" style="color:red" data-toggle="modal" data-target="#deleteBoardModal"
+                                               th:data-board-id="${b.boardCode}"
+                                               th:data-session-id="${session.S_ID}"
+                                               th:data-board-mid="${b.mId}"><i class="bi bi-trash"></i>삭제</a>
+                                        </div>
+
 
                                         <div class="comments-reply" style="width: 100%; display: none">
                                             <div style="display: flex; margin-bottom: 10px; margin-top: 12px">
@@ -80,7 +97,7 @@
                                                     <br>
                                                     <p th:text="${r.pName}" style="font-size: 0.78rem;"></p>
                                                 </div>
-                                                <div style="background: #f9fafb; border-radius: 5px; padding: 10px; width: 40%">
+                                                <div style="background: #f9fafb; border-radius: 25px; padding: 10px; width: 40%">
                                                     <div>
                                                         <div class="reply-user-id" style="font-size: 12px" th:text="${r.replDate}"></div>
                                                         <div class="donation-comments" style="color: black; font-size: 15px" th:text="${r.replContent}"></div>
@@ -131,6 +148,75 @@
             </div>
         </div>
     </div>
+
+    <!-- 글 수정 모달 -->
+    <div class="modal fade" id="editBoardModal" tabindex="-1" aria-labelledby="editBoardModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content community-modal">
+
+                <div class="modal-body">
+                    <!-- 권한 없음 메시지 -->
+                    <div id="editBoardError" class="content-hidden" role="alert">
+                        <p style="color: black"> ❗ 작성자만 <i style="color: blue">수정</i>할 수 있습니다.</p>
+                        <button type="button" class="btn-modal1 m-1" data-dismiss="modal" aria-label="Close" style="width: 100%">알겠어요.</button>
+                    </div>
+
+                    <form id="editBoardForm" method="post" th:action="@{/pharm/board/modify}">
+                        <h5 class="modal-title font-1 m-1" id="editBoardModalLabel">글 수정하기</h5>
+
+                        <input  type="hidden" id="editBoardId" name="boardCode">
+                        <input  type="hidden" id="editBoardmId" name="mId">
+                        <input  type="hidden" id="sessionId">
+
+
+                        <textarea class="form-control commodal-title mb-3" id="editBoardTitle" name="boardTitle" placeholder="제목을 입력하세요."
+                                  required type="text"></textarea>
+                        <textarea class="form-control commodal-content" id="editBoardContent" name="boardContent" placeholder="내용을 입력하세요." required
+                                  rows="4"></textarea>
+                        <div class="mt-3 commodal-info">
+                            <p class="font-1" style="font-size: 14px">
+                                ⚠️최근 제3자에 대한 허위사실 유포, 비방 목적의 댓글로 인해 당사자간 법적분쟁이 발생한 사례가 증가하고 있습니다.
+                                악의적 댓글 작성자는 명예훼손, 모욕 등으로 법적 책임을 부담하게 될 수 있다는 점을 유의하여 주시기 바랍니다.
+                            </p>
+                        </div>
+                        <button class="btn btn-success mt-3" id="editCommodalBtn" type="submit">수정하기</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 글 삭제 확인 모달 -->
+    <div class="modal fade" id="deleteBoardModal" tabindex="-1" aria-labelledby="deleteBoardModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content community-modal">
+
+                <div class="modal-body">
+                    <!-- 권한 없음 메시지 -->
+                    <div id="deleteBoardError" class="content-hidden2" role="alert">
+                        <p style="color: black"> ❗ 작성자만 <i style="color: red">삭제</i>할 수 있습니다. </p>
+                        <button type="button" class="btn-modal1 m-1" data-dismiss="modal" aria-label="Close" style="width: 100%">알겠어요.</button>
+                    </div>
+
+                    <form id="deleteBoardForm" method="post" th:action="@{/pharm/board/delete}">
+                        <h5 class="modal-title font-1 m-1" id="deleteBoardModalLabel">정말로 삭제할까요?</h5>
+                        <div class="m-3 commodal-info">
+                            <p class="font-1" style="font-size: 14px">
+                                ❗ 삭제된 글은 복구할 수 없습니다.
+                            </p>
+                        </div>
+                        <input type="hidden" id="deleteBoardId" name="boardCode">
+                        <input type="hidden" id="sessionId2">
+                        <input type="hidden" id="deleteBoardmId">
+
+                        <button type="submit" class="deleteBtnOk" style="background-color: #ff8c9f; border: none">삭제</button><br>
+                        <button type="button" class="deleteBinNo" data-dismiss="modal" aria-label="Close">취소</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsFile">
@@ -170,8 +256,52 @@
             }
 
         });
+        $(document).ready(function() {
+            $('.reply mark').on('click', function() {
+                $(this).closest('.comments-review').find('.comlist-menu').slideToggle();
+            });
+
+            // 글 수정 버튼 클릭 시 모달 창에 데이터 채우기
+            $('.comlist-edit').on('click', function() {
+                const boardId = $(this).data('board-id');
+                const boardTitle = $(this).data('board-title');
+                const boardContent = $(this).data('board-content');
+                const boardMid = $(this).data('board-mid');
+                const sessionId =$(this).data('session-id');
+                if(boardMid === sessionId) {
+                    $('#editBoardId').val(boardId);
+                    $('#editBoardTitle').val(boardTitle);
+                    $('#editBoardContent').val(boardContent);
+                    $('#editBoardmId').val(boardMid);
+                    $('#sessionId').val(sessionId);
+                    $('#editBoardError').addClass('content-hidden');
+                    $('#editBoardForm').show();
+                } else{
+                    $('#editBoardError').removeClass('content-hidden');
+                    $('#editBoardForm').hide();
+                }
+            });
+
+                // 글 삭제 버튼 클릭 시 모달 창에 데이터 채우기
+                $('.comlist-delete').on('click', function() {
+                    const boardId2 = $(this).data('board-id');
+                    const sessionId2 = $(this).data('session-id');
+                    const boardmId2 = $(this).data('board-mid');
+                    if(boardmId2 === sessionId2) {
+                        $('#deleteBoardId').val(boardId2);
+                        $('#sessionId2').val(sessionId2);
+                        $('#deleteBoardmId').val(boardmId2);
+                        $('#deleteBoardError').addClass('content-hidden2');
+                        $('#deleteBoardForm').show();
+                    } else{
+                        $('#deleteBoardError').removeClass('content-hidden2');
+                        $('#deleteBoardForm').hide();
+
+                    }
+                });
+
+
+        });
     </script>
-
-
 </th:block>
 </html>

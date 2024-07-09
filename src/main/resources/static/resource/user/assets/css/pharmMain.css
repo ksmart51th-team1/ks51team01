@@ -35,6 +35,15 @@
     padding: 10px;
     margin: 10px;
 }
+.deleteBtnOk, .deleteBinNo {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    font-family: "Pretendard-Regular", sans-serif;
+    padding: 10px;
+    margin: 5px;
+    height: 50px;
+}
 .alert-notification {
     position: absolute;
     right: 15px;
@@ -137,4 +146,22 @@
     outline-color: #235FD9;
     outline-width: 1px;
     padding: 10px;
+}
+
+
+
+.comlist-menu {
+    display: none;
+    border-radius: 15px;
+    background-color: #f9fafb;
+    position: relative;
+    width: 15%;
+    left: 12%;
+    text-align: center;
+}
+#editCommodalBtn {
+    width: 100%;
+    border: none;
+    background-color: #235FD9;
+    color: white;
 }
