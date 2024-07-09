@@ -2,8 +2,10 @@ package team01.yaksutor.admin.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class AdMedicine {
+public class MedicalInfo extends AdMedicine{
     private String mediCode;
     private String regMId;
     private String mediName;
@@ -12,5 +14,7 @@ public class AdMedicine {
     private String mediDrugtype;
     private String mediState;
     private String mediUsebydate;
-    private String regDate;
+
+    private List<AdIngredient> ingrList;
+    private List<AdEfficacy> effiList;
 }

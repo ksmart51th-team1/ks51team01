@@ -26,8 +26,7 @@ public class PhBoardService {
         return boardList;
     }
     // 추가
-    public void addBoard(Board board){
-        phBoardMapper.addBoard(board);
+    public void addBoard(Board board){phBoardMapper.addBoard(board);
     }
     // 수정
     public int modifyBoard(Board board){
@@ -43,6 +42,10 @@ public class PhBoardService {
     public List<Repl> getReplList() {
         List<Repl> replList = phBoardMapper.getReplList();
         return replList;
+    }
+    // 추가
+    public void addRepl(Repl repl) {
+        phBoardMapper.addRepl(repl);
     }
 
 

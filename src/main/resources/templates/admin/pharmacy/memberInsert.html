@@ -7,14 +7,14 @@
 
 <th:block layout:fragment="customContent">
   <section class="content-main">
-    <form id="addMember" th:action="@{/admin/member/memberInsert}" method="post">
+    <form id="addMember" th:action="@{/admin/member/AdmemberInsert}" method="post">
       <div class="row">
         <div class="col-6">
           <div class="content-header">
             <h2 class="content-title" th:text="${content}">새로운 회원 등록</h2>
             <div>
               <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">등록 취소</button>
-              <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="회원 등록" />
+              <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="회원 등록"  disabled/>
             </div>
           </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="col-lg-6">
           <div class="card mb-4">
             <div class="card-body">
-              <div class="row">
+              <div class="row common">
                 <div class="col-md-3">
                   <h6 class="fs-5">1. 회원정보입력</h6>
                 </div>
@@ -31,6 +31,7 @@
                   <div class="mb-4">
                     <label class="form-label fs-6" for="memberId">회원아이디</label>
                     <input type="text" placeholder="아이디를 입력해주세요" name="memberId" id="memberId" class="form-control w-50" >
+                    <span id="check-message" class="form-text"></span>
                   </div>
                   <div class="mb-4">
                     <label class="form-label fs-6" for="memberPw">회원비밀번호</label>
@@ -40,8 +41,8 @@
                     <label class="form-label fs-6" for="memberLevelNum">약사등급선택</label>
                     <select class="form-select w-50" name="memberLevelNum" id="memberLevelNum" onchange="togglePharmacyInfo()">
                       <option>약사등급 선택</option>
-                      <option value="1">1.개국약사</option>
-                      <option value="2">2.관리약사</option>
+                      <option value="3">1.개국약사</option>
+                      <option value="4">2.관리약사</option>
                     </select>
                   </div>
                   <div class="mb-4">
@@ -58,26 +59,30 @@
                   </div>
                   <div class="mb-4">
                     <label class="form-label fs-6" for="memberPhone">핸드폰</label>
-                    <input type="text" placeholder="이메일을 입력해주세요" name="memberPhone"  id="memberPhone" class="form-control w-50">
+                    <input type="text" placeholder="핸드폰번호를 입력해주세요" name="memberPhone"  id="memberPhone" class="form-control w-50">
                   </div>
                   <div class="mb-4">
                     <label class="form-label mr-30 fs-6" >성별</label>
-                    <input class="mr-5 fs-5" type="radio" name="Gender"/>남
-                    <input class="ml-5 mr-5 fs-5" type="radio" name="Gender"/>여
+                    <input class="mr-5 fs-5" type="radio" name="memberGender" value="남"/>남
+                    <input class="ml-5 mr-5 fs-5" type="radio" name="memberGender" value="여"/>여
                   </div>
                   <div >
                     <div class="mb-4 d-flex">
                       <label class="form-label mr-30 fs-6" >주소입력</label>
                       <button type="button" id="addrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
                     </div>
-                    <input class="form-control mb-3 w-25" type="text" required="" name="memberAddr" id="memberPostcode" placeholder="우편번호" />
-                    <input class="form-control mb-3" type="text" required="" name="memberAddr" id="memberAddress" placeholder="도로명주소" />
-                    <input class="form-control mb-3" type="text" required="" name="memberAddr" id="memberDetailAddress" placeholder="상세주소" />
+                    <input class="form-control mb-3 w-25" type="text" required="" name="memberPostCode" id="memberPostcode" placeholder="우편번호" />
+                    <input class="form-control mb-3" type="text" required="" name="targetAddr" id="targetAddr" placeholder="도로명주소" />
+                    <input class="form-control mb-3" type="text" required="" name="targetAddrDetail" id="targetAddrDetail" placeholder="상세주소" />
+                    <input type="hidden" name="memberAddrSido" id="memberAddrSido" />
+                    <input type="hidden" name="memberAddrSigungu" id="memberAddrSigungu" />
+                    <input type="hidden" name="memberAddrDong" id="memberAddrDong" />
+                    <input type="hidden" name="memberAddr" id="memberAddr" />
                   </div>
                 </div> <!-- col.// -->
               </div> <!-- row.// -->
               <hr class="mb-4 mt-0">
-              <div class="row">
+              <div class="row common">
                 <div class="col-md-3">
                   <h6 class="fs-5">2. 면허 정보 입력</h6>
                 </div>
@@ -111,9 +116,13 @@
                       <label class="form-label mr-30 fs-6" >약국주소입력</label>
                       <button type="button" id="pAddrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
                     </div>
-                    <input class="form-control mb-3 w-25" type="text" required="" name="pharmacyAddr" id="pharPostcode" placeholder="우편번호" />
-                    <input class="form-control mb-3" type="text" required="" name="pharmacyAddr" id="pharAddress" placeholder="도로명주소" />
-                    <input class="form-control mb-3" type="text" required="" name="pharmacyAddr" id="pharDetailAddress" placeholder="상세주소" />
+                    <input class="form-control mb-3 w-25" type="text"  name="pPostCode" id="pPostCode" placeholder="우편번호" />
+                    <input class="form-control mb-3" type="text"  name="targetPharAddr" id="targetPharAddr" placeholder="도로명주소" />
+                    <input class="form-control mb-3" type="text"  name="targetPharAddrDetail" id="targetPharAddrDetail" placeholder="상세주소" />
+                    <input type="hidden" name="pAddrDo" id="pAddrDo" />
+                    <input type="hidden" name="pAddrSi" id="pAddrSi" />
+                    <input type="hidden" name="pAddrDong" id="pAddrDong" />
+                    <input type="hidden" name="pAddr" id="pAddr" />
                   </div>
                   <div class="mb-4">
                     <label class="form-label fs-6" for="openDate">약국개업일자</label>
@@ -129,12 +138,12 @@
                 <div class="col-md-9 mt-50">
                 <div class="mb-4">
                   <div class="mb-4">
-                    <label class="form-label fs-6" for="resultPharId">개국약사아이디</label>
-                    <input type="text"  name="resultPharId"  id="resultPharId" class="form-control w-50">
+                    <label class="form-label fs-6" for="PharId">개국약사아이디</label>
+                    <input type="text"  name="pharId"  id="PharId" class="form-control w-50">
                   </div>
                   <div class="mb-4">
-                     <label class="form-label fs-6" for="PharName">약국이름</label>
-                      <input type="text"  name="PharName"  id="PharName" class="form-control w-50 ">
+                     <label class="form-label fs-6" for="PName">약국이름</label>
+                      <input type="text"  name="pName"  id="PharName" class="form-control w-50 ">
                   </div>
                 </div>
 
@@ -198,17 +207,17 @@
     $('#addrBtn').click(function(){
       const searchObj = {
         zonecode : 'memberPostcode',
-        address: 'memberAddress',
-        focus : 'memberDetailAddress'
+        address: 'targetAddr',
+        focus : 'targetAddrDetail'
       }
       searchAddress(searchObj);
     });
     //약국주소객체
     $('#pAddrBtn').click(function(){
       const searchObj = {
-        zonecode : 'pharPostcode',
-        address: 'pharAddress',
-        focus : 'pharDetailAddress'
+        zonecode : 'pPostCode',
+        address: 'targetPharAddr',
+        focus : 'targetPharAddrDetail'
       }
       searchAddress(searchObj);
     });
@@ -218,20 +227,92 @@
       location.href = '/admin/adminMain';
     });
 
+
     $('#submitBtn').click(function(){
+
       let isSubmit = true;
-      $('#addMedicine input, #addMedicine select').each((idx, element) => {
+
+      // 회원의 주소 파싱 및 숨겨진 필드에 값 설정
+      const fullAddress = $('#targetAddr').val().trim();
+      console.log(fullAddress);
+      const addrDetail = $('#targetAddrDetail').val().trim();
+      console.log(addrDetail);
+      if (fullAddress) {
+        try {
+          const parsedAddress = parseAddress(fullAddress);
+          $('#memberAddrSido').val(parsedAddress.sido);
+          $('#memberAddrSigungu').val(parsedAddress.sigungu);
+          $('#memberAddrDong').val(parsedAddress.dong);
+          $('#memberAddr').val(parsedAddress.detail + ' ' + addrDetail);
+        } catch (e) {
+          alert('잘못된 회원 주소 형식입니다.');
+          $('#targetAddress').focus();
+          isSubmit = false;
+        }
+      } else {
+        alert('도로명주소는 필수 입력 항목입니다');
+        $('#targetAddress').focus();
+        isSubmit = false;
+      }
+
+      const cate = ['owner','staff'];
+      const idx = Number($('#memberLevelNum').val())-3;
+      console.log(cate[idx]);
+      if(cate[idx] === 'owner'){
+        //약국의 주소 파싱 및 숨겨진 필드에 값 설정
+        const fullPharAddress = $('#targetPharAddr').val().trim();
+        const addrPharDetail = $('#targetPharAddrDetail').val().trim();
+        if (fullPharAddress) {
+          try {
+            const parsedAddress = parseAddress(fullPharAddress);
+            $('#pAddrDo').val(parsedAddress.sido);
+            $('#pAddrSi').val(parsedAddress.sigungu);
+            $('#pAddrDong').val(parsedAddress.dong);
+            $('#pAddr').val(parsedAddress.detail + ' ' + addrPharDetail);
+          } catch (e) {
+            console.log(e);
+            alert('잘못된 약국 주소 형식입니다.');
+            $('#targetAddress').focus();
+            isSubmit = false;
+          }
+        } else {
+          alert('도로명주소는 필수 입력 항목입니다');
+          $('#targetAddress').focus();
+          isSubmit = false;
+        }
+      }
+
+      $(`#addMember .common input:not([type="hidden"]), #addMember #${cate[idx]} input:not([type="hidden"])`).each((idx, element) => {
         const id = element.id;
         const value = element.value;
-        if(!value){
+        /*if(!value){
           alert(`${id}는(은) 필수 입력 항목입니다`);
           $(element.focus());
           isSubmit = false;
           return false;
-        }
+        }*/
       });
-      if(isSubmit) $('#addMedicine').submit();
+      if(isSubmit) $('#addMember').submit();
+
     });
+
+    //주소 파싱하는 함수 정의
+    function parseAddress(address) {
+      const pattern = /(?<sido>[가-힣]+특별자치도|[가-힣]+시|[가-힣]+도|[가-힣]+북|[가-힣]+남|[가-힣]+기|[가-힣]+산|[가-힣]+구|[가-힣]+울|[가-힣]+전)\s+(?<sigungu>[가-힣]+시\s+[가-힣]+구|[가-힣]+시|[가-힣]+군|[가-힣]+구)\s+(?<detail>.+)/;
+      const match = address.match(pattern);
+      if (match) {
+        const detailPattern = /(?<dong>[가-힣]+[동|읍|면|리])?\s*(?<detail>.+)?/;
+        const detailMatch = match.groups.detail.match(detailPattern);
+        return {
+          sido: match.groups.sido,
+          sigungu: match.groups.sigungu,
+          dong: detailMatch.groups.dong || '',
+          detail: detailMatch.groups.detail || match.groups.detail
+        };
+      } else {
+        throw new Error('Invalid address format');
+      }
+    }
 
     //약사의 권한에 따라 약국정보추가 혹은 소속약국등록 div 보이게 만드는 자바스크립트
     function togglePharmacyInfo() {
@@ -239,10 +320,10 @@
       var ownerDiv = document.getElementById('owner');
       var staffDiv = document.getElementById('staff');
 
-      if (memberLevel === "1") {
+      if (memberLevel === "3") {
         ownerDiv.classList.remove('d-none');
         staffDiv.classList.add('d-none');
-      } else if (memberLevel === "2") {
+      } else if (memberLevel === "4") {
         ownerDiv.classList.add('d-none');
         staffDiv.classList.remove('d-none');
       } else {
@@ -251,11 +332,35 @@
       }
     }
 
-    //약국검색 모달창 띄우기
-    function openModal() {
-      const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-      myModal.show();
-    }
+
+
+    //회원가입시 ID체크
+    $(document).ready(function() {
+      $('#memberId').on('blur', function() {
+        var memberId = $(this).val();
+        var $checkMessage = $('#check-message');
+
+        if (memberId.length === 0) {
+          $checkMessage.text('').hide();
+          return;
+        }
+
+        $.ajax({
+          url: '/admin/member/idCheck',
+          method: 'POST',
+          data: { memberId: memberId },
+          dataType : 'json',
+          success: function(response) {
+            if (response) {
+              $checkMessage.text('이미 사용 중인 아이디입니다.').css('color', 'red').show();
+            } else {
+              $checkMessage.text('사용 가능한 아이디입니다.').css('color', 'green').show();
+              $('#submitBtn').prop('disabled',false);
+            }
+          }
+        });
+      });
+    });
 
   </script>
 </th:block>

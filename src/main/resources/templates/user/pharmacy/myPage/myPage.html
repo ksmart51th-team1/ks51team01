@@ -30,9 +30,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>계정</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="page-login.html"><i class="fi-rs-sign-out mr-10"></i>로그아웃</a>
-                                    </li>
+
+                                        <li class="nav-item">
+
+                                                <a class="nav-link" th:href="@{/logout}"><i class="fi-rs-sign-out mr-10"></i>로그아웃</a>
+
+                                        </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -41,7 +45,7 @@
                                 <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="mb-0 font-1">안녕하세요 <mark>admin</mark> 님.</h3>
+                                            <h3 class="mb-0 font-1">안녕하세요 <mark th:text="${session.S_PNAME}"></mark> 의 <mark th:text="${session.S_NAME}"></mark> 님. </h3>
                                         </div>
                                         <div class="card-body">
                                             <p>

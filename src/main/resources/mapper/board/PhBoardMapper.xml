@@ -11,6 +11,7 @@
     <resultMap type="Board" id="boardResultMap">
         <id column="cm_num" 			property="boardCode" />
         <result column="m_id" 		property="mId"/>
+        <result column="p_name" 		property="pName"/>
         <result column="cm_title" 		property="boardTitle"/>
         <result column="cm_content" 		property="boardContent"/>
         <result column="cm_view" 		property="boardView"/>
@@ -19,14 +20,19 @@
 
     <select id="getBoardList" resultMap="boardResultMap">
         SELECT
-            cm_num,
-            m_id,
-            cm_title,
-            cm_content,
-            cm_view,
-            cm_date
+            c.cm_num,
+            c.m_id,
+            p.p_name,
+            c.cm_title,
+            c.cm_content,
+            c.cm_view,
+            c.cm_date
         FROM
-            community;
+            community AS c
+        INNER JOIN
+            pharmacy AS p
+        ON
+            c.m_id = p.phar_id;
     </select>
     <!--커뮤니티 등록-->
     <insert id="addBoard" parameterType="Board">
@@ -75,21 +81,45 @@
     <resultMap type="Repl" id="replResultMap">
         <id column="repl_num" 			property="replNum" />
         <result column="m_id" 		property="mId"/>
+        <result column="p_name" 		property="pName"/>
         <result column="cm_num" 		property="cmNum"/>
         <result column="repl_content" 		property="replContent"/>
         <result column="repl_date" 	property="replDate"/>
     </resultMap>
     <select id="getReplList" resultMap="replResultMap">
         SELECT
-            repl_num,
-            m_id,
-            cm_num,
-            repl_content,
-            repl_date
+            r.repl_num,
+            r.m_id,
+            p.p_name,
+            r.cm_num,
+            r.repl_content,
+            r.repl_date
         FROM
-            repl;
+            repl AS r
+        INNER JOIN
+            pharmacy AS p
+        ON
+            r.m_id = p.phar_id;
     </select>
-
+    <!--커뮤니티 댓글 등록-->
+    <insert id="addRepl" parameterType="Repl">
+        <selectKey keyProperty="replNum" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(repl_num) = 0 THEN 'repl_num_1'
+            ELSE
+            CONCAT(
+            'repl_num_',
+            MAX(CAST(SUBSTRING_INDEX(repl_num, 'repl_num_', -1) AS UNSIGNED)) +1)
+            END AS replNum
+            FROM
+            repl;
+        </selectKey>
+        INSERT INTO repl
+        (repl_num, m_id, cm_num, repl_content, repl_date)
+        values
+        (#{replNum}, #{mId}, #{cmNum}, #{replContent}, CURDATE());
+    </insert>
 
 
     <!-- =================자주하는 질문==========================-->

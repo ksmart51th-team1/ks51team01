@@ -6,6 +6,7 @@ import lombok.Data;
 public class Repl {
     private String replNum;
     private String mId;
+    private String pName;
     private String cmNum;
     private String replContent;
     private String replDate;
