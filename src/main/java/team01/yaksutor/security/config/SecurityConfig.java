@@ -33,6 +33,7 @@ public class SecurityConfig {
 
     private static final String[] BASIC_LIST = {
             "/", "/index","/resource/**","/member/memberInsert/**", "/login"
+
     };
 
     @Bean

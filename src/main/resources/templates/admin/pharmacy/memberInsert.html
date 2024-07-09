@@ -63,8 +63,8 @@
                   </div>
                   <div class="mb-4">
                     <label class="form-label mr-30 fs-6" >성별</label>
-                    <input class="mr-5 fs-5" type="radio" name="memberGender" value="남자"/>남
-                    <input class="ml-5 mr-5 fs-5" type="radio" name="memberGender" value="여자"/>여
+                    <input class="mr-5 fs-5" type="radio" name="memberGender" value="남"/>남
+                    <input class="ml-5 mr-5 fs-5" type="radio" name="memberGender" value="여"/>여
                   </div>
                   <div >
                     <div class="mb-4 d-flex">
@@ -116,9 +116,9 @@
                       <label class="form-label mr-30 fs-6" >약국주소입력</label>
                       <button type="button" id="pAddrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
                     </div>
-                    <input class="form-control mb-3 w-25" type="text" required="" name="pPostCode" id="pPostCode" placeholder="우편번호" />
-                    <input class="form-control mb-3" type="text" required="" name="targetPharAddr" id="targetPharAddr" placeholder="도로명주소" />
-                    <input class="form-control mb-3" type="text" required="" name="targetPharAddrDetail" id="targetPharAddrDetail" placeholder="상세주소" />
+                    <input class="form-control mb-3 w-25" type="text"  name="pPostCode" id="pPostCode" placeholder="우편번호" />
+                    <input class="form-control mb-3" type="text"  name="targetPharAddr" id="targetPharAddr" placeholder="도로명주소" />
+                    <input class="form-control mb-3" type="text"  name="targetPharAddrDetail" id="targetPharAddrDetail" placeholder="상세주소" />
                     <input type="hidden" name="pAddrDo" id="pAddrDo" />
                     <input type="hidden" name="pAddrSi" id="pAddrSi" />
                     <input type="hidden" name="pAddrDong" id="pAddrDong" />
@@ -139,11 +139,11 @@
                 <div class="mb-4">
                   <div class="mb-4">
                     <label class="form-label fs-6" for="PharId">개국약사아이디</label>
-                    <input type="text"  name="PharId"  id="PharId" class="form-control w-50">
+                    <input type="text"  name="pharId"  id="PharId" class="form-control w-50">
                   </div>
                   <div class="mb-4">
-                     <label class="form-label fs-6" for="PharName">약국이름</label>
-                      <input type="text"  name="PharName"  id="PharName" class="form-control w-50 ">
+                     <label class="form-label fs-6" for="PName">약국이름</label>
+                      <input type="text"  name="pName"  id="PharName" class="form-control w-50 ">
                   </div>
                 </div>
 
@@ -245,28 +245,7 @@
           $('#memberAddrDong').val(parsedAddress.dong);
           $('#memberAddr').val(parsedAddress.detail + ' ' + addrDetail);
         } catch (e) {
-          alert('잘못된 주소 형식입니다.');
-          $('#targetAddress').focus();
-          isSubmit = false;
-        }
-      } else {
-        alert('도로명주소는 필수 입력 항목입니다');
-        $('#targetAddress').focus();
-        isSubmit = false;
-      }
-
-      //약국의 주소 파싱 및 숨겨진 필드에 값 설정
-      const fullPharAddress = $('#targetPharAddr').val().trim();
-      const addrPharDetail = $('#targetPharAddrDetail').val().trim();
-      if (fullAddress) {
-        try {
-          const parsedAddress = parseAddress(fullPharAddress);
-          $('#pAddrDo').val(parsedAddress.sido);
-          $('#pAddrSi').val(parsedAddress.sigungu);
-          $('#pAddrDong').val(parsedAddress.dong);
-          $('#pAddr').val(parsedAddress.detail + ' ' + addrPharDetail);
-        } catch (e) {
-          alert('잘못된 주소 형식입니다.');
+          alert('잘못된 회원 주소 형식입니다.');
           $('#targetAddress').focus();
           isSubmit = false;
         }
@@ -277,16 +256,41 @@
       }
 
       const cate = ['owner','staff'];
-      const idx = Number($('#memberLevelNum').val())-1;
-      $(`#addMember .common input:not([type="hidden"], #addMember #${cate[idx]} input:not([type="hidden"]`).each((idx, element) => {
+      const idx = Number($('#memberLevelNum').val())-3;
+      console.log(cate[idx]);
+      if(cate[idx] === 'owner'){
+        //약국의 주소 파싱 및 숨겨진 필드에 값 설정
+        const fullPharAddress = $('#targetPharAddr').val().trim();
+        const addrPharDetail = $('#targetPharAddrDetail').val().trim();
+        if (fullPharAddress) {
+          try {
+            const parsedAddress = parseAddress(fullPharAddress);
+            $('#pAddrDo').val(parsedAddress.sido);
+            $('#pAddrSi').val(parsedAddress.sigungu);
+            $('#pAddrDong').val(parsedAddress.dong);
+            $('#pAddr').val(parsedAddress.detail + ' ' + addrPharDetail);
+          } catch (e) {
+            console.log(e);
+            alert('잘못된 약국 주소 형식입니다.');
+            $('#targetAddress').focus();
+            isSubmit = false;
+          }
+        } else {
+          alert('도로명주소는 필수 입력 항목입니다');
+          $('#targetAddress').focus();
+          isSubmit = false;
+        }
+      }
+
+      $(`#addMember .common input:not([type="hidden"]), #addMember #${cate[idx]} input:not([type="hidden"])`).each((idx, element) => {
         const id = element.id;
         const value = element.value;
-        if(!value){
+        /*if(!value){
           alert(`${id}는(은) 필수 입력 항목입니다`);
           $(element.focus());
           isSubmit = false;
           return false;
-        }
+        }*/
       });
       if(isSubmit) $('#addMember').submit();
 
@@ -294,7 +298,7 @@
 
     //주소 파싱하는 함수 정의
     function parseAddress(address) {
-      const pattern = /(?<sido>[가-힣]+특별자치도|[가-힣]+시|[가-힣]+도|[가-힣]+북|[가-힣]+남|[가-힣]+기|[가-힣]+산|[가-힣]+구|[가-힣]+울)\s+(?<sigungu>[가-힣]+시\s+[가-힣]+구|[가-힣]+시|[가-힣]+군|[가-힣]+구)\s+(?<detail>.+)/;
+      const pattern = /(?<sido>[가-힣]+특별자치도|[가-힣]+시|[가-힣]+도|[가-힣]+북|[가-힣]+남|[가-힣]+기|[가-힣]+산|[가-힣]+구|[가-힣]+울|[가-힣]+전)\s+(?<sigungu>[가-힣]+시\s+[가-힣]+구|[가-힣]+시|[가-힣]+군|[가-힣]+구)\s+(?<detail>.+)/;
       const match = address.match(pattern);
       if (match) {
         const detailPattern = /(?<dong>[가-힣]+[동|읍|면|리])?\s*(?<detail>.+)?/;
