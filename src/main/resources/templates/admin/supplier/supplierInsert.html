@@ -67,6 +67,10 @@
                     <input class="form-control mb-3 w-25" type="text" required="" name="memberPostCode" id="memberPostcode" placeholder="우편번호" />
                     <input class="form-control mb-3" type="text" required="" name="targetAddr" id="targetAddr" placeholder="도로명주소" />
                     <input class="form-control mb-3" type="text" required="" name="targetAddrDetail" id="targetAddrDetail" placeholder="상세주소" />
+                    <input type="hidden" name="memberAddrSido" id="memberAddrSido" />
+                    <input type="hidden" name="memberAddrSigungu" id="memberAddrSigungu" />
+                    <input type="hidden" name="memberAddrDong" id="memberAddrDong" />
+                    <input type="hidden" name="memberAddr" id="memberAddr" />
                   </div>
                 </div> <!-- col.// -->
               </div> <!-- row.// -->
@@ -96,6 +100,7 @@
                     <input class="form-control mb-3 w-25" type="text" required="" name="supPostcode" id="supPostcode" placeholder="우편번호" />
                     <input class="form-control mb-3" type="text" required="" name="supAddress" id="supAddress" placeholder="도로명주소" />
                     <input class="form-control mb-3" type="text" required="" name="supDetailAddress" id="supDetailAddress" placeholder="상세주소" />
+                    <input type="hidden" name="supAddr" id="supAddr" />
                   </div>
                   <div class="mb-4">
                     <label class="form-label fs-6" for="supIntro">업체 소개</label>
@@ -167,12 +172,12 @@
       }
       searchAddress(searchObj);
     });
-    //약국주소객체
+    //납품업체주소객체
     $('#supAddrBtn').click(function(){
       const searchObj = {
-        zonecode : 'pPostCode',
-        address: 'targetPharAddr',
-        focus : 'targetPharAddrDetail'
+        zonecode : 'supPostcode',
+        address: 'supAddress',
+        focus : 'supDetailAddress'
       }
       searchAddress(searchObj);
     });
@@ -214,6 +219,7 @@
       const idx = Number($('#memberLevelNum').val())-3;
       console.log(cate[idx]);
       if(cate[idx] === 'owner'){
+
         //약국의 주소 파싱 및 숨겨진 필드에 값 설정
         const fullPharAddress = $('#targetPharAddr').val().trim();
         const addrPharDetail = $('#targetPharAddrDetail').val().trim();

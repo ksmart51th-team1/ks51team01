@@ -95,13 +95,13 @@
                                             <a th:href="@{/admin/adminMain}">(테스트용 추후 삭제)관리자화면</a>
                                         </div>
                                         <div>
-                                            <a href="/admin/adminMain?memberId=admin&memberPw=admin1234" >관리자 메인 화면 바로가기</a>
+                                            <a th:href="@{#}" class="shortCut" data-login-id="admin" data-login-pw="admin1234">관리자 메인 화면 바로가기</a>
                                         </div>
                                         <div>
-                                            <a href="/pharm/main?memberId=id007&memberPw=pw007" >약사 메인 화면 바로가기</a>
+                                            <a th:href="@{#}" class="shortCut" data-login-id="id007" data-login-pw="pw007">약사 메인 화면 바로가기</a>
                                         </div>
                                         <div>
-                                            <a href="/supplier/supplierMain?memberId=id001&memberPw=pw001" >납품업체 메인 화면 바로가기</a>
+                                            <a th:href="@{#}" class="shortCut" data-login-id="id001" data-login-pw="pw001">납품업체 메인 화면 바로가기</a>
                                         </div>
                                     </form>
                                 </div>
@@ -150,5 +150,22 @@
 <script th:src="@{/resource/user/assets/js/main.js?v=5.6}"></script><a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none;"><i class="fi-rs-arrow-small-up"></i></a>
 <script th:src="@{/resource/user/assets/js/shop.js?v=5.6}"></script>
 
+<script>
+    $('.shortCut').click(e => {
+        e.preventDefault();
+        const target = e.target;
+        const $loginForm = $('<form></form>');
+        const $memberId = $('<input />', {name: 'memberId', value: $(target).data('loginId')});
+        const $memberPw = $('<input />', {name: 'memberPw', value: $(target).data('loginPw')});
+        const $secret = $('<input />', {name: 'secret_key', value: $('input[name="secret_key"]').val()});
+        $loginForm.attr('action', '/login');
+        $loginForm.attr('method', 'post');
+        $loginForm.append($memberId, $memberPw, $secret);
+        $('body').append($loginForm);
+        $loginForm.submit();
+    });
 
-</body></html>
+</script>
+
+</body>
+</html>
