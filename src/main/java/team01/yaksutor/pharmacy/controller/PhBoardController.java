@@ -34,11 +34,13 @@ public class PhBoardController {
 
         return "user/pharmacy/board/boardList";
     }
-    // 커뮤니티 조회 (관리자)
+    // 커뮤니티 + 댓글 조회 (관리자)
     @GetMapping("/admin/boardList")
     public String getBoardList2(Model model) {
         List<Board> boardList = phBoardService.getBoardList();
+        List<Repl> replList = phBoardService.getReplList();
         model.addAttribute("boardList", boardList);
+        model.addAttribute("replList", replList);
 
         return "admin/board/boardList";
     }
@@ -63,17 +65,36 @@ public class PhBoardController {
         return "redirect:/admin/boardList";
 
     }
+    // 커뮤니티 수정 (사용자)
+    @PostMapping("/pharm/board/modify")
+    public String modifyBoard2(Board board){
+        phBoardService.modifyBoard(board);
+        return "redirect:/pharm/board";
+    }
     // 커뮤니티 수정 (관리자)
     @PostMapping("/admin/boardList/modify")
     public String modifyBoard(Board board){
         phBoardService.modifyBoard(board);
         return "redirect:/admin/boardList";
     }
+    // 커뮤니티 삭제 (사용자)
+    @PostMapping("/pharm/board/delete")
+    public String deleteBoard2(@RequestParam String boardCode){
+        phBoardService.deleteBoard(boardCode);
+        return "redirect:/pharm/board";
+    }
     // 커뮤니티 삭제 (관리자)
     @PostMapping("/admin/boardList/delete")
     public String deleteBoard(@RequestParam String boardCode){
         phBoardService.deleteBoard(boardCode);
         return "redirect:/admin/boardList";
+    }
+    // 커뮤니티 댓글 등록 (사용자)
+    @PostMapping("/pharm/replAdd")
+    public String addRepl(Repl repl){
+        phBoardService.addRepl(repl);
+        return "redirect:/pharm/board";
+
     }
 
 

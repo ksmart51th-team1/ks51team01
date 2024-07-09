@@ -35,6 +35,15 @@
     padding: 10px;
     margin: 10px;
 }
+.deleteBtnOk, .deleteBinNo {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    font-family: "Pretendard-Regular", sans-serif;
+    padding: 10px;
+    margin: 5px;
+    height: 50px;
+}
 .alert-notification {
     position: absolute;
     right: 15px;
@@ -48,4 +57,111 @@
     text-align: center;
     line-height: 20px;
     background-color: #1f6feb;
+}
+.board-title {
+    color: black;
+    font-size: 1.25rem;
+}
+
+.reply span {
+    font-size: 23px;
+    color: #0a0a18;
+}
+
+.replyArea {
+    width: 480px;
+    resize: none;
+    outline-color: #235FD9;
+    outline-width: 1px;
+    border-radius: 20px;
+    min-height: 50px;
+}
+
+#replyBtn {
+    background-color: #235FD9;
+    margin-left: 1%;
+    width: 10px;
+    border-radius: 40px;
+    height: 50px;
+    border: none;
+}
+#replyBtn:hover {
+    background-color: rgba(35, 95, 217, 0.71);
+
+}
+.replyCursor{
+    font-size: 20px;
+    left: -7px;
+    position: relative;
+}
+.board-date {
+    font-size: 12px;
+    margin: 30px;
+    color: darkgray;
+}
+
+.community-modal {
+    border-radius: 20px;
+    border: none;
+}
+
+.community-modal textarea{
+    border: 1px solid darkslategray;
+    outline-color: black;
+}
+
+.commodal-info {
+    background: #fff1f1;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+#commodal-btn {
+    width: 100%;
+    border: none;
+    background-color: #ff8c9f;
+}
+
+#commodal-btn:hover{
+    background-color: #2929f8;
+}
+
+.community-modal h5{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: black;
+}
+.commodal-title {
+    width: 100%;
+    height: 50px;
+    resize: none;
+    outline-color: #235FD9;
+    outline-width: 1px;
+    padding: 10px;
+}
+.commodal-content {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    outline-color: #235FD9;
+    outline-width: 1px;
+    padding: 10px;
+}
+
+
+
+.comlist-menu {
+    display: none;
+    border-radius: 15px;
+    background-color: #f9fafb;
+    position: relative;
+    width: 15%;
+    left: 12%;
+    text-align: center;
+}
+#editCommodalBtn {
+    width: 100%;
+    border: none;
+    background-color: #235FD9;
+    color: white;
 }

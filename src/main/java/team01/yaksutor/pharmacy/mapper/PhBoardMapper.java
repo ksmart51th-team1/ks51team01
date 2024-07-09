@@ -23,6 +23,8 @@ public interface PhBoardMapper {
     int modifyBoard(Board board);
     // 커뮤니티 삭제
     int deleteBoard(String boardCode);
+    // 커뮤니티 댓글 등록
+    int addRepl(Repl repl);
 
 
 

@@ -32,9 +32,12 @@ public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         request.getSession().setAttribute("S_ID", sessionMember.getMemberId());
         request.getSession().setAttribute("S_LEVEL", sessionMember.getMemberLevelName());
         request.getSession().setAttribute("S_NAME", sessionMember.getMemberName());
+
+
         System.out.println("1. " + request.getSession().getAttribute("S_ID"));
         System.out.println("2. " + request.getSession().getAttribute("S_LEVEL"));
         System.out.println("3. " + request.getSession().getAttribute("S_NAME"));
+
 
         String memberInfo = authentication.getName();
 
