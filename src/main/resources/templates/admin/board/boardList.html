@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/layout/default}">
 <head>
+
 </head>
 
 <th:block layout:fragment="customContent">
@@ -13,7 +14,6 @@
             </div>
         </div>
         <div class="card mb-4">
-            <!-- card-header end// -->
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -36,7 +36,7 @@
                             <td th:text="${b.mId}"></td>
                             <td th:text="${b.boardDate}"></td>
                             <td>
-                                <button type="button" class="btn btn-md rounded font-sm replyBtn" style="background-color: blue">댓글관리</button>
+                                <a class="btn replyBtn" style="background-color: blue; color: white;">댓글관리</a>
                             </td>
                             <td class="text-end">
                                 <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editBoardModal"
@@ -45,25 +45,21 @@
                                    th:data-board-content="${b.boardContent}">수정</a>
                                 <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
                                     <input type="hidden" name="boardCode" th:value="${b.boardCode}">
-                                    <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
+                                    <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red; color: white;">삭제</button>
                                 </form>
-
-                                <!-- dropdown //end -->
                             </td>
                         </tr>
-                        <th class="reply-list" style="display: none">
-                            <td>댓글제목</td>
-                            <td>댓글내용</td>
-                            <td>댓글날짜</td>
-                            <td>등록자</td>
-                        </th>
 
+                        <tr class="reply-list" style="display: none" th:each="r : ${replList}" th:if="${b.boardCode} == ${r.cmNum}">
+                            <td colspan="2" th:text="${r.cmNum} + ' / ' + ${r.replNum}"></td>
+                            <td th:text="${r.replContent}"></td>
+                            <td th:text="${r.mId}"></td>
+                            <td th:text="${r.replDate}"></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
-                <!-- table-responsive//end -->
             </div>
-            <!-- card-body end// -->
         </div>
         <div class="pagination-area mt-30 mb-50">
             <nav aria-label="Page navigation example">
@@ -87,9 +83,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editBoardModalLabel">질문 수정</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-
-                    </button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editBoardForm" th:action="@{/admin/boardList/modify}" method="post">
@@ -111,31 +105,37 @@
 </th:block>
 
 <th:block layout:fragment="customJsFile">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
-    <script th:inline="javascript">
-        $('#editBoardModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var boardId = button.data('board-id');
-            var boardTitle = button.data('board-title');
-            var boardContent = button.data('board-content');
+    <script>
+        $(document).ready(function () {
+            $('.replyBtn').on('click', function () {
+                $(this).closest('.card-body').find('.reply-list').slideToggle();
+            });
 
-            var modal = $(this);
-            modal.find('#editBoardId').val(boardId);
-            modal.find('#editBoardTitle').val(boardTitle);
-            modal.find('#editBoardContent').val(boardContent);
-        });
+            $('#editBoardModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var boardId = button.data('board-id');
+                var boardTitle = button.data('board-title');
+                var boardContent = button.data('board-content');
 
-        document.querySelectorAll('.delete-button').forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                if (confirm('정말로 삭제할까요?')) {
-                    var form = event.target.closest('.delete-form');
-                    form.submit();
-                }
+                var modal = $(this);
+                modal.find('#editBoardId').val(boardId);
+                modal.find('#editBoardTitle').val(boardTitle);
+                modal.find('#editBoardContent').val(boardContent);
+            });
+
+            document.querySelectorAll('.delete-button').forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    if (confirm('정말로 삭제할까요?')) {
+                        var form = event.target.closest('.delete-form');
+                        form.submit();
+                    }
+                });
             });
         });
     </script>
