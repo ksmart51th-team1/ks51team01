@@ -61,6 +61,108 @@
                 </div>
             </div>
         </div>
+    </section>
+
+
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title font-1">커뮤니티 관리</h2>
+            </div>
+            <div>
+                <a th:href="@{/admin/boardAdd}" class="btn btn-primary btn-sm rounded">등록</a>
+            </div>
+        </div>
+        <div class="card mb-4">
+
+            <div class="card-body">
+                <article class="itemlist">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">제목</h6></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">내용</h6></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">작성자</h6></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-status">
+                            <h6 class="mb-0">댓글관리</h6>
+                        </div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-date">
+                            <h6 class="mb-0">등록일자</h6>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                            <h6 class="mb-0">수정/삭제</h6>
+                        </div>
+                    </div>
+                    <!-- row .// -->
+                </article>
+                <!-- itemlist  .// -->
+                <article class="itemlist" th:if="${boardList != null}" th:each="b : ${boardList}">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${b.boardTitle}" class="mb-0">제목</p></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${b.boardContent}" class="mb-0">내용</p></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${b.mId}" class="mb-0">작성자</p></div>
+
+                        <div class="col-lg-2 col-sm-2 col-4 col-status">
+                            <span class="badge rounded-pill alert-success replyBtn">댓글관리</span>
+                        </div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-date">
+                            <span th:text="${b.boardDate}"></span>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                            <a class="btn btn-sm font-sm rounded btn-brand"
+                               data-toggle="modal"
+                               data-target="#editBoardModal"
+                               th:data-board-id="${b.boardCode}"
+                               th:data-board-title="${b.boardTitle}"
+                               th:data-board-content="${b.boardContent}">
+                                <i class="material-icons md-edit"></i> 수정
+                            </a>
+                            <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
+                                <input type="hidden" name="boardCode" th:value="${b.boardCode}">
+                                <a href="#" class="btn btn-sm font-sm btn-light rounded delete-button"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            </form>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="reply-list" style="display: none" th:each="r : ${replList}" th:if="${b.boardCode} == ${r.cmNum}">
+                        <div class="row align-items-center">
+                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0"><i class="bi bi-arrow-return-right"
+                            style="font-weight: bolder; color: #0a58ca; font-size: 20px; width: 50px"></i></p></div>
+                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${r.replContent}" class="mb-0">내용</p></div>
+                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${r.mId}" class="mb-0">작성자</p></div>
+
+                            <div class="col-lg-2 col-sm-2 col-4 col-status">
+                                <span class="badge rounded-pill alert-success replyBtn"></span>
+                            </div>
+                            <div class="col-lg-1 col-sm-2 col-4 col-price"> <p th:text="${r.replDate}" class="mb-0">내용</p></div>
+                            <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                                <a class="btn btn-sm font-sm rounded btn-brand"
+                                   data-toggle="modal"
+                                   data-target="#editBoardModal"
+                                   th:data-board-id="${b.boardCode}"
+                                   th:data-board-title="${b.boardTitle}"
+                                   th:data-board-content="${b.boardContent}">
+                                    <i class="material-icons md-edit"></i> 수정
+                                </a>
+                                <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
+                                    <input type="hidden" name="boardCode" th:value="${b.boardCode}">
+                                    <a href="#" class="btn btn-sm font-sm btn-light rounded delete-button"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+
+
+            </div>
+            <!-- card-body end// -->
+        </div>
+        <!-- card end// -->
         <div class="pagination-area mt-30 mb-50">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-start">
@@ -76,6 +178,11 @@
             </nav>
         </div>
     </section>
+
+
+
+
+
 
     <!-- 수정 모달 -->
     <div class="modal fade" id="editBoardModal" tabindex="-1" aria-labelledby="editBoardModalLabel" aria-hidden="true">
@@ -114,7 +221,7 @@
     <script>
         $(document).ready(function () {
             $('.replyBtn').on('click', function () {
-                $(this).closest('.card-body').find('.reply-list').slideToggle();
+                $(this).closest('.itemlist').find('.reply-list').slideToggle();
             });
 
             $('#editBoardModal').on('show.bs.modal', function (event) {
