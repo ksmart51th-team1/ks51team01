@@ -4,4 +4,170 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.admin.mapper.AdMemberMapper">
 
+    <!-- AS 매번 하기 귀찮으니까 아래 resultMap을 사용함   -->
+    <resultMap id="memberResultMap" type="team01.yaksutor.dto.Member">
+        <!-- PK칼럼과 일반칼럼을 주의해야한다. -->
+        <id column="m_id" property="memberId" />
+        <result column="level" property="memberLevelNum"/>
+        <result column="level_name" property="memberLevelName"/>
+        <result column="pw" property="memberPw"/>
+        <result column="name" property="memberName"/>
+        <result column="gender" property="memberGender"/>
+        <result column="email" property="memberEmail"/>
+        <result column="birth" property="memberBirth"/>
+        <result column="phone" property="memberPhone"/>
+        <result column="sido" property="memberAddrSido"/>
+        <result column="sigungu" property="memberAddrSigungu"/>
+        <result column="dong" property="memberAddrDong"/>
+        <result column="pst_code" property="memberPostCode"/>
+        <result column="addr" property="memberAddr"/>
+    </resultMap>
+
+    <resultMap id="pharmacyResultMap" type="team01.yaksutor.dto.Pharmacy">
+        <id column="phar_code" property="pharCode" />
+        <result column="phar_Id" property="pharId"/>
+        <result column="p_name" property="pName"/>
+        <result column="busin_num" property="businNum"/>
+        <result column="p_addr_do" property="pAddrDo"/>
+        <result column="p_addr_si" property="pAddrSi"/>
+        <result column="p_addr_dong" property="pAddrDong"/>
+        <result column="p_addr" property="pAddr"/>
+        <result column="p_post_code" property="pPostCode"/>
+        <result column="open_date" property="openDate"/>
+    </resultMap>
+
+    <resultMap id="LicenseResultMap" type="team01.yaksutor.dto.License">
+        <id column="lice_code" property="liceCode" />
+        <result column="pharmacist_id" property="pharmacistId"/>
+        <result column="license_num" property="licenseNum"/>
+        <result column="license_get_date" property="licenseGetDate"/>
+    </resultMap>
+
+    <resultMap id="memberLevelResultMap" type="team01.yaksutor.dto.Level">
+        <id column="level_num" property="levelNum"/>
+        <result column="level_name" property="levelName"/>
+        <result column="level_date" property="levelDate"/>
+    </resultMap>
+
+    <resultMap id="managePharmacyResultMap" type="team01.yaksutor.dto.ManagePharmacy">
+        <id column="mana_phar_code" property="manaPharCode"/>
+        <result column="phar_code" property="pharCode"/>
+        <result column="phar_id" property="pharId"/>
+        <result column="reg_m_id" property="regMID"/>
+        <result column="state" property="state"/>
+        <result column="reg_date" property="regDate"/>
+    </resultMap>
+
+    <sql id="memberSearch">
+        SELECT
+        m.m_id,
+        m.`level`,
+        l.level_name,
+        m.pw,
+        m.`name`,
+        m.gender,
+        m.email,
+        m.birth,
+        m.phone,
+        m.sido,
+        m.sigungu,
+        m.dong,
+        m.pst_code,
+        m.addr
+        FROM `member` AS m
+        INNER JOIN `level` AS l
+        ON
+        m.`level` = l.level_num
+    </sql>
+    
+    <insert id="memberInsert" parameterType="Member">
+        INSERT INTO member
+        (m_id, `level`, pw, name, gender, email, birth, phone, sido, sigungu, dong, pst_code, addr, draw_stat, level_reg_date)
+        VALUES
+        (#{memberId}, #{memberLevelNum}, #{memberPw}, #{memberName}, #{memberGender}, #{memberEmail}, #{memberBirth}, #{memberPhone}, #{memberAddrSido},
+        #{memberAddrSigungu}, '', #{memberPostCode}, #{memberAddr}, CURDATE(), CURDATE())
+    </insert>
+
+    <insert id="licenseInsert" parameterType="License">
+        <selectKey keyProperty="liceCode" resultType="String" order="BEFORE">
+            /* lice_code 코드 자동증가 */
+            SELECT
+            CASE
+            WHEN COUNT(lice_code) = 0 THEN 'lice_code_1'
+            ELSE CONCAT(
+            'lice_code_',
+            MAX(CAST(SUBSTRING_INDEX(lice_code, '_', -1) AS UNSIGNED)) + 1
+            )
+            END AS liceCode
+            FROM
+            license;
+        </selectKey>
+        /* 약사면허등록 */
+        INSERT INTO license
+        (lice_code, pharmacist_id, license_num, license_get_date)
+        VALUES (#{liceCode}, #{pharmacistId}, #{licenseNum}, #{licenseGetDate})
+    </insert>
+
+    <insert id="pharmacyInsert" parameterType="Pharmacy">
+        <selectKey keyProperty="pharCode" resultType="String" order="BEFORE">
+            /*  phar_code 자동증가 코드  */
+            SELECT
+            CASE
+            WHEN COUNT(phar_code) = 0 THEN 'phar_code_1'
+            ELSE CONCAT(
+            'phar_code_',
+            MAX(CAST(SUBSTRING_INDEX(phar_code, '_', -1) AS UNSIGNED)) + 1
+            )
+            END AS pharCode
+            FROM
+            pharmacy;
+        </selectKey>
+        INSERT INTO pharmacy
+        (phar_code, phar_id, p_name, busin_num, p_addr_do, p_addr_si, p_addr_dong, p_post_code, p_addr, open_date)
+        VALUES (#{pharCode}, #{pharId}, #{pName}, #{businNum}, #{pAddrDo}, #{pAddrSi}, #{pAddrDong}, #{pPostCode}, #{pAddr}, #{openDate})
+    </insert>
+
+    <insert id="managePharmacyInsert" parameterType="ManagePharmacy">
+        <selectKey keyProperty="manaPharCode" resultType="String" order="BEFORE">
+            /*  mana_phar_code 자동증가 코드  */
+            SELECT
+            CASE
+            WHEN COUNT(mana_phar_code) = 0 THEN 'mana_phar_code_1'
+            ELSE CONCAT(
+            'mana_phar_code_',
+            MAX(CAST(SUBSTRING_INDEX(mana_phar_code, '_', -1) AS UNSIGNED)) + 1
+            )
+            END AS manaPharCode
+            FROM
+            manage_pharmacy;
+        </selectKey>
+        INSERT INTO manage_pharmacy
+        (mana_phar_code, phar_code, phar_id, reg_m_id, state, reg_date)
+        VALUES (#{manaPharCode}, #{pharCode}, #{pharId}, 'admin', '재직중', CURDATE())
+    </insert>
+
+    <select id="getPharCode" resultType="String">
+        /* pharId와 pName으로 Phar_code 조회 */
+        SELECT phar_code
+        FROM pharmacy
+        WHERE phar_id = #{pharId}
+    </select>
+
+    <select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
+        <include refid="memberSearch">
+        </include>
+        WHERE
+        m.m_id = #{memberId}
+    </select>
+
+    <select id="idCheck" parameterType="String" resultType="boolean">
+        SELECT
+        COUNT(m_id)
+        FROM
+        member
+        WHERE
+        m_id=#{memberId};
+
+    </select>
+
 </mapper>

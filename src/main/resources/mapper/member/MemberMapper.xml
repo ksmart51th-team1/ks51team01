@@ -58,5 +58,5 @@
         WHERE
             m.m_id = #{memberId}
     </select>
-    
+
 </mapper>

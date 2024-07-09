@@ -33,6 +33,7 @@ public class SecurityConfig {
 
     private static final String[] BASIC_LIST = {
             "/", "/index","/resource/**","/member/memberInsert/**", "/login"
+
     };
 
     @Bean
@@ -81,6 +82,7 @@ public class SecurityConfig {
                         )
                         .maximumSessions(1)
                         .expiredUrl("/login?expired=true")
+
         )
                 .logout(logout -> logout
                 .logoutUrl("/logout")

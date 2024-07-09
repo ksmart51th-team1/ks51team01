@@ -11,6 +11,7 @@
     <meta property="og:type" content="">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/user/assets/imgs/theme/favicon.svg}">
     <!-- Template CSS -->
@@ -94,7 +95,13 @@
                                             <a th:href="@{/admin/adminMain}">(테스트용 추후 삭제)관리자화면</a>
                                         </div>
                                         <div>
-                                            <a th:href="@{/pharm/main}">약사 메인 화면 바로가기</a>
+                                            <a href="/admin/adminMain?memberId=admin&memberPw=admin1234" >관리자 메인 화면 바로가기</a>
+                                        </div>
+                                        <div>
+                                            <a href="/pharm/main?memberId=id007&memberPw=pw007" >약사 메인 화면 바로가기</a>
+                                        </div>
+                                        <div>
+                                            <a href="/supplier/supplierMain?memberId=id001&memberPw=pw001" >납품업체 메인 화면 바로가기</a>
                                         </div>
                                     </form>
                                 </div>
