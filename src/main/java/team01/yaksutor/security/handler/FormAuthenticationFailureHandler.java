@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import team01.yaksutor.security.exception.SecretException;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @Component
 public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
@@ -22,7 +23,7 @@ public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
         String errorMessage = "Invalid Username or Password";
 
         if(exception instanceof BadCredentialsException) {
-            errorMessage = "Invalid Username or Password";
+            errorMessage = "회원정보가 일치하지 않습니다.";
         }
         else if(exception instanceof UsernameNotFoundException) {
             errorMessage = "User not exists";
@@ -34,7 +35,9 @@ public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             errorMessage = "Invalid Secret key";
         }
 
-        setDefaultFailureUrl("/login?error=true&exception=" + errorMessage);
+        errorMessage = URLEncoder.encode(errorMessage, "UTF-8");
+
+        setDefaultFailureUrl("/?error=true&exception=" + errorMessage);
 
         super.onAuthenticationFailure(request, response, exception);
 
