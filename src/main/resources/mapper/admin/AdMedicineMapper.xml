@@ -3,6 +3,30 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.admin.mapper.AdMedicineMapper">
+    <resultMap id="medicineListMap" type="AdMedicine">
+        <id column="medi_code" property="mediCode" />
+        <result column="reg_m_id" property="regMId" />
+        <result column="medi_name" property="mediName" />
+        <result column="medi_img" property="mediImg" />
+        <result column="medi_drugform" property="mediDrugform" />
+        <result column="medi_drugtype" property="mediDrugtype" />
+        <result column="medi_state" property="mediState" />
+        <result column="medi_userbydate" property="mediUsebydate" />
+        <result column="reg_date" property="regDate" />
+    </resultMap>
+
+    <resultMap id="sellMedicineListMap" type="AdSellMedicine">
+        <id column="goods_code" property="goodsCode" />
+        <result column="supp_code" property="suppCode" />
+        <result column="medi_code" property="mediCode" />
+        <result column="medi_name" property="mediName" />
+        <result column="medi_detail" property="mediDetail" />
+        <result column="medi_price" property="mediPrice" />
+        <result column="medi_img" property="mediImg" />
+        <result column="reg_qty" property="regQty" />
+        <result column="state" property="state" />
+        <result column="reg_date" property="regDate" />
+    </resultMap>
 
     <select id="checkLevel" parameterType="string" resultType="int">
         SELECT
@@ -13,5 +37,110 @@
             m.m_id = #{regMId};
     </select>
 
+    <select id="getMedicineList" resultMap="sellMedicineListMap">
+        SELECT
+            *
+        FROM
+            sell_medicine AS s
+        LIMIT #{startRow}, #{rowPerPage};
+    </select>
 
+    <select id="getMedicineListCnt" resultType="int">
+        /* 로그인 할 테이블 행의 갯수 조회 */
+        SELECT
+            COUNT(1)
+        FROM
+            medicine;
+    </select>
+
+    <insert id="insertMedicine" parameterType="AdMedicine">
+        <selectKey keyProperty="mediCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+                case
+                when COUNT(medi_code) = 0	then 'medi_code_1'
+                ELSE
+                CONCAT('medi_code_',
+                max(cast(SUBSTRING_INDEX(medi_code, 'medi_code_', -1) AS UNSIGNED))+1
+                )
+                END AS mediCode
+            FROM
+                medicine;
+        </selectKey>
+        INSERT INTO medicine
+            (medi_code, reg_m_id, medi_name, medi_img, medi_drugform, medi_drugtype, medi_state, medi_usebydate, reg_date)
+            VALUES (#{mediCode}, #{regMId}, #{mediName}, #{mediImg}, #{mediDrugform}, #{mediDrugtype}, #{mediState}, #{mediUsebydate}, CURDATE())
+    </insert>
+
+    <insert id="insertImg" parameterType="FileRequest">
+        INSERT INTO img_data
+            (file_idx, file_origin_name, file_new_name, file_path, file_size, file_reg_date)
+            VALUES (#{fileIdx}, #{fileOriginName}, #{fileNewName}, #{filePath}, #{fileSize}, #{fileRegDate})
+    </insert>
+
+    <insert id="insertIngredient" parameterType="AdIngredient">
+        <selectKey keyProperty="ingredientCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+                case
+                when COUNT(ingredient_code) = 0	then 'ingr_1'
+                ELSE
+                CONCAT('ingr_',
+                max(cast(SUBSTRING_INDEX(ingredient_code, 'ingr_', -1) AS UNSIGNED))+1
+                )
+                END AS ingredientCode
+            FROM
+                ingredient;
+        </selectKey>
+        INSERT INTO ingredient
+            (Ingredient_code, medi_code, reg_m_id, Ingredient, Content, reg_date)
+            VALUES (#{ingredientCode}, #{mediCode}, #{regMId}, #{ingredient}, #{content}, CURDATE())
+    </insert>
+
+    <insert id="insertEfficacy" parameterType="AdEfficacy">
+        <selectKey keyProperty="efficacyCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+                case
+                when COUNT(efficacy_code) = 0	then 'effi_1'
+                ELSE
+                CONCAT('effi_',
+                max(cast(SUBSTRING_INDEX(efficacy_code, 'effi_', -1) AS UNSIGNED))+1
+                )
+                END AS efficacyCode
+            FROM
+                efficacy;
+        </selectKey>
+        INSERT INTO efficacy
+            (efficacy_code, medi_code, reg_m_id, efficacy, reg_date)
+            VALUES (#{efficacyCode}, #{mediCode}, #{regMId}, #{efficacy}, CURDATE())
+    </insert>
+
+    <insert id="insertSellMedicine" parameterType="AdSellMedicine">
+        <selectKey keyProperty="goodsCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+                case
+                when COUNT(goods_code) = 0	then 'goods_code_1'
+                ELSE
+                CONCAT('goods_code_',
+                max(cast(SUBSTRING_INDEX(goods_code, 'goods_code_', -1) AS UNSIGNED))+1
+                )
+                END AS goodsCode
+            FROM
+                sell_medicine;
+        </selectKey>
+        INSERT INTO sell_medicine
+            (goods_code, supp_code, medi_code, medi_name, medi_detail, medi_price, medi_img, reg_qty, state, reg_date)
+            VALUES (#{goodsCode}, #{suppCode}, #{mediCode}, #{mediName}, #{mediDetail}, #{mediPrice}, #{mediImg}, #{regQty}, #{state}, CURDATE())
+    </insert>
+
+    <select id="getSuppCode" parameterType="String" resultType="String">
+        SELECT
+            supp_code
+        FROM
+            supplier
+        WHERE
+            supp_id = #{regMId};
+    </select>
 </mapper>

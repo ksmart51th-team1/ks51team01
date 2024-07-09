@@ -40,83 +40,32 @@
                 </div>
             </header>
             <!-- card-header end// -->
-            <div class="card-body">
+            <div class="card-body" th:if="${medicineList != null}" th:each="m : ${medicineList}">
                 <article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" th:href="@{/admin/medicine/medicineDetailView}">
                                 <div class="left">
-                                    <img th:src="@{/resource/admin/assets/imgs/items/1.jpg}" class="img-sm img-thumbnail" alt="Item" />
+                                    <img th:src="${m.mediImg}" class="img-sm img-thumbnail" alt="Item" />
                                 </div>
                                 <div class="info">
-                                    <h6 class="mb-0">Seeds of Change Organic Quinoa</h6>
+                                    <h6 class="mb-0" th:text="${m.mediName}"></h6>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>$34.50</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price" th:text="${m.mediPrice + '원'}"></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-success">Active</span>
+                            <span id="stateClass" class="" th:text="${m.state}"></span>
+                            <div>
+
+                            </div>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
+                            <span th:text="${m.regDate}"></span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
-                        </div>
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/admin/medicine/medicineDetailView}">
-                                <div class="left">
-                                    <img th:src="@{/resource/admin/assets/imgs/items/3.jpg}" class="img-sm img-thumbnail" alt="Item" />
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Gortons Beer Battered Fish Fillets</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>$76.99</span></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-warning">Archived</span>
-                        </div>
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
-                        </div>
-                    </div>
-                    <!-- row .// -->
-                </article>
-                <!-- itemlist  .// -->
-                <article class="itemlist">
-                    <div class="row align-items-center">
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/admin/medicine/medicineDetailView}">
-                                <div class="left">
-                                    <img th:src="@{/resource/admin/assets/imgs/items/3.jpg}" class="img-sm img-thumbnail" alt="Item" />
-                                </div>
-                                <div class="info">
-                                    <h6 class="mb-0">Blue Diamond Almonds Lightly Salted</h6>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>$76.99</span></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-danger">Disabled</span>
-                        </div>
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{/admin/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            <a th:href="@{/admin/medicine/medicineModify(GoodsCode=${m.goodsCode})}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
+                            <a th:href="@{/admin/medicine/medicineDelete(GoodsCode=${m.goodsCode})}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                         </div>
                     </div>
                     <!-- row .// -->
@@ -129,14 +78,29 @@
         <div class="pagination-area mt-30 mb-50">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-start">
-                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                    <!--<li class="page-item active"><a class="page-link" href="#">01</a></li>
                     <li class="page-item"><a class="page-link" href="#">02</a></li>
                     <li class="page-item"><a class="page-link" href="#">03</a></li>
                     <li class="page-item"><a class="page-link dot" href="#">...</a></li>
                     <li class="page-item"><a class="page-link" href="#">16</a></li>
                     <li class="page-item">
                         <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
-                    </li>
+                    </li>-->
+                    <!--<li class="page-item"><a class="page-link" th:href="@{/admin/medicine/medicineSearchList}">[맨처음]</a></li>
+                    <li class="page-item"><a class="page-link" th:if="${currentPage > 1}"
+                       th:href="@{/admin/medicine/medicineSearchList(currentPage=${currentPage - 1})}">[이전]</a>
+                    <span th:unless="${currentPage > 1}">[이전]</span></li>-->
+                    <th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+                        <li class="page-item"><a class="page-link" th:unless="${currentPage == num}"
+                           th:href="@{/admin/medicine/medicineSearchList(currentPage=${num})}"
+                           th:text="|${num}|"></a></li>
+                        <li class="page-item"><span class="page-link" th:if="${currentPage == num}"
+                              th:text="|${num}|"></span></li>
+                    </th:block>
+                    <!--<li class="page-item"><a class="page-link" th:if="${currentPage < lastPage}"
+                              th:href="@{/admin/medicine/medicineSearchList(currentPage=${currentPage + 1})}">[다음]</a>
+                    <span th:unless="${currentPage < lastPage}">[다음]</span></li>
+                    <li class="page-item"><a class="page-link" th:href="@{/admin/medicine/medicineSearchList(currentPage=${lastPage})}">[마지막]</a></li>-->
                 </ul>
             </nav>
         </div>
@@ -149,6 +113,13 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+        if([[${m.state}]] == '판매중'){
+            $('#stateClass').addClass('badge rounded-pill alert-danger')
+        }
+
+        if($('.page-link').val() == [[${currentPage}]]){
+            $(this).addClass('active');
+        }
 
     </script>
 </th:block>

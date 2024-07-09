@@ -16,6 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import team01.yaksutor.security.handler.FormAccessDeniedHandler;
 
 @Configuration
@@ -30,16 +32,24 @@ public class SecurityConfig {
     private final AuthenticationFailureHandler failureHandler;
 
     private static final String[] BASIC_LIST = {
-            "/", "/index","/resource/**","/member/memberInsert/**"
+            "/", "/index","/resource/**","/member/memberInsert/**", "/login"
+
     };
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+        MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
         http
                 .csrf(AbstractHttpConfigurer::disable) //CSRF 비활성화
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers(BASIC_LIST).permitAll()  // index 페이지에 대한 접근 허용
+                                .requestMatchers(
+                                        mvc.pattern("/"),
+                                        mvc.pattern("/index"),
+                                        mvc.pattern("/resource/**"),
+                                        mvc.pattern("/member/memberInsert/**"),
+                                        mvc.pattern("/login")
+                                ).permitAll()  // index 페이지에 대한 접근 허용
                                    // /resources/** 하위 모든 경로에 대한 접근 허용
                                 .requestMatchers("/admin/**").hasAuthority("관리자")
                                 .requestMatchers("/pharm/**").hasAuthority("개국약사")
@@ -48,13 +58,19 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()                // 그 외 모든 요청에는 인증이 필요함
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/")
                         .usernameParameter("memberId")
                         .passwordParameter("memberPw")
+                        .loginProcessingUrl("/login")
                         .authenticationDetailsSource(authenticationDetailsSource)
                         .successHandler(successHandler)
                         .failureHandler(failureHandler)
                         .permitAll())
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll()
+                )
                 .authenticationProvider(authenticationProvider)
                 .exceptionHandling(exception -> exception
                         .accessDeniedHandler(new FormAccessDeniedHandler("/denied"))
@@ -66,6 +82,7 @@ public class SecurityConfig {
                         )
                         .maximumSessions(1)
                         .expiredUrl("/login?expired=true")
+
         )
                 .logout(logout -> logout
                 .logoutUrl("/logout")
