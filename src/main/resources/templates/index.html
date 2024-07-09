@@ -67,10 +67,10 @@
                                     <form th:action="@{/login}" method="post">
                                         <input type="hidden" th:value="secret" name="secret_key" />
                                         <div class="form-group">
-                                            <input type="text"  name="memberId" id="memberId" placeholder="회원아이디를 입력하세요. *">
+                                            <input type="text"  name="memberId" id="memberId" placeholder="회원아이디를 입력하세요. *" value="admin">
                                         </div>
                                         <div class="form-group">
-                                            <input  type="password" name="memberPw" id="memberPw" placeholder="비밀번호를 입력하세요 *">
+                                            <input  type="password" name="memberPw" id="memberPw" placeholder="비밀번호를 입력하세요 *" value="admin1234">
                                         </div>
 
                                         <div class="login_footer form-group mb-50">
@@ -82,6 +82,11 @@
                                             </div>
                                             <a class="text-muted" href="#">비밀번호를 잊었나요?</a>
                                         </div>
+
+                                        <div class="form-group" th:if="${error}">
+                                            <label class="form-label text-danger" th:text="${exception}"></label>
+                                        </div>
+
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-heading btn-block hover-up" name="login">로그인</button>
                                         </div>
@@ -136,7 +141,7 @@
 <script th:src="@{/resource/user/assets/js/plugins/jquery.elevatezoom.js}"></script>
 <!-- Template  JS -->
 <script th:src="@{/resource/user/assets/js/main.js?v=5.6}"></script><a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none;"><i class="fi-rs-arrow-small-up"></i></a>
-<script th:src="@{/resource/user//assets/js/shop.js?v=5.6}"></script>
+<script th:src="@{/resource/user/assets/js/shop.js?v=5.6}"></script>
 
 
 </body></html>
