@@ -44,6 +44,16 @@ public class PhBoardController {
 
         return "admin/board/boardList";
     }
+    // 커뮤니티 + 댓글 조회 (납품자)
+    @GetMapping("/supplier/boardList")
+    public String getBoardList3(Model model) {
+        List<Board> boardList = phBoardService.getBoardList();
+        List<Repl> replList = phBoardService.getReplList();
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("replList", replList);
+
+        return "user/supplier/board/boardList";
+    }
     // 커뮤니티 등록 (사용자)
     @PostMapping("/pharm/boardAdd")
     public String addBoard(Board board){

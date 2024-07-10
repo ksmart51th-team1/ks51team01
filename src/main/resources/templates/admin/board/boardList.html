@@ -10,63 +10,6 @@
     <section class="content-main">
         <div class="content-header">
             <div>
-                <h2 class="content-title card-title">커뮤니티</h2>
-            </div>
-        </div>
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>내용</th>
-                            <th>작성자</th>
-                            <th>작성일자</th>
-                            <th>댓글</th>
-                            <th class="text-center">수정/삭제</th>
-                        </tr>
-                        </thead>
-                        <tbody th:if="${boardList != null}" th:each="b : ${boardList}">
-                        <tr>
-                            <td th:text="${b.boardCode}"></td>
-                            <td><b th:text="${b.boardTitle}"></b></td>
-                            <td th:text="${b.boardContent}"></td>
-                            <td th:text="${b.mId}"></td>
-                            <td th:text="${b.boardDate}"></td>
-                            <td>
-                                <a class="btn replyBtn" style="background-color: blue; color: white;">댓글관리</a>
-                            </td>
-                            <td class="text-end">
-                                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editBoardModal"
-                                   th:data-board-id="${b.boardCode}"
-                                   th:data-board-title="${b.boardTitle}"
-                                   th:data-board-content="${b.boardContent}">수정</a>
-                                <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
-                                    <input type="hidden" name="boardCode" th:value="${b.boardCode}">
-                                    <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red; color: white;">삭제</button>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr class="reply-list" style="display: none" th:each="r : ${replList}" th:if="${b.boardCode} == ${r.cmNum}">
-                            <td colspan="2" th:text="${r.cmNum} + ' / ' + ${r.replNum}"></td>
-                            <td th:text="${r.replContent}"></td>
-                            <td th:text="${r.mId}"></td>
-                            <td th:text="${r.replDate}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="content-main">
-        <div class="content-header">
-            <div>
                 <h2 class="content-title card-title font-1">커뮤니티 관리</h2>
             </div>
             <div>
@@ -80,12 +23,12 @@
                     <div class="row align-items-center">
 
                         <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">제목</h6></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">내용</h6></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">작성자</h6></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <h6 class="mb-0">댓글관리</h6>
+                        <div class="col-lg-3 col-sm-2 col-4 col-price"> <h6 class="mb-0">내용</h6></div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-price"> <h6 class="mb-0">작성자</h6></div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-status">
+                            <h6 class="mb-0">댓글</h6>
                         </div>
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
+                        <div class="col-lg-2 col-sm-2 col-4 col-date">
                             <h6 class="mb-0">등록일자</h6>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
@@ -99,14 +42,14 @@
                     <div class="row align-items-center">
 
                         <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${b.boardTitle}" class="mb-0">제목</p></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${b.boardContent}" class="mb-0">내용</p></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${b.mId}" class="mb-0">작성자</p></div>
+                        <div class="col-lg-3 col-sm-2 col-4 col-price"> <p th:text="${b.boardContent}" class="mb-0">내용</p></div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-price"> <p th:text="${b.mId}" class="mb-0">작성자</p></div>
 
-                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-success replyBtn">댓글관리</span>
+                        <div class="col-lg-1 col-sm-2 col-4 col-status">
+                            <span class="badge rounded-pill badge-soft-dark replyBtn" style="cursor: pointer">댓글 <i th:text="'(' + ${b.replSize} + ')'"></i> </span>
                         </div>
-                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span th:text="${b.boardDate}"></span>
+                        <div class="col-lg-2 col-sm-2 col-4 col-date">
+                            <span th:text="${b.boardDate}" class="mb-0"></span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
                             <a class="btn btn-sm font-sm rounded btn-brand"
@@ -127,24 +70,34 @@
 
 
                     </div>
-                    <div class="reply-list" style="display: none" th:each="r : ${replList}" th:if="${b.boardCode} == ${r.cmNum}">
-                        <div class="row align-items-center">
-                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0"><i class="bi bi-arrow-return-right"
-                            style="font-weight: bolder; color: #0a58ca; font-size: 20px; width: 50px"></i></p></div>
-                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${r.replContent}" class="mb-0">내용</p></div>
+                    <div class="reply-list" style="display: none; background-color: rgba(0,0,0,.03)" >
+                        <article class="itemlist">
+                            <div class="row align-items-center">
+                                <div class="col-lg-5 col-sm-2 col-4 col-price"> <h6 class="mb-0">댓글내용</h6></div>
+                                <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">작성자</h6></div>
+
+                                <div class="col-lg-2 col-sm-2 col-4 col-date">
+                                    <h6 class="mb-0">등록일자</h6>
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                                    <h6 class="mb-0">수정/삭제</h6>
+                                </div>
+                            </div>
+                            <!-- row .// -->
+                        </article>
+                        <div class="row align-items-center" th:each="r : ${replList}" th:if="${b.boardCode} == ${r.cmNum}">
+
+                            <div class="col-lg-5 col-sm-2 col-4 col-price"> <p th:text="${r.replContent}" class="mb-0">내용</p></div>
                             <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${r.mId}" class="mb-0">작성자</p></div>
 
-                            <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                <span class="badge rounded-pill alert-success replyBtn"></span>
-                            </div>
-                            <div class="col-lg-1 col-sm-2 col-4 col-price"> <p th:text="${r.replDate}" class="mb-0">내용</p></div>
+
+                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p th:text="${r.replDate}" class="mb-0">내용</p></div>
                             <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
                                 <a class="btn btn-sm font-sm rounded btn-brand"
                                    data-toggle="modal"
-                                   data-target="#editBoardModal"
-                                   th:data-board-id="${b.boardCode}"
-                                   th:data-board-title="${b.boardTitle}"
-                                   th:data-board-content="${b.boardContent}">
+                                   data-target="#editReplModal"
+                                   th:data-repl-id="${r.replNum}"
+                                   th:data-repl-content="${r.replContent}">
                                     <i class="material-icons md-edit"></i> 수정
                                 </a>
                                 <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
@@ -209,6 +162,28 @@
             </div>
         </div>
     </div>
+
+    <!-- 댓글 수정 모달 -->
+    <div class="modal fade" id="editReplModal" tabindex="-1" aria-labelledby="editReplModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editReplModalLabel">댓글 수정</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editReplForm" th:action="@{/admin/boardList/modify}" method="post">
+                        <input type="hidden" id="editReplId" name="replNum">
+                        <div class="form-group">
+                            <label for="editReplContent">내용</label>
+                            <textarea class="form-control" id="editReplContent" name="replContent" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">수정</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsFile">
@@ -234,6 +209,15 @@
                 modal.find('#editBoardId').val(boardId);
                 modal.find('#editBoardTitle').val(boardTitle);
                 modal.find('#editBoardContent').val(boardContent);
+            });
+            $('#editReplModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var replId = button.data('repl-id');
+                var replContent = button.data('repl-content');
+
+                var modal = $(this);
+                modal.find('#editReplId').val(replId);
+                modal.find('#editReplContent').val(replContent);
             });
 
             document.querySelectorAll('.delete-button').forEach(function(button) {
