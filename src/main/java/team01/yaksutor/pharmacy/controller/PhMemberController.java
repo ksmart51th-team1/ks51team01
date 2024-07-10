@@ -7,7 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import team01.yaksutor.dto.License;
 import team01.yaksutor.dto.Member;
+import team01.yaksutor.dto.Pharmacy;
+import team01.yaksutor.pharmacy.service.PhMemberService;
 
 @Controller
 @RequestMapping("/member")
@@ -15,8 +18,35 @@ import team01.yaksutor.dto.Member;
 @Slf4j
 public class PhMemberController {
 
+    private final PhMemberService phMemberService;
 
 
+    @PostMapping("/memberInsert/staff")
+    public String insertStaff(Member member,Pharmacy pharmacy, License license) {
+        log.info("Member {}",member);
+        log.info("Pharmacy {}",pharmacy);
+        log.info("License {}",license);
+        phMemberService.insertStaffMember(member,license,pharmacy);
+        return "redirect:/";
+    }
+
+    /**
+     * 개국약사의 회원가입 처리
+     * @param member
+     * @param pharmacy
+     * @param license
+     * @return
+     */
+    @PostMapping("/memberInsert/owner")
+    public String insertOwner(Member member, Pharmacy pharmacy, License license) {
+        log.info("Member : {}",member);
+        log.info("License : {}",license);
+        log.info("pharmacy : {}",pharmacy);
+
+        phMemberService.insertOwnerMember(member,license,pharmacy);
+
+        return "redirect:/";
+    }
 
     /**
      * 관리약사 가입페이지로 이동

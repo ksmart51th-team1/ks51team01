@@ -7,7 +7,7 @@
 
 <th:block layout:fragment="customContent">
   <section class="content-main">
-    <form id="addMember" th:action="@{/admin/supplier/SupplierInsert}" method="post">
+    <form id="addSupplier" th:action="@{/admin/supplier/supplierInsert}" method="post">
       <div class="row">
         <div class="col-6">
           <div class="content-header">
@@ -64,9 +64,9 @@
                       <label class="form-label mr-30 fs-6" >회원주소입력</label>
                       <button type="button" id="addrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
                     </div>
-                    <input class="form-control mb-3 w-25" type="text" required="" name="memberPostCode" id="memberPostcode" placeholder="우편번호" />
-                    <input class="form-control mb-3" type="text" required="" name="targetAddr" id="targetAddr" placeholder="도로명주소" />
-                    <input class="form-control mb-3" type="text" required="" name="targetAddrDetail" id="targetAddrDetail" placeholder="상세주소" />
+                    <input class="form-control mb-3 w-25" type="text"  name="memberPostCode" id="memberPostcode" placeholder="우편번호" />
+                    <input class="form-control mb-3" type="text"  name="targetAddr" id="targetAddr" placeholder="도로명주소" />
+                    <input class="form-control mb-3" type="text"  name="targetAddrDetail" id="targetAddrDetail" placeholder="상세주소" />
                     <input type="hidden" name="memberAddrSido" id="memberAddrSido" />
                     <input type="hidden" name="memberAddrSigungu" id="memberAddrSigungu" />
                     <input type="hidden" name="memberAddrDong" id="memberAddrDong" />
@@ -97,9 +97,9 @@
                       <label class="form-label mr-30 fs-6" >사업장주소입력</label>
                       <button type="button" id="supAddrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
                     </div>
-                    <input class="form-control mb-3 w-25" type="text" required="" name="supPostcode" id="supPostcode" placeholder="우편번호" />
-                    <input class="form-control mb-3" type="text" required="" name="supAddress" id="supAddress" placeholder="도로명주소" />
-                    <input class="form-control mb-3" type="text" required="" name="supDetailAddress" id="supDetailAddress" placeholder="상세주소" />
+                    <input class="form-control mb-3 w-25" type="text"  name="supPostcode" id="supPostcode" placeholder="우편번호" />
+                    <input class="form-control mb-3" type="text"  name="targetSupAddr" id="targetSupAddr" placeholder="도로명주소" />
+                    <input class="form-control mb-3" type="text"  name="targetSupAddrDetail" id="targetSupAddrDetail" placeholder="상세주소" />
                     <input type="hidden" name="supAddr" id="supAddr" />
                   </div>
                   <div class="mb-4">
@@ -176,8 +176,8 @@
     $('#supAddrBtn').click(function(){
       const searchObj = {
         zonecode : 'supPostcode',
-        address: 'supAddress',
-        focus : 'supDetailAddress'
+        address: 'targetSupAddr',
+        focus : 'targetSupAddrDetail'
       }
       searchAddress(searchObj);
     });
@@ -215,45 +215,40 @@
         isSubmit = false;
       }
 
-      const cate = ['owner','staff'];
-      const idx = Number($('#memberLevelNum').val())-3;
-      console.log(cate[idx]);
-      if(cate[idx] === 'owner'){
 
-        //약국의 주소 파싱 및 숨겨진 필드에 값 설정
-        const fullPharAddress = $('#targetPharAddr').val().trim();
-        const addrPharDetail = $('#targetPharAddrDetail').val().trim();
-        if (fullPharAddress) {
-          try {
-            const parsedAddress = parseAddress(fullPharAddress);
-            $('#pAddrDo').val(parsedAddress.sido);
-            $('#pAddrSi').val(parsedAddress.sigungu);
-            $('#pAddrDong').val(parsedAddress.dong);
-            $('#pAddr').val(parsedAddress.detail + ' ' + addrPharDetail);
-          } catch (e) {
-            console.log(e);
-            alert('잘못된 약국 주소 형식입니다.');
-            $('#targetAddress').focus();
-            isSubmit = false;
-          }
+
+        //납품업체의 주소 파싱 및 숨겨진 필드에 값 설정
+      const fullSupAddress = $('#targetSupAddr').val();
+      const addrSupDetail = $('#targetSupAddrDetail').val();
+      const postcode = $('#supPostcode').val();
+
+      if (fullSupAddress && postcode) {
+        // Hidden input에 '(우편번호) 전체주소 상세주소' 형식으로 저장
+        $('#supAddr').val(`(${postcode}) ${fullSupAddress} ${addrSupDetail}`);
+      } else {
+        if (!postcode) {
+          alert('우편번호는 필수 입력 항목입니다');
+          $('#supPostcode').focus();
         } else {
           alert('도로명주소는 필수 입력 항목입니다');
-          $('#targetAddress').focus();
-          isSubmit = false;
+          $('#targetSupAddr').focus();
         }
+        isSubmit = false;
       }
 
-      $(`#addMember .common input:not([type="hidden"]), #addMember #${cate[idx]} input:not([type="hidden"])`).each((idx, element) => {
+
+      $(`#addSupplier input:not([type="hidden"])`).each((idx, element) => {
         const id = element.id;
         const value = element.value;
-        /*if(!value){
+        if(!value){
           alert(`${id}는(은) 필수 입력 항목입니다`);
           $(element.focus());
           isSubmit = false;
           return false;
-        }*/
+        }
       });
-      if(isSubmit) $('#addMember').submit();
+
+      if(isSubmit) $('#addSupplier').submit();
 
     });
 

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import team01.yaksutor.admin.service.AdSupplierService;
 import team01.yaksutor.dto.Member;
 import team01.yaksutor.dto.Supplier;
 
@@ -15,13 +16,14 @@ import team01.yaksutor.dto.Supplier;
 @RequiredArgsConstructor
 @Slf4j
 public class AdSupplierController {
+    private final AdSupplierService adSupplierService;
 
-    @PostMapping("SupplierInsert")
+    @PostMapping("supplierInsert")
     public String supplierInsert(Member member, Supplier supplier){
-        log.info("member {}",member);
-        log.info("supplier {}",supplier);
 
-        return "redirect:/admin/supplier/supplierInsert";
+        adSupplierService.supplierInsert(member, supplier);
+
+        return "/admin/supplier/supplierInsert";
     }
 
 
