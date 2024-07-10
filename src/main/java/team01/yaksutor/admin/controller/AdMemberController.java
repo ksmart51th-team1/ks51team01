@@ -26,6 +26,13 @@ public class AdMemberController {
     private final PasswordEncoder passwordEncoder;
     private final AdMemberService adMemberService;
 
+    @PostMapping("/pharmacyInsert")
+    public String pharmacyInsert(Member member, Pharmacy pharmacy){
+        log.info("member {}",member);
+        log.info("pharmacy {}",pharmacy);
+        adMemberService.staffToOwnerMember(member,pharmacy);
+        return "redirect:/admin/pharmacy/pharmacyInsert";
+    }
 
     @PostMapping("/AdmemberInsert")
     public String AdMemberInsert(Member member, Pharmacy pharmacy, License license, Model model){
@@ -73,8 +80,8 @@ public class AdMemberController {
     @GetMapping("/pharmacyInsert")
     public String pharmacyInsert(Model model) {
 
-        model.addAttribute("title","약국추가");
-        model.addAttribute("content","약국추가");
+        model.addAttribute("title","기존 관리약사 개국약사로 변경");
+        model.addAttribute("content","기존 관리약사 개국약사로 변경");
 
         return "admin/pharmacy/pharmacyInsert";
     }
@@ -85,4 +92,7 @@ public class AdMemberController {
         model.addAttribute("content","약사회원등록");
         return "admin/pharmacy/memberInsert";
     }
+
+    /* 특정 회원 조회 */
+
 }
