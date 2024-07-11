@@ -10,5 +10,5 @@ public interface MemberMapper {
 
 
     Member getMemberInfoById(String memberId);
-
+    List<Member> getMemberInfo();
 }

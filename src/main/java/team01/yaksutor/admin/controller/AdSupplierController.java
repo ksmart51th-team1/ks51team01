@@ -11,6 +11,8 @@ import team01.yaksutor.admin.service.AdSupplierService;
 import team01.yaksutor.dto.Member;
 import team01.yaksutor.dto.Supplier;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin/supplier")
 @RequiredArgsConstructor
@@ -18,7 +20,19 @@ import team01.yaksutor.dto.Supplier;
 public class AdSupplierController {
     private final AdSupplierService adSupplierService;
 
-    @PostMapping("supplierInsert")
+    @GetMapping("/supplierSearchList")
+    public String supplierSearchList(Model model) {
+        List<Supplier> supplierList = adSupplierService.getSupplierInfo();
+
+        model.addAttribute("title","납품업체 리스트");
+        model.addAttribute("content","납품업체 리스트");
+        model.addAttribute("supplierList",supplierList);
+
+
+        return "admin/supplier/supplierSearchList";
+    }
+
+    @PostMapping("/supplierInsert")
     public String supplierInsert(Member member, Supplier supplier){
 
         adSupplierService.supplierInsert(member, supplier);

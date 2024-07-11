@@ -58,6 +58,20 @@
         <result column="reg_date" property="regDate"/>
     </resultMap>
 
+    <resultMap id="supplierResultMap" type="team01.yaksutor.dto.Supplier">
+        <id column="supp_code" property="suppCode"/>
+        <result column="supp_id" property="suppId"/>
+        <result column="admin_id" property="adminId"/>
+        <result column="sup_num" property="supNum"/>
+        <result column="sup_intro" property="supIntro"/>
+        <result column="sup_addr" property="supAddr"/>
+        <result column="sup_name" property="supName"/>
+        <result column="sup_tell" property="supTell"/>
+        <result column="app_state" property="appState"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="app_date" property="appDate"/>
+    </resultMap>
+
     <sql id="memberSearch">
         SELECT
         m.m_id,
@@ -79,6 +93,54 @@
         ON
         m.`level` = l.level_num
     </sql>
+
+    <select id="getSupplierInfo" resultMap="supplierResultMap">
+        SELECT
+        supp_code,
+        supp_id,
+        admin_id,
+        sup_num,
+        sup_intro,
+        sup_addr,
+        sup_name,
+        sup_tell,
+        app_state,
+        reg_date,
+        app_date
+        FROM
+        supplier
+    </select>
+
+    <select id="getPharmacyList" resultMap="pharmacyResultMap">
+        SELECT
+            phar_code,
+            phar_id,
+            p_name,
+            busin_num,
+            p_addr_do,
+            p_addr_si,
+            p_addr_dong,
+            p_post_code,
+            p_addr,
+            open_date
+        FROM
+            pharmacy
+    </select>
+
+    <delete id="deleteManagePharmacyById" parameterType="String">
+        DELETE
+        FROM
+        manage_pharmacy AS mp
+        WHERE
+        mp.phar_id = #{staffId}
+    </delete>
+    <update id="updateMemberLevelNumById" parameterType="String">
+        UPDATE member AS m
+        SET
+        m.`level`=3
+        WHERE
+        m.m_id = #{staffId}
+    </update>
 
     <insert id="supplierInsert" parameterType="Supplier">
         <selectKey keyProperty="suppCode" resultType="String" order="BEFORE">
@@ -190,5 +252,6 @@
         m_id=#{memberId};
 
     </select>
+
 
 </mapper>
