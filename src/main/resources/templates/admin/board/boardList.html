@@ -13,7 +13,7 @@
                 <h2 class="content-title card-title font-1">커뮤니티 관리</h2>
             </div>
             <div>
-                <a th:href="@{/admin/boardAdd}" class="btn btn-primary btn-sm rounded">등록</a>
+                <a th:href="@{/admin/boardAdd}" class="btn btn-primary btn-sm rounded"><i class="bi bi-pen"></i>글쓰기</a>
             </div>
         </div>
         <div class="card mb-4">
@@ -46,7 +46,15 @@
                         <div class="col-lg-1 col-sm-2 col-4 col-price"> <p th:text="${b.mId}" class="mb-0">작성자</p></div>
 
                         <div class="col-lg-1 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill badge-soft-dark replyBtn" style="cursor: pointer">댓글 <i th:text="'(' + ${b.replSize} + ')'"></i> </span>
+                            <span class="badge rounded-pill badge-soft-warning text-black-50 replyBtn" style="cursor: pointer">댓글
+                                <i th:text="'(' + ${b.replSize} + ')'" style="font-weight: bolder; color:black;"></i> </span>
+                            <span class="badge rounded-pill badge-soft-info text-black-50 replyAddBtn" style="cursor: pointer"
+                                  data-toggle="modal" data-target="#writeReplModal"
+                                  th:data-board-id="${b.boardCode}"
+                                  th:data-board-content="${b.boardContent}"
+                                  th:data-board-title="${b.boardTitle}"
+                                  th:data-board-mid="${b.mId}">등록
+                                </span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-date">
                             <span th:text="${b.boardDate}" class="mb-0"></span>
@@ -62,7 +70,7 @@
                             </a>
                             <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
                                 <input type="hidden" name="boardCode" th:value="${b.boardCode}">
-                                <a href="#" class="btn btn-sm font-sm btn-light rounded delete-button"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                                <a href="#" class="btn btn-sm font-sm btn-light rounded delete-button" style="color: red"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                             </form>
 
                         </div>
@@ -70,11 +78,12 @@
 
 
                     </div>
-                    <div class="reply-list" style="display: none; background-color: rgba(0,0,0,.03)" >
+                    <div class="reply-list" style="display: none; background-color: rgba(0,0,255,0.03)" >
                         <article class="itemlist">
                             <div class="row align-items-center">
                                 <div class="col-lg-5 col-sm-2 col-4 col-price"> <h6 class="mb-0">댓글내용</h6></div>
                                 <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">작성자</h6></div>
+
 
                                 <div class="col-lg-2 col-sm-2 col-4 col-date">
                                     <h6 class="mb-0">등록일자</h6>
@@ -100,8 +109,8 @@
                                    th:data-repl-content="${r.replContent}">
                                     <i class="material-icons md-edit"></i> 수정
                                 </a>
-                                <form th:action="@{/admin/boardList/delete}" method="post" style="display:inline;" class="delete-form">
-                                    <input type="hidden" name="boardCode" th:value="${b.boardCode}">
+                                <form th:action="@{/admin/boardList/deleteRepl}" method="post" style="display:inline;" class="delete-form">
+                                    <input type="hidden" name="replNum" th:value="${r.replNum}">
                                     <a href="#" class="btn btn-sm font-sm btn-light rounded delete-button"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                                 </form>
 
@@ -134,7 +143,49 @@
 
 
 
+    <!-- 댓글 등록 모달 -->
+    <div class="modal fade font-1" id="writeReplModal" tabindex="-1" aria-labelledby="writeReplModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content community-modal">
 
+                <div class="modal-body">
+                    <h5 class="modal-title font-1 m-1" id="writeReplModalLabel">댓글 등록</h5>
+
+                    <form id="addReplForm" method="post" th:action="@{/admin/replAdd}">
+                        <div class="mt-3 commodal-info font-1">
+
+
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="bTitle" style="background: none; border: none">제목</label>
+                                <input type="text" class="form-control"  aria-describedby="basic-addon1" id="bTitle"
+                                       style="background: none; border-radius: 20px; border: 1px solid darkgrey" readonly>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="bmId"  style="background: none; border: none">작성</label>
+                                <input type="text" class="form-control"  aria-describedby="basic-addon1" id="bmId"
+                                       style="background: none; border-radius: 20px; border: 1px solid darkgrey" readonly>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <label for="bContent" class="input-group-text"  style="background: none; border: none">내용</label>
+                                <input class="form-control" aria-label="With textarea" id="bContent"
+                                       style="background: none; border-radius: 20px; border: 1px solid darkgrey" readonly>
+                            </div>
+                        </div>
+                        <textarea class="form-control commodal-content" id="replContent" name="replContent" placeholder="댓글 입력."
+                                  style="background: none; border-radius: 20px; border: 1px solid darkgrey" required
+                                  rows="4"></textarea>
+                        <input class="form-control" hidden="hidden" id="mId" name="mId" th:value="${session.S_ID}">
+                        <input class="form-control"  hidden="hidden" id="cmNum" name="cmNum" >
+
+
+
+                        <button class="btn btn-success mt-3" id="commodal-btn" type="submit" style="width: 100%; color: white">글쓰기</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
     <!-- 수정 모달 -->
@@ -172,7 +223,7 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editReplForm" th:action="@{/admin/boardList/modify}" method="post">
+                    <form id="editReplForm" th:action="@{/admin/boardList/modifyRepl}" method="post">
                         <input type="hidden" id="editReplId" name="replNum">
                         <div class="form-group">
                             <label for="editReplContent">내용</label>
@@ -227,6 +278,26 @@
                         form.submit();
                     }
                 });
+            });
+
+
+            $('.replyAddBtn').on('click', function() {
+                const boardId = $(this).data('board-id');
+                const boardTitle = $(this).data('board-title');
+                const boardContent = $(this).data('board-content');
+                const boardmId = $(this).data('board-mid');
+
+
+                if(boardId != null) {
+                    $('#cmNum').val(boardId);
+                    $('#bTitle').val(boardTitle);
+                    $('#bContent').val(boardContent);
+                    $('#bmId').val(boardmId);
+
+                    $('#addReplForm').show();
+                } else{
+                    $('#addReplForm').hide();
+                }
             });
         });
     </script>
