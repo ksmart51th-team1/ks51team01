@@ -1,10 +1,7 @@
 package team01.yaksutor.admin.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import team01.yaksutor.admin.dto.AdEfficacy;
-import team01.yaksutor.admin.dto.AdIngredient;
-import team01.yaksutor.admin.dto.AdMedicine;
-import team01.yaksutor.admin.dto.AdSellMedicine;
+import team01.yaksutor.admin.dto.*;
 import team01.yaksutor.dto.SellMedicine;
 import team01.yaksutor.file.dto.FileRequest;
 import team01.yaksutor.file.util.FileUtils;
@@ -17,19 +14,25 @@ public interface AdMedicineMapper {
 
     int checkLevel(String regMId);
 
-    List<Map<String, Object>> getMedicineList(int startRow, int rowPerPage);
+    List<SellMediInfo> getMedicineList(int startRow, int rowPerPage);
 
     int getMedicineListCnt();
 
-    void insertMedicine(AdMedicine adMedicine);
+    void insertMedicine(MedicalInfo medicalInfo);
 
     void insertImg(FileRequest fileRequest);
 
-    void insertIngrdient(AdIngredient ingredient);
+    void insertIngredient(AdIngredient adIngredient);
 
-    void insertEfficacy(AdEfficacy efficacy);
+    void insertEfficacy(AdEfficacy adEfficacy);
 
-    void insertSellMedicine(AdSellMedicine adSellMedicine);
+    void insertSellMedicine(SellMediInfo sellMediInfo);
 
     String getSuppCode(String regMId);
+
+    MedicalInfo getMedicineInfo(String goodsCode);
+
+    String getSuppName(String goodsCode);
+
+    SellMediInfo getSellMediInfo(String goodsCode);
 }
