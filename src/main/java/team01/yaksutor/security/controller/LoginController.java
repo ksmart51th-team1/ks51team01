@@ -20,7 +20,7 @@ import team01.yaksutor.dto.Member;
 @RequiredArgsConstructor
 public class LoginController {
 
-    @GetMapping(value="/login")
+    @GetMapping(value="/")
     public String login(@RequestParam(value = "error", required = false) String error,
                         @RequestParam(value = "exception", required = false) String exception, Model model){
         model.addAttribute("error",error);

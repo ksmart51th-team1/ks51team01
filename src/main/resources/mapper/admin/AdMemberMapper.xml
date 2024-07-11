@@ -79,6 +79,27 @@
         ON
         m.`level` = l.level_num
     </sql>
+
+    <insert id="supplierInsert" parameterType="Supplier">
+        <selectKey keyProperty="suppCode" resultType="String" order="BEFORE">
+            /*  supp_code 자동증가 코드  */
+            SELECT
+            CASE
+            WHEN COUNT(supp_code) = 0 THEN 'supp_code_1'
+            ELSE CONCAT(
+            'supp_code_',
+            MAX(CAST(SUBSTRING_INDEX(supp_code, '_', -1) AS UNSIGNED)) + 1
+            )
+            END AS suppCode
+            FROM
+            supplier;
+        </selectKey>
+
+
+        INSERT INTO supplier
+        (supp_code, supp_id, admin_id, sup_num, sup_intro, sup_addr, sup_name, sup_tell, app_state, reg_date, app_date)
+        VALUES (#{suppCode}, #{suppId}, #{adminId}, #{supNum}, #{supIntro}, #{supAddr}, #{supName}, #{supTell}, #{appState}, CURDATE(), CURDATE())
+    </insert>
     
     <insert id="memberInsert" parameterType="Member">
         INSERT INTO member

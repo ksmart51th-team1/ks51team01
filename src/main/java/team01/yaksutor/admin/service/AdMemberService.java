@@ -30,4 +30,8 @@ public class AdMemberService {
         adMemberMapper.licenseInsert(license);
         adMemberMapper.managePharmacyInsert(managePharmacy);
     }
+    @Transactional
+    public void staffToOwnerMember(Member member, Pharmacy pharmacy) {
+
+    }
 }
