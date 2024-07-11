@@ -197,19 +197,12 @@
                     return false;
                 }
             });*/
-            const ingrList = $('.ingredient').val();
-            const request = $.ajax({
-                url : '/admin/medicine/medicineInsert',
-                method : 'POST',
-                data : { 'ingrList' : ingrList },
-                dataType : 'json'
-            });
             if(isSubmit) $('#addMedicine').submit();
         });
 
         const createIngrRow = () => {
             const ingrContent = [
-                { 'tagName' : 'input', 'type' : 'text', 'name' : 'Ingredient' },
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'ingredient' },
                 { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
                 { 'tagName' : 'button', 'type' : 'button' }
             ];
@@ -357,7 +350,8 @@
             for(let i =0; i<files.length; i++){
                 formData.append("img", files[i]);
             }
-
+            console.log(requestObj);
+            console.log(JSON.stringify(requestObj));
             const request = $.ajax({
                 url : '/admin/medicine/medicineInsert',
                 method : 'POST',

@@ -16,6 +16,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="/resource/user/assets/imgs/theme/favicon.svg">
     <!-- Template CSS -->
     <link rel="stylesheet" href="/resource/user/assets/css/main.css?v=5.6">
+    <style>
+        .logoNew {
+            font-family: "Cafe24Ssurround";
+            color: pink;
+            font-size: 3rem;
+        }
+    </style>
 </head>
 <body>
 <main class="main pages">
@@ -40,9 +47,10 @@
                                         <h1 class="mb-5">회원 가입</h1>
                                         <p class="mb-30">이미 계정이 있으신가요? <a th:href="@{/}">로그인하러가기</a></p>
                                     </div>
-                                    <form th:action="@{/member/memberInsert}" method="post">
+                                    <form th:action="@{/member/memberInsert/staff}" method="post" id="addMember">
                                         <div class="form-group">
                                             <input type="text" required="" name="memberId" id="memberId" placeholder="회원아이디">
+                                            <span id="check-message" class="form-text"></span>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" required="" name="memberPw" id="memberPw" placeholder="회원비밀번호">
@@ -53,38 +61,46 @@
 
                                         <div class="form-group payment_option mb-50">
                                             <div class="custome-radio">
-                                                <input class="form-check-input" required="" type="radio" name="gender" id="exampleRadios1" checked="">
-                                                <label class="form-check-label" for="exampleRadios1" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">남성</label>
-                                                <input class="form-check-input" required="" type="radio" name="gender" id="exampleRadios2" checked="">
-                                                <label class="form-check-label" for="exampleRadios2" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">여성</label>
+                                                <input class="form-check-input" required="" type="radio" name="memberGender" id="memberGenderMan" checked="" value="남">
+                                                <label class="form-check-label" for="memberGenderMan" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">남성</label>
+                                                <input class="form-check-input" required="" type="radio" name="memberGender" id="memberGenderWomen" checked="" value="여">
+                                                <label class="form-check-label" for="memberGenderWomen" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">여성</label>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-fill-out btn-block hover-up font-weight-bold mb-10" onclick="sample6_execDaumPostcode()">주소검색</button>
-                                            <input class="mb-1" type="text" required="" name="memberAddr" id="sample6_postcode" placeholder="우편번호" />
-                                            <input class="mb-1" type="text" required="" name="memberAddr"  id="sample6_address" placeholder="도로명주소" />
-                                            <input type="text" required="" name="memberAddr"  id="sample6_detailAddress" placeholder="상세주소" />
+                                            <button type="button" id="addrBtn" class="btn btn-fill-out btn-block hover-up font-weight-bold mb-10">주소등록</button>
+                                            <input class="mb-1" type="text"  name="memberPostCode" id="memberPostCode" placeholder="우편번호" />
+                                            <input class="mb-1" type="text"  name="targetAddr"  id="targetAddr" placeholder="도로명주소" />
+                                            <input type="text"  name="targetAddrDetail"  id="targetAddrDetail" placeholder="상세주소" />
+                                            <input type="hidden" name="memberAddrSido" id="memberAddrSido" />
+                                            <input type="hidden" name="memberAddrSigungu" id="memberAddrSigungu" />
+                                            <input type="hidden" name="memberAddrDong" id="memberAddrDong" />
+                                            <input type="hidden" name="memberAddr" id="memberAddr" />
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="text" required="" name="memberEmail" id="memberEmail" placeholder="이메일주소">
+                                            <input type="text"  name="memberEmail" id="memberEmail" placeholder="이메일주소">
                                         </div>
                                         <div class="form-group">
                                             <label>생년월일</label>
-                                            <input type="date" required="" name="memberBirth" id="memberBirth" placeholder="생년월일">
+                                            <input type="date"  name="memberBirth" id="memberBirth" placeholder="생년월일">
                                         </div>
                                         <div class="form-group mb-50">
-                                            <input type="text" required="" name="memberPhone" id="memberPhone" placeholder="핸드폰번호( '-' 없이 입력해주세요)">
+                                            <input type="text"  name="memberPhone" id="memberPhone" placeholder="핸드폰번호( '-' 없이 입력해주세요)">
                                         </div>
                                         <div class="form-group mb-50">
-                                            <label style="font-size: 20px">약사면허 입력</label>
-                                            <input class="mb-3" type="text" required="" name="licenceNum" id="licenceNum" placeholder="약사면허 입력">
-                                            <label>면허취득일자</label>
-                                            <input type="date" name="licenceGetDate" id="licenceGetDate" >
+                                            <label >약사면허 입력</label>
+                                            <input class="mb-3" type="text" name="licenseNum" id="licenseNum" placeholder="약사면허 입력">
+                                            <label >면허취득일자</label>
+                                            <input type="date" name="licenseGetDate" id="licenseGetDate" >
+                                        </div>
+                                        <div class="form-group mb-50">
+                                            <label style="font-size: 20px">소속약국의 대표자 아이디를 입력해주세요</label>
+                                            <input type="text" name="pharId" id="pharId" placeholder="아이디 입력">
                                         </div>
 
                                         <div class="form-group mb-30">
-                                            <button type="submit" class="btn btn-fill-out btn-block hover-up font-weight-bold" name="login">회원가입하기</button>
+                                            <button type="submit" class="btn btn-fill-out btn-block hover-up font-weight-bold" name="login" id="submitBtn">회원가입하기</button>
                                         </div>
 
                                     </form>
@@ -100,56 +116,162 @@
 </main>
 </body>
 
+<script th:src="@{/resource/user/assets/js/vendor/jquery-3.6.0.min.js}"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    function sample6_execDaumPostcode() {
+    function searchAddress(searchObj) {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var addr = ''; // 주소 변수
 
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
+                    data.address = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
+                    data.address = data.jibunAddress;
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
+
+                if(searchObj != null){
+                    const valueArr = searchObj.value;
+                    for(const key in searchObj){
+                        if(key === 'focus'){
+                            document.getElementById(searchObj[key]).focus();
+                            continue;
+                        }
+                        document.getElementById(searchObj[key]).value = data[key];
+                    }
+                }
+
+                /*
+                document.getElementById('memberPostcode').value = data.zonecode;
+                document.getElementById("memberAddress").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
+                document.getElementById("memberDetailAddress").focus();
+
+                 */
             }
         }).open();
     }
 
-    function sample7_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+    //회원 주소 객체
+    $('#addrBtn').click(function(){
+        const searchObj = {
+            zonecode : 'memberPostCode',
+            address: 'targetAddr',
+            focus : 'targetAddrDetail'
+        }
+        searchAddress(searchObj);
+    });
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample7_postcode').value = data.zonecode;
-                document.getElementById("sample7_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample7_detailAddress").focus();
+    $('#submitBtn').click(function(event){
+
+        event.preventDefault();
+
+        let isSubmit = true;
+
+        // 회원의 주소 파싱 및 숨겨진 필드에 값 설정
+        const fullAddress = $('#targetAddr').val().trim();
+        const addrDetail = $('#targetAddrDetail').val().trim();
+        if (fullAddress) {
+            try {
+                const parsedAddress = parseAddress(fullAddress);
+                $('#memberAddrSido').val(parsedAddress.sido);
+                $('#memberAddrSigungu').val(parsedAddress.sigungu);
+                $('#memberAddrDong').val(parsedAddress.dong);
+                $('#memberAddr').val(parsedAddress.detail + ' ' + addrDetail);
+            } catch (e) {
+                alert('잘못된 회원 주소 형식입니다.');
+                $('#targetAddr').focus();
+                isSubmit = false;
             }
-        }).open();
+        } else {
+            alert('도로명주소는 필수 입력 항목입니다');
+            $('#targetAddr').focus();
+            isSubmit = false;
+        }
+
+
+        $(`#addMember input:not([type="hidden"]), #addMember input:not([type="hidden"])`).each((idx, element) => {
+            const id = element.id;
+            const value = element.value;
+            if(!value){
+                alert(`${id}는(은) 필수 입력 항목입니다`);
+                $(element.focus());
+                isSubmit = false;
+                return false;
+            }
+        });
+
+        //회원가입 성공시 로직
+        if (isSubmit) {
+            const formData = $('#addMember').serialize(); // 폼 데이터를 직렬화합니다.
+            $.ajax({
+                url: $('#addMember').attr('action'),
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert('회원가입이 완료되었습니다.');
+                    window.location.href = '/'; // 성공 후 리다이렉트할 URL
+                },
+                error: function(xhr, status, error) {
+                    alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                }
+            });
+        }
+
+    });
+
+    //주소 파싱하는 함수 정의
+    function parseAddress(address) {
+        const pattern = /(?<sido>[가-힣]+특별자치도|[가-힣]+시|[가-힣]+도|[가-힣]+북|[가-힣]+남|[가-힣]+기|[가-힣]+산|[가-힣]+구|[가-힣]+울|[가-힣]+전)\s+(?<sigungu>[가-힣]+시\s+[가-힣]+구|[가-힣]+시|[가-힣]+군|[가-힣]+구)\s+(?<detail>.+)/;
+        const match = address.match(pattern);
+        if (match) {
+            const detailPattern = /(?<dong>[가-힣]+[동|읍|면|리])?\s*(?<detail>.+)?/;
+            const detailMatch = match.groups.detail.match(detailPattern);
+            return {
+                sido: match.groups.sido,
+                sigungu: match.groups.sigungu,
+                dong: detailMatch.groups.dong || '',
+                detail: detailMatch.groups.detail || match.groups.detail
+            };
+        } else {
+            throw new Error('Invalid address format');
+        }
     }
+
+    //회원가입시 ID체크
+    $(document).ready(function() {
+        $('#memberId').on('blur', function() {
+            var memberId = $(this).val();
+            var $checkMessage = $('#check-message');
+
+            if (memberId.length === 0) {
+                $checkMessage.text('').hide();
+                return;
+            }
+
+            $.ajax({
+                url: '/admin/member/idCheck',
+                method: 'POST',
+                data: { memberId: memberId },
+                dataType : 'json',
+                success: function(response) {
+                    if (response) {
+                        $checkMessage.text('이미 사용 중인 아이디입니다.').css('color', 'red').show();
+                    } else {
+                        $checkMessage.text('사용 가능한 아이디입니다.').css('color', 'green').show();
+                        $('#submitBtn').prop('disabled',false);
+                    }
+                }
+            });
+        });
+    });
 </script>
 </html>

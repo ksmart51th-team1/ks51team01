@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class MedicalInfo extends AdMedicine{
+public class MedicalInfo{
     private String mediCode;
     private String regMId;
     private String mediName;
@@ -14,7 +14,9 @@ public class MedicalInfo extends AdMedicine{
     private String mediDrugtype;
     private String mediState;
     private String mediUsebydate;
+    private String regDate;
 
+    private AdImgData imgInfo;
     private List<AdIngredient> ingrList;
     private List<AdEfficacy> effiList;
 }

@@ -285,12 +285,12 @@
       $(`#addMember .common input:not([type="hidden"]), #addMember #${cate[idx]} input:not([type="hidden"])`).each((idx, element) => {
         const id = element.id;
         const value = element.value;
-        /*if(!value){
+        if(!value){
           alert(`${id}는(은) 필수 입력 항목입니다`);
           $(element.focus());
           isSubmit = false;
           return false;
-        }*/
+        }
       });
       if(isSubmit) $('#addMember').submit();
 

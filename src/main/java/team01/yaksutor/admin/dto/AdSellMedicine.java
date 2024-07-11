@@ -14,4 +14,5 @@ public class AdSellMedicine {
     private int regQty;
     private String state;
     private String regDate;
+
 }
