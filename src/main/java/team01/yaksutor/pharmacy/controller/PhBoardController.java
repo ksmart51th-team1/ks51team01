@@ -59,6 +59,12 @@ public class PhBoardController {
     public String addBoard(Board board){
         phBoardService.addBoard(board);
         return "redirect:/pharm/board";
+    }
+    // 커뮤니티 등록 (납품자)
+    @PostMapping("/supplier/boardAdd")
+    public String addBoard3(Board board){
+        phBoardService.addBoard(board);
+        return "redirect:/supplier/boardList";
 
     }
     // 커뮤니티 등록 (관리자)
@@ -81,6 +87,12 @@ public class PhBoardController {
         phBoardService.modifyBoard(board);
         return "redirect:/pharm/board";
     }
+    // 커뮤니티 수정 (납품자)
+    @PostMapping("/supplier/board/modify")
+    public String modifyBoard3(Board board){
+        phBoardService.modifyBoard(board);
+        return "redirect:/supplier/boardList";
+    }
     // 커뮤니티 수정 (관리자)
     @PostMapping("/admin/boardList/modify")
     public String modifyBoard(Board board){
@@ -93,6 +105,12 @@ public class PhBoardController {
         phBoardService.deleteBoard(boardCode);
         return "redirect:/pharm/board";
     }
+    // 커뮤니티 삭제 (납품자)
+    @PostMapping("/supplier/board/delete")
+    public String deleteBoard3(@RequestParam String boardCode){
+        phBoardService.deleteBoard(boardCode);
+        return "redirect:/supplier/boardList";
+    }
     // 커뮤니티 삭제 (관리자)
     @PostMapping("/admin/boardList/delete")
     public String deleteBoard(@RequestParam String boardCode){
@@ -104,6 +122,13 @@ public class PhBoardController {
     public String addRepl(Repl repl){
         phBoardService.addRepl(repl);
         return "redirect:/pharm/board";
+
+    }
+    // 커뮤니티 댓글 등록 (납품자)
+    @PostMapping("/supplier/replAdd")
+    public String addRepl2(Repl repl){
+        phBoardService.addRepl(repl);
+        return "redirect:/supplier/boardList";
 
     }
 
