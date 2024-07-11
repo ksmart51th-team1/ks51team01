@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
-      layout:decorate="~{user/pharmacy/layout/default}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/supplier/layout/default}">
 <head>
     <style>
         .content-hidden {
@@ -282,23 +282,23 @@
                 }
             });
 
-                // 글 삭제 버튼 클릭 시 모달 창에 데이터 채우기
-                $('.comlist-delete').on('click', function() {
-                    const boardId2 = $(this).data('board-id');
-                    const sessionId2 = $(this).data('session-id');
-                    const boardmId2 = $(this).data('board-mid');
-                    if(boardmId2 === sessionId2) {
-                        $('#deleteBoardId').val(boardId2);
-                        $('#sessionId2').val(sessionId2);
-                        $('#deleteBoardmId').val(boardmId2);
-                        $('#deleteBoardError').addClass('content-hidden2');
-                        $('#deleteBoardForm').show();
-                    } else{
-                        $('#deleteBoardError').removeClass('content-hidden2');
-                        $('#deleteBoardForm').hide();
+            // 글 삭제 버튼 클릭 시 모달 창에 데이터 채우기
+            $('.comlist-delete').on('click', function() {
+                const boardId2 = $(this).data('board-id');
+                const sessionId2 = $(this).data('session-id');
+                const boardmId2 = $(this).data('board-mid');
+                if(boardmId2 === sessionId2) {
+                    $('#deleteBoardId').val(boardId2);
+                    $('#sessionId2').val(sessionId2);
+                    $('#deleteBoardmId').val(boardmId2);
+                    $('#deleteBoardError').addClass('content-hidden2');
+                    $('#deleteBoardForm').show();
+                } else{
+                    $('#deleteBoardError').removeClass('content-hidden2');
+                    $('#deleteBoardForm').hide();
 
-                    }
-                });
+                }
+            });
 
 
         });
