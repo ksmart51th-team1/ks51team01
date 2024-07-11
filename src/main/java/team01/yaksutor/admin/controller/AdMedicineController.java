@@ -41,7 +41,7 @@ public class AdMedicineController {
         Map<String, Object> medicineListObject = adMedicineService.getMedicineList(currentPage);
 
         @SuppressWarnings("unchecked")
-        List<Map<String, Object>> medicineList = (List<Map<String, Object>>) medicineListObject.get("medicineList");
+        List<SellMediInfo> medicineList = (List<SellMediInfo>) medicineListObject.get("medicineList");
         int lastPage = (int) medicineListObject.get("lastPage");
         int startPageNum = (int) medicineListObject.get("startPageNum");
         int endPageNum = (int) medicineListObject.get("endPageNum");
@@ -76,8 +76,15 @@ public class AdMedicineController {
     }
 
     @GetMapping("/medicineDetailView")
-    public String medicineDetailView(Model model) {
+    public String medicineDetailView(Model model,
+                                     @RequestParam(value="goodsCode") String goodsCode) {
+        Map<String, Object> mediObj = adMedicineService.getMedicalInfo(goodsCode);
+        RequestMedicine requestMedicine = (RequestMedicine) mediObj.get("requestMedicine");
+        String suppName = mediObj.get("suppName").toString();
 
+
+        model.addAttribute("requestMedicine", requestMedicine);
+        model.addAttribute("suppName", suppName);
         model.addAttribute("title", "의약품 상세");
         model.addAttribute("content", "의약품 상세");
 
@@ -119,10 +126,10 @@ public class AdMedicineController {
             requestMedicine.getMedicalInfo().setMediImg(file.getFileIdx());
             requestMedicine.getSellMediInfo().setMediImg(file.getFileIdx());
         });
-        //adMedicineService.insertMedicine(requestMedicine, fileList);
-        //log.info("requestMedicine: {}", requestMedicine);
-        //log.info("requestMedicine:{}",requestMedicine);
-        //log.info("img:{}",multipartFile.size());
+        log.info("requestMedicine: {}", requestMedicine);
+        log.info("img: {}",multipartFile.size());
+        adMedicineService.insertMedicine(requestMedicine, fileList);
+
         return "redirect:/admin/medicine/medicineSearchList";
     }
 

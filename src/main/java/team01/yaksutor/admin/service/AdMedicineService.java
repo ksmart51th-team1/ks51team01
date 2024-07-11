@@ -32,7 +32,7 @@ public class AdMedicineService {
         // 마지막 페이지 설정 초기화
         int endPageNum = 10;
 
-        List<Map<String, Object>> medicineList = adMedicineMapper.getMedicineList(startRow, rowPerPage);
+        List<SellMediInfo> medicineList = adMedicineMapper.getMedicineList(startRow, rowPerPage);
 
         double cnt = adMedicineMapper.getMedicineListCnt();
 
@@ -63,33 +63,52 @@ public class AdMedicineService {
     @Transactional
     public void insertMedicine(RequestMedicine requestMedicine,
                                List<FileRequest> fileRequestList){
-        AdMedicine adMedicine = requestMedicine.getMedicalInfo();
-        AdSellMedicine adSellMedicine = requestMedicine.getSellMediInfo();
+        MedicalInfo medicalInfo = requestMedicine.getMedicalInfo();
+        SellMediInfo sellMediInfo = requestMedicine.getSellMediInfo();
         for(FileRequest fileRequest : fileRequestList){
             adMedicineMapper.insertImg(fileRequest);
         }
-        log.info("adMedicine: {}" , adMedicine);
-        adMedicineMapper.insertMedicine(adMedicine);
-        log.info("adMedicine: {}" , adMedicine);
+        log.info("adMedicine: {}" , medicalInfo);
+        adMedicineMapper.insertMedicine(medicalInfo);
+        log.info("adMedicine: {}" , medicalInfo);
         String regMId = requestMedicine.getMedicalInfo().getRegMId();
         String mediCode = requestMedicine.getMedicalInfo().getMediCode();
-        List<AdIngredient> ingrList = requestMedicine.getMedicalInfo().getIngrList();
-        ingrList.forEach(ingr -> {
-            ingr.setRegMId(regMId);
-            ingr.setMediCode(mediCode);
-            adMedicineMapper.insertIngrdient(ingr);
-        });
         List<AdEfficacy> effiList = requestMedicine.getMedicalInfo().getEffiList();
         effiList.forEach(effi -> {
             effi.setRegMId(regMId);
             effi.setMediCode(mediCode);
             adMedicineMapper.insertEfficacy(effi);
         });
-        AdSellMedicine sellMedicine = requestMedicine.getSellMediInfo();
+        List<AdIngredient> ingrList = requestMedicine.getMedicalInfo().getIngrList();
+        log.info("ingrList: {}" , ingrList);
+        ingrList.forEach(ingr -> {
+            ingr.setRegMId(regMId);
+            ingr.setMediCode(mediCode);
+            log.info("ingrList: {}" , ingr);
+            adMedicineMapper.insertIngredient(ingr);
+        });
         String suppCode = adMedicineMapper.getSuppCode(regMId);
-        sellMedicine.setSuppCode(suppCode);
-        sellMedicine.setMediCode(mediCode);
-        sellMedicine.setState("판매중");
-        adMedicineMapper.insertSellMedicine(sellMedicine);
+        String mediName = requestMedicine.getMedicalInfo().getMediName();
+        sellMediInfo.setSuppCode(suppCode);
+        sellMediInfo.setMediCode(mediCode);
+        sellMediInfo.setMediName(mediName);
+        sellMediInfo.setState("판매중");
+        adMedicineMapper.insertSellMedicine(sellMediInfo);
+    }
+
+    public Map<String, Object> getMedicalInfo(String goodsCode){
+        MedicalInfo medicalInfo = adMedicineMapper.getMedicineInfo(goodsCode);
+        String suppName = adMedicineMapper.getSuppName(goodsCode);
+        SellMediInfo sellMediInfo = adMedicineMapper.getSellMediInfo(goodsCode);
+        RequestMedicine requestMedicine = new RequestMedicine();
+        requestMedicine.setMedicalInfo(medicalInfo);
+        requestMedicine.setSellMediInfo(sellMediInfo);
+        log.info("medicalInfo: {}", medicalInfo);
+        Map<String, Object> mediObj = new HashMap<>();
+
+        mediObj.put("requestMedicine", requestMedicine);
+        mediObj.put("suppName", suppName);
+
+        return mediObj;
     }
 }

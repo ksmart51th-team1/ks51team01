@@ -27,13 +27,13 @@
                                 <div class="col-md-3">
                                     <h6>1. 의약품 정보</h6>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-9" th:object="${medicalInfo}">
                                     <div class="mb-4">
-                                        <label class="form-label" for="regMId">판매자</label>
+                                        <label class="form-label" for="regMId" th:value="*{regMId}">판매자</label>
                                         <input type="text" placeholder="판매자를 입력해주세요" name="regMId" id="regMId" class="form-control" >
                                     </div>
                                     <div class="mb-4">
-                                        <label class="form-label" for="mediName">의약품 이름</label>
+                                        <label class="form-label" for="mediName" th:value="*{mediName}">의약품 이름</label>
                                         <input type="text" placeholder="의약품 이름을 적어주세요" name="mediName" id="mediName" class="form-control" >
                                     </div>
                                     <div class="mb-4">
