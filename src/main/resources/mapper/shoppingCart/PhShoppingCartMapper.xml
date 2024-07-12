@@ -17,19 +17,20 @@
         <result column="qty" property="qty"/>
         <result column="shopping_cart_group" property="shoppingCartGroup"/>
         <result column="reg_date" 	property="regDate"/>
+        <result column="medi_name" 		property="mediName"/>
+        <result column="medi_price" 	property="mediPrice"/>
 
     </resultMap>
 
     <select id="getShoppingCartList" resultMap="shoppingCartResultMap">
         SELECT
-            s.shopping_cart_code,
-            s.goods_code,
-            s.o_m_id,
-            s.qty,
-            s.shopping_cart_group,
-            s.reg_date
+            *
         FROM
             shopping_cart AS s
+        INNER JOIN
+            sell_medicine AS sm
+        ON
+            s.goods_code = sm.goods_code;
 
     </select>
     <!--    &lt;!&ndash;등록&ndash;&gt;

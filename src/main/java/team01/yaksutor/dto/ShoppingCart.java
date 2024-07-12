@@ -11,4 +11,9 @@ public class ShoppingCart {
     private String shoppingCartGroup;
     private String regDate;
 
+
+    // sellMedicine
+    private String mediName;
+    private int mediPrice;
+
 }
