@@ -10,6 +10,8 @@ import team01.yaksutor.admin.mapper.AdMemberMapper;
 import team01.yaksutor.dto.Member;
 import team01.yaksutor.dto.Supplier;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -35,5 +37,10 @@ public class AdSupplierService {
 
 
 
+    }
+
+    public List<Supplier> getSupplierInfo() {
+        List<Supplier> supplierInfo = adMemberMapper.getSupplierInfo();
+        return supplierInfo;
     }
 }

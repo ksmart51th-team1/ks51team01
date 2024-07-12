@@ -4,9 +4,9 @@
     <div class="screen-overlay"></div>
     <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
-
-                <a th:href="@{/admin/adminMain}" class="logoNew brand-wrap" style="font-family: Cafe24Ssurround; color: pink; font-size: 2rem">약수터</a>
-
+                <a th:href="@{/admin/adminMain}" >
+                    <img th:src="@{/resource/logo/logo_pink.png}" class="logo" alt="Nest Dashboard" />
+                </a>
             <div>
                 <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
             </div>
@@ -26,9 +26,9 @@
                     </a>
                     <div class="submenu">
                         <a th:href="@{/admin/member/memberInsert}">회원 추가</a>
-                        <a th:href="@{#}">회원 검색</a>
+                        <a th:href="@{/admin/member/memberSearchList}">회원 검색</a>
                         <a th:href="@{/admin/member/pharmacyInsert}">약국 추가</a>
-                        <a th:href="@{#}">약국 검색</a>
+                        <a th:href="@{/admin/member/pharmacySearchList}">약국 검색</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
@@ -38,7 +38,7 @@
                     </a>
                     <div class="submenu">
                         <a th:href="@{/admin/supplier/supplierInsert}">납품업체 추가</a>
-                        <a th:href="@{#}">납품업체 검색</a>
+                        <a th:href="@{/admin/supplier/supplierSearchList}">납품업체 검색</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
@@ -56,6 +56,9 @@
                         <i class="icon material-icons md-add_box"></i>
                         <span class="text">로그인 이력 조회</span>
                     </a>
+                    <div class="submenu">
+                        <a th:href="@{/admin/loginHistory}">로그인 이력 조회</a>
+                    </div>
                 </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" th:href="@{#}">
@@ -126,7 +129,7 @@
                 </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-person"></i>
+                        <i class="icon bi-chat-quote-fill"></i>
                         <span class="text">커뮤니티 관리</span>
                     </a>
                     <div class="submenu">
@@ -136,7 +139,7 @@
                 </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-person"></i>
+                        <i class="icon bi-megaphone-fill"></i>
                         <span class="text">공지사항 관리</span>
                     </a>
                     <div class="submenu">
@@ -146,7 +149,7 @@
                 </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-person"></i>
+                        <i class="icon bi-headset"></i>
                         <span class="text">자주하는 질문 관리</span>
                     </a>
                     <div class="submenu">

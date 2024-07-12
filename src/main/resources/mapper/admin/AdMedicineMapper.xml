@@ -58,6 +58,23 @@
         </association>
     </resultMap>
 
+    <resultMap id="ingrListMap" type="AdIngredient">
+        <id 	column="ingredient_code"           property="ingredientCode"/>
+        <result column="medi_code" 	property="mediCode"/>
+        <result column="reg_m_id" 	    property="regMId"/>
+        <result column="ingredient" 	        property="ingredient"/>
+        <result column="content"          property="content"/>
+        <result column="reg_date" 	    property="regDate"/>
+    </resultMap>
+
+    <resultMap id="effiListMap" type="AdEfficacy">
+        <id 	column="efficacy_code"           property="efficacyCode"/>
+        <result column="medi_code" 	property="mediCode"/>
+        <result column="reg_m_id" 	    property="regMId"/>
+        <result column="efficacy" 	        property="efficacy"/>
+        <result column="reg_date" 	    property="regDate"/>
+    </resultMap>
+
     <select id="checkLevel" parameterType="string" resultType="int">
         SELECT
             m.`level`
@@ -224,4 +241,94 @@
             s.goods_code = #{goodsCode};
     </select>
 
+    <select id="getAdIngredient" parameterType="String" resultMap="ingrListMap">
+        SELECT
+            i.*
+        FROM
+            ingredient AS i
+        WHERE
+            i.medi_code = #{mediCode};
+    </select>
+
+    <select id="getAdEfficacy" parameterType="String" resultMap="effiListMap">
+        SELECT
+            e.*
+        FROM
+            efficacy AS e
+        WHERE
+            e.medi_code = #{mediCode};
+    </select>
+
+    <update id="updateMedicine" parameterType="MedicalInfo">
+        UPDATE medicine
+        SET
+            reg_m_id=#{regMId},
+            medi_name=#{mediName},
+            medi_img=#{mediImg},
+            medi_drugform=#{mediDrugform},
+            medi_drugtype=#{mediDrugtype},
+            medi_state=#{mediState},
+            medi_usebydate=#{mediUsebydate}
+        WHERE medi_code=#{mediCode}
+    </update>
+
+    <delete id="deleteIngredient" parameterType="string">
+        DELETE FROM ingredient WHERE medi_code=#{mediCode}
+    </delete>
+
+    <delete id="deleteEfficacy" parameterType="string">
+        DELETE FROM efficacy WHERE medi_code=#{mediCode}
+    </delete>
+
+    <update id="updateSellMedicine" parameterType="SellMediInfo">
+        UPDATE sell_medicine
+        SET
+            supp_code=#{suppCode},
+            medi_code=#{mediCode},
+            medi_name=#{mediName},
+            medi_detail=#{mediDetail},
+            medi_price=#{mediPrice},
+            medi_img=#{mediImg},
+            reg_qty=#{regQty}
+        WHERE goods_code=#{goodsCode}
+    </update>
+
+    <select id="getMedicineImg" parameterType="string" resultType="string">
+        SELECT
+            m.medi_img
+        FROM
+            medicine AS m
+        WHERE
+            m.medi_code = #{medicineCode};
+    </select>
+
+    <select id="getMediCode" parameterType="string" resultType="string">
+        SELECT
+            m.medi_code
+        FROM
+            medicine AS m
+            INNER join
+            sell_medicine AS s
+            on
+            m.medi_code = s.medi_code
+        WHERE
+            goods_code = #{goodsCode};
+    </select>
+
+    <select id="getMedicineName" parameterType="string" resultType="string">
+        SELECT
+            m.medi_name
+        FROM
+            medicine AS m
+        WHERE
+            m.medi_code = #{mediCode};
+    </select>
+
+    <update id="deleteSellMedicine" parameterType="string">
+        UPDATE sell_medicine
+        SET
+            state='삭제'
+        WHERE
+            medi_code=#{mediCode};
+    </update>
 </mapper>

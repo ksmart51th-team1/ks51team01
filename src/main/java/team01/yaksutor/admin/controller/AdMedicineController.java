@@ -58,8 +58,13 @@ public class AdMedicineController {
     }
 
     @GetMapping("/medicineModify")
-    public String medicineModify(Model model) {
+    public String medicineModify(Model model,
+                                 @RequestParam(value="goodsCode") String goodsCode) {
+        Map<String, Object> mediObj = adMedicineService.getMedicalInfo(goodsCode);
+        RequestMedicine requestMedicine = (RequestMedicine) mediObj.get("requestMedicine");
+        String suppName = mediObj.get("suppName").toString();
 
+        model.addAttribute("requestMedicine", requestMedicine);
         model.addAttribute("title", "의약품 수정");
         model.addAttribute("content", "의약품 수정");
 
@@ -67,8 +72,14 @@ public class AdMedicineController {
     }
 
     @GetMapping("/medicineDelete")
-    public String medicineDelete(Model model) {
+    public String medicineDelete(Model model,
+                                 @RequestParam(value="goodsCode") String goodsCode) {
 
+        String mediCode = adMedicineMapper.getMediCode(goodsCode);
+        String mediName = adMedicineMapper.getMedicineName(mediCode);
+
+        model.addAttribute("mediCode", mediCode);
+        model.addAttribute("mediName", mediName);
         model.addAttribute("title", "의약품 삭제");
         model.addAttribute("content", "의약품 삭제");
 
@@ -81,8 +92,19 @@ public class AdMedicineController {
         Map<String, Object> mediObj = adMedicineService.getMedicalInfo(goodsCode);
         RequestMedicine requestMedicine = (RequestMedicine) mediObj.get("requestMedicine");
         String suppName = mediObj.get("suppName").toString();
+        String effies ="";
+        List<AdEfficacy> efficacyList = requestMedicine.getMedicalInfo().getEffiList();
+        boolean first = true;
+        for (AdEfficacy adEfficacy : efficacyList) {
+            if(!first){
+                effies += ", ";
+                first = false;
+            }
+            effies += adEfficacy.getEfficacy();
+            effies += " ";
+        }
 
-
+        model.addAttribute("effies", effies);
         model.addAttribute("requestMedicine", requestMedicine);
         model.addAttribute("suppName", suppName);
         model.addAttribute("title", "의약품 상세");
@@ -133,5 +155,29 @@ public class AdMedicineController {
         return "redirect:/admin/medicine/medicineSearchList";
     }
 
+    @PostMapping("/medicineModify")
+    @ResponseBody
+    public String medicineModify(Model model,
+                                 @RequestPart(value="requestMedicine") RequestMedicine requestMedicine,
+                                 @RequestPart(value="img") List<MultipartFile> multipartFile){
+        log.info("requestMedicine: {}", requestMedicine);
+
+        List<FileRequest> fileList = fileUtils.uploadFiles(multipartFile);
+        fileList.forEach( file -> {
+            log.info("file:{}", file);
+            requestMedicine.getMedicalInfo().setMediImg(file.getFileIdx());
+            requestMedicine.getSellMediInfo().setMediImg(file.getFileIdx());
+        });
+        adMedicineService.modifyMedicine(requestMedicine, fileList);
+
+        return "redirect:/admin/medicine/medicineSearchList";
+    }
+
+    @PostMapping("/medicineDelete")
+    public String medicineDelete(@RequestParam(value="mediCode") String mediCode){
+        adMedicineService.deleteMedicine(mediCode);
+
+        return "redirect:/admin/medicine/medicineSearchList";
+    }
 
 }

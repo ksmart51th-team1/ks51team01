@@ -7,14 +7,15 @@
 
 <th:block layout:fragment="customContent">
     <section class="content-main">
-        <form id="addMedicine" th:action="@{/admin/medicine/medicineInsert}" method="post">
+        <form id="deleteMedicine" th:action="@{/admin/medicine/medicineDelete(mediCode=${mediCode})}" method="post">
+
             <div class="row">
                 <div class="col-6">
                     <div class="content-header">
                         <h2 class="content-title" th:text="${content}">의약품 삭제</h2>
                         <div>
                             <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">삭제취소</button>
-                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="의약품 삭제" />
+                            <button type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up">의약품 삭제</button>
                         </div>
                     </div>
                 </div>
@@ -30,7 +31,7 @@
                                 <div class="col-md-9">
                                     <div class="mb-4">
                                         <label class="form-label" for="mediName">의약품 이름</label>
-                                        <input type="text" value="의약품이름" name="mediName" id="mediName" class="form-control" >
+                                        <input type="text" value="의약품이름" name="mediName" id="mediName" class="form-control" th:value="${mediName}" readonly="readonly">
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label" for="writeName">삭제조건</label>
@@ -53,7 +54,13 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-
+        $('#submitBtn').click(function(){
+            const oriName = $('#mediName').val();
+            const writeName = $('#writeName').val();
+            if(oriName == writeName){
+                $('#deleteMedicine').submit();
+            }
+        });
     </script>
 </th:block>
 </html>

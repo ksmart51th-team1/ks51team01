@@ -11,11 +11,24 @@ import team01.yaksutor.dto.ManagePharmacy;
 import team01.yaksutor.dto.Member;
 import team01.yaksutor.dto.Pharmacy;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class AdMemberService {
     private final AdMemberMapper adMemberMapper;
+    private final MemberMapper memberMapper;
+
+    public List<Pharmacy> getPharmacyInfo(){
+        List<Pharmacy> pharmacyInfo = adMemberMapper.getPharmacyList();
+        return pharmacyInfo;
+    }
+
+    public List<Member> getMemberInfo() {
+        List<Member> memberInfo = memberMapper.getMemberInfo();
+        return memberInfo;
+    }
 
 
     @Transactional
@@ -32,6 +45,19 @@ public class AdMemberService {
     }
     @Transactional
     public void staffToOwnerMember(Member member, Pharmacy pharmacy) {
+        String memberId = member.getMemberId();
+        Member staffInfo = memberMapper.getMemberInfoById(memberId);
+        String staffId = staffInfo.getMemberId();
+        adMemberMapper.deleteManagePharmacyById(staffId);
+        adMemberMapper.updateMemberLevelNumById(staffId);
+        //Pharmacy테이블에 추가
+        pharmacy.setPharId(memberId);
+        adMemberMapper.pharmacyInsert(pharmacy);
+    }
 
+    //회원 삭제
+    public void memberDelete(String memberId) {
+        Member member = memberMapper.getMemberInfoById(memberId);
+        adMemberMapper.deleteMemberById(member);
     }
 }

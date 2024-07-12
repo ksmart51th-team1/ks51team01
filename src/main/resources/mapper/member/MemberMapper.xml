@@ -59,5 +59,10 @@
         WHERE
             m.m_id = #{memberId}
     </select>
+    <select id="getMemberInfo" resultMap="memberResultMap">
+        <include refid="memberSearch">
+
+        </include>
+    </select>
 
 </mapper>

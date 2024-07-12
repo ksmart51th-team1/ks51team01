@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.supplier.mapper.SuMedicineMapper">
+    <resultMap id="medicineListMap" type="Medicine">
+        <id column="medi_code"           property="mediCode" />
+        <result column="reg_m_id"        property="regMId" />
+        <result column="medi_name"       property="mediName" />
+        <result column="medi_img"        property="mediImg" />
+        <result column="medi_drugform"   property="mediDrugform" />
+        <result column="medi_drugtype"   property="mediDrugtype" />
+        <result column="medi_state"      property="mediState" />
+        <result column="medi_usebydate" property="mediUsebydate" />
+        <result column="reg_date"        property="regDate" />
+
+        <association property="imgData" javaType="ImgData">
+            <id 	column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name" 	property="fileOriginName"/>
+            <result column="file_new_name" 	    property="fileNewName"/>
+            <result column="file_path" 	        property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date" 	    property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="sellMedicineListMap" type="SellMedicine">
+        <id column="goods_code"      property="goodsCode" />
+        <result column="supp_code"   property="suppCode" />
+        <result column="medi_code"   property="mediCode" />
+        <result column="medi_name"   property="mediName" />
+        <result column="medi_detail" property="mediDetail" />
+        <result column="medi_price"  property="mediPrice" />
+        <result column="medi_img"    property="mediImg" />
+        <result column="reg_qty"     property="regQty" />
+        <result column="state"       property="state" />
+        <result column="reg_date"    property="regDate" />
+
+        <association property="imgData" javaType="ImgData">
+            <id 	column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name" 	property="fileOriginName"/>
+            <result column="file_new_name" 	    property="fileNewName"/>
+            <result column="file_path" 	        property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date" 	    property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="medicalInfoMap" type="MedicalInfo">
+        <id column="medi_code"      property="mediCode" />
+        <result column="reg_m_id"   property="regMId" />
+        <result column="medi_name"   property="mediName" />
+        <result column="medi_img"   property="mediImg" />
+        <result column="medi_drugform" property="mediDrugform" />
+        <result column="medi_drugtype"  property="mediDrugtype" />
+        <result column="medi_state"    property="mediState" />
+        <result column="medi_usebydate"     property="mediUsebydate" />
+        <result column="reg_date"       property="regDate" />
+
+        <association property="imgInfo" javaType="AdImgData">
+            <id 	column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name" 	property="fileOriginName"/>
+            <result column="file_new_name" 	    property="fileNewName"/>
+            <result column="file_path" 	        property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date" 	    property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="ingrListMap" type="Ingredient">
+        <id 	column="ingredient_code"           property="ingredientCode"/>
+        <result column="medi_code" 	property="mediCode"/>
+        <result column="reg_m_id" 	    property="regMId"/>
+        <result column="ingredient" 	        property="ingredient"/>
+        <result column="content"          property="content"/>
+        <result column="reg_date" 	    property="regDate"/>
+    </resultMap>
+
+    <resultMap id="effiListMap" type="Efficacy">
+        <id 	column="efficacy_code"           property="efficacyCode"/>
+        <result column="medi_code" 	property="mediCode"/>
+        <result column="reg_m_id" 	    property="regMId"/>
+        <result column="efficacy" 	        property="efficacy"/>
+        <result column="reg_date" 	    property="regDate"/>
+    </resultMap>
+
+    <select id="getListSellMedicine" parameterType="string" resultMap="sellMedicineListMap">
+        SELECT
+            s.*,
+            i.file_path
+        FROM
+            sell_medicine AS s
+            INNER join
+            img_data i
+            on
+            s.medi_img = i.file_idx
+        WHERE
+            s.supp_code = #{suppCode} AND s.state != '삭제';
+    </select>
+
+    <select id="getSuppCode" parameterType="string" resultType="string">
+        SELECT
+            supp_code
+        FROM
+            supplier AS s
+        WHERE
+            s.supp_id = #{sid};
+    </select>
+
+    <insert id="insertMedicine" parameterType="Medicine">
+        <selectKey keyProperty="mediCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(medi_code) = 0	then 'medi_code_1'
+            ELSE
+            CONCAT('medi_code_',
+            max(cast(SUBSTRING_INDEX(medi_code, 'medi_code_', -1) AS UNSIGNED))+1
+            )
+            END AS mediCode
+            FROM
+            medicine;
+        </selectKey>
+        INSERT INTO medicine
+        (medi_code, reg_m_id, medi_name, medi_img, medi_drugform, medi_drugtype, medi_state, medi_usebydate, reg_date)
+        VALUES (#{mediCode}, #{regMId}, #{mediName}, #{mediImg}, #{mediDrugform}, #{mediDrugtype}, #{mediState}, #{mediUsebydate}, CURDATE())
+    </insert>
+
+    <insert id="insertImg" parameterType="FileRequest">
+        INSERT INTO img_data
+        (file_idx, file_origin_name, file_new_name, file_path, file_size, file_reg_date)
+        VALUES (#{fileIdx}, #{fileOriginName}, #{fileNewName}, #{filePath}, #{fileSize}, #{fileRegDate})
+    </insert>
+
+    <insert id="insertIngredient" parameterType="Ingredient">
+        <selectKey keyProperty="ingredientCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(ingredient_code) = 0	then 'ingr_1'
+            ELSE
+            CONCAT('ingr_',
+            max(cast(SUBSTRING_INDEX(ingredient_code, 'ingr_', -1) AS UNSIGNED))+1
+            )
+            END AS ingredientCode
+            FROM
+            ingredient;
+        </selectKey>
+        INSERT INTO ingredient
+        (Ingredient_code, medi_code, reg_m_id, Ingredient, Content, reg_date)
+        VALUES (#{ingredientCode}, #{mediCode}, #{regMId}, #{ingredient}, #{content}, CURDATE())
+    </insert>
+
+    <insert id="insertEfficacy" parameterType="Efficacy">
+        <selectKey keyProperty="efficacyCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(efficacy_code) = 0	then 'effi_1'
+            ELSE
+            CONCAT('effi_',
+            max(cast(SUBSTRING_INDEX(efficacy_code, 'effi_', -1) AS UNSIGNED))+1
+            )
+            END AS efficacyCode
+            FROM
+            efficacy;
+        </selectKey>
+        INSERT INTO efficacy
+        (efficacy_code, medi_code, reg_m_id, efficacy, reg_date)
+        VALUES (#{efficacyCode}, #{mediCode}, #{regMId}, #{efficacy}, CURDATE())
+    </insert>
+
+    <insert id="insertSellMedicine" parameterType="SellMedicine">
+        <selectKey keyProperty="goodsCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(goods_code) = 0	then 'goods_code_1'
+            ELSE
+            CONCAT('goods_code_',
+            max(cast(SUBSTRING_INDEX(goods_code, 'goods_code_', -1) AS UNSIGNED))+1
+            )
+            END AS goodsCode
+            FROM
+            sell_medicine;
+        </selectKey>
+        INSERT INTO sell_medicine
+        (goods_code, supp_code, medi_code, medi_name, medi_detail, medi_price, medi_img, reg_qty, state, reg_date)
+        VALUES (#{goodsCode}, #{suppCode}, #{mediCode}, #{mediName}, #{mediDetail}, #{mediPrice}, #{mediImg}, #{regQty}, '판매중', CURDATE())
+    </insert>
+
+    <select id="getMedicineInfo" parameterType="String" resultMap="medicineListMap">
+        SELECT
+            m.*,
+            d.*
+        FROM
+            medicine AS m
+            INNER join
+            sell_medicine AS s
+            on
+            m.medi_code = s.medi_code
+            INNER join
+            img_data AS d
+            on
+            m.medi_img = d.file_idx
+        WHERE
+            s.goods_code = #{goodsCode};
+    </select>
+
+    <select id="getSuppName" parameterType="string" resultType="string">
+        SELECT
+        su.sup_name
+        FROM
+        sell_medicine AS s
+        INNER join
+        supplier AS su
+        on
+        s.supp_code = su.supp_code
+        WHERE
+        s.goods_code = #{goodsCode};
+    </select>
+
+    <select id="getSellMedicineInfo" parameterType="String" resultMap="sellMedicineListMap">
+        SELECT
+        s.*
+        FROM
+        sell_medicine AS s
+        WHERE
+        s.goods_code = #{goodsCode};
+    </select>
+
+    <select id="getIngrList" parameterType="String" resultMap="ingrListMap">
+        SELECT
+        i.*
+        FROM
+        ingredient AS i
+        WHERE
+        i.medi_code = #{mediCode};
+    </select>
+
+    <select id="getEffiList" parameterType="String" resultMap="effiListMap">
+        SELECT
+        e.*
+        FROM
+        efficacy AS e
+        WHERE
+        e.medi_code = #{mediCode};
+    </select>
+
+    <select id="getMediCode" parameterType="string" resultType="string">
+        SELECT
+        m.medi_code
+        FROM
+        medicine AS m
+        INNER join
+        sell_medicine AS s
+        on
+        m.medi_code = s.medi_code
+        WHERE
+        goods_code = #{goodsCode};
+    </select>
+
+    <update id="updateMedicine" parameterType="Medicine">
+        UPDATE medicine
+        SET
+            reg_m_id=#{regMId},
+            medi_name=#{mediName},
+            medi_img=#{mediImg},
+            medi_drugform=#{mediDrugform},
+            medi_drugtype=#{mediDrugtype},
+            medi_state=#{mediState},
+            medi_usebydate=#{mediUsebydate}
+        WHERE medi_code=#{mediCode}
+    </update>
+
+    <delete id="deleteIngredient" parameterType="string">
+        DELETE FROM ingredient WHERE medi_code=#{mediCode}
+    </delete>
+
+    <delete id="deleteEfficacy" parameterType="string">
+        DELETE FROM efficacy WHERE medi_code=#{mediCode}
+    </delete>
+
+    <update id="updateSellMedicine" parameterType="SellMedicine">
+        UPDATE sell_medicine
+        SET
+            supp_code=#{suppCode},
+            medi_code=#{mediCode},
+            medi_name=#{mediName},
+            medi_detail=#{mediDetail},
+            medi_price=#{mediPrice},
+            medi_img=#{mediImg},
+            reg_qty=#{regQty}
+        WHERE goods_code=#{goodsCode}
+    </update>
+
+    <update id="deleteSellMedicine" parameterType="string">
+        UPDATE sell_medicine
+        SET
+            state='삭제'
+        WHERE
+            medi_code=#{mediCode};
+    </update>
+
+</mapper>

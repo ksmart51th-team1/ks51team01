@@ -50,7 +50,7 @@
                                             <!-- col .// -->
                                             <div class="col-lg-12 mb-3">
                                                 <label class="form-label">상세 설명</label>
-                                                <textarea class="form-control" rows="4" readonly="readonly" th:value="*{sellMediInfo.mediDetail}"></textarea>
+                                                <textarea class="form-control" rows="4" readonly="readonly" th:text="*{sellMediInfo.mediDetail}"></textarea>
                                             </div>
                                             <!-- col .// -->
                                             <div class="col-lg-6 mb-3">
@@ -63,22 +63,24 @@
                                                 <input class="form-control" type="text" readonly="readonly" th:value="*{sellMediInfo.regQty}"/>
                                             </div>
                                             <!-- col .// -->
-                                            <div>
+                                            <div class="row">
+                                                <label class="col-lg-6 mb-3 form-label">성분</label>
+                                                <label class="col-lg-6 mb-3 form-label">함량</label>
+                                            </div>
+                                            <div class="row" th:if="${requestMedicine.medicalInfo.ingrList != null}" th:each="i : ${requestMedicine.medicalInfo.ingrList}">
                                                 <div class="col-lg-6 mb-3">
-                                                    <label class="form-label">성분</label>
-                                                    <input class="form-control" type="text" readonly="readonly" />
+                                                    <input class="form-control" type="text" readonly="readonly" th:value="${i.ingredient}"/>
                                                 </div>
                                                 <!-- col .// -->
                                                 <div class="col-lg-6 mb-3">
-                                                    <label class="form-label">함량</label>
-                                                    <input class="form-control" type="text" readonly="readonly" />
+                                                    <input class="form-control" type="text" readonly="readonly" th:value="${i.content}"/>
                                                 </div>
                                                 <!-- col .// -->
                                             </div>
                                             <div>
-                                                <div class="col-lg-6 mb-3">
+                                                <div class="col-lg-12 mb-3">
                                                     <label class="form-label">효능</label>
-                                                    <input class="form-control" type="text" readonly="readonly" />
+                                                    <input class="form-control" type="text" readonly="readonly" th:value="${effies}"/>
                                                 </div>
                                             </div>
                                             <!-- col .// -->

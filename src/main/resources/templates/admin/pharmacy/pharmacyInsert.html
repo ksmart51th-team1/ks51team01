@@ -7,14 +7,14 @@
 
 <th:block layout:fragment="customContent">
     <section class="content-main">
-        <form id="addPharmacy" th:action="@{/admin/member/pharmacyInsert}" method="post">
+        <form id="addPharmacy" th:action="@{/admin/member/adPharmacyInsert}" method="post">
             <div class="row">
                 <div class="col-6">
                     <div class="content-header">
                         <h2 class="content-title" th:text="${content}">기존 관리약사 개국약사로 변경</h2>
                         <div>
                             <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">등록 취소</button>
-                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="약국등록 및 개국약사로 전환" />
+                            <button id="submitBtn" class="btn btn-md rounded font-sm hover-up" disabled>약국등록 및 개국약사로 전환</button>
                         </div>
                     </div>
                 </div>
@@ -31,6 +31,7 @@
                                     <div class="mb-4">
                                         <label class="form-label fs-6" for="memberId">회원아이디</label>
                                         <input type="text" placeholder="아이디를 입력해주세요" name="memberId" id="memberId" class="form-control w-50" >
+                                        <span id="check-message" class="form-text"></span>
                                     </div>
                                 </div> <!-- col.// -->
                             </div> <!-- row.// -->
@@ -53,9 +54,9 @@
                                             <label class="form-label mr-30 fs-6" >약국주소입력</label>
                                             <button type="button" id="pAddrBtn" class="btn btn-md rounded font-sm hover-up ms-auto me-3">주소검색</button>
                                         </div>
-                                        <input class="form-control mb-3 w-25" type="text"  name="pPostCode" id="pPostCode" placeholder="우편번호" />
-                                        <input class="form-control mb-3" type="text"  name="targetPharAddr" id="targetPharAddr" placeholder="도로명주소" />
-                                        <input class="form-control mb-3" type="text"  name="targetPharAddrDetail" id="targetPharAddrDetail" placeholder="상세주소" />
+                                        <input class="form-control mb-3 w-25" type="text" name="pPostCode" id="pPostCode" placeholder="우편번호" />
+                                        <input class="form-control mb-3" type="text" name="targetPharAddr" id="targetPharAddr" placeholder="도로명주소" />
+                                        <input class="form-control mb-3" type="text" name="targetPharAddrDetail" id="targetPharAddrDetail" placeholder="상세주소" />
                                         <input type="hidden" name="pAddrDo" id="pAddrDo" />
                                         <input type="hidden" name="pAddrSi" id="pAddrSi" />
                                         <input type="hidden" name="pAddrDong" id="pAddrDong" />
@@ -80,55 +81,38 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script th:src="@{/resource/user/assets/js/vendor/jquery-3.6.0.min.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:inline="javascript">
         function searchAddress(searchObj) {
             new daum.Postcode({
                 oncomplete: function(data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    var addr = ''; // 주소 변수
-
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    var addr = '';
+                    if (data.userSelectedType === 'R') {
                         data.address = data.roadAddress;
-                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    } else {
                         data.address = data.jibunAddress;
                     }
-
-                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
-
-                    if(searchObj != null){
+                    if (searchObj != null) {
                         const valueArr = searchObj.value;
-                        for(const key in searchObj){
-                            if(key === 'focus'){
+                        for (const key in searchObj) {
+                            if (key === 'focus') {
                                 document.getElementById(searchObj[key]).focus();
                                 continue;
                             }
                             document.getElementById(searchObj[key]).value = data[key];
                         }
                     }
-
-                    /*
-                    document.getElementById('memberPostcode').value = data.zonecode;
-                    document.getElementById("memberAddress").value = addr;
-                    // 커서를 상세주소 필드로 이동한다.
-                    document.getElementById("memberDetailAddress").focus();
-
-                     */
                 }
             }).open();
         }
 
-
-        //약국주소객체
         $('#pAddrBtn').click(function(){
             const searchObj = {
-                zonecode : 'pPostCode',
+                zonecode: 'pPostCode',
                 address: 'targetPharAddr',
-                focus : 'targetPharAddrDetail'
-            }
+                focus: 'targetPharAddrDetail'
+            };
             searchAddress(searchObj);
         });
 
@@ -137,76 +121,49 @@
             location.href = '/admin/adminMain';
         });
 
-
         $('#submitBtn').click(function(){
-
             let isSubmit = true;
-
-            // 회원의 주소 파싱 및 숨겨진 필드에 값 설정
-            const fullAddress = $('#targetAddr').val().trim();
-            console.log(fullAddress);
-            const addrDetail = $('#targetAddrDetail').val().trim();
-            console.log(addrDetail);
-            if (fullAddress) {
+            const fullPharAddress = $('#targetPharAddr').val().trim();
+            const addrPharDetail = $('#targetPharAddrDetail').val().trim();
+            if (fullPharAddress) {
                 try {
-                    const parsedAddress = parseAddress(fullAddress);
-                    $('#memberAddrSido').val(parsedAddress.sido);
-                    $('#memberAddrSigungu').val(parsedAddress.sigungu);
-                    $('#memberAddrDong').val(parsedAddress.dong);
-                    $('#memberAddr').val(parsedAddress.detail + ' ' + addrDetail);
+                    const parsedAddress = parseAddress(fullPharAddress);
+                    $('#pAddrDo').val(parsedAddress.sido);
+                    $('#pAddrSi').val(parsedAddress.sigungu);
+                    $('#pAddrDong').val(parsedAddress.dong);
+                    $('#pAddr').val(parsedAddress.detail + ' ' + addrPharDetail);
                 } catch (e) {
-                    alert('잘못된 회원 주소 형식입니다.');
-                    $('#targetAddress').focus();
+                    console.log(e);
+                    alert('잘못된 약국 주소 형식입니다.');
+                    $('#targetPharAddr').focus();
                     isSubmit = false;
                 }
             } else {
                 alert('도로명주소는 필수 입력 항목입니다');
-                $('#targetAddress').focus();
+                $('#targetPharAddr').focus();
                 isSubmit = false;
             }
 
-            const cate = ['owner','staff'];
-            const idx = Number($('#memberLevelNum').val())-3;
-            console.log(cate[idx]);
-            if(cate[idx] === 'owner'){
-                //약국의 주소 파싱 및 숨겨진 필드에 값 설정
-                const fullPharAddress = $('#targetPharAddr').val().trim();
-                const addrPharDetail = $('#targetPharAddrDetail').val().trim();
-                if (fullPharAddress) {
-                    try {
-                        const parsedAddress = parseAddress(fullPharAddress);
-                        $('#pAddrDo').val(parsedAddress.sido);
-                        $('#pAddrSi').val(parsedAddress.sigungu);
-                        $('#pAddrDong').val(parsedAddress.dong);
-                        $('#pAddr').val(parsedAddress.detail + ' ' + addrPharDetail);
-                    } catch (e) {
-                        console.log(e);
-                        alert('잘못된 약국 주소 형식입니다.');
-                        $('#targetAddress').focus();
-                        isSubmit = false;
-                    }
-                } else {
-                    alert('도로명주소는 필수 입력 항목입니다');
-                    $('#targetAddress').focus();
-                    isSubmit = false;
-                }
-            }
-
-            $(`#addMember .common input:not([type="hidden"]), #addMember #${cate[idx]} input:not([type="hidden"])`).each((idx, element) => {
+            $(`#addPharmacy .common input:not([type="hidden"]), #addPharmacy input:not([type="hidden"])`).each((idx, element) => {
                 const id = element.id;
                 const value = element.value;
-                if(!value){
+                if (!value) {
                     alert(`${id}는(은) 필수 입력 항목입니다`);
-                    $(element.focus());
+                    $(element).focus();
                     isSubmit = false;
                     return false;
                 }
-            });
-            if(isSubmit) $('#addMember').submit();
 
+            });
+            if (isSubmit) {
+                alert('정상처리되었습니다');
+                $('#addPharmacy').submit();
+                window.location.href = '/admin/adminMain'; // 리디렉션 경로로 이동합니다.
+            }
         });
 
-        //주소 파싱하는 함수 정의
+
+
         function parseAddress(address) {
             const pattern = /(?<sido>[가-힣]+특별자치도|[가-힣]+시|[가-힣]+도|[가-힣]+북|[가-힣]+남|[가-힣]+기|[가-힣]+산|[가-힣]+구|[가-힣]+울|[가-힣]+전)\s+(?<sigungu>[가-힣]+시\s+[가-힣]+구|[가-힣]+시|[가-힣]+군|[가-힣]+구)\s+(?<detail>.+)/;
             const match = address.match(pattern);
@@ -223,28 +180,6 @@
                 throw new Error('Invalid address format');
             }
         }
-
-        //약사의 권한에 따라 약국정보추가 혹은 소속약국등록 div 보이게 만드는 자바스크립트
-        function togglePharmacyInfo() {
-            var memberLevel = document.getElementById('memberLevelNum').value;
-            var ownerDiv = document.getElementById('owner');
-            var staffDiv = document.getElementById('staff');
-
-            if (memberLevel === "3") {
-                ownerDiv.classList.remove('d-none');
-                staffDiv.classList.add('d-none');
-            } else if (memberLevel === "4") {
-                ownerDiv.classList.add('d-none');
-                staffDiv.classList.remove('d-none');
-            } else {
-                ownerDiv.classList.add('d-none');
-                staffDiv.classList.add('d-none');
-            }
-        }
-
-
-
-        //회원가입시 ID체크
         $(document).ready(function() {
             $('#memberId').on('blur', function() {
                 var memberId = $(this).val();
@@ -256,17 +191,24 @@
                 }
 
                 $.ajax({
-                    url: '/admin/member/idCheck',
+                    url: '/admin/member/isStaff',
                     method: 'POST',
                     data: { memberId: memberId },
-                    dataType : 'json',
+                    dataType: 'json',
                     success: function(response) {
+                        console.log(response);
                         if (response) {
-                            $checkMessage.text('이미 사용 중인 아이디입니다.').css('color', 'red').show();
+                            $checkMessage.text('해당 아이디는 관리약사 권한 입니다').css('color', 'green').show();
+                            $('#submitBtn').prop('disabled', false);
                         } else {
-                            $checkMessage.text('사용 가능한 아이디입니다.').css('color', 'green').show();
-                            $('#submitBtn').prop('disabled',false);
+
+                            $checkMessage.text('관리약사인경우에만 등록이 가능합니다.').css('color', 'red').show();
                         }
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패했을 때의 처리
+                        console.error("Error: " + error);
+                        $checkMessage.text('서버 오류가 발생했습니다. 다시 시도해주세요.').css('color', 'red').show();
                     }
                 });
             });

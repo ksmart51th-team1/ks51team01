@@ -25,6 +25,10 @@ public interface PhBoardMapper {
     int deleteBoard(String boardCode);
     // 커뮤니티 댓글 등록
     int addRepl(Repl repl);
+    // 커뮤니티 댓글 수정
+    int modifyRepl(Repl repl);
+    // 커뮤니티 댓글 삭제
+    int deleteRepl(String replNum);
 
 
 
