@@ -35,4 +35,26 @@ public interface AdMedicineMapper {
     String getSuppName(String goodsCode);
 
     SellMediInfo getSellMediInfo(String goodsCode);
+
+    List<AdIngredient> getAdIngredient(String mediCode);
+
+    List<AdEfficacy> getAdEfficacy(String mediCode);
+
+    void updateMedicine(MedicalInfo medicalInfo);
+
+    void deleteIngredient(String medicineCode);
+
+    void deleteEfficacy(String medicineCode);
+
+    void updateSellMedicine(SellMediInfo sellMediInfo);
+
+    String getMedicineImg(String medicineCode);
+
+    String getMediCode(String goodsCode);
+
+    String getMedicineName(String mediCode);
+
+    void deleteSellMedicine(String mediCode);
+
+    
 }

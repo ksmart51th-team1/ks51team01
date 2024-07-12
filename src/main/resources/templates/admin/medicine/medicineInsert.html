@@ -13,9 +13,8 @@
                     <div class="content-header">
                         <h2 class="content-title" th:text="${content}">의약품 등록</h2>
                         <div>
-                            <button type="button" id="testBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">test</button>
                             <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">등록 취소</button>
-                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="의약품 등록"/>
+                            <button type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" disabled>의약품 등록</button>
                         </div>
                     </div>
                 </div>
@@ -184,22 +183,6 @@
             return {isSubmit, ingrList};
         }
 
-        $('#submitBtn').click(function(){
-            let isSubmit = true;
-            /*$('#addMedicine input, #addMedicine select').each((idx, element) => {
-                const name = element.value;
-                const id = element.id;
-                const value = element.value;
-                if(!value){
-                    alert(`${name}는(은) 필수 입력 항목입니다`);
-                    $(element.focus());
-                    isSubmit = false;
-                    return false;
-                }
-            });*/
-            if(isSubmit) $('#addMedicine').submit();
-        });
-
         const createIngrRow = () => {
             const ingrContent = [
                 { 'tagName' : 'input', 'type' : 'text', 'name' : 'ingredient' },
@@ -296,11 +279,20 @@
             });
         });
 
-        $('#testBtn').click(function(){
-
-            const allList = [];
-            const ingrLeng = $('#ingrTbody tr');
-
+        $('#submitBtn').click(function(){
+            let isSubmit = true;
+            $('#addMedicine input, #addMedicine select').each((idx, element) => {
+                const name = element.value;
+                const id = element.id;
+                const value = element.value;
+                if(!value){
+                    alert(`${id}는(은) 필수 입력 항목입니다`);
+                    $(element.focus());
+                    isSubmit = false;
+                    return false;
+                }
+            });
+            if(isSubmit) {
             const medicalInfo = {};
 
             $('.medical-info input, .medical-info select').not('.ingredient, .content, .efficacy').each((idx, item) => {
@@ -364,49 +356,8 @@
             request.done(element => {
                 return element;
             });
-
-            /*
-            ingrLeng.each((idx, item) => {
-                const ingrObj = {
-                    ingredient : $(item).find('.ingredient').val(),
-                    content : $(item).find('.content').val()
-                };
-                allList.push(ingrObj);
-            });
-
-            const effiList = [];
-            const effiLeng = $('#effiTbody tr');
-            effiLeng.each((idx, item) => {
-                const effiObj = {
-                    efficacy : $(item).find('.efficacy').val()
-                };
-                allList.push(effiObj);
-            });
-            const allList = {
-                ingrList : ingrList,
-                effiList : effiList
-            };
-            const request = $.ajax({
-                url : '/admin/medicine/medicineInsert',
-                method : 'POST',
-                contentType : 'application/json;',
-                data : JSON.stringify(allList),
-                dataType : 'json'
-            });
-            request.done(element => {
-                return element;
-            });
-            */
-            /*const requestEffi = $.ajax({
-                url : '/admin/medicine/medicineInsert',
-                method : 'POST',
-                contentType : 'application/json;',
-                data : JSON.stringify(effiList),
-                dataType : 'json'
-            });
-            requestEffi.done(element => {
-                return
-            })*/
+                $(location).attr('href', '/admin/medicine/medicineSearchList');
+            }
         });
     </script>
 </th:block>
