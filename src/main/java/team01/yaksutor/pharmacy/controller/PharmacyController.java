@@ -37,11 +37,11 @@ public class PharmacyController {
 
         return "user/pharmacy/myPage/myPage";
     }
-    @GetMapping("/cart")
+/*    @GetMapping("/cart")
     public String cart() {
 
         return "user/pharmacy/order/cart";
-    }
+    }*/
 
     @GetMapping("/myOrderList")
     public String myOderList() {

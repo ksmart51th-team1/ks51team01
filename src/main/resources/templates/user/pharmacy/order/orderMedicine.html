@@ -72,7 +72,7 @@
                     <table class="table table-wishlist">
                         <thead>
                         <tr class="main-heading">
-                            <th class="custome-checkbox start pl-30" colspan="2" scope="col">의약품 이름</th>
+                            <th class="custome-checkbox start pl-30" colspan="3" scope="col">의약품 이름</th>
                             <th scope="col">가격</th>
                             <th scope="col">판매상태</th>
                             <th scope="col">재고</th>
@@ -83,18 +83,14 @@
                         </thead>
                         <tbody th:each="s : ${sellMedicineList}" th:if="${sellMedicineList != null}">
                         <tr class="pt-30">
-                            <td class="image product-thumbnail pt-40 pl-30"><img th:src="@{/resource/user/assets/imgs/medicine/img_alotede.jfif}" /></td>
+                            <td class="image product-thumbnail pt-40 pl-30"><img th:src="${s.filePath}" /></td>
                             <td class="product-des product-name">
                                 <h6><a class="product-name mb-10" th:text="${s.mediName}"></a></h6>
-                                <div class="product-rate-cover">
-                                    <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 90%"></div>
-                                    </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
-                                </div>
+                                <span style="color: gray" th:text="${s.regDate}"></span>
                             </td>
+                            <td th:text="${s.mediDetail}"></td>
                             <td class="price" data-title="Price">
-                                <h3 class="text-brand" th:text="${s.getMediPrice()} + '원'"></h3>
+                                <h3 class="text-brand" th:text="${s.mediPrice} + '원'"></h3>
                             </td>
                             <td class="text-center detail-info" data-title="Stock">
                                 <span class="stock-status in-stock mb-0" th:text="${s.state}"></span>

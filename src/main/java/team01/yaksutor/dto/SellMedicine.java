@@ -14,6 +14,6 @@ public class SellMedicine {
     private int regQty;
     private String state;
     private String regDate;
-
+    private String filePath;
     private ImgData imgData;
 }
