@@ -14,6 +14,6 @@ public class AdLoginHistoryService {
     private final AdLoginHistoryMapper adLoginHistoryMapper;
 
     public List<LoginHistory> getAllLoginHistories() {
-        //return adLoginHistoryMapper.get
+        return null;
     }
 }
