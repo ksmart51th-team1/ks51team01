@@ -11,28 +11,26 @@
     <resultMap type="Board" id="boardResultMap">
         <id column="cm_num" 			property="boardCode" />
         <result column="m_id" 		property="mId"/>
-        <result column="p_name" 		property="pName"/>
         <result column="cm_title" 		property="boardTitle"/>
         <result column="cm_content" 		property="boardContent"/>
         <result column="cm_view" 		property="boardView"/>
         <result column="cm_date" 	property="boardDate"/>
+        <result column="replSize" 	property="replSize"/>
     </resultMap>
 
     <select id="getBoardList" resultMap="boardResultMap">
         SELECT
             c.cm_num,
             c.m_id,
-            p.p_name,
             c.cm_title,
             c.cm_content,
             c.cm_view,
-            c.cm_date
+            c.cm_date,
+            (
+            SELECT COUNT(1) FROM repl AS r WHERE c.cm_num = r.cm_num
+            ) AS replSize
         FROM
-            community AS c
-        INNER JOIN
-            pharmacy AS p
-        ON
-            c.m_id = p.phar_id;
+            community AS c;
     </select>
     <!--커뮤니티 등록-->
     <insert id="addBoard" parameterType="Board">
@@ -81,7 +79,6 @@
     <resultMap type="Repl" id="replResultMap">
         <id column="repl_num" 			property="replNum" />
         <result column="m_id" 		property="mId"/>
-        <result column="p_name" 		property="pName"/>
         <result column="cm_num" 		property="cmNum"/>
         <result column="repl_content" 		property="replContent"/>
         <result column="repl_date" 	property="replDate"/>
@@ -90,16 +87,11 @@
         SELECT
             r.repl_num,
             r.m_id,
-            p.p_name,
             r.cm_num,
             r.repl_content,
             r.repl_date
         FROM
-            repl AS r
-        INNER JOIN
-            pharmacy AS p
-        ON
-            r.m_id = p.phar_id;
+            repl AS r;
     </select>
     <!--커뮤니티 댓글 등록-->
     <insert id="addRepl" parameterType="Repl">
@@ -120,8 +112,23 @@
         values
         (#{replNum}, #{mId}, #{cmNum}, #{replContent}, CURDATE());
     </insert>
+    <!--커뮤니티 댓글 수정-->
+    <update id="modifyRepl" parameterType="Repl">
+        UPDATE repl
+        <set>
+            <if test="replContent != null and replContent != ''">
+                repl_content = #{replContent},
+            </if>
+        </set>
+        WHERE
+        repl_num = #{replNum}
+    </update>
 
-
+    <!--커뮤니티 댓글 삭제-->
+    <delete id="deleteRepl" parameterType="String">
+        DELETE FROM repl
+        WHERE repl_num = #{replNum}
+    </delete>
     <!-- =================자주하는 질문==========================-->
 
     <!--자주하는 질문 조회-->

@@ -47,6 +47,14 @@ public class PhBoardService {
     public void addRepl(Repl repl) {
         phBoardMapper.addRepl(repl);
     }
+    // 수정
+    public int modifyRepl(Repl repl) {
+        return  phBoardMapper.modifyRepl(repl);
+    }
+    // 삭제
+    public void deleteRepl(String replNum) {
+        phBoardMapper.deleteRepl(replNum);
+    }
 
 
 

@@ -6,6 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import team01.yaksutor.dto.SellMedicine;
+import team01.yaksutor.pharmacy.service.PhMedicineService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/pharm")
@@ -13,10 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class PhMedicineController {
 
+    private final PhMedicineService phMedicineService;
+
+    /* ------------------------------------------------------------
+     *                    의약품판매등록
+     *  ------------------------------------------------------------*/
+
+
     @GetMapping("/order/orderMedicine")
-    public String medicineSearchList(Model model) {
+    public String getSellMedicineList(Model model) {
+        List<SellMedicine> sellMedicineList = phMedicineService.getSellMedicineList();
         model.addAttribute("title", "의약품 검색 주문");
-        model.addAttribute("content", "의약품 목록");
+        model.addAttribute("sellMedicineList", sellMedicineList);
         return "user/pharmacy/order/orderMedicine";
     }
 

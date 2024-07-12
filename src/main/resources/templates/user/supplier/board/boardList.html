@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
-      layout:decorate="~{user/pharmacy/layout/default}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/supplier/layout/default}">
 <head>
     <style>
         .content-hidden {
@@ -83,11 +83,12 @@
 
                                                 </div>
 
-                                                <form id="addReplForm" th:action="@{/pharm/replAdd}" method="post" style="display: flex">
-                                                    <textarea id="replContent" name="replContent" class="replyArea" minlength="1" maxlength="200" th:placeholder="${b.mId} +  ' 님에게 댓글 추가...'" required></textarea>
+                                                <form id="addReplForm" th:action="@{/supplier/replAdd}" method="post" style="display: flex">
+                                                    <textarea id="replContent" style="border: 1px solid #ececec; height: 50px; padding: 10px 10px 10px 20px; font-size: 16px;"
+                                                              name="replContent" class="replyArea" minlength="1" maxlength="200" th:placeholder="${b.mId} +  ' 님에게 댓글 추가...'" required></textarea>
                                                     <input type="text" class="form-control" id="mId" name="mId" th:value="${session.S_ID}" hidden="hidden" >
                                                     <input type="text" class="form-control" id="cmNum" name="cmNum" th:value="${b.boardCode}" hidden="hidden">
-                                                    <button type="submit" class="btn btn-success"  id="replyBtn"><i class="bi bi-cursor replyCursor"></i></button>
+                                                    <button type="submit" class="btn btn-success"  id="replyBtn" style="color: white; width: 40px" ><i class="bi bi-cursor replyCursor"></i></button>
                                                 </form>
                                             </div>
 
@@ -129,7 +130,7 @@
                 <div class="modal-body">
                     <h5 class="modal-title font-1 m-1" id="writeBoardModalLabel">글 남기기</h5>
 
-                    <form id="addBoardForm" method="post" th:action="@{/pharm/boardAdd}">
+                    <form id="addBoardForm" method="post" th:action="@{/supplier/boardAdd}">
                         <textarea class="form-control commodal-title mb-3" id="boardTitle" name="boardTitle" placeholder="제목을 입력하세요."
                                   required type="text"></textarea>
                         <textarea class="form-control commodal-content" id="boardContent" name="boardContent" placeholder="내용을 입력하세요." required
@@ -142,7 +143,7 @@
                                 악의적 댓글 작성자는 명예훼손, 모욕 등으로 법적 책임을 부담하게 될 수 있다는 점을 유의하여 주시기 바랍니다.
                             </p>
                         </div>
-                        <button class="btn btn-success mt-3" id="commodal-btn" type="submit">글쓰기</button>
+                        <button class="btn btn-success mt-3" id="commodal-btn" type="submit" style="color: white; text-align: center">글쓰기</button>
                     </form>
                 </div>
 
@@ -162,7 +163,7 @@
                         <button type="button" class="btn-modal1 m-1" data-dismiss="modal" aria-label="Close" style="width: 100%">알겠어요.</button>
                     </div>
 
-                    <form id="editBoardForm" method="post" th:action="@{/pharm/board/modify}">
+                    <form id="editBoardForm" method="post" th:action="@{/supplier/board/modify}">
                         <h5 class="modal-title font-1 m-1" id="editBoardModalLabel">글 수정하기</h5>
 
                         <input  type="hidden" id="editBoardId" name="boardCode">
@@ -199,7 +200,7 @@
                         <button type="button" class="btn-modal1 m-1" data-dismiss="modal" aria-label="Close" style="width: 100%">알겠어요.</button>
                     </div>
 
-                    <form id="deleteBoardForm" method="post" th:action="@{/pharm/board/delete}">
+                    <form id="deleteBoardForm" method="post" th:action="@{/supplier/board/delete}">
                         <h5 class="modal-title font-1 m-1" id="deleteBoardModalLabel">정말로 삭제할까요?</h5>
                         <div class="m-3 commodal-info">
                             <p class="font-1" style="font-size: 14px">
@@ -224,7 +225,7 @@
             <div class="modal-content community-modal">
 
                 <div class="modal-body">
-                    <form id="deleteReplForm" method="post" th:action="@{/pharm/replDelete}">
+                    <form id="deleteReplForm" method="post" th:action="@{/supplier/replDelete}">
                         <h5 class="modal-title font-1 m-1" id="deleteReplModalLabel">정말로 삭제할까요?</h5>
                         <div class="m-3 commodal-info">
                             <p class="font-1" style="font-size: 14px">
@@ -308,23 +309,23 @@
                 }
             });
 
-                // 글 삭제 버튼 클릭 시 모달 창에 데이터 채우기
-                $('.comlist-delete').on('click', function() {
-                    const boardId2 = $(this).data('board-id');
-                    const sessionId2 = $(this).data('session-id');
-                    const boardmId2 = $(this).data('board-mid');
-                    if(boardmId2 === sessionId2) {
-                        $('#deleteBoardId').val(boardId2);
-                        $('#sessionId2').val(sessionId2);
-                        $('#deleteBoardmId').val(boardmId2);
-                        $('#deleteBoardError').addClass('content-hidden2');
-                        $('#deleteBoardForm').show();
-                    } else{
-                        $('#deleteBoardError').removeClass('content-hidden2');
-                        $('#deleteBoardForm').hide();
+            // 글 삭제 버튼 클릭 시 모달 창에 데이터 채우기
+            $('.comlist-delete').on('click', function() {
+                const boardId2 = $(this).data('board-id');
+                const sessionId2 = $(this).data('session-id');
+                const boardmId2 = $(this).data('board-mid');
+                if(boardmId2 === sessionId2) {
+                    $('#deleteBoardId').val(boardId2);
+                    $('#sessionId2').val(sessionId2);
+                    $('#deleteBoardmId').val(boardmId2);
+                    $('#deleteBoardError').addClass('content-hidden2');
+                    $('#deleteBoardForm').show();
+                } else{
+                    $('#deleteBoardError').removeClass('content-hidden2');
+                    $('#deleteBoardForm').hide();
 
-                    }
-                });
+                }
+            });
 
             // 댓글 삭제 버튼 클릭 시 모달 창에 데이터 채우기
             $('.replDelete').on('click', function() {
