@@ -20,7 +20,7 @@
           </div>
           <div class="col-lg-2 col-md-3 col-6">
             <select class="form-select">
-              <option>약국상태</option>
+              <option>업체상태</option>
               <option>운영중</option>
               <option>휴업중</option>
               <option>전체보기</option>
@@ -41,37 +41,40 @@
           <table class="table table-hover">
             <thead>
             <tr>
-              <th>약국코드</th>
-              <th>약국아이디</th>
-              <th>약국이름</th>
+              <th>업체코드</th>
+              <th>업체아이디</th>
               <th>사업자번호</th>
-              <th>주소</th>
-              <th>개업일자</th>
+              <th>업체소개</th>
+              <th>업체주소</th>
+              <th>업체명</th>
+              <th>업체연락처</th>
+              <th>승인상태</th>
               <th class="text-center">수정/삭제</th>
             </tr>
             </thead>
             <tbody th:if="${supplierList != null}" th:each="s : ${supplierList}">
             <tr>
-              <td th:text="${p.pharCode}"></td>
-              <td th:text="${p.pharId}"></td>
-              <td th:text="${p.pName}"></td>
-              <td th:text="${p.businNum}"></td>
-              <td th:text="'(' + ${p.pPostCode} + ') ' + ${p.pAddrDo} + ' ' + ${p.pAddrSi} + ' ' + ${p.pAddrDong} + ' ' + ${p.pAddr}"></td>
-              <td th:text="${p.openDate}"></td>
+              <td th:text="${s.suppCode}"></td>
+              <td th:text="${s.suppId}"></td>
+              <td th:text="${s.supNum}"></td>
+              <td th:text="${s.supIntro}"></td>
+              <td th:text="${s.supAddr}"></td>
+              <td th:text="${s.supName}"></td>
+              <td th:text="${s.supTell}"></td>
+              <td th:text="${s.appState}"></td>
               <td class="text-end">
-                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editPharmacyModal"
-                   th:data-phar-code="${p.pharCode}"
-                   th:data-phar-id="${p.pharId}"
-                   th:data-p-name="${p.pName}"
-                   th:data-busin-num="${p.businNum}"
-                   th:data-p-addr-do="${p.pAddrDo}"
-                   th:data-p-addr-si="${p.pAddrSi}"
-                   th:data-p-addr-dong="${p.pAddrDong}"
-                   th:data-p-addr="${p.pAddr}"
-                   th:data-p-post-code="${p.pPostCode}"
-                   th:data-open-date="${p.openDate}">수정</a>
-                <form th:action="@{/admin/pharmacy/delete}" method="post" style="display:inline;" class="delete-form">
-                  <input type="hidden" name="pharCode" th:value="${p.pharCode}">
+                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editSupplierModal"
+                   th:data-supp-code="${s.suppCode}"
+                   th:data-supp-id="${s.suppId}"
+                   th:data-admin-id="${s.adminId}"
+                   th:data-sup-num="${s.supNum}"
+                   th:data-sup-intro="${s.supIntro}"
+                   th:data-sup-addr="${s.supAddr}"
+                   th:data-sup-name="${s.supName}"
+                   th:data-sup-tell="${s.supTell}"
+                   th:data-app-state="${s.appState}">수정</a>
+                <form th:action="@{/admin/supplier/delete}" method="post" style="display:inline;" class="delete-form">
+                  <input type="hidden" name="suppCode" th:value="${s.suppCode}">
                   <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
                 </form>
               </td>
@@ -100,51 +103,43 @@
   </section>
 
   <!-- 수정 모달 -->
-  <div class="modal fade" id="editPharmacyModal" tabindex="-1" aria-labelledby="editPharmacyModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editSupplierModal" tabindex="-1" aria-labelledby="editSupplierModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editPharmacyModalLabel">약국 정보 수정</h5>
+          <h5 class="modal-title" id="editSupplierModalLabel">납품업체 정보 수정</h5>
           <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="pharmacyModify" th:action="@{/admin/pharmacy/pharmacyModify}" method="post">
-            <input type="hidden" id="editPharCode" name="pharCode">
+          <form id="supplierModify" th:action="@{/admin/supplier/supplierModify}" method="post">
+            <input type="hidden" id="editSuppCode" name="suppCode">
             <div class="form-group">
-              <label for="editPharId">약국 아이디</label>
-              <input type="text" class="form-control" id="editPharId" name="pharId" required>
+              <label for="editSuppId">납품업체 아이디</label>
+              <input type="text" class="form-control" id="editSuppId" name="suppId" required>
             </div>
             <div class="form-group">
-              <label for="editPName">약국 이름</label>
-              <input type="text" class="form-control" id="editPName" name="pName" required>
+              <label for="editSupNum">사업자 번호</label>
+              <input type="text" class="form-control" id="editSupNum" name="supNum" required>
             </div>
             <div class="form-group">
-              <label for="editBusinNum">사업자 번호</label>
-              <input type="text" class="form-control" id="editBusinNum" name="businNum" required>
+              <label for="editSupIntro">업체 소개</label>
+              <textarea class="form-control" id="editSupIntro" name="supIntro" required></textarea>
             </div>
             <div class="form-group">
-              <label for="editPAddrDo">주소 도</label>
-              <input type="text" class="form-control" id="editPAddrDo" name="pAddrDo" required>
+              <label for="editSupAddr">업체 주소</label>
+              <input type="text" class="form-control" id="editSupAddr" name="supAddr" required>
             </div>
             <div class="form-group">
-              <label for="editPAddrSi">주소 시</label>
-              <input type="text" class="form-control" id="editPAddrSi" name="pAddrSi" required>
+              <label for="editSupName">업체명</label>
+              <input type="text" class="form-control" id="editSupName" name="supName" required>
             </div>
             <div class="form-group">
-              <label for="editPAddrDong">주소 동</label>
-              <input type="text" class="form-control" id="editPAddrDong" name="pAddrDong" required>
+              <label for="editSupTell">업체 연락처</label>
+              <input type="text" class="form-control" id="editSupTell" name="supTell" required>
             </div>
             <div class="form-group">
-              <label for="editPAddr">상세 주소</label>
-              <input type="text" class="form-control" id="editPAddr" name="pAddr" required>
-            </div>
-            <div class="form-group">
-              <label for="editPPostCode">우편 번호</label>
-              <input type="text" class="form-control" id="editPPostCode" name="pPostCode" required>
-            </div>
-            <div class="form-group">
-              <label for="editOpenDate">개업 일자</label>
-              <input type="date" class="form-control" id="editOpenDate" name="openDate" required>
+              <label for="editAppState">승인 상태</label>
+              <input type="text" class="form-control" id="editAppState" name="appState" required>
             </div>
             <button type="submit" class="btn btn-primary mt-3">수정</button>
           </form>
@@ -162,30 +157,26 @@
 
 <th:block layout:fragment="customJs">
   <script th:inline="javascript">
-    $('#editPharmacyModal').on('show.bs.modal', function (event) {
+    $('#editSupplierModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
-      var pharCode = button.data('phar-code');
-      var pharId = button.data('phar-id');
-      var pName = button.data('p-name');
-      var businNum = button.data('busin-num');
-      var pAddrDo = button.data('p-addr-do');
-      var pAddrSi = button.data('p-addr-si');
-      var pAddrDong = button.data('p-addr-dong');
-      var pAddr = button.data('p-addr');
-      var pPostCode = button.data('p-post-code');
-      var openDate = button.data('open-date');
+      var suppCode = button.data('supp-code');
+      var suppId = button.data('supp-id');
+      var supNum = button.data('sup-num');
+      var supIntro = button.data('sup-intro');
+      var supAddr = button.data('sup-addr');
+      var supName = button.data('sup-name');
+      var supTell = button.data('sup-tell');
+      var appState = button.data('app-state');
 
       var modal = $(this);
-      modal.find('#editPharCode').val(pharCode);
-      modal.find('#editPharId').val(pharId);
-      modal.find('#editPName').val(pName);
-      modal.find('#editBusinNum').val(businNum);
-      modal.find('#editPAddrDo').val(pAddrDo);
-      modal.find('#editPAddrSi').val(pAddrSi);
-      modal.find('#editPAddrDong').val(pAddrDong);
-      modal.find('#editPAddr').val(pAddr);
-      modal.find('#editPPostCode').val(pPostCode);
-      modal.find('#editOpenDate').val(openDate);
+      modal.find('#editSuppCode').val(suppCode);
+      modal.find('#editSuppId').val(suppId);
+      modal.find('#editSupNum').val(supNum);
+      modal.find('#editSupIntro').val(supIntro);
+      modal.find('#editSupAddr').val(supAddr);
+      modal.find('#editSupName').val(supName);
+      modal.find('#editSupTell').val(supTell);
+      modal.find('#editAppState').val(appState);
     });
 
     document.querySelectorAll('.delete-button').forEach(function(button) {

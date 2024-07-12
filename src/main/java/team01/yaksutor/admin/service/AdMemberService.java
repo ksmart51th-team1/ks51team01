@@ -54,4 +54,10 @@ public class AdMemberService {
         pharmacy.setPharId(memberId);
         adMemberMapper.pharmacyInsert(pharmacy);
     }
+
+    //회원 삭제
+    public void memberDelete(String memberId) {
+        Member member = memberMapper.getMemberInfoById(memberId);
+        adMemberMapper.deleteMemberById(member);
+    }
 }

@@ -111,6 +111,14 @@
         supplier
     </select>
 
+    <update id="deleteMemberById" parameterType="Member">
+        UPDATE member AS m
+        SET
+        m.`level`=5
+        WHERE
+        m.m_id = #{memberId}
+    </update>
+
     <select id="getPharmacyList" resultMap="pharmacyResultMap">
         SELECT
             phar_code,

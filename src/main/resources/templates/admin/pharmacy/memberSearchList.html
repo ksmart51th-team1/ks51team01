@@ -19,11 +19,11 @@
             <input type="text" placeholder="검색어 입력" class="form-control">
           </div>
           <div class="col-lg-2 col-md-3 col-6">
-            <select class="form-select">
-              <option>회원상태</option>
-              <option>정상회원</option>
-              <option>탈퇴회원</option>
-              <option>전체보기</option>
+            <select id="memberStatusFilter" class="form-select">
+              <option value="">회원상태</option>
+              <option value="active">정상회원</option>
+              <option value="inactive">탈퇴회원</option>
+              <option value="all">전체보기</option>
             </select>
           </div>
           <div class="col-lg-2 col-md-3 col-6">
@@ -51,7 +51,7 @@
             </tr>
             </thead>
             <tbody th:if="${memberList != null}" th:each="m : ${memberList}">
-            <tr>
+            <tr th:attr="data-status=${m.memberLevelName == '탈퇴회원' ? 'inactive' : (m.memberLevelName == '관리자' || m.memberLevelName == '납품업체' || m.memberLevelName == '관리약사' || m.memberLevelName == '개국약사' ? 'active' : '')}">
               <td th:text="${m.memberId}"></td>
               <td th:text="${m.memberName}"></td>
               <td th:text="${m.memberLevelName}"></td>
@@ -66,7 +66,7 @@
                    th:data-member-gender="${m.memberGender}"
                    th:data-member-email="${m.memberEmail}"
                    th:data-member-phone="${m.memberPhone}">수정</a>
-                <form th:action="@{/admin/member/delete}" method="post" style="display:inline;" class="delete-form">
+                <form th:action="@{/admin/member/memberDelete}" method="post" style="display:inline;" class="delete-form">
                   <input type="hidden" name="memberId" th:value="${m.memberId}">
                   <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
                 </form>
@@ -142,30 +142,63 @@
 
 <th:block layout:fragment="customJs">
   <script th:inline="javascript">
-    $('#editMemberModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget);
-      var memberId = button.data('member-id');
-      var memberName = button.data('member-name');
-      var memberLevel = button.data('member-level');
-      var memberGender = button.data('member-gender');
-      var memberEmail = button.data('member-email');
-      var memberPhone = button.data('member-phone');
+    $(document).ready(function () {
+      $('#editMemberModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var memberId = button.data('member-id');
+        var memberName = button.data('member-name');
+        var memberLevel = button.data('member-level');
+        var memberGender = button.data('member-gender');
+        var memberEmail = button.data('member-email');
+        var memberPhone = button.data('member-phone');
 
-      var modal = $(this);
-      modal.find('#editMemberId').val(memberId);
-      modal.find('#editMemberName').val(memberName);
-      modal.find('#editMemberLevel').val(memberLevel);
-      modal.find('#editMemberGender').val(memberGender);
-      modal.find('#editMemberEmail').val(memberEmail);
-      modal.find('#editMemberPhone').val(memberPhone);
-    });
+        var modal = $(this);
+        modal.find('#editMemberId').val(memberId);
+        modal.find('#editMemberName').val(memberName);
+        modal.find('#editMemberLevel').val(memberLevel);
+        modal.find('#editMemberGender').val(memberGender);
+        modal.find('#editMemberEmail').val(memberEmail);
+        modal.find('#editMemberPhone').val(memberPhone);
+      });
 
-    document.querySelectorAll('.delete-button').forEach(function(button) {
-      button.addEventListener('click', function(event) {
-        if (confirm('정말로 삭제할까요?')) {
-          var form = event.target.closest('.delete-form');
-          form.submit();
-        }
+      $('#memberStatusFilter').on('change', function () {
+        var status = $(this).val();
+        filterMembersByStatus(status);
+      });
+
+      function filterMembersByStatus(status) {
+        $('table tbody tr').each(function () {
+          var row = $(this);
+          var memberStatus = row.attr('data-status'); // 행의 data-status 속성을 가져옴
+
+          if (status === 'all' || status === '') {
+            row.show();
+          } else if (status === 'active') {
+            if (memberStatus === 'active') {
+              row.show();
+            } else {
+              row.hide();
+            }
+          } else if (status === 'inactive') {
+            if (memberStatus === 'inactive') {
+              row.show();
+            } else {
+              row.hide();
+            }
+          }
+        });
+      }
+
+      // 페이지 로드 시 전체 보기로 설정
+      filterMembersByStatus('all');
+
+      document.querySelectorAll('.delete-button').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+          if (confirm('정말로 삭제할까요?')) {
+            var form = event.target.closest('.delete-form');
+            form.submit();
+          }
+        });
       });
     });
   </script>

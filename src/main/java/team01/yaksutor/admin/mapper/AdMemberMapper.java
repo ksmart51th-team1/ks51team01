@@ -28,4 +28,6 @@ public interface AdMemberMapper {
     List<Pharmacy> getPharmacyList();
     /*납품업체전체정보조회*/
     List<Supplier> getSupplierInfo();
+    /*회원 탈퇴*/
+    void deleteMemberById(Member member);
 }

@@ -3,6 +3,7 @@ package team01.yaksutor.security.handler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.AuthenticationException;
@@ -26,8 +27,9 @@ public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             errorMessage = "회원정보가 일치하지 않습니다.";
         }
         else if(exception instanceof UsernameNotFoundException) {
-            errorMessage = "User not exists";
+            errorMessage = "존재하지 않는 회원입니다.";
         }
+
         else if(exception instanceof CredentialsExpiredException) {
             errorMessage = "Expired password";
 

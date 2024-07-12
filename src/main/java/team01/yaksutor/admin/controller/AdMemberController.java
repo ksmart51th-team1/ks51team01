@@ -30,6 +30,13 @@ public class AdMemberController {
     private final AdMemberService adMemberService;
     private final MemberMapper memberMapper;
 
+    /*회원 삭제*/
+    @PostMapping("/memberDelete")
+    public String deleteQuestionCenter(@RequestParam String memberId){
+       adMemberService.memberDelete(memberId);
+        return "redirect:/admin/pharmacy/memberSearchList";
+    }
+
     @GetMapping("/pharmacySearchList")
     public String pharmacySearchList(Model model) {
         List<Pharmacy> pharmacyList = adMemberService.getPharmacyInfo();
