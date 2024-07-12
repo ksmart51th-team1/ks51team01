@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+<head>
+</head>
+
+<th:block layout:fragment="customContent">
+  <section class="content-main">
+    <div class="content-header">
+      <div>
+        <h2 class="content-title card-title" th:text="${content}">납품업체리스트</h2>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <header class="card-header">
+        <div class="row gx-3">
+          <div class="col-lg-4 col-md-6 me-auto">
+            <input type="text" placeholder="검색어 입력" class="form-control">
+          </div>
+          <div class="col-lg-2 col-md-3 col-6">
+            <select class="form-select">
+              <option>업체상태</option>
+              <option>운영중</option>
+              <option>휴업중</option>
+              <option>전체보기</option>
+            </select>
+          </div>
+          <div class="col-lg-2 col-md-3 col-6">
+            <select class="form-select">
+              <option>20개씩 보기</option>
+              <option>30개씩 보기</option>
+              <option>40개씩 보기</option>
+            </select>
+          </div>
+        </div>
+      </header>
+      <!-- card-header end// -->
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>업체코드</th>
+              <th>업체아이디</th>
+              <th>사업자번호</th>
+              <th>업체소개</th>
+              <th>업체주소</th>
+              <th>업체명</th>
+              <th>업체연락처</th>
+              <th>승인상태</th>
+              <th class="text-center">수정/삭제</th>
+            </tr>
+            </thead>
+            <tbody th:if="${supplierList != null}" th:each="s : ${supplierList}">
+            <tr>
+              <td th:text="${s.suppCode}"></td>
+              <td th:text="${s.suppId}"></td>
+              <td th:text="${s.supNum}"></td>
+              <td th:text="${s.supIntro}"></td>
+              <td th:text="${s.supAddr}"></td>
+              <td th:text="${s.supName}"></td>
+              <td th:text="${s.supTell}"></td>
+              <td th:text="${s.appState}"></td>
+              <td class="text-end">
+                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editSupplierModal"
+                   th:data-supp-code="${s.suppCode}"
+                   th:data-supp-id="${s.suppId}"
+                   th:data-admin-id="${s.adminId}"
+                   th:data-sup-num="${s.supNum}"
+                   th:data-sup-intro="${s.supIntro}"
+                   th:data-sup-addr="${s.supAddr}"
+                   th:data-sup-name="${s.supName}"
+                   th:data-sup-tell="${s.supTell}"
+                   th:data-app-state="${s.appState}">수정</a>
+                <form th:action="@{/admin/supplier/delete}" method="post" style="display:inline;" class="delete-form">
+                  <input type="hidden" name="suppCode" th:value="${s.suppCode}">
+                  <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
+                </form>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- table-responsive//end -->
+      </div>
+      <!-- card-body end// -->
+    </div>
+    <div class="pagination-area mt-30 mb-50">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-start">
+          <li class="page-item active"><a class="page-link" href="#">01</a></li>
+          <li class="page-item"><a class="page-link" href="#">02</a></li>
+          <li class="page-item"><a class="page-link" href="#">03</a></li>
+          <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+          <li class="page-item"><a class="page-link" href="#">16</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- 수정 모달 -->
+  <div class="modal fade" id="editSupplierModal" tabindex="-1" aria-labelledby="editSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editSupplierModalLabel">납품업체 정보 수정</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="supplierModify" th:action="@{/admin/supplier/supplierModify}" method="post">
+            <input type="hidden" id="editSuppCode" name="suppCode">
+            <div class="form-group">
+              <label for="editSuppId">납품업체 아이디</label>
+              <input type="text" class="form-control" id="editSuppId" name="suppId" required>
+            </div>
+            <div class="form-group">
+              <label for="editSupNum">사업자 번호</label>
+              <input type="text" class="form-control" id="editSupNum" name="supNum" required>
+            </div>
+            <div class="form-group">
+              <label for="editSupIntro">업체 소개</label>
+              <textarea class="form-control" id="editSupIntro" name="supIntro" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="editSupAddr">업체 주소</label>
+              <input type="text" class="form-control" id="editSupAddr" name="supAddr" required>
+            </div>
+            <div class="form-group">
+              <label for="editSupName">업체명</label>
+              <input type="text" class="form-control" id="editSupName" name="supName" required>
+            </div>
+            <div class="form-group">
+              <label for="editSupTell">업체 연락처</label>
+              <input type="text" class="form-control" id="editSupTell" name="supTell" required>
+            </div>
+            <div class="form-group">
+              <label for="editAppState">승인 상태</label>
+              <input type="text" class="form-control" id="editAppState" name="appState" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">수정</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+  <script th:inline="javascript">
+    $('#editSupplierModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var suppCode = button.data('supp-code');
+      var suppId = button.data('supp-id');
+      var supNum = button.data('sup-num');
+      var supIntro = button.data('sup-intro');
+      var supAddr = button.data('sup-addr');
+      var supName = button.data('sup-name');
+      var supTell = button.data('sup-tell');
+      var appState = button.data('app-state');
+
+      var modal = $(this);
+      modal.find('#editSuppCode').val(suppCode);
+      modal.find('#editSuppId').val(suppId);
+      modal.find('#editSupNum').val(supNum);
+      modal.find('#editSupIntro').val(supIntro);
+      modal.find('#editSupAddr').val(supAddr);
+      modal.find('#editSupName').val(supName);
+      modal.find('#editSupTell').val(supTell);
+      modal.find('#editAppState').val(appState);
+    });
+
+    document.querySelectorAll('.delete-button').forEach(function(button) {
+      button.addEventListener('click', function(event) {
+        if (confirm('정말로 삭제할까요?')) {
+          var form = event.target.closest('.delete-form');
+          form.submit();
+        }
+      });
+    });
+  </script>
+</th:block>
+</html>
