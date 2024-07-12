@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.pharmacy.mapper.PhStockMapper">
+    <resultMap id="medicineListMap" type="Medicine">
+        <id column="medi_code"           property="mediCode" />
+        <result column="reg_m_id"        property="regMId" />
+        <result column="medi_name"       property="mediName" />
+        <result column="medi_img"        property="mediImg" />
+        <result column="medi_drugform"   property="mediDrugform" />
+        <result column="medi_drugtype"   property="mediDrugtype" />
+        <result column="medi_state"      property="mediState" />
+        <result column="medi_usebydate"  property="mediUsebydate" />
+        <result column="reg_date"        property="regDate" />
+
+        <association property="imgData" javaType="ImgData">
+            <id 	column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name" 	property="fileOriginName"/>
+            <result column="file_new_name" 	    property="fileNewName"/>
+            <result column="file_path" 	        property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date" 	    property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="sellMedicineListMap" type="SellMedicine">
+        <id column="goods_code"      property="goodsCode" />
+        <result column="supp_code"   property="suppCode" />
+        <result column="medi_code"   property="mediCode" />
+        <result column="medi_name"   property="mediName" />
+        <result column="medi_detail" property="mediDetail" />
+        <result column="medi_price"  property="mediPrice" />
+        <result column="medi_img"    property="mediImg" />
+        <result column="reg_qty"     property="regQty" />
+        <result column="state"       property="state" />
+        <result column="reg_date"    property="regDate" />
+
+        <association property="imgData" javaType="ImgData">
+            <id 	column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name" 	property="fileOriginName"/>
+            <result column="file_new_name" 	    property="fileNewName"/>
+            <result column="file_path" 	        property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date" 	    property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="medicalInfoMap" type="MedicalInfo">
+        <id column="medi_code"          property="mediCode" />
+        <result column="reg_m_id"       property="regMId" />
+        <result column="medi_name"      property="mediName" />
+        <result column="medi_img"       property="mediImg" />
+        <result column="medi_drugform"  property="mediDrugform" />
+        <result column="medi_drugtype"  property="mediDrugtype" />
+        <result column="medi_state"     property="mediState" />
+        <result column="medi_usebydate" property="mediUsebydate" />
+        <result column="reg_date"       property="regDate" />
+
+        <association property="imgInfo" javaType="AdImgData">
+            <id 	column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name" 	property="fileOriginName"/>
+            <result column="file_new_name" 	    property="fileNewName"/>
+            <result column="file_path" 	        property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date" 	    property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="ingrListMap" type="Ingredient">
+        <id 	column="ingredient_code" property="ingredientCode"/>
+        <result column="medi_code" 	     property="mediCode"/>
+        <result column="reg_m_id" 	     property="regMId"/>
+        <result column="ingredient"      property="ingredient"/>
+        <result column="content"         property="content"/>
+        <result column="reg_date" 	     property="regDate"/>
+    </resultMap>
+
+    <resultMap id="effiListMap" type="Efficacy">
+        <id 	column="efficacy_code" property="efficacyCode"/>
+        <result column="medi_code" 	   property="mediCode"/>
+        <result column="reg_m_id" 	   property="regMId"/>
+        <result column="efficacy" 	   property="efficacy"/>
+        <result column="reg_date" 	   property="regDate"/>
+    </resultMap>
+
+    <resultMap id="getStockList" type="PharmStock">
+        <id 	column="stock_code"    property="stockCode"/>
+        <result column="medi_code" 	   property="mediCode"/>
+        <result column="phar_code" 	   property="pharCode"/>
+        <result column="pharm_name"    property="pharmCode"/>
+        <result column="company" 	   property="company"/>
+        <result column="phar_qty" 	   property="pharQty"/>
+        <result column="manufact_date" property="manufactDate"/>
+        <result column="expira_date"   property="expiraDate"/>
+        <result column="stock_checked" property="stockChecked"/>
+        <result column="last_date" 	   property="lastDate"/>
+    </resultMap>
+
+    <select id="getPharmStockList" resultMap="getStockList">
+        SELECT
+            p.stock_code,
+            p.medi_code,
+            p.phar_code,
+            p.pharm_name,
+            p.phar_qty,
+            p.stock_checked,
+            p.last_date
+        FROM
+            pharm_stock AS p
+    </select>
+</mapper>

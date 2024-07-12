@@ -79,6 +79,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editQuestionModalLabel">질문 수정</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editQuestionForm" th:action="@{/admin/faqList/modify}" method="post">
+                            <input type="hidden" id="editQuestionId" name="questionNum">
+                            <div class="form-group">
+                                <label for="editQuestionTitle">제목</label>
+                                <input type="text" class="form-control" id="editQuestionTitle" name="questionTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editQuestionContent">내용</label>
+                                <textarea class="form-control" id="editQuestionContent" name="questionContent" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">수정</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
 </th:block>
