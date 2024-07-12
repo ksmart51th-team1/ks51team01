@@ -22,7 +22,9 @@ public class PhBoardController {
 
     private final PhBoardService phBoardService;
 
-    /* ------------------커뮤니티 + 댓글------------------------------*/
+    /* ------------------------------------------------------------
+    *                    커뮤니티 + 댓글
+    *  ------------------------------------------------------------*/
 
     // 커뮤니티 + 댓글 조회 (사용자)
     @GetMapping("/pharm/board")
@@ -59,6 +61,12 @@ public class PhBoardController {
     public String addBoard(Board board){
         phBoardService.addBoard(board);
         return "redirect:/pharm/board";
+    }
+    // 커뮤니티 등록 (납품자)
+    @PostMapping("/supplier/boardAdd")
+    public String addBoard3(Board board){
+        phBoardService.addBoard(board);
+        return "redirect:/supplier/boardList";
 
     }
     // 커뮤니티 등록 (관리자)
@@ -81,6 +89,12 @@ public class PhBoardController {
         phBoardService.modifyBoard(board);
         return "redirect:/pharm/board";
     }
+    // 커뮤니티 수정 (납품자)
+    @PostMapping("/supplier/board/modify")
+    public String modifyBoard3(Board board){
+        phBoardService.modifyBoard(board);
+        return "redirect:/supplier/boardList";
+    }
     // 커뮤니티 수정 (관리자)
     @PostMapping("/admin/boardList/modify")
     public String modifyBoard(Board board){
@@ -92,6 +106,12 @@ public class PhBoardController {
     public String deleteBoard2(@RequestParam String boardCode){
         phBoardService.deleteBoard(boardCode);
         return "redirect:/pharm/board";
+    }
+    // 커뮤니티 삭제 (납품자)
+    @PostMapping("/supplier/board/delete")
+    public String deleteBoard3(@RequestParam String boardCode){
+        phBoardService.deleteBoard(boardCode);
+        return "redirect:/supplier/boardList";
     }
     // 커뮤니티 삭제 (관리자)
     @PostMapping("/admin/boardList/delete")
@@ -106,10 +126,47 @@ public class PhBoardController {
         return "redirect:/pharm/board";
 
     }
+    // 커뮤니티 댓글 등록 (납품자)
+    @PostMapping("/supplier/replAdd")
+    public String addRepl2(Repl repl){
+        phBoardService.addRepl(repl);
+        return "redirect:/supplier/boardList";
+    }
+    // 커뮤니티 댓글 등록 (관리자)
+    @PostMapping("/admin/replAdd")
+    public String addRepl3(Repl repl){
+        phBoardService.addRepl(repl);
+        return "redirect:/admin/boardList";
 
+    }
+    // 커뮤니티 댓글 수정 (관리자)
+    @PostMapping("/admin/boardList/modifyRepl")
+    public String modifyRepl(Repl repl){
+        phBoardService.modifyRepl(repl);
+        return "redirect:/admin/boardList";
+    }
+    // 커뮤니티 댓글 삭제 (사용자)
+    @PostMapping("/pharm/replDelete")
+    public String deleteRepl(@RequestParam String replNum){
+        phBoardService.deleteRepl(replNum);
+        return "redirect:/pharm/board";
+    }
+    // 커뮤니티 댓글 삭제 (납품자)
+    @PostMapping("/supplier/replDelete")
+    public String deleteRepl2(@RequestParam String replNum){
+        phBoardService.deleteRepl(replNum);
+        return "redirect:/supplier/boardList";
+    }
+    // 커뮤니티 댓글 삭제 (관리자)
+    @PostMapping("/admin/boardList/deleteRepl")
+    public String deleteRepl3(@RequestParam String replNum){
+        phBoardService.deleteRepl(replNum);
+        return "redirect:/admin/boardList";
+    }
 
-
-    /* ------------------자주하는 질문------------------------------*/
+    /* ------------------------------------------------------------
+     *                    자주하는 질문
+     *  ------------------------------------------------------------*/
 
     // 자주하는 질문 조회 (사용자)
     @GetMapping("/pharm/faq")
@@ -118,6 +175,14 @@ public class PhBoardController {
 
         model.addAttribute("questionCenterList", questionCenterList);
         return "user/pharmacy/board/faq";
+    }
+    // 자주하는 질문 조회 (납품자)
+    @GetMapping("/supplier/faq")
+    public String getQuestionCenterList3(Model model) {
+        List<QuestionCenter> questionCenterList = phBoardService.getQuestionCenterList();
+
+        model.addAttribute("questionCenterList", questionCenterList);
+        return "user/supplier/board/faq";
     }
     // 자주하는 질문 조회 (관리자)
     @GetMapping("/admin/faqList")
@@ -163,6 +228,13 @@ public class PhBoardController {
     List<Notice> noticeList = phBoardService.getNoticeList();
         model.addAttribute("noticeList", noticeList);
         return "user/pharmacy/board/notice";
+    }
+    // 공지사항 조회 (납품자)
+    @GetMapping("/supplier/notice")
+    public String getNoticeList3(Model model) {
+        List<Notice> noticeList = phBoardService.getNoticeList();
+        model.addAttribute("noticeList", noticeList);
+        return "user/supplier/board/notice";
     }
     // 공지사항 조회 (관리자)
     @GetMapping("/admin/noticeList")

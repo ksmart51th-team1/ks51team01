@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/pharmacy/layout/default}">
 <head>
-    <!-- 필요한 CSS 파일들 -->
+
 </head>
 
 <th:block layout:fragment="customContent">
@@ -14,18 +14,7 @@
                     <h1 class="heading-2 mb-10" style="font-family: 'Pretendard-Regular';">자주하는 질문</h1>
                 </div>
                 <div class="card mb-4">
-                    <header class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                                <select class="form-select">
-                                    <option selected="">전체</option>
-                                    <option>자유게시판</option>
-                                    <option>제품후기</option>
-                                </select>
-                            </div>
-                        </div>
-                    </header>
-                    <!-- card-header end// -->
+                         <!-- card-header end// -->
                     <div class="card-body">
                         <article class="itemlist m-3" th:if="${questionCenterList != null}" th:each="q : ${questionCenterList}">
                             <div class="row align-items-center">
