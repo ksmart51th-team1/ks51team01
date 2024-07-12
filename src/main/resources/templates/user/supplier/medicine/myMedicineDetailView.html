@@ -14,73 +14,79 @@
             <div class="card-body">
                 <div class="row gx-5">
                     <div class="col-lg-9">
-                        <section class="content-body p-xl-4">
+                        <section class="content-body p-xl-4" th:object="${mediInfo}">
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="row gx-3">
                                         <div class="col-6 mb-3">
                                             <label class="form-label">의약품 이름</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="*{medicine.mediName}"/>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">소비기한</label>
-                                            <input class="form-control" type="date" />
+                                            <input class="form-control" type="date" th:value="*{medicine.mediUsebydate}"/>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-6 mb-3">
                                             <label class="form-label">판매자 아이디</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="*{medicine.regMId}"/>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">업체명</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="${suppName}"/>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">제형</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="*{medicine.mediDrugform}"/>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">의약품 구분</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="*{medicine.mediDrugtype}"/>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-12 mb-3">
                                             <label class="form-label">상세 설명</label>
-                                            <textarea class="form-control" rows="4" readonly="readonly"></textarea>
+                                            <textarea class="form-control" rows="4" readonly="readonly" th:text="*{sellMedicine.mediDetail}"></textarea>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">가격</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="*{sellMedicine.mediPrice}"/>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">판매 수량</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="*{sellMedicine.regQty}"/>
                                         </div>
                                         <!-- col .// -->
-                                        <div class="col-lg-6 mb-3">
-                                            <label class="form-label">성분</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                        <div class="row">
+                                            <label class="col-lg-6 mb-3 form-label">성분</label>
+                                            <label class="col-lg-6 mb-3 form-label">함량</label>
                                         </div>
-                                        <!-- col .// -->
-                                        <div class="col-lg-6 mb-3">
-                                            <label class="form-label">함량</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                        <div class="row" th:if="${mediInfo.ingrList != null}" th:each="i : ${mediInfo.ingrList}">
+                                            <div class="col-lg-6 mb-3">
+                                                <input class="form-control" type="text" readonly="readonly" th:value="${i.ingredient}"/>
+                                            </div>
+                                            <!-- col .// -->
+                                            <div class="col-lg-6 mb-3">
+                                                <input class="form-control" type="text" readonly="readonly" th:value="${i.content}"/>
+                                            </div>
+                                            <!-- col .// -->
                                         </div>
-                                        <!-- col .// -->
-                                        <div class="col-lg-6 mb-3">
-                                            <label class="form-label">효능</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                        <div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label class="form-label">효능</label>
+                                                <input class="form-control" type="text" readonly="readonly" th:value="${effies}"/>
+                                            </div>
                                         </div>
                                         <!-- col .// -->
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">등록일</label>
-                                            <input class="form-control" type="text" readonly="readonly" />
+                                            <input class="form-control" type="text" readonly="readonly" th:value="*{sellMedicine.regDate}"/>
                                         </div>
 
                                     </div>
@@ -89,7 +95,7 @@
                                 <!-- col.// -->
                                 <aside class="col-lg-4">
                                     <figure class="text-lg-center">
-                                        <img class="img-lg mb-3 img-avatar" th:src="@{/resource/supplier/assets/imgs/medicine/img_doperin.png}" alt="User Photo" />
+                                        <img class="img-lg mb-3 img-avatar" th:src="*{medicine.imgData.filePath}" alt="User Photo" />
                                         <figcaption>
                                             <label class="form-label">제품 이미지</label>
                                         </figcaption>
@@ -99,7 +105,7 @@
                             </div>
                             <!-- row.// -->
                             <br />
-                            <a th:href="@{/user/supplier/medicine/medicineModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정하기 </a>
+                            <a th:href="@{/supplier/myMedicineModify(goodsCode=*{sellMedicine.goodsCode})}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정하기 </a>
                             <hr class="my-5" />
                             <!-- row.// -->
                         </section>

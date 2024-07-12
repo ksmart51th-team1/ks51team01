@@ -13,4 +13,6 @@ public class Medicine {
     private String mediState;
     private String mediUsebydate;
     private String regDate;
+
+    private ImgData imgData;
 }

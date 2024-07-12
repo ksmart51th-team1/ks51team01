@@ -120,15 +120,7 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-        console.log([[${medicineList}]]);
 
-        if([[${m.state}]] == '판매중'){
-            $('#stateClass').addClass('badge rounded-pill alert-danger')
-        }
-
-        if($('.page-link').val() == [[${currentPage}]]){
-            $(this).addClass('active');
-        }
 
     </script>
 </th:block>
