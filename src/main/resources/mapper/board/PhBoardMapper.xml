@@ -112,8 +112,23 @@
         values
         (#{replNum}, #{mId}, #{cmNum}, #{replContent}, CURDATE());
     </insert>
+    <!--커뮤니티 댓글 수정-->
+    <update id="modifyRepl" parameterType="Repl">
+        UPDATE repl
+        <set>
+            <if test="replContent != null and replContent != ''">
+                repl_content = #{replContent},
+            </if>
+        </set>
+        WHERE
+        repl_num = #{replNum}
+    </update>
 
-
+    <!--커뮤니티 댓글 삭제-->
+    <delete id="deleteRepl" parameterType="String">
+        DELETE FROM repl
+        WHERE repl_num = #{replNum}
+    </delete>
     <!-- =================자주하는 질문==========================-->
 
     <!--자주하는 질문 조회-->

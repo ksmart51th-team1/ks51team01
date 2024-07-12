@@ -7,7 +7,7 @@
 
 <th:block layout:fragment="customContent">
     <section class="content-main">
-        <form id="addMedicine" th:action="@{/supplier/myMedicineInsert}" method="post">
+        <form id="addMedicine" th:action="@{/supplier/myMedicineInsert}" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-6">
                     <div class="content-header">
@@ -23,7 +23,7 @@
                 <div class="col-lg-6">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row medical-info">
                                 <div class="col-md-3">
                                     <h6>1. 의약품 정보</h6>
                                 </div>
@@ -91,7 +91,7 @@
                                 </div> <!-- col.// -->
                             </div> <!-- row.// -->
                             <hr class="mb-4 mt-0">
-                            <div class="row">
+                            <div class="row sell-info">
                                 <div class="col-md-3">
                                     <h6>2. 의약품 판매 정보</h6>
                                 </div>
@@ -155,12 +155,77 @@
                     return false;
                 }
             });
-            if(isSubmit) $('#addMedicine').submit();
+            if(isSubmit) {
+                const medicine = {};
+
+                $('.medical-info input, .medical-info select').not('.ingredient, .content, .efficacy').each((idx, item) => {
+                    const id = item.id;
+                    const value = $(item).val();
+                    medicine[id] = value;
+                });
+                const ingrList = [];
+                const effiList = [];
+                $('#ingrTbody tr').each((idx, item) => {
+                    const ingrObj = {};
+                    $(item).find('input').each((idx, item) => {
+                        const name = $(item).attr('name');
+                        const value = $(item).val();
+                        ingrObj[name] = value;
+                    });
+                    ingrList.push(ingrObj);
+                });
+                $('#effiTbody tr').each((idx, item) => {
+                    const effiObj = {};
+                    $(item).find('input').each((idx, item) => {
+                        const name = $(item).attr('name');
+                        const value = $(item).val();
+                        effiObj[name] = value;
+                    });
+                    effiList.push(effiObj);
+                })
+                //medicalInfo['ingrList'] = ingrList;
+                //medicalInfo['effiList'] = effiList;
+                console.log(medicine);
+
+                const sellMedicine = {};
+                $('.sell-info input, .sell-info textarea').each((idx, item) => {
+                    const id = item.id;
+                    const value = $(item).val();
+                    sellMedicine[id] = value;
+                });
+                console.log(sellMedicine);
+                const requestObj = {medicine,sellMedicine, ingrList, effiList};
+
+                const inputFile = $('#mediImg');
+                const files = inputFile[0].files;
+
+                const formData = new FormData();
+                formData.append('medicineInfo', new Blob([JSON.stringify(requestObj)],{ type : 'application/json'}));
+
+                for(let i =0; i<files.length; i++){
+                    formData.append("img", files[i]);
+                }
+                console.log(requestObj);
+                console.log(JSON.stringify(requestObj));
+                const request = $.ajax({
+                    url : '/supplier/insertMedicine',
+                    method : 'POST',
+                    contentType : false, // formdata -> multipart/form-data
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    data : formData,
+                    dataType : 'json'
+                });
+                request.done(element => {
+                    return element;
+                });
+                $(location).attr('href', '/supplier/medicineSearchList');
+            }
         });
 
         const createIngrRow = () => {
             const ingrContent = [
-                { 'tagName' : 'input', 'type' : 'text', 'name' : 'Ingredient' },
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'ingredient' },
                 { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
                 { 'tagName' : 'button', 'type' : 'button' }
             ];

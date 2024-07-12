@@ -101,8 +101,9 @@
                                                     <div>
                                                         <div class="reply-user-id" style="font-size: 12px" th:text="${r.replDate}"></div>
                                                         <div class="donation-comments" style="color: black; font-size: 15px" th:text="${r.replContent}"></div>
-                                                        <div class="rlSize" hidden="hidden">2</div>
-                                                        <div hidden="hidden">com_20231204_0001</div>
+                                                        <div th:if="${r.mId} == ${session.S_ID}"><a class="replDelete"   style="color: red" data-toggle="modal" data-target="#deleteReplModal"
+                                                                                                    th:data-repl-id="${r.replNum}">삭제</a></div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,7 +187,7 @@
             </div>
         </div>
     </div>
-    <!-- 글 삭제 확인 모달 -->
+    <!-- 커뮤니티 삭제 확인 모달 -->
     <div class="modal fade" id="deleteBoardModal" tabindex="-1" aria-labelledby="deleteBoardModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content community-modal">
@@ -217,6 +218,31 @@
             </div>
         </div>
     </div>
+    <!-- 댓글 삭제 확인 모달 -->
+    <div class="modal fade" id="deleteReplModal" tabindex="-1" aria-labelledby="deleteReplModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content community-modal">
+
+                <div class="modal-body">
+                    <form id="deleteReplForm" method="post" th:action="@{/pharm/replDelete}">
+                        <h5 class="modal-title font-1 m-1" id="deleteReplModalLabel">정말로 삭제할까요?</h5>
+                        <div class="m-3 commodal-info">
+                            <p class="font-1" style="font-size: 14px">
+                                ❗ 삭제된 글은 복구할 수 없습니다.
+                            </p>
+                        </div>
+                        <input type="hidden" id="deleteReplId" name="replNum">
+
+                        <button type="submit" class="deleteBtnOk" style="background-color: #ff8c9f; border: none">삭제</button><br>
+                        <button type="button" class="deleteBinNo" data-dismiss="modal" aria-label="Close">취소</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 </th:block>
 
 <th:block layout:fragment="customJsFile">
@@ -299,6 +325,19 @@
 
                     }
                 });
+
+            // 댓글 삭제 버튼 클릭 시 모달 창에 데이터 채우기
+            $('.replDelete').on('click', function() {
+                const replNum = $(this).data('repl-id');
+
+                if(replNum != null) {
+                    $('#deleteReplId').val(replNum);
+                    $('#deleteReplForm').show();
+                } else{
+                    $('#deleteReplForm').hide();
+
+                }
+            });
 
 
         });
