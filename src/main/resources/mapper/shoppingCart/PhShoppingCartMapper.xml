@@ -19,6 +19,7 @@
         <result column="reg_date" 	property="regDate"/>
         <result column="medi_name" 		property="mediName"/>
         <result column="medi_price" 	property="mediPrice"/>
+        <result column="cartSize" 	property="cartSize"/>
 
     </resultMap>
 
