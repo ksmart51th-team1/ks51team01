@@ -30,11 +30,8 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>계정</a>
                                     </li>
-
                                         <li class="nav-item">
-
                                                 <a class="nav-link" th:href="@{/logout}"><i class="fi-rs-sign-out mr-10"></i>로그아웃</a>
-
                                         </li>
 
                                 </ul>
@@ -163,44 +160,57 @@
                                 <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>Account Details</h5>
+                                            <h5 th:text="${content}"></h5>
                                         </div>
                                         <div class="card-body">
-                                            <p>Already have an account? <a href="page-login.html">Log in instead!</a></p>
-                                            <form method="post" name="enq">
-                                                <div class="row">
-                                                    <div class="form-group col-md-6">
-                                                        <label>First Name <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="name" type="text">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>Last Name <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="phone">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label>Display Name <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="dname" type="text">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label>Email Address <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="email" type="email">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label>Current Password <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="password" type="password">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label>New Password <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="npassword" type="password">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label>Confirm Password <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="cpassword" type="password">
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Change</button>
-                                                    </div>
+                                            <form th:action="@{/pharm/myPage/myAccountModify}" method="post" name="enq">
+                                                <div class="form-group mb-4 w-25">
+                                                    <label for="memberId">회원아이디</label>
+                                                    <input type="text" name="memberId" id="memberId" style="height: 50px" readonly th:value="${session.S_ID}" >
+                                                    <input type="hidden" name="memberLevelNum" id="memberLevelNum" th:value="${member.memberLevelNum}" />
+                                                    <input type="hidden" name="memberLevelName" id="memberLevelName" th:value="${member.memberLevelName}" />
                                                 </div>
+                                                <div class="form-group mb-4 w-25">
+                                                    <label for="memberName">회원이름</label>
+                                                    <input type="text" name="memberName" id="memberName" style="height: 50px" th:value="${member.memberName}" >
+                                                </div>
+                                                <div class="form-group mb-4 w-25">
+                                                    <label class="mr-30" for="memberGender">성별</label>
+                                                    <input type="text" style="height: 50px" id="MemberGender" name="memberGender" required th:value="${member.memberGender}">
+                                                </div>
+                                                <div class="form-group mb-4 w-50 ">
+                                                    <label for="memberPostCode">우편번호</label>
+                                                    <input style="height: 50px" type="text" name="memberPostCode" id="memberPostCode" th:value="${member.memberPostCode}">
+                                                </div>
+                                                <div class="form-group mb-4 w-50 ">
+                                                    <label for="memberAddrSido">시/도</label>
+                                                    <input style="height: 50px" type="text" name="memberAddrSido" id="memberAddrSido" th:value="${member.memberAddrSido}">
+                                                </div>
+                                                <div class="form-group mb-4 w-50 ">
+                                                    <label for="memberAddrSigungu">시/군/구</label>
+                                                    <input style="height: 50px" type="text" name="memberAddrSigungu" id="memberAddrSigungu" th:value="${member.memberAddrSigungu}"/>
+                                                </div>
+                                                <div class="form-group mb-4 w-50 ">
+                                                    <label for="memberAddrDong">동</label>
+                                                    <input style="height: 50px" type="text" name="memberAddrDong" id="memberAddrDong" th:value="${member.memberAddrDong}"/>
+                                                </div>
+                                                <div class="form-group mb-4 w-50 ">
+                                                    <label for="memberAddr">상세주소</label>
+                                                    <input style="height: 50px" type="text" name="memberAddr" id="memberAddr" th:value="${member.memberAddr}"/>
+                                                </div>
+                                                <div class="form-group mb-4 w-50">
+                                                    <label for="memberEmail">이메일</label>
+                                                    <input style="height: 50px" type="text"  name="memberEmail" id="memberEmail"  th:value="${member.memberEmail}"/>
+                                                </div>
+                                                <div class="form-group mb-4 w-25">
+                                                    <label for="memberBirth">생년월일</label>
+                                                    <input style="height: 50px" type="date"  name="memberBirth" id="memberBirth" th:value="${member.memberBirth}"/>
+                                                </div>
+                                                <div class="form-group mb-4 w-25">
+                                                    <label for="memberPhone">핸드폰번호</label>
+                                                    <input type="text"  name="memberPhone" id="memberPhone" style="height: 50px" th:value="${member.memberPhone}"/>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary mt-3">변경내용 저장하기</button>
                                             </form>
                                         </div>
                                     </div>

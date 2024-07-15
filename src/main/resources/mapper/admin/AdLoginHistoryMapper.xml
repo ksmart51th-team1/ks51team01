@@ -41,4 +41,25 @@
         log_num DESC
         LIMIT 1
     </update>
+
+    <select id="getLoginHistory" parameterType="int" resultMap="LoginHistoryResultMap">
+        /*로그인 이력 조회*/
+        SELECT
+            log_num,
+            m_id,
+            browser,
+            login_date,
+            logout_date
+        FROM
+            log_data
+        LIMIT #{startRow}, #{rowPerPage};
+    </select>
+
+    <select id="getLoginHistoryCnt" resultType="int">
+        /* 로그인 할 테이블 행의 갯수 조회 */
+        SELECT
+        COUNT(1)
+        FROM
+        log_data;
+    </select>
 </mapper>

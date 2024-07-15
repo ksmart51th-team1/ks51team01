@@ -30,4 +30,14 @@ public interface AdMemberMapper {
     List<Supplier> getSupplierInfo();
     /*회원 탈퇴*/
     void deleteMemberById(Member member);
+    /*회원 수정*/
+    int modifyMember(Member member);
+    //약국수정
+    int modifyPharmacy(Pharmacy pharmacy);
+    //약국삭제
+    int deletePharmacy(Pharmacy pharmacy);
+    //납품업체삭제
+    int deleteSupplier(Supplier supplier);
+    //납품업체수정
+    int modifySupplier(Supplier supplier);
 }

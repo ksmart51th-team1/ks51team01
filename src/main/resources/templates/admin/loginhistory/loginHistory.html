@@ -75,14 +75,24 @@
         <div class="pagination-area mt-30 mb-50">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-start">
-                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
+                    <li class="page-item active">
+                        <a  th:href="@{/admin/loginHistory}">[맨처음]</a>
+                        <a th:if="${currentPage > 1}"
+                           th:href="@{/admin/loginHistory(currentPage=${currentPage - 1})}">[이전]</a>
+                        <span th:unless="${currentPage > 1}">[이전]</span>
+                        <th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+                            <a th:unless="${currentPage == num}"
+                               th:href="@{/admin/loginHistory(currentPage=${num})}"
+                               th:text="|[${num}]|"></a>
+                            <span th:if="${currentPage == num}"
+                                  th:text="|[${num}]|"></span>
+                        </th:block>
+                        <a 		th:if="${currentPage < lastPage}"
+                                  th:href="@{/admin/loginHistory(currentPage=${currentPage + 1})}">[다음]</a>
+                        <span th:unless="${currentPage < lastPage}">[다음]</span>
+                        <a th:href="@{/admin/loginHistory(currentPage=${lastPage})}">[마지막]</a>
                     </li>
+
                 </ul>
             </nav>
         </div>
