@@ -16,6 +16,8 @@ public class UserAgentPaser {
 
         if (userAgent.contains("Edg")) {
             return "Edge";
+        } else if (userAgent.contains("Whale")) {
+            return "Whale";
         } else if (userAgent.contains("Chrome") && !userAgent.contains("Chromium")) {
             return "Chrome";
         } else if (userAgent.contains("Firefox")) {
@@ -26,9 +28,7 @@ public class UserAgentPaser {
             return "Internet Explorer";
         } else if (userAgent.contains("Opera") || userAgent.contains("OPR")) {
             return "Opera";
-        } else if (userAgent.contains("Whale")) {
-            return "Whale";
-        } else {
+        }  else {
             return "Unknown";
         }
     }

@@ -1,13 +1,29 @@
 package team01.yaksutor.pharmacy.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import team01.yaksutor.dto.Ingredient;
+import team01.yaksutor.dto.Medicine;
+import team01.yaksutor.dto.PharmStock;
+import team01.yaksutor.dto.StockInfo;
+import team01.yaksutor.pharmacy.mapper.PhStockMapper;
+import team01.yaksutor.pharmacy.service.PhStockService;
 
-@RequestMapping("/pharm")
+import java.util.List;
+
 @Controller
+@RequestMapping("/pharm")
+@RequiredArgsConstructor
+@Slf4j
 public class PhPharmStockController {
+    private final PhStockMapper phStockMapper;
+    private final PhStockService phStockService;
+    private final HttpServletRequest request;
+
 
     @GetMapping("/checkMedi")
     public String pharmStrock(Model model) {
@@ -26,7 +42,12 @@ public class PhPharmStockController {
 
     @GetMapping("/myStockSearchList")
     public String myStockSearchList(Model model) {
+        String sid = request.getSession().getAttribute("S_ID").toString();
+        log.info("sid: {}", sid);
+        String pharCode = phStockMapper.getPharCodeById(sid);
+        List<PharmStock> stockList = phStockMapper.getPharmStockList(pharCode);
 
+        model.addAttribute("stockList", stockList);
         model.addAttribute("title", "재고 목록");
         model.addAttribute("content", "재고 목록");
 
@@ -34,8 +55,17 @@ public class PhPharmStockController {
     }
 
     @GetMapping("/myStockRelease")
-    public String myStockRelease(Model model) {
+    public String myStockRelease(Model model,
+                                 @RequestParam(value="stockCode") String stockCode,
+                                 @RequestParam(value="mediName") String mediName) {
 
+        String thisStockCode = stockCode;
+        String stockQty = phStockMapper.getStockQty(stockCode);
+        String thisMedi = mediName;
+
+        model.addAttribute("thisStockCode", thisStockCode);
+        model.addAttribute("stockQty", stockQty);
+        model.addAttribute("mediName", thisMedi);
         model.addAttribute("title", "출고");
         model.addAttribute("content", "출고");
 
@@ -44,10 +74,53 @@ public class PhPharmStockController {
 
     @GetMapping("/myStockHistory")
     public String myStockHistory(Model model) {
+        String sid = request.getSession().getAttribute("S_ID").toString();
+        String pharCode = phStockMapper.getPharCodeById(sid);
 
         model.addAttribute("title", "입출고 기록");
         model.addAttribute("content", "입출고 기록");
 
         return "user/pharmacy/pharmstock/myStockHistory";
+    }
+
+    @GetMapping("/stockDetailView")
+    public String stockDetailView(Model model,
+                                  @RequestParam(value="mediCode") String mediCode) {
+
+        StockInfo stockInfo = new StockInfo();
+        String sid = request.getSession().getAttribute("S_ID").toString();
+        String pharCode = phStockMapper.getPharCodeById(sid);
+        stockInfo.setMedicine(phStockMapper.getMedicineByCode(mediCode));
+        stockInfo.setPharmStock(phStockMapper.getPharmStockByCode(mediCode, pharCode));
+        List<Ingredient> ingrList = phStockMapper.getIngredientByCode(mediCode);
+        stockInfo.setIngrList(ingrList);
+        stockInfo.setEffiList(phStockMapper.getEfficacyByCode(mediCode));
+
+        log.info("stockInfo: {}", stockInfo);
+
+        model.addAttribute("stockInfo", stockInfo);
+        model.addAttribute("title", "재고 상세");
+        model.addAttribute("content", "재고 상세");
+
+
+        return "user/pharmacy/pharmstock/stockDetailView";
+    }
+
+    @PostMapping("/myStockInsert")
+    @ResponseBody
+    public String myStockInsert(@RequestPart(value="stockInfo") StockInfo stockInfo){
+        String sid = request.getSession().getAttribute("S_ID").toString();
+        log.info("stockInfo: {}", stockInfo);
+        phStockService.stockInsert(stockInfo, sid);
+
+        return "user/pharmacy/pharmstock/myStockInsert";
+    }
+
+    @PostMapping("/myStockRelease")
+    public String myStockRelease(@RequestParam(value="qty") String qty,
+                                 @RequestParam(value="stockCode") String stockCode){
+        phStockService.stockRelease(qty, stockCode);
+
+        return "/user/pharmacy/pharmstock/myStockSearchList";
     }
 }

@@ -12,7 +12,6 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-
 public class AdLoginHistoryService {
 
     private final AdLoginHistoryMapper adLoginHistoryMapper;
