@@ -28,24 +28,20 @@
                                             <div class="card-header">
                                                 <h5>재고 정보</h5>
                                             </div>
-                                            <div class="card-body">
-                                                <form method="post" name="enq">
+                                            <div class="card-body medical-info">
+                                                <form method="post" name="enq" id="addMedicine">
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label>의약품 이름 <span class="required">*</span></label>
-                                                            <input required="" class="form-control" name="name" type="text" />
+                                                            <input id="mediName" class="form-control" name="name" type="text" />
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>제조사 <span class="required">*</span></label>
-                                                            <input required="" class="form-control" name="text" type="text" />
+                                                            <input id="company" class="form-control" name="text" type="text" />
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>제조일자 <span class="required">*</span></label>
-                                                            <input required="" class="form-control" name="dname" type="date" />
-                                                        </div>
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-12">
                                                             <label>소비기한 <span class="required">*</span></label>
-                                                            <input required="" class="form-control" name="email" type="date" />
+                                                            <input id="mediUsebydate" class="form-control" name="email" type="date" />
                                                         </div>
                                                         <div class="row">
                                                             <div class="form-group col-md-5">
@@ -91,15 +87,15 @@
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>제형 <span class="required">*</span></label>
-                                                            <input required="" class="form-control" name="gagosipuh" type="text" />
+                                                            <input id="mediDrugform" class="form-control" name="gagosipuh" type="text" />
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>포장상태 <span class="required">*</span></label>
-                                                            <input required="" class="form-control" name="jib" type="text" />
+                                                            <input id="mediState" class="form-control" name="jib" type="text" />
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>의약품 구분 <span class="required">*</span></label>
-                                                            <select required="" class="form-control" name="un">
+                                                            <select id="mediDrugtype" class="form-control" name="un">
                                                                 <option value="">선택해주세요</option>
                                                                 <option value="일반의약품">일반 의약품</option>
                                                                 <option value="전문의약품">전문 의약품</option>
@@ -107,7 +103,7 @@
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>재고 수량 <span class="required">*</span></label>
-                                                            <input required="" class="form-control" name="qty" type="text" />
+                                                            <input id="pharQty" class="form-control" name="qty" type="text" />
                                                         </div>
                                                         <div class="col-md-3">
                                                             <button type="button" class="btn btn-fill-out submit font-weight-bold" name="submitBtn" id="submitBtn">재고 등록</button>
@@ -150,7 +146,66 @@
                     return false;
                 }
             });
-            if(isSubmit) $('#addMedicine').submit();
+            if(isSubmit) {
+                const medicine = {};
+
+                $('.medical-info input, .medical-info select').not('.ingredient, .content, .efficacy #pharQty #company').each((idx, item) => {
+                    const id = item.id;
+                    const value = $(item).val();
+                    medicine[id] = value;
+                });
+                const ingrList = [];
+                const effiList = [];
+                $('#ingrBox div.row').each((idx, item) => {
+                    const ingrObj = {};
+                    $(item).find('input').each((idx, item) => {
+                        const name = $(item).attr('name');
+                        const value = $(item).val();
+                        ingrObj[name] = value;
+                    });
+                    ingrList.push(ingrObj);
+                });
+                $('#effiBox div.row').each((idx, item) => {
+                    const effiObj = {};
+                    $(item).find('input').each((idx, item) => {
+                        const name = $(item).attr('name');
+                        const value = $(item).val();
+                        effiObj[name] = value;
+                    });
+                    effiList.push(effiObj);
+                })
+                //medicalInfo['ingrList'] = ingrList;
+                //medicalInfo['effiList'] = effiList;
+                console.log(medicine);
+
+                const pharmStock = {};
+                $('#pharQty, #company').each((idx, item) => {
+                    const id = item.id;
+                    const value = $(item).val();
+                    pharmStock[id] = value;
+                });
+                console.log(pharmStock);
+                const requestObj = {medicine, pharmStock, ingrList, effiList};
+
+                const formData = new FormData();
+                formData.append('stockInfo', new Blob([JSON.stringify(requestObj)],{ type : 'application/json'}));
+
+                console.log(requestObj);
+                console.log(JSON.stringify(requestObj));
+                const request = $.ajax({
+                    url : '/pharm/myStockInsert',
+                    method : 'POST',
+                    contentType : false, // formdata -> multipart/form-data
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    data : formData,
+                    dataType : 'json'
+                });
+                request.done(element => {
+                    return element;
+                });
+                $(location).attr('href', '/pharm/myStockSearchList');
+            }
         });
 
         const createIngrRow = () => {
