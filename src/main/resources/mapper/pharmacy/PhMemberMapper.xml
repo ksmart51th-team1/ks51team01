@@ -3,5 +3,96 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.pharmacy.mapper.PhMemberMapper">
+    <resultMap id="memberResultMap" type="team01.yaksutor.dto.Member">
+        <!-- PK칼럼과 일반칼럼을 주의해야한다. -->
+        <id column="m_id" property="memberId" />
+        <result column="level" property="memberLevelNum"/>
+        <result column="level_name" property="memberLevelName"/>
+        <result column="pw" property="memberPw"/>
+        <result column="name" property="memberName"/>
+        <result column="gender" property="memberGender"/>
+        <result column="email" property="memberEmail"/>
+        <result column="birth" property="memberBirth"/>
+        <result column="phone" property="memberPhone"/>
+        <result column="sido" property="memberAddrSido"/>
+        <result column="sigungu" property="memberAddrSigungu"/>
+        <result column="dong" property="memberAddrDong"/>
+        <result column="pst_code" property="memberPostCode"/>
+        <result column="addr" property="memberAddr"/>
+    </resultMap>
 
+    <resultMap id="pharmacyResultMap" type="team01.yaksutor.dto.Pharmacy">
+        <id column="phar_code" property="pharCode" />
+        <result column="phar_Id" property="pharId"/>
+        <result column="p_name" property="pName"/>
+        <result column="busin_num" property="businNum"/>
+        <result column="p_addr_do" property="pAddrDo"/>
+        <result column="p_addr_si" property="pAddrSi"/>
+        <result column="p_addr_dong" property="pAddrDong"/>
+        <result column="p_addr" property="pAddr"/>
+        <result column="p_post_code" property="pPostCode"/>
+        <result column="open_date" property="openDate"/>
+        <result column="p_state" property="pState"/>
+    </resultMap>
+
+    <resultMap id="LicenseResultMap" type="team01.yaksutor.dto.License">
+        <id column="lice_code" property="liceCode" />
+        <result column="pharmacist_id" property="pharmacistId"/>
+        <result column="license_num" property="licenseNum"/>
+        <result column="license_get_date" property="licenseGetDate"/>
+    </resultMap>
+
+    <resultMap id="memberLevelResultMap" type="team01.yaksutor.dto.Level">
+        <id column="level_num" property="levelNum"/>
+        <result column="level_name" property="levelName"/>
+        <result column="level_date" property="levelDate"/>
+    </resultMap>
+
+    <resultMap id="managePharmacyResultMap" type="team01.yaksutor.dto.ManagePharmacy">
+        <id column="mana_phar_code" property="manaPharCode"/>
+        <result column="phar_code" property="pharCode"/>
+        <result column="phar_id" property="pharId"/>
+        <result column="reg_m_id" property="regMID"/>
+        <result column="state" property="state"/>
+        <result column="reg_date" property="regDate"/>
+    </resultMap>
+
+    <update id="modifyMyAccount" parameterType="Member">
+        /* 회원수정 */
+        UPDATE member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberName != null and memberName != ''">
+                name=#{memberName},
+            </if>
+            <if test="memberGender != null and memberGender != ''">
+                gender=#{memberGender},
+            </if>
+            <if test="memberPostCode != null and memberPostCode != ''">
+                pst_code=#{memberPostCode},
+            </if>
+            <if test="memberAddrSido != null and memberAddrSido != ''">
+                sido=#{memberAddrSido},
+            </if>
+            <if test="memberAddrSigungu != null and memberAddrSigungu != ''">
+                sigungu=#{memberAddrSigungu},
+            </if>
+            <if test="memberAddrDong != null and memberAddrDong != ''">
+                dong=#{memberAddrDong},
+            </if>
+            <if test="memberAddr != null and memberAddr != ''">
+                addr=#{memberAddr},
+            </if>
+            <if test="memberEmail != null and memberEmail != ''">
+                email=#{memberEmail},
+            </if>
+            <if test="memberBirth != null and memberBirth != ''">
+                birth=#{memberBirth},
+            </if>
+            <if test="memberPhone != null and memberPhone != ''">
+                phone=#{memberPhone}
+            </if>
+        </trim>
+        WHERE
+        m_id=#{memberId};
+    </update>
 </mapper>

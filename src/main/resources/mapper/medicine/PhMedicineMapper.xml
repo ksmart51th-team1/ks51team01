@@ -21,6 +21,8 @@
         <result column="reg_qty" 	property="regQty"/>
         <result column="state" 	property="state"/>
         <result column="reg_date" 	property="regDate"/>
+        <result column="file_path" 	property="filePath"/>
+
     </resultMap>
 
     <select id="getSellMedicineList" resultMap="sellMedicineResultMap">
@@ -34,9 +36,14 @@
             s.medi_img,
             s.reg_qty,
             s.state,
-            s.reg_date
+            s.reg_date,
+            i.file_path
         FROM
-            sell_medicine AS s;
+          sell_medicine AS s
+        INNER JOIN
+          img_data AS i
+        ON
+         s.medi_img = i.file_idx
     </select>
 <!--    &lt;!&ndash;등록&ndash;&gt;
     <insert id="addBoard" parameterType="Board">

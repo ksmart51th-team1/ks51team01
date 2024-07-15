@@ -60,4 +60,17 @@ public class AdMemberService {
         Member member = memberMapper.getMemberInfoById(memberId);
         adMemberMapper.deleteMemberById(member);
     }
+
+    //회원수정
+    public int memberModify(Member member) {
+        return adMemberMapper.modifyMember(member);
+    }
+
+    public int pharmacyModify(Pharmacy pharmacy) {
+        return adMemberMapper.modifyPharmacy(pharmacy);
+    }
+
+    public int pharmacyDelete(Pharmacy pharmacy) {
+        return adMemberMapper.deletePharmacy(pharmacy);
+    }
 }

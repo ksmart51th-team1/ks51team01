@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import team01.yaksutor.dto.SellMedicine;
+import team01.yaksutor.dto.ShoppingCart;
 import team01.yaksutor.pharmacy.service.PhMedicineService;
+import team01.yaksutor.pharmacy.service.PhShoppingCartService;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class PhMedicineController {
 
     private final PhMedicineService phMedicineService;
+    private final PhShoppingCartService phShoppingCartService;
 
     /* ------------------------------------------------------------
      *                    의약품판매등록
@@ -27,8 +30,12 @@ public class PhMedicineController {
     @GetMapping("/order/orderMedicine")
     public String getSellMedicineList(Model model) {
         List<SellMedicine> sellMedicineList = phMedicineService.getSellMedicineList();
+
+        List<ShoppingCart> shoppingCartList = phShoppingCartService.getShoppingCartList();
         model.addAttribute("title", "의약품 검색 주문");
         model.addAttribute("sellMedicineList", sellMedicineList);
+        model.addAttribute("shoppingCartList", shoppingCartList);
+
         return "user/pharmacy/order/orderMedicine";
     }
 
