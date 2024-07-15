@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.pharmacy.mapper.PhShoppingCartMapper">
+
+
+    <!--======================================
+                    장바구니
+    ======================================-->
+
+    <!--장바구니 조회-->
+    <resultMap type="ShoppingCart" id="shoppingCartResultMap">
+        <id column="shopping_cart_code" property="shoppingCartCode" />
+        <result column="goods_code" property="goodsCode"/>
+        <result column="o_m_id" property="oMId"/>
+        <result column="qty" property="qty"/>
+        <result column="shopping_cart_group" property="shoppingCartGroup"/>
+        <result column="reg_date" 	property="regDate"/>
+        <result column="medi_name" 		property="mediName"/>
+        <result column="medi_price" 	property="mediPrice"/>
+        <result column="medi_detail" 	property="mediDetail"/>
+        <result column="cartSize" 	property="cartSize"/>
+        <result column="sumQty" 	property="sumQty"/>
+        <result column="file_path" 	property="filePath"/>
+
+    </resultMap>
+
+    <select id="getShoppingCartList" resultMap="shoppingCartResultMap">
+        SELECT
+        SUM(s.qty) AS sumQty,
+        s.*,
+        sm.*,
+        i.*
+        FROM
+        shopping_cart AS s
+        INNER JOIN
+        sell_medicine AS sm
+        ON
+        s.goods_code = sm.goods_code
+        INNER JOIN
+        img_data AS i
+        ON
+        i.file_idx = sm.medi_img
+        GROUP BY s.goods_code, s.o_m_id
+
+    </select>
+
+        <insert id="addShoppingCart" parameterType="ShoppingCart">
+            <selectKey keyProperty="shoppingCartCode" resultType="String" order="BEFORE">
+                SELECT
+                CASE
+                WHEN COUNT(shopping_cart_code) = 0 THEN 'sc_code_1'
+                ELSE
+                CONCAT(
+                'sc_code_',
+                MAX(CAST(SUBSTRING_INDEX(shopping_cart_code, 'sc_code_', -1) AS UNSIGNED)) +1)
+                END AS shoppingCartCode
+                FROM
+                shopping_cart;
+            </selectKey>
+            INSERT INTO shopping_cart
+            (shopping_cart_code, goods_code, o_m_id, qty, shopping_cart_group, reg_date)
+            values
+            (#{shoppingCartCode}, #{goodsCode}, #{oMId}, #{qty},#{shoppingCartGroup}, CURDATE());
+        </insert>
+
+        <!-- 수정&ndash;&gt;
+        <update id="modifyBoard" parameterType="Board">
+            UPDATE community
+            <set>
+                <if test="boardTitle != null and boardTitle != ''">
+                    cm_title = #{boardTitle},
+                </if>
+                <if test="boardContent != null and boardContent != ''">
+                    cm_content = #{boardContent},
+                </if>
+            </set>
+            WHERE
+            cm_num = #{boardCode}
+        </update>
+
+        &lt;!&ndash;삭제&ndash;&gt;
+        <delete id="deleteBoard" parameterType="String">
+            DELETE FROM community
+            WHERE cm_num = #{boardCode}
+        </delete>-->
+
+
+
+
+</mapper>

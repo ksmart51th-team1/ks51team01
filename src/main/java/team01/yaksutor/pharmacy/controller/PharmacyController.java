@@ -41,11 +41,11 @@ public class PharmacyController {
         model.addAttribute("member",member);
         return "user/pharmacy/myPage/myPage";
     }
-    @GetMapping("/cart")
+/*    @GetMapping("/cart")
     public String cart() {
 
         return "user/pharmacy/order/cart";
-    }
+    }*/
 
     @GetMapping("/myOrderList")
     public String myOderList() {
