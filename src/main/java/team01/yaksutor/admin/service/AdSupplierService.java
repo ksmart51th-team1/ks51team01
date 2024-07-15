@@ -43,4 +43,13 @@ public class AdSupplierService {
         List<Supplier> supplierInfo = adMemberMapper.getSupplierInfo();
         return supplierInfo;
     }
+
+    //납품업체 폐업
+    public int supplierDelete(Supplier supplier) {
+        return adMemberMapper.deleteSupplier(supplier);
+    }
+
+    public int supplierModify(Supplier supplier) {
+        return adMemberMapper.modifySupplier(supplier);
+    }
 }

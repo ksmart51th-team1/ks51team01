@@ -30,11 +30,36 @@ public class AdMemberController {
     private final AdMemberService adMemberService;
     private final MemberMapper memberMapper;
 
+
+    /*약국 삭제*/
+    @PostMapping("/pharmacyDelete")
+    public String deletePharmacy(Pharmacy pharmacy){
+        adMemberService.pharmacyDelete(pharmacy);
+        return "redirect:/admin/member/pharmacySearchList";
+    }
+
+
+    /*약국 수정*/
+    @PostMapping("/pharmacyModify")
+    public String modifyPharmacy(Pharmacy pharmacy){
+        adMemberService.pharmacyModify(pharmacy);
+        return "redirect:/admin/member/pharmacySearchList";
+    }
+
+
+    /*회원 수정*/
+    @PostMapping("/memberModify")
+    public String modifyMember(Member member){
+        adMemberService.memberModify(member);
+        return "redirect:/admin/member/memberSearchList";
+    }
+
+
     /*회원 삭제*/
     @PostMapping("/memberDelete")
-    public String deleteQuestionCenter(@RequestParam String memberId){
+    public String deleteMember(@RequestParam String memberId){
        adMemberService.memberDelete(memberId);
-        return "redirect:/admin/pharmacy/memberSearchList";
+        return "redirect:/admin/member/memberSearchList";
     }
 
     @GetMapping("/pharmacySearchList")

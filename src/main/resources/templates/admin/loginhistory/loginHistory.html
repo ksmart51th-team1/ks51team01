@@ -48,7 +48,7 @@
                             <th>브라우저</th>
                             <th>로그인 일자</th>
                             <th>로그아웃 일자</th>
-                            <th class="text-center">수정/삭제</th>
+                            <th class="text-center">삭제</th>
                         </tr>
                         </thead>
                         <tbody th:if="${loginHistoryList != null}" th:each="l : ${loginHistoryList}">
@@ -58,16 +58,10 @@
                             <td th:text="${l.browser}"></td>
                             <td th:text="${l.loginDate}"></td>
                             <td th:text="${l.logoutDate}"></td>
-                            <td class="text-end">
-                                <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editLoginHistoryModal"
-                                   th:data-log-num="${l.logNum}"
-                                   th:data-member-id="${l.memberId}"
-                                   th:data-browser="${l.browser}"
-                                   th:data-login-date="${l.loginDate}"
-                                   th:data-logout-date="${l.logoutDate}">수정</a>
-                                <form th:action="@{/admin/loginHistory/delete}" method="post" style="display:inline;" class="delete-form">
+                            <td class="text-center">
+                                <form th:action="@{/admin/loginHistory/deleteHistory}" method="post" style="display:inline;" class="delete-form">
                                     <input type="hidden" name="logNum" th:value="${l.logNum}">
-                                    <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
+                                    <button type="button" class="btn btn-md rounded font-sm delete-button " style="background-color: red">삭제</button>
                                 </form>
                             </td>
                         </tr>
@@ -81,52 +75,30 @@
         <div class="pagination-area mt-30 mb-50">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-start">
-                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
+                    <li class="page-item active">
+                        <a  th:href="@{/admin/loginHistory}">[맨처음]</a>
+                        <a th:if="${currentPage > 1}"
+                           th:href="@{/admin/loginHistory(currentPage=${currentPage - 1})}">[이전]</a>
+                        <span th:unless="${currentPage > 1}">[이전]</span>
+                        <th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+                            <a th:unless="${currentPage == num}"
+                               th:href="@{/admin/loginHistory(currentPage=${num})}"
+                               th:text="|[${num}]|"></a>
+                            <span th:if="${currentPage == num}"
+                                  th:text="|[${num}]|"></span>
+                        </th:block>
+                        <a 		th:if="${currentPage < lastPage}"
+                                  th:href="@{/admin/loginHistory(currentPage=${currentPage + 1})}">[다음]</a>
+                        <span th:unless="${currentPage < lastPage}">[다음]</span>
+                        <a th:href="@{/admin/loginHistory(currentPage=${lastPage})}">[마지막]</a>
                     </li>
+
                 </ul>
             </nav>
         </div>
     </section>
 
-    <!-- 수정 모달 -->
-    <div class="modal fade" id="editLoginHistoryModal" tabindex="-1" aria-labelledby="editLoginHistoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editLoginHistoryModalLabel">로그인 이력 수정</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="loginHistoryModify" th:action="@{/admin/loginHistory/loginHistoryModify}" method="post">
-                        <input type="hidden" id="editLogNum" name="logNum">
-                        <div class="form-group">
-                            <label for="editMemberId">회원 아이디</label>
-                            <input type="text" class="form-control" id="editMemberId" name="memberId" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editBrowser">브라우저</label>
-                            <input type="text" class="form-control" id="editBrowser" name="browser" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editLoginDate">로그인 일자</label>
-                            <input type="datetime-local" class="form-control" id="editLoginDate" name="loginDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editLogoutDate">로그아웃 일자</label>
-                            <input type="datetime-local" class="form-control" id="editLogoutDate" name="logoutDate" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">수정</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </th:block>
 
 <th:block layout:fragment="customJsFile">
@@ -137,21 +109,6 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-        $('#editLoginHistoryModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var logNum = button.data('log-num');
-            var memberId = button.data('member-id');
-            var browser = button.data('browser');
-            var loginDate = button.data('login-date');
-            var logoutDate = button.data('logout-date');
-
-            var modal = $(this);
-            modal.find('#editLogNum').val(logNum);
-            modal.find('#editMemberId').val(memberId);
-            modal.find('#editBrowser').val(browser);
-            modal.find('#editLoginDate').val(loginDate);
-            modal.find('#editLogoutDate').val(logoutDate);
-        });
 
         document.querySelectorAll('.delete-button').forEach(function(button) {
             button.addEventListener('click', function(event) {

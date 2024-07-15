@@ -34,6 +34,7 @@
         <result column="p_addr" property="pAddr"/>
         <result column="p_post_code" property="pPostCode"/>
         <result column="open_date" property="openDate"/>
+        <result column="p_state" property="pState"/>
     </resultMap>
 
     <resultMap id="LicenseResultMap" type="team01.yaksutor.dto.License">
@@ -94,6 +95,105 @@
         m.`level` = l.level_num
     </sql>
 
+    <update id="modifySupplier" parameterType="Supplier">
+        /* 납품업체 수정 */
+        UPDATE supplier
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="supNum != null and supNum != ''">
+                sup_num=#{supNum},
+            </if>
+            <if test="supIntro != null and supIntro != ''">
+                sup_intro=#{supIntro},
+            </if>
+            <if test="supAddr != null and supAddr != ''">
+                sup_addr=#{supAddr},
+            </if>
+            <if test="supName != null and supName != ''">
+                sup_name=#{supName},
+            </if>
+            <if test="supTell != null and supTell != ''">
+                sup_tell=#{supTell},
+            </if>
+            <if test="appState != null and appState != ''">
+                app_state=#{appState},
+            </if>
+        </trim>
+        WHERE
+        supp_code=#{suppCode}
+    </update>
+
+    <update id="deleteSupplier" parameterType="Supplier">
+        /*납품업체 삭제*/
+        UPDATE supplier
+        SET
+        app_state='폐업'
+        WHERE
+        supp_code=#{suppCode}
+    </update>
+
+    <update id="deletePharmacy" parameterType="Pharmacy">
+        /* 약국 삭제 */
+        UPDATE pharmacy
+        SET
+        p_state='폐업'
+        WHERE
+        phar_code=#{pharCode}
+    </update>
+
+    <update id="modifyPharmacy" parameterType="Pharmacy">
+        /* 약국 수정 */
+        UPDATE pharmacy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pName != null and pName != ''">
+                p_name=#{pName},
+            </if>
+            <if test="businNum != null and businNum != ''">
+                busin_num=#{businNum},
+            </if>
+            <if test="pAddrDo != null and pAddrDo != ''">
+                p_addr_do=#{pAddrDo},
+            </if>
+            <if test="pAddrSi != null and pAddrSi != ''">
+                p_addr_si=#{pAddrSi},
+            </if>
+            <if test="pAddrDong != null and pAddrDong != ''">
+                p_addr_dong=#{pAddrDong},
+            </if>
+            <if test="pAddr != null and pAddr != ''">
+                p_addr=#{pAddr},
+            </if>
+            <if test="pPostCode != null and pPostCode != ''">
+                p_post_code=#{pPostCode},
+            </if>
+            <if test="openDate != null and openDate != ''">
+                open_date=#{openDate}
+            </if>
+        </trim>
+        WHERE
+        phar_code=#{pharCode};
+    </update>
+
+    <update id="modifyMember" parameterType="Member">
+        /* 회원수정 */
+        UPDATE member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberName != null and memberName != ''">
+                name=#{memberName},
+            </if>
+            <if test="memberGender != null and memberGender != ''">
+                gender=#{memberGender},
+            </if>
+            <if test="memberEmail != null and memberEmail != ''">
+                email=#{memberEmail},
+            </if>
+            <if test="memberPhone != null and memberPhone != ''">
+                phone=#{memberPhone}
+            </if>
+        </trim>
+        WHERE
+        m_id=#{memberId};
+    </update>
+
     <select id="getSupplierInfo" resultMap="supplierResultMap">
         SELECT
         supp_code,
@@ -130,7 +230,8 @@
             p_addr_dong,
             p_post_code,
             p_addr,
-            open_date
+            open_date,
+            p_state
         FROM
             pharmacy
     </select>
