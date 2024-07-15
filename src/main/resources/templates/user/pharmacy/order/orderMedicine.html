@@ -10,13 +10,12 @@
       <main class="main" style="transform: none;">
             <div class="container mb-30" style="transform: none;">
             <div class="archive-header-2 text-center pt-80 pb-50">
-                <h1 class="display-2 mb-50">Nest Food Store</h1>
                 <div class="row">
                     <div class="col-lg-5 mx-auto">
                         <div class="sidebar-widget-2 widget_search mb-50">
                             <div class="search-form">
                                 <form action="#">
-                                    <input placeholder="Search in this store..." type="text">
+                                    <input placeholder="의약품명, 효능, 제조사 등을 입력하세요." type="text">
                                     <button type="submit"><i class="fi-rs-search"></i></button>
                                 </form>
                             </div>
@@ -29,7 +28,9 @@
                 <div class="col-lg-4-5">
                     <div class="shop-product-fillter">
                         <div class="totall-product">
-                            <p></p>
+                            <p>현재 <mark th:each="s, i : ${sellMedicineList}"
+                                       th:if="${i.index} < 1"
+                                       th:text="${i.size}"></mark> 개의 약품이 등록되어 있어요.</p>
                         </div>
                         <div class="sort-by-product-area">
                             <div class="sort-by-cover mr-10">
@@ -69,51 +70,65 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-wishlist">
-                        <thead>
-                        <tr class="main-heading">
-                            <th class="custome-checkbox start pl-30" colspan="3" scope="col">의약품 이름</th>
-                            <th scope="col">가격</th>
-                            <th scope="col">판매상태</th>
-                            <th scope="col">재고</th>
 
-                            <th scope="col">갯수</th>
-                            <th class="end" scope="col">장바구니에 추가</th>
-                        </tr>
-                        </thead>
+                    <table class="table table-wishlist">
+
+
                         <tbody th:each="s : ${sellMedicineList}" th:if="${sellMedicineList != null}">
+
                         <tr class="pt-30">
                             <td class="image product-thumbnail pt-40 pl-30"><img th:src="${s.filePath}" /></td>
                             <td class="product-des product-name">
-                                <h6><a class="product-name mb-10" th:text="${s.mediName}"></a></h6>
-                                <span style="color: gray" th:text="${s.regDate}"></span>
-                            </td>
-                            <td th:text="${s.mediDetail}"></td>
-                            <td class="price" data-title="Price">
-                                <h3 class="text-brand" th:text="${s.mediPrice} + '원'"></h3>
+                                <h6><a class="mb-10" th:text="${s.mediName}"></a></h6>
+                                <span style="color: gray" th:text="${s.mediDetail}"></span>
+
                             </td>
                             <td class="text-center detail-info" data-title="Stock">
                                 <span class="stock-status in-stock mb-0" th:text="${s.state}"></span>
                             </td>
                             <td th:text="${s.regQty}"></td>
+                            <td class="price" data-title="Price">
+                                <h6 th:text="${s.mediPrice} + '원'"></h6>
+                            </td>
                             <td class="text-center detail-info" data-title="Stock">
                                 <div class="detail-extralink mr-15">
                                     <div class="detail-qty border radius">
                                         <a class="qty-down" href="#"><i class="fi-rs-angle-small-down"></i></a>
-                                        <input class="qty-val" min="1" name="quantity" type="text" value="1">
+                                        <input class="qty-val" min="1" name="qty" th:max="${s.regQty}" type="text" value="1">
                                         <a class="qty-up" href="#"><i class="fi-rs-angle-small-up"></i></a>
                                     </div>
                                 </div>
                             </td>
+
                             <td class="text-right" data-title="Cart">
-                                <button class="btn btn-sm">Add to cart</button>
+                                <form id="addShoppingCartForm" method="post" th:action="@{/pharm/addCart}">
+                                    <input id="goodsCode" name="goodsCode" th:value="${s.goodsCode}" type="hidden">
+                                    <input id="oMId" name="oMId" th:value="${session.S_ID}" type="hidden">
+                                    <input id="shoppingCartGroup" name="shoppingCartGroup" type="hidden" value="group1">
+                                    <input  class="qty-val-hidden" hidden="hidden" min="1" name="qty" th:max="${s.regQty}" type="text" value="1">
+                                    <button class="btn btn-sm" type="submit">담기</button>
+                                </form>
                             </td>
+
                         </tr>
+
 
 
                          </tbody>
                     </table>
+
                 </div>
+                <!-- 담기 완료 -->
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="myModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                완료
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-lg-1-5 primary-sidebar sticky-sidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
 
 
@@ -229,14 +244,8 @@
                         </div>
                         <a class="btn btn-sm btn-default" href="shop-grid-right.html"><i class="fi-rs-filter mr-5"></i> Fillter</a>
                     </div><div class="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none animated" style="visibility: visible;">
-                        <img alt="" th:src="@{/resource/user/assets/imgs/banner/banner-11.png}">
+                        <img alt="" th:src="@{/resource/user/assets/imgs/ttt.jpg}">
                         <div class="banner-text">
-                            <span>Oganic</span>
-                            <h4>
-                                Save 17% <br>
-                                on <span class="text-brand">Oganic</span><br>
-                                Juice
-                            </h4>
                         </div>
                     </div></div></div>
             </div>
@@ -249,6 +258,49 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script>
+        document.querySelectorAll('.qty-val').forEach(function(externalInput) {
+            externalInput.addEventListener('input', function() {
+                var maxVal = parseInt(externalInput.getAttribute('max'), 10);
+                if (parseInt(externalInput.value, 10) > maxVal) {
+                    alert('최대 수량은 ' + maxVal + '입니다.');
+                    externalInput.value = 1; // 초기화 값
+                }
+                // Find the corresponding hidden input inside the form
+                var form = externalInput.closest('tr').querySelector('form');
+                var hiddenInput = form.querySelector('.qty-val-hidden');
+                hiddenInput.value = externalInput.value;
+            });
+        });
+
+        // Additional code to handle the increment and decrement buttons
+        document.querySelectorAll('.qty-up').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var input = button.closest('.detail-qty').querySelector('.qty-val');
+                var maxVal = parseInt(input.getAttribute('max'), 10);
+                if (parseInt(input.value, 10) < maxVal) {
+                    input.value = parseInt(input.value) + 1;
+                    input.dispatchEvent(new Event('input')); // Trigger the input event to sync values
+                } else {
+                    alert('최대 수량은 ' + maxVal + '입니다.');
+                }
+            });
+        });
+
+        document.querySelectorAll('.qty-down').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var input = button.closest('.detail-qty').querySelector('.qty-val');
+                if (parseInt(input.value, 10) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                    input.dispatchEvent(new Event('input')); // Trigger the input event to sync values
+                }
+            });
+        });
+
+
+    </script>
     <script th:inline="javascript">
 
     </script>

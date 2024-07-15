@@ -10,4 +10,7 @@ public interface PhShoppingCartMapper {
 
     // 조회
     List<ShoppingCart> getShoppingCartList();
+    // 추가
+    int addShoppingCart(ShoppingCart shoppingCart);
+
 }

@@ -26,4 +26,8 @@ public class PhShoppingCartService {
         List<ShoppingCart> shoppingCartList = phShoppingCartMapper.getShoppingCartList();
         return shoppingCartList;
     }
+    // 추가
+    public void addShoppingCart(ShoppingCart shoppingCart) {
+        phShoppingCartMapper.addShoppingCart(shoppingCart);
+    }
 }

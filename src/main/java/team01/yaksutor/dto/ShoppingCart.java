@@ -15,5 +15,14 @@ public class ShoppingCart {
     // sellMedicine
     private String mediName;
     private int mediPrice;
+    private String mediDetail;
+
+    // 총합
+    private int sumQty;
+    // 총합금액
+    private int allPrice;
+
+    // 이미지
+    private String filePath;
 
 }
