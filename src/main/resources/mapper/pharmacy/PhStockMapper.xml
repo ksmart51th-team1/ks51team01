@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.pharmacy.mapper.PhStockMapper">
+
     <resultMap id="medicineListMap" type="Medicine">
         <id column="medi_code"           property="mediCode" />
         <result column="reg_m_id"        property="regMId" />
@@ -24,29 +25,7 @@
         </association>
     </resultMap>
 
-    <resultMap id="sellMedicineListMap" type="SellMedicine">
-        <id column="goods_code"      property="goodsCode" />
-        <result column="supp_code"   property="suppCode" />
-        <result column="medi_code"   property="mediCode" />
-        <result column="medi_name"   property="mediName" />
-        <result column="medi_detail" property="mediDetail" />
-        <result column="medi_price"  property="mediPrice" />
-        <result column="medi_img"    property="mediImg" />
-        <result column="reg_qty"     property="regQty" />
-        <result column="state"       property="state" />
-        <result column="reg_date"    property="regDate" />
-
-        <association property="imgData" javaType="ImgData">
-            <id 	column="file_idx"           property="fileIdx"/>
-            <result column="file_origin_name" 	property="fileOriginName"/>
-            <result column="file_new_name" 	    property="fileNewName"/>
-            <result column="file_path" 	        property="filePath"/>
-            <result column="file_size"          property="fileSize"/>
-            <result column="file_reg_date" 	    property="fileRegDate"/>
-        </association>
-    </resultMap>
-
-    <resultMap id="medicalInfoMap" type="MedicalInfo">
+    <resultMap id="medicalInfoMap" type="Medicine">
         <id column="medi_code"          property="mediCode" />
         <result column="reg_m_id"       property="regMId" />
         <result column="medi_name"      property="mediName" />
@@ -57,7 +36,7 @@
         <result column="medi_usebydate" property="mediUsebydate" />
         <result column="reg_date"       property="regDate" />
 
-        <association property="imgInfo" javaType="AdImgData">
+        <association property="imgData" javaType="ImgData">
             <id 	column="file_idx"           property="fileIdx"/>
             <result column="file_origin_name" 	property="fileOriginName"/>
             <result column="file_new_name" 	    property="fileNewName"/>
@@ -88,7 +67,32 @@
         <id 	column="stock_code"    property="stockCode"/>
         <result column="medi_code" 	   property="mediCode"/>
         <result column="phar_code" 	   property="pharCode"/>
-        <result column="pharm_name"    property="pharmCode"/>
+        <result column="pharm_name"    property="pharmName"/>
+        <result column="company" 	   property="company"/>
+        <result column="phar_qty" 	   property="pharQty"/>
+        <result column="manufact_date" property="manufactDate"/>
+        <result column="expira_date"   property="expiraDate"/>
+        <result column="stock_checked" property="stockChecked"/>
+        <result column="last_date" 	   property="lastDate"/>
+
+        <association property="medicine" javaType="Medicine">
+            <id     column="medi_code"       property="mediCode" />
+            <result column="reg_m_id"        property="regMId" />
+            <result column="medi_name"       property="mediName" />
+            <result column="medi_img"        property="mediImg" />
+            <result column="medi_drugform"   property="mediDrugform" />
+            <result column="medi_drugtype"   property="mediDrugtype" />
+            <result column="medi_state"      property="mediState" />
+            <result column="medi_usebydate"  property="mediUsebydate" />
+            <result column="reg_date"        property="regDate" />
+        </association>
+    </resultMap>
+
+    <resultMap id="getStockInfo" type="PharmStock">
+        <id 	column="stock_code"    property="stockCode"/>
+        <result column="medi_code" 	   property="mediCode"/>
+        <result column="phar_code" 	   property="pharCode"/>
+        <result column="pharm_name"    property="pharmName"/>
         <result column="company" 	   property="company"/>
         <result column="phar_qty" 	   property="pharQty"/>
         <result column="manufact_date" property="manufactDate"/>
@@ -97,7 +101,49 @@
         <result column="last_date" 	   property="lastDate"/>
     </resultMap>
 
-    <select id="getPharmStockList" resultMap="getStockList">
+    <resultMap id="getStockHistoryList" type="StockHistory">
+        <id 	column="stock_history_code" property="stockHistoryCode"/>
+        <result column="phar_code" 	        property="pharCode"/>
+        <result column="medi_code" 	        property="mediCode"/>
+        <result column="inout_qty" 	        property="inoutQty"/>
+        <result column="real_inout_qty" 	property="realInoutQty"/>
+        <result column="order_inout_qty" 	property="orderInoutQty"/>
+        <result column="inout_type" 	    property="inoutType"/>
+        <result column="after_qty" 	        property="afterQty"/>
+        <result column="inout_date" 	    property="inoutDate"/>
+
+        <association property="medicine" javaType="Medicine">
+            <id     column="medi_code"       property="mediCode" />
+            <result column="reg_m_id"        property="regMId" />
+            <result column="medi_name"       property="mediName" />
+            <result column="medi_img"        property="mediImg" />
+            <result column="medi_drugform"   property="mediDrugform" />
+            <result column="medi_drugtype"   property="mediDrugtype" />
+            <result column="medi_state"      property="mediState" />
+            <result column="medi_usebydate"  property="mediUsebydate" />
+            <result column="reg_date"        property="regDate" />
+        </association>
+    </resultMap>
+
+    <select id="getPharCodeById" parameterType="string" resultType="string">
+        SELECT
+            p.phar_code
+        FROM
+            pharmacy AS p
+        WHERE
+            p.phar_id = #{sid};
+    </select>
+
+    <select id="getPharmNameById" parameterType="string" resultType="string">
+        SELECT
+            p.p_name
+        FROM
+            pharmacy AS p
+        WHERE
+            p.phar_id = #{sid};
+    </select>
+
+    <select id="getPharmStockList" parameterType="string" resultMap="getStockList">
         SELECT
             p.stock_code,
             p.medi_code,
@@ -105,8 +151,197 @@
             p.pharm_name,
             p.phar_qty,
             p.stock_checked,
-            p.last_date
+            p.last_date,
+            m.medi_name
         FROM
             pharm_stock AS p
+            left join
+            medicine AS m
+            on
+            p.medi_code = m.medi_code
+        WHERE
+            p.phar_code = #{pharCode};
+    </select>
+
+    <insert id="insertMedicine" parameterType="Medicine">
+        <selectKey keyProperty="mediCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(medi_code) = 0	then 'medi_code_1'
+            ELSE
+            CONCAT('medi_code_',
+            max(cast(SUBSTRING_INDEX(medi_code, 'medi_code_', -1) AS UNSIGNED))+1
+            )
+            END AS mediCode
+            FROM
+            medicine;
+        </selectKey>
+        INSERT INTO medicine
+        (medi_code, reg_m_id, medi_name, medi_drugform, medi_drugtype, medi_state, medi_usebydate, reg_date)
+        VALUES (#{mediCode}, #{regMId}, #{mediName}, #{mediDrugform}, #{mediDrugtype}, #{mediState}, #{mediUsebydate}, CURDATE())
+    </insert>
+
+    <insert id="insertPharmStock" parameterType="PharmStock">
+        <selectKey keyProperty="stockCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(stock_code) = 0	then 'stock_code_1'
+            ELSE
+            CONCAT('stock_code_',
+            max(cast(SUBSTRING_INDEX(stock_code, 'stock_code_', -1) AS UNSIGNED))+1
+            )
+            END AS stockCode
+            FROM
+            pharm_stock;
+        </selectKey>
+        INSERT INTO pharm_stock
+        (stock_code, medi_code, phar_code, pharm_name, company, phar_qty, expira_date, stock_checked, last_date)
+        VALUES (#{stockCode}, #{mediCode}, #{pharCode}, #{pharmName}, #{company}, #{pharQty}, #{expiraDate}, '무', CURDATE())
+    </insert>
+
+    <insert id="insertIngredient" parameterType="Ingredient">
+        <selectKey keyProperty="ingredientCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(ingredient_code) = 0	then 'ingr_1'
+            ELSE
+            CONCAT('ingr_',
+            max(cast(SUBSTRING_INDEX(ingredient_code, 'ingr_', -1) AS UNSIGNED))+1
+            )
+            END AS ingredientCode
+            FROM
+            ingredient;
+        </selectKey>
+        INSERT INTO ingredient
+        (Ingredient_code, medi_code, reg_m_id, Ingredient, Content, reg_date)
+        VALUES (#{ingredientCode}, #{mediCode}, #{regMId}, #{ingredient}, #{content}, CURDATE())
+    </insert>
+
+    <insert id="insertEfficacy" parameterType="Efficacy">
+        <selectKey keyProperty="efficacyCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(efficacy_code) = 0	then 'effi_1'
+            ELSE
+            CONCAT('effi_',
+            max(cast(SUBSTRING_INDEX(efficacy_code, 'effi_', -1) AS UNSIGNED))+1
+            )
+            END AS efficacyCode
+            FROM
+            efficacy;
+        </selectKey>
+        INSERT INTO efficacy
+        (efficacy_code, medi_code, reg_m_id, efficacy, reg_date)
+        VALUES (#{efficacyCode}, #{mediCode}, #{regMId}, #{efficacy}, CURDATE())
+    </insert>
+
+    <select id="getMedicineByCode" parameterType="string" resultMap="medicalInfoMap">
+        SELECT
+            m.*,
+            i.*
+        FROM
+            medicine AS m
+            left join
+            img_data AS i
+            on
+            m.medi_img = i.file_idx
+        WHERE
+            m.medi_code = #{mediCode};
+    </select>
+
+    <select id="getPharmStockByCode" parameterType="string" resultMap="getStockList">
+        SELECT
+            p.*
+        FROM
+            pharm_stock AS p
+        WHERE
+            p.medi_code = #{mediCode} AND p.phar_code = #{pharCode};
+    </select>
+
+    <select id="getIngredientByCode" parameterType="string" resultMap="ingrListMap">
+        SELECT
+            i.*
+        FROM
+            ingredient AS i
+        WHERE
+            i.medi_code = #{mediCode};
+    </select>
+
+    <select id="getEfficacyByCode" parameterType="string" resultMap="effiListMap">
+        SELECT
+            e.*
+        FROM
+            efficacy AS e
+        WHERE
+            e.medi_code = #{mediCode};
+    </select>
+
+    <select id="getStockQty" parameterType="string" resultType="string">
+        SELECT
+            p.phar_qty
+        FROM
+            pharm_stock AS p
+        WHERE
+            p.stock_code = #{stockCode};
+    </select>
+
+    <update id="stockRelease" parameterType="PharmStock">
+        UPDATE pharm_stock
+        SET
+            phar_qty=#{pharQty}
+        WHERE stock_code=#{stockCode};
+    </update>
+
+    <insert id="insertStockHistory">
+        <selectKey keyProperty="stockHistoryCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(stock_history_code) = 0	then 'sh_code_1'
+            ELSE
+            CONCAT('sh_code_',
+            max(cast(SUBSTRING_INDEX(stock_history_code, 'sh_code_', -1) AS UNSIGNED))+1
+            )
+            END AS stockHistoryCode
+            FROM
+            stock_history;
+        </selectKey>
+        INSERT INTO stock_history
+        (stock_history_code, phar_code, medi_code, inout_qty, real_inout_qty, order_inout_qty, inout_type, after_qty, inout_date)
+        VALUES (#{stockHistoryCode}, #{pharCode}, #{mediCode}, #{inoutQty}, #{realInoutQty}, #{orderInoutQty}, #{inoutType}, #{afterQty}, CURDATE())
+    </insert>
+
+    <select id="getStockInfo" parameterType="String" resultMap="getStockInfo">
+        SELECT
+            p.*
+        FROM
+            pharm_stock AS p
+        WHERE
+            p.stock_code = #{stockCode};
+    </select>
+
+    <select id="getStockHistory" parameterType="string" resultMap="getStockHistoryList">
+        SELECT
+            s.stock_history_code,
+            s.phar_code,
+            s.medi_code,
+            s.inout_qty,
+            s.real_inout_qty,
+            s.inout_type,
+            s.after_qty,
+            s.inout_date,
+            m.medi_name
+        FROM
+            stock_history AS s
+            INNER join
+            medicine AS m
+            on
+            s.medi_code = m.medi_code
+        WHERE
+            s.phar_code = #{pharCode};
     </select>
 </mapper>

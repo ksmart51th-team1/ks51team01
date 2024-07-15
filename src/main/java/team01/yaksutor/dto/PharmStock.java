@@ -14,4 +14,6 @@ public class PharmStock {
     private String expiraDate;
     private String stockChecked;
     private String lastDate;
+
+    private Medicine medicine;
 }

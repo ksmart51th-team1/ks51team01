@@ -34,74 +34,28 @@
                                 <th scope="col" class="end">출고처리</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody th:if="${ stockList != null}" th:each="s : ${stockList}">
                             <tr class="pt-30">
                                 <td class="product-des product-name pl-30">
-                                    <h6><a class="product-name mb-10" th:href="@{/pharm/order/orderMedicineDetailView}">알로테드 정</a></h6>
+                                    <h6><a class="product-name mb-10" th:href="@{/pharm/stockDetailView(stockCode=${s.stockCode},mediCode=${s.mediCode})}" th:text="${s.medicine.mediName}"></a></h6>
                                 </td>
                                 <td class="price" data-title="Price">
-                                    <h3 class="text-brand">50개</h3>
+                                    <h6 class="text-brand" th:text="${s.pharQty + '개'}"></h6>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
-                                    <span class="stock-status in-stock mb-0"> 재고조사 불필요 </span>
+                                    <span class="stock-status in-stock mb-0" th:text="${s.stockChecked}"></span>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
-                                    <div class="detail-extralink mr-15">
-                                        2024.03.01
+                                    <div class="detail-extralink mr-15" th:text="${s.lastDate}">
+
                                     </div>
                                 </td>
                                 <td class="text-right" data-title="Cart">
-                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease}">출고</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="product-des product-name pl-30">
-                                    <h6><a class="product-name mb-10" href="shop-product-right.html">후시딘 연고</a></h6>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h3 class="text-brand">300개</h3>
-                                </td>
-                                <td class="text-center detail-info" data-title="Stock">
-                                    <span class="stock-status out-stock mb-0"> 재고조사 필요 </span>
-                                </td>
-                                <td class="text-center detail-info" data-title="Stock">
-                                    <div class="detail-extralink mr-15">
-                                        2024.06.01
-                                    </div>
-                                </td>
-                                <td class="text-right" data-title="Cart">
-                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease}">출고</a>
+                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease(stockCode=${s.stockCode},mediName=${s.medicine.mediName})}">출고</a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editQuestionModalLabel">질문 수정</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editQuestionForm" th:action="@{/admin/faqList/modify}" method="post">
-                            <input type="hidden" id="editQuestionId" name="questionNum">
-                            <div class="form-group">
-                                <label for="editQuestionTitle">제목</label>
-                                <input type="text" class="form-control" id="editQuestionTitle" name="questionTitle" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editQuestionContent">내용</label>
-                                <textarea class="form-control" id="editQuestionContent" name="questionContent" rows="4" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-3">수정</button>
-                        </form>
                     </div>
                 </div>
             </div>
