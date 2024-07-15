@@ -73,7 +73,7 @@
                    th:data-sup-name="${s.supName}"
                    th:data-sup-tell="${s.supTell}"
                    th:data-app-state="${s.appState}">수정</a>
-                <form th:action="@{/admin/supplier/delete}" method="post" style="display:inline;" class="delete-form">
+                <form th:action="@{/admin/supplier/supplierDelete}" method="post" style="display:inline;" class="delete-form">
                   <input type="hidden" name="suppCode" th:value="${s.suppCode}">
                   <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
                 </form>
@@ -115,7 +115,7 @@
             <input type="hidden" id="editSuppCode" name="suppCode">
             <div class="form-group">
               <label for="editSuppId">납품업체 아이디</label>
-              <input type="text" class="form-control" id="editSuppId" name="suppId" required>
+              <input type="text" class="form-control" id="editSuppId" name="suppId" required readonly>
             </div>
             <div class="form-group">
               <label for="editSupNum">사업자 번호</label>

@@ -20,6 +20,18 @@ import java.util.List;
 public class AdSupplierController {
     private final AdSupplierService adSupplierService;
 
+    @PostMapping("/supplierModify")
+    public String supplierModify(Supplier supplier){
+        adSupplierService.supplierModify(supplier);
+        return "redirect:/admin/supplier/supplierSearchList";
+    }
+
+    @PostMapping("/supplierDelete")
+    public String supplierDelete(Supplier supplier){
+        adSupplierService.supplierDelete(supplier);
+        return "redirect:/admin/supplier/supplierSearchList";
+    }
+
     @GetMapping("/supplierSearchList")
     public String supplierSearchList(Model model) {
         List<Supplier> supplierList = adSupplierService.getSupplierInfo();

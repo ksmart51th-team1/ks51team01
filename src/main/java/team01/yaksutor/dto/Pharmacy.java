@@ -14,4 +14,5 @@ public class Pharmacy {
     private String pAddr;
     private String pPostCode;
     private String openDate;
+    private String pState;
 }
