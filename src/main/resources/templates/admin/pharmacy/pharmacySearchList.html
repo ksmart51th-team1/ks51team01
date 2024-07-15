@@ -22,7 +22,7 @@
             <select class="form-select">
               <option>약국상태</option>
               <option>운영중</option>
-              <option>휴업중</option>
+              <option>폐 업</option>
               <option>전체보기</option>
             </select>
           </div>
@@ -47,6 +47,7 @@
               <th>사업자번호</th>
               <th>주소</th>
               <th>개업일자</th>
+              <th>운영상태</th>
               <th class="text-center">수정/삭제</th>
             </tr>
             </thead>
@@ -58,6 +59,7 @@
               <td th:text="${p.businNum}"></td>
               <td th:text="'(' + ${p.pPostCode} + ') ' + ${p.pAddrDo} + ' ' + ${p.pAddrSi} + ' ' + ${p.pAddrDong} + ' ' + ${p.pAddr}"></td>
               <td th:text="${p.openDate}"></td>
+              <td th:text="${p.PState}"></td>
               <td class="text-end">
                 <a href="#" class="btn btn-md rounded font-sm" data-toggle="modal" data-target="#editPharmacyModal"
                    th:data-phar-code="${p.pharCode}"
@@ -70,7 +72,7 @@
                    th:data-p-addr="${p.pAddr}"
                    th:data-p-post-code="${p.pPostCode}"
                    th:data-open-date="${p.openDate}">수정</a>
-                <form th:action="@{/admin/pharmacy/delete}" method="post" style="display:inline;" class="delete-form">
+                <form th:action="@{/admin/member/pharmacyDelete}" method="post" style="display:inline;" class="delete-form">
                   <input type="hidden" name="pharCode" th:value="${p.pharCode}">
                   <button type="button" class="btn btn-md rounded font-sm delete-button" style="background-color: red">삭제</button>
                 </form>
@@ -108,11 +110,11 @@
           <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="pharmacyModify" th:action="@{/admin/pharmacy/pharmacyModify}" method="post">
+          <form id="pharmacyModify" th:action="@{/admin/member/pharmacyModify}" method="post">
             <input type="hidden" id="editPharCode" name="pharCode">
             <div class="form-group">
               <label for="editPharId">약국 아이디</label>
-              <input type="text" class="form-control" id="editPharId" name="pharId" required>
+              <input type="text" class="form-control" id="editPharId" name="pharId" required readonly>
             </div>
             <div class="form-group">
               <label for="editPName">약국 이름</label>

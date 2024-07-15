@@ -1,19 +1,22 @@
 package team01.yaksutor.pharmacy.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import team01.yaksutor.dto.Member;
+import team01.yaksutor.pharmacy.service.phMyPageService;
 
 @RequestMapping("/pharm")
+@RequiredArgsConstructor
 @Controller
 public class PharmacyController {
+
+    private static final Logger log = LoggerFactory.getLogger(PharmacyController.class);
+    private final phMyPageService phMyPageService;
 
     @GetMapping("/main")
     public String pharmMain(Model model) {
@@ -33,8 +36,9 @@ public class PharmacyController {
         return "user/pharmacy/board/qna";
     }
     @GetMapping("/myPage")
-    public String myPage() {
-
+    public String myPage(Model model) {
+        Member member = phMyPageService.getMeberInfoById();
+        model.addAttribute("member",member);
         return "user/pharmacy/myPage/myPage";
     }
 /*    @GetMapping("/cart")
