@@ -12,12 +12,12 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+
 public class AdLoginHistoryService {
 
     private final AdLoginHistoryMapper adLoginHistoryMapper;
 
-    public Map<String, Object> getLoginHistory(int currentPage){
+    public Map<String, Object> getLoginHistory(int currentPage) {
         // 보여줄 행의 갯수
         int rowPerPage = 10;
         // 테이블의 조회할 시작행
@@ -34,16 +34,16 @@ public class AdLoginHistoryService {
         double cnt = adLoginHistoryMapper.getLoginHistoryCnt();
 
         // 마지막 페이지
-        int lastPage = (int) Math.ceil(cnt/rowPerPage);
+        int lastPage = (int) Math.ceil(cnt / rowPerPage);
 
         endPageNum = lastPage < 10 ? lastPage : endPageNum;
 
         // 동적 페이지 설정
-        if(currentPage > 6 && lastPage > 9){
+        if (currentPage > 6 && lastPage > 9) {
             startPageNum = currentPage - 5;
             endPageNum = currentPage + 4;
             // 마지막 페이지 번호가 마지막 페이지 수보다 클경우에 페이지 번호를 고정
-            if(endPageNum >= lastPage){
+            if (endPageNum >= lastPage) {
                 startPageNum = lastPage - 9;
                 endPageNum = lastPage;
             }
@@ -56,5 +56,6 @@ public class AdLoginHistoryService {
         resultMap.put("endPageNum", endPageNum);
 
         return resultMap;
+
     }
 }
