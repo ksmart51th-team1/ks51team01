@@ -369,6 +369,12 @@ input[type=number]:focus,
   background-color: #d1e8f2 !important;
 }
 
+.bgNew {
+  background-image: url(../imgs/ad-1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 .bg-4 {
   background-color: #cdd4f8 !important;
 }
