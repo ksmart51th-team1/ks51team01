@@ -36,18 +36,30 @@ public class PhShoppingCartController {
         model.addAttribute("memberList", memberList);
         return "user/pharmacy/order/cart";
     }
-    // 생성
+    // 생성 (약사)
     @PostMapping("/pharm/addCart")
     public String addShoppingCart(ShoppingCart shoppingCart){
         phShoppingCartService.addShoppingCart(shoppingCart);
         return "redirect:/pharm/order/orderMedicine";
     }
+    // 생성 (관리자)
+    @PostMapping("/admin/addCart")
+    public String addShoppingCart2(ShoppingCart shoppingCart){
+        phShoppingCartService.addShoppingCart(shoppingCart);
+        return "redirect:/admin/addShoppingCart";
+    }
 
-    // 커뮤니티 삭제 (사용자)
+    // 삭제 (사용자)
     @PostMapping("/pharm/cart/delete")
     public String deleteShoppingCart(@RequestParam String goodsCode, @RequestParam String oMID){
         phShoppingCartService.deleteShoppingCart(goodsCode, oMID);
         return "redirect:/pharm/cart";
+    }
+    // 삭제 (관리자)
+    @PostMapping("/admin/cart/delete")
+    public String deleteShoppingCart2(@RequestParam String goodsCode, @RequestParam String oMID){
+        phShoppingCartService.deleteShoppingCart(goodsCode, oMID);
+        return "redirect:/admin/addShoppingCart";
     }
 
 
