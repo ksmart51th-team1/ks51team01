@@ -39,6 +39,7 @@ public class PhShoppingCartController {
     // 추가
     @PostMapping("/pharm/addCart")
     public String addShoppingCart(ShoppingCart shoppingCart){
+        log.info("addShoppingCart {}", shoppingCart);
         phShoppingCartService.addShoppingCart(shoppingCart);
         return "redirect:/pharm/order/orderMedicine";
     }

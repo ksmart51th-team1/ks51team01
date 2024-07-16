@@ -141,7 +141,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <a class="btn mb-20 w-100" href="#" style="background-color: rgba(0,0,0,0.85)">결제하기<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a class="btn mb-20 w-100" th:href="@{/pharm/Order}" style="background-color: rgba(0,0,0,0.85)">결제하기<i class="fi-rs-sign-out ml-15"></i></a>
+                    <button class="button" type="button" onclick="requestPayment()">test</button>
                 </div>
             </div>
         </div>
@@ -152,10 +153,36 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
-    <script>
+    <script th:inline="javascript">
+        const testList = [[${shoppingCartList}]];
+        console.log(testList);
+
+        /*결제에 해당하는 부분*/
+        const data = {
+            storeId: 'store-f4751201-4959-40a4-9738-f58651a60e01',
+            channelKey: 'channel-key-75b2b89c-d62f-4285-bbc7-d378c03b94dc',
+            paymentId: "2", //실제 DB에 연동된 결제 코드가 들어가야함
+            orderName: '길범진이용권', // 주문상품의 이름이 들어가야함 카카오페이결제창에서 상품이름이 여기를 기준으로 뜸
+            totalAmount: 1000, //결제금액이 여기에 들어가야함
+            currency: 'CURRENCY_KRW',
+            payMethod: "EASY_PAY",
+            easyPay: {
+                easyPayProvider: "KAKAOPAY",
+            }
+        };
+        async function requestPayment(){
+            const response = await PortOne.requestPayment(data);
+            console.log(response);
+
+        }
+        // 결제 끝
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
             let totalSum = 0;
             document.querySelectorAll('tr.pt-30').forEach(function(row) {
