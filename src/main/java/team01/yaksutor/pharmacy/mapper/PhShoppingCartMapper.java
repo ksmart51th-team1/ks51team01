@@ -12,5 +12,7 @@ public interface PhShoppingCartMapper {
     List<ShoppingCart> getShoppingCartList();
     // 추가
     int addShoppingCart(ShoppingCart shoppingCart);
+    // 삭제
+    int deleteShoppingCart(String goodsCode, String oMID);
 
 }

@@ -30,4 +30,10 @@ public class PhShoppingCartService {
     public void addShoppingCart(ShoppingCart shoppingCart) {
         phShoppingCartMapper.addShoppingCart(shoppingCart);
     }
+
+    // 삭제
+    public void deleteShoppingCart(String goodsCode, String oMID) {
+        phShoppingCartMapper.deleteShoppingCart(goodsCode, oMID);
+    }
+
 }

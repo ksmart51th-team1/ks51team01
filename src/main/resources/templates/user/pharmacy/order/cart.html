@@ -43,8 +43,9 @@
                                 <a class="delete-item"
                                    data-target="#deleteCartModal"
                                    data-toggle="modal"
-                                th:data-cart-code="${s.goodsCode}"
-                                th:data-medi-name="${s.mediName}"><i class="bi bi-x" style="font-size: 20px"></i></a>
+                                th:data-goods-code="${s.goodsCode}"
+                                th:data-medi-name="${s.mediName}"
+                                th:data-sess-id="${session.S_ID}"><i class="bi bi-x" style="font-size: 20px"></i></a>
                             </td>
                         </tr>
 
@@ -58,7 +59,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content community-modal">
                             <div class="modal-body">
-                                <form id="deleteCartForm" method="post" th:action="@{#}">
+                                <form id="deleteCartForm" method="post" th:action="@{/pharm/cart/delete}">
                                     <h5 class="modal-title font-1 m-1" id="deleteCartModalLabel"><mark id="deleteMediName" name="deleteMediName"></mark> 품목을 장바구니에서 제거할까요?</h5>
                                     <div class="m-3 commodal-info2">
                                         <p class="font-1" style="font-size: 14px">
@@ -66,6 +67,8 @@
                                         </p>
                                     </div>
                                     <input hidden="hidden" id="deleteCartId" name="deleteCartId">
+                                    <input hidden="hidden" id="goodsCode" name="goodsCode">
+                                    <input  hidden="hidden" id="oMID" name="oMID">
 
                                     <button class="deleteBtnOk" style="background-color: #ff8c9f; border: none" type="submit">제거</button><br>
                                     <button aria-label="Close" class="deleteBinNo" data-dismiss="modal" type="button">취소</button>
@@ -173,11 +176,13 @@
 
         $(document).ready(function() {
             $('.delete-item').on('click', function() {
-                const goodsCode = $(this).data('cart-code');
+                const goodsCode = $(this).data('goods-code');
                 const mediName = $(this).data('medi-name');
+                const oMID = $(this).data('sess-id')
 
                 if(goodsCode != null) {
-                    $('#deleteCartId').val(goodsCode);
+                    $('#goodsCode').val(goodsCode);
+                    $('#oMID').val(oMID);
                     $('#deleteMediName').text(mediName);
                     $('#deleteCartForm').show();
                 } else{

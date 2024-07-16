@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.common.mapper.MemberMapper;
 import team01.yaksutor.common.service.MemberService;
 import team01.yaksutor.dto.Member;
@@ -35,13 +36,22 @@ public class PhShoppingCartController {
         model.addAttribute("memberList", memberList);
         return "user/pharmacy/order/cart";
     }
-
-    // 추가
+    // 생성
     @PostMapping("/pharm/addCart")
     public String addShoppingCart(ShoppingCart shoppingCart){
         phShoppingCartService.addShoppingCart(shoppingCart);
         return "redirect:/pharm/order/orderMedicine";
     }
+
+    // 커뮤니티 삭제 (사용자)
+    @PostMapping("/pharm/cart/delete")
+    public String deleteShoppingCart(@RequestParam String goodsCode, @RequestParam String oMID){
+        phShoppingCartService.deleteShoppingCart(goodsCode, oMID);
+        return "redirect:/pharm/cart";
+    }
+
+
+
 
 
 
