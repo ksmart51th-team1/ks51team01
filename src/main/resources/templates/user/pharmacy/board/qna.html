@@ -19,28 +19,49 @@
                                 <p class="text-muted mb-30 font-sm"></p>
                                 <form action="#" class="contact-form-style mt-30" id="contact-form" method="post">
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-6">
+                                        <div class="col-lg-4 col-md-6">
                                             <div class="input-style mb-20">
-                                                <input name="name" placeholder="First Name" type="text">
+                                                <p class="text-center m-auto" style="line-height: 60px; color: black">문의유형<i class="bi bi-asterisk" style="color: red"></i> </p>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6">
+                                        <div class="col-lg-8 col-md-6">
                                             <div class="input-style mb-20">
-                                                <input name="email" placeholder="Your Email" type="email">
+                                                <select name="email" placeholder="Your Email" style="border: 1px solid #ececec;
+                                                                                                                    border-radius: 10px;
+                                                                                                                    height: 64px;
+                                                                                                                    -webkit-box-shadow: none;
+                                                                                                                    box-shadow: none;
+                                                                                                                    padding-left: 20px;
+                                                                                                                    font-size: 16px;
+                                                                                                                    width: 100%;" type="email">
+                                                    <option>배송 및 주문</option>
+                                                    <option>의약품 및 약국</option>
+                                                    <option>재고</option>
+                                                    <option>기타</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12 col-md-12">
+                                        <div class="col-lg-4 col-md-6">
                                             <div class="input-style mb-20">
-                                                <input name="telephone" placeholder="Your Phone" type="tel">
+                                                <p class="text-center m-auto" style="line-height: 60px; color: black">문의내용<i class="bi bi-asterisk" style="color: red"></i> </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-6">
+                                            <div class="input-style mb-20">
+                                                <input name="telephone" placeholder="문의 제목을 입력하세요." type="tel">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12 col-md-12">
                                             <div class="textarea-style mb-30">
-                                                <textarea name="message" placeholder="Message"></textarea>
+                                                <textarea name="message" placeholder="문의 내용을 입력하세요.
+
+신속하고 정확한 안내를 위하여 '문의유형'과 '주문번호'를 선택(또는 입력)해 주세요.
+
+※ 상담사에게 폭언, 욕설 등을 하지 말아 주세요. 답변을 받지 못하거나 사전안내 없이 삭제될 수 있습니다."></textarea>
                                             </div>
                                             <h2 class="mb-10 pb-3" style="border-top:  2px solid black;"></h2>
-                                            <button class="submit submit-auto-width" type="submit">Send message</button>
+                                            <button class="submit submit-auto-width" type="submit">문의접수</button>
                                         </div>
                                     </div>
                                 </form>
