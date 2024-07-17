@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row medical-info">
                 <div class="col-lg-6">
                     <div class="card mb-4">
                         <div class="card-body">
@@ -29,16 +29,16 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="mb-4">
-                                        <label class="form-label" for="regMId">약국코드</label>
-                                        <input type="text" placeholder="판매자를 입력해주세요" name="regMId" id="regMId" class="form-control" >
+                                        <label class="form-label" for="pharCode">약국코드</label>
+                                        <input type="text" placeholder="판매자를 입력해주세요" name="pharCode" id="pharCode" class="form-control" >
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label" for="mediName">의약품 이름</label>
                                         <input type="text" placeholder="의약품 이름을 적어주세요" name="mediName" id="mediName" class="form-control" >
                                     </div>
                                     <div class="mb-4">
-                                        <label class="form-label" for="compacy">제조사</label>
-                                        <input type="text" placeholder="제조사를 적어주세요" name="company" id="compacy" class="form-control" />
+                                        <label class="form-label" for="company">제조사</label>
+                                        <input type="text" placeholder="제조사를 적어주세요" name="company" id="company" class="form-control" />
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label" for="mediDrugform">제형</label>
@@ -49,13 +49,9 @@
                                         <input type="text" placeholder="예시(10정/상자, 30정/병 등)" name="mediState"  id="mediState" class="form-control">
                                     </div>
                                     <div class="mb-4">
-                                        <label for="stockQty" class="form-label">재고 수량</label>
+                                        <label for="pharQty" class="form-label">재고 수량</label>
                                         <sub class="float-end">단위 : 개</sub>
-                                        <input type="text" name="stockQty" id="stockQty" class="form-control">
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="form-label" for="mediManuDate">제조일자</label>
-                                        <input type="date" name="mediManuDate"  id="mediManuDate" class="form-control">
+                                        <input type="text" name="pharQty" id="pharQty" class="form-control">
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label" for="mediUsebydate">소비기한</label>
@@ -107,18 +103,6 @@
                                     </div>
                                 </div> <!-- col.// -->
                             </div> <!-- row.// -->
-                            <hr class="mb-4 mt-0">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <h6>2. 이미지 파일</h6>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="mb-4">
-                                        <label for="mediImg" class="form-label">의약품 이미지</label>
-                                        <input name="mediImg" id="mediImg" class="form-control" type="file">
-                                    </div>
-                                </div> <!-- col.// -->
-                            </div> <!-- .row end// -->
                         </div>
                     </div>
                 </div>
@@ -150,12 +134,71 @@
                     return false;
                 }
             });
-            if(isSubmit) $('#addMedicine').submit();
+            if(isSubmit) {
+                const medicine = {};
+
+                $('.medical-info input, .medical-info select').not('.ingredient, .content, .efficacy #pharQty #company #pharCode').each((idx, item) => {
+                    const id = item.id;
+                    const value = $(item).val();
+                    medicine[id] = value;
+                });
+                const ingrList = [];
+                const effiList = [];
+                $('#ingrTbody tr').each((idx, item) => {
+                    const ingrObj = {};
+                    $(item).find('input').each((idx, item) => {
+                        const name = $(item).attr('name');
+                        const value = $(item).val();
+                        ingrObj[name] = value;
+                    });
+                    ingrList.push(ingrObj);
+                });
+                $('#effiTbody tr').each((idx, item) => {
+                    const effiObj = {};
+                    $(item).find('input').each((idx, item) => {
+                        const name = $(item).attr('name');
+                        const value = $(item).val();
+                        effiObj[name] = value;
+                    });
+                    effiList.push(effiObj);
+                })
+                //medicalInfo['ingrList'] = ingrList;
+                //medicalInfo['effiList'] = effiList;
+                console.log(medicine);
+
+                const pharmStock = {};
+                $('#pharQty, #company, #pharCode').each((idx, item) => {
+                    const id = item.id;
+                    const value = $(item).val();
+                    pharmStock[id] = value;
+                });
+                console.log(pharmStock);
+                const requestObj = {medicine, pharmStock, ingrList, effiList};
+
+                const formData = new FormData();
+                formData.append('stockInfo', new Blob([JSON.stringify(requestObj)],{ type : 'application/json'}));
+
+                console.log(requestObj);
+                console.log(JSON.stringify(requestObj));
+                const request = $.ajax({
+                    url : '/admin/stockInsert',
+                    method : 'POST',
+                    contentType : false, // formdata -> multipart/form-data
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    data : formData,
+                    dataType : 'json'
+                });
+                request.done(element => {
+                    return element;
+                });
+                $(location).attr('href', '/admin/stockSearchList');
+            }
         });
 
         const createIngrRow = () => {
             const ingrContent = [
-                { 'tagName' : 'input', 'type' : 'text', 'name' : 'Ingredient' },
+                { 'tagName' : 'input', 'type' : 'text', 'name' : 'ingredient' },
                 { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
                 { 'tagName' : 'button', 'type' : 'button' }
             ];

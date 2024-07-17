@@ -43,13 +43,14 @@
             <div class="card-body">
                 <article class="mb-5">
                     <div class="row align-items-center">
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                        <div class="col-lg-2 col-sm-2 col-4 flex-grow-1 col-name">
                             <a class="itemside" th:href="@{#}">
                                 <div class="info">
                                     <h6 class="mb-0">의약품 이름</h6>
                                 </div>
                             </a>
                         </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>약국이름</span></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-price"><span>재고량</span></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
                             <span class="mb-0">재고조사 여부</span>
@@ -63,31 +64,31 @@
                     </div>
                     <!-- row .// -->
                 </article>
-                <article class="itemlist">
+                <article class="itemlist" th:each="s : ${stockList}">
                     <div class="row align-items-center">
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                        <div class="col-lg-2 col-sm-2 col-4 flex-grow-1 col-name">
                             <a class="itemside" th:href="@{#}">
                                 <div class="info">
-                                    <h6 class="mb-0">후시딘 연고</h6>
+                                    <h6 class="mb-0" th:text="${s.medicine.mediName}">후시딘 연고</h6>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>200개</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${s.pharmName}">200개</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${s.pharQty}">200개</span></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-success">재고조사 불필요</span>
+                            <span class="badge rounded-pill alert-success" th:text="${s.stockChecked}">재고조사 불필요</span>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>2024.06.24</span>
+                            <span th:text="${s.lastDate}">2024.06.24</span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-center">
-                            <a th:href="@{/admin/stockModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/stockDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            <a th:href="@{/admin/stockModify(stockCode=${s.stockCode})}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
                         </div>
                     </div>
                     <!-- row .// -->
                 </article>
                 <!-- itemlist  .// -->
-                <article class="itemlist">
+                <!--<article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" th:href="@{#}">
@@ -108,9 +109,9 @@
                             <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                         </div>
                     </div>
-                    <!-- row .// -->
+                    &lt;!&ndash; row .// &ndash;&gt;
                 </article>
-                <!-- itemlist  .// -->
+                &lt;!&ndash; itemlist  .// &ndash;&gt;
                 <article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
@@ -132,8 +133,8 @@
                             <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                         </div>
                     </div>
-                    <!-- row .// -->
-                </article>
+                    &lt;!&ndash; row .// &ndash;&gt;
+                </article>-->
                 <!-- itemlist  .// -->
             </div>
             <!-- card-body end// -->

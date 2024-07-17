@@ -29,18 +29,23 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>타이레놀정 500mg</td>
-                        <td>3,014</td>
+                    <tr th:each="o : ${oldStockList}">
                         <td>
-                            <input type="text" />
+                            <input type="text" class="stockCode" name="stockCode" th:value="${o.stockCode}" hidden="hidden" />
+                            <h6 class="mediName" th:text="${o.medicine.mediName}">타이레놀정 500mg</h6>
                         </td>
                         <td>
-                            <input type="text" placeholder="사유 입력"/>
+                            <h6 class="preInveQty" th:text="${o.pharQty}">3,014</h6>
                         </td>
-                        <td><a href="#" class="btn-small d-block">재고조사 저장</a></td>
+                        <td>
+                            <input type="text" class="postInveQty" />
+                        </td>
+                        <td>
+                            <input type="text" placeholder="사유 입력" class="adnormalReason" />
+                        </td>
+                        <td><button type="button" class="btn font-weight-bold submitBtn">재고조사 저장</button></td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td> 노루모에프내복액</td>
                         <td>1,024</td>
                         <td>
@@ -61,7 +66,7 @@
                             <input type="text" placeholder="사유 입력"/>
                         </td>
                         <td><a href="#" class="btn-small d-block">재고조사 저장</a></td>
-                    </tr>
+                    </tr>-->
 
                     </tbody>
                 </table>
@@ -74,5 +79,35 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('.submitBtn').click(function(){
+            const stockClearance = {};
+            $(this).closest('tr').find('input').each(function(){
+                console.log($(this).val());
+                console.log($(this).attr('class'))
+                const name = $(this).attr('class');
+                const value = $(this).val();
+                stockClearance[name] = value;
+            });
+            $(this).closest('tr').find('h6').each(function(){
+                console.log($(this).text());
+                const name = $(this).attr('class');
+                const value = $(this).text();
+                stockClearance[name] = value;
+            });
+            console.log(stockClearance);
+            console.log(JSON.stringify(stockClearance))
+            const request = $.ajax({
+                url : '/pharm/checkMedi',
+                method : 'POST',
+                contentType : 'application/json',
+                data : JSON.stringify(stockClearance),
+                dataType : 'json'
+            });
+            request.done(element => {
+                return element;
+            });
+        })
+    </script>
 </th:block>
 </html>

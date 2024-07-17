@@ -50,46 +50,43 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>약국 코드</span></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>재고량</span></div>
+                        <div class="col-lg-1 col-sm-1 col-4 col-price"><span>약국 코드</span></div>
+                        <div class="col-lg-1 col-sm-1 col-2 col-price"><span>전 재고량</span></div>
+                        <div class="col-lg-1 col-sm-1 col-2 col-price"><span>입/출고 재고량</span></div>
+                        <div class="col-lg-1 col-sm-1 col-2 col-price"><span>후 재고량</span></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="mb-0">재고조사 여부</span>
+                            <span class="mb-0">입/출고 여부</span>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>재고조사 일자</span>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-action text-center">
-                            <span>수정/삭제</span>
+                            <span>입/출고 일자</span>
                         </div>
                     </div>
                     <!-- row .// -->
                 </article>
-                <article class="itemlist">
+                <article class="itemlist" th:each="s : ${stockHistoryList}">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" th:href="@{#}">
                                 <div class="info">
-                                    <h6 class="mb-0">후시딘 연고</h6>
+                                    <h6 class="mb-0" th:text="${s.medicine.mediName}">후시딘 연고</h6>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>pharm_1</span></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>200개</span></div>
+                        <div class="col-lg-1 col-sm-1 col-2 col-price"><span th:text="${s.pharCode}">pharm_1</span></div>
+                        <div class="col-lg-1 col-sm-1 col-2 col-price"><span th:text="${s.inoutQty}">200개</span></div>
+                        <div class="col-lg-1 col-sm-1 col-2 col-price"><span th:text="${s.orderInoutQty}">200개</span></div>
+                        <div class="col-lg-1 col-sm-1 col-2 col-price"><span th:text="${s.afterQty}">200개</span></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-success">재고조사 불필요</span>
+                            <span class="badge rounded-pill inoutState" th:text="${s.inoutType}">재고조사 불필요</span>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>2024.06.24</span>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-action text-center">
-                            <a th:href="@{/admin/stockHistoryModify}" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> 수정 </a>
-                            <a th:href="@{/admin/stockHistoryDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            <span th:text="${s.inoutDate}">2024.06.24</span>
                         </div>
                     </div>
                     <!-- row .// -->
                 </article>
                 <!-- itemlist  .// -->
-                <article class="itemlist">
+                <!--<article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" th:href="@{#}">
@@ -111,8 +108,8 @@
                             <a th:href="@{/admin/medicine/medicineDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                         </div>
                     </div>
-                    <!-- row .// -->
-                </article>
+                    &lt;!&ndash; row .// &ndash;&gt;
+                </article>-->
                 <!-- itemlist  .// -->
             </div>
             <!-- card-body end// -->
@@ -141,7 +138,14 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-
+        $('.inoutState').each(function(){
+            const value = $(this).text();
+            if(value == '입고'){
+                $(this).addClass('alert-success');
+            } else{
+                $(this).addClass('alert-danger')
+            }
+        });
     </script>
 </th:block>
 </html>
