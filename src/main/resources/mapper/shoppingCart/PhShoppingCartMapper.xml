@@ -85,26 +85,11 @@
             (#{shoppingCartCode}, #{goodsCode}, #{oMId}, #{qty},#{shoppingCartGroup}, CURDATE());
         </insert>
 
-        <!-- 수정&ndash;&gt;
-        <update id="modifyBoard" parameterType="Board">
-            UPDATE community
-            <set>
-                <if test="boardTitle != null and boardTitle != ''">
-                    cm_title = #{boardTitle},
-                </if>
-                <if test="boardContent != null and boardContent != ''">
-                    cm_content = #{boardContent},
-                </if>
-            </set>
-            WHERE
-            cm_num = #{boardCode}
-        </update>
-
-        &lt;!&ndash;삭제&ndash;&gt;
-        <delete id="deleteBoard" parameterType="String">
-            DELETE FROM community
-            WHERE cm_num = #{boardCode}
-        </delete>-->
+        <!--삭제-->
+        <delete id="deleteShoppingCart" parameterType="String">
+            DELETE FROM shopping_cart
+            WHERE goods_code = #{goodsCode} AND o_m_id = #{oMID}
+        </delete>
 
 
 
