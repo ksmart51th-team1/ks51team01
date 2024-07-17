@@ -146,7 +146,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <a class="btn mb-20 w-100" href="#" style="background-color: rgba(0,0,0,0.85)">결제하기<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a class="btn mb-20 w-100" id="paymentButton" th:href="@{/pharm/OrderPay}" style="background-color: rgba(0,0,0,0.85)">결제하기<i class="fi-rs-sign-out ml-15"></i></a>
+                    <button class="button" type="button" onclick="requestPayment()">test</button>
                 </div>
             </div>
         </div>
@@ -157,10 +158,33 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
-    <script>
+    <script th:inline="javascript">
+        const testList = [[${shoppingCartList}]];
+        console.log(testList);
+
+        // 결제에 해당하는 부분
+        const data = {
+            storeId: 'store-f4751201-4959-40a4-9738-f58651a60e01',
+            channelKey: 'channel-key-75b2b89c-d62f-4285-bbc7-d378c03b94dc',
+            paymentId: "2", // 실제 DB에 연동된 결제 코드가 들어가야 함
+            orderName: '길범진이용권', // 주문 상품의 이름이 들어가야 함, 카카오페이 결제창에서 상품 이름이 여기를 기준으로 뜸
+            totalAmount: 1000, // 결제 금액이 여기에 들어가야 함
+            currency: 'CURRENCY_KRW',
+            payMethod: "EASY_PAY",
+            easyPay: {
+                easyPayProvider: "KAKAOPAY",
+            }
+        };
+
+        async function requestPayment(){
+            const response = await PortOne.requestPayment(data);
+            console.log(response);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             let totalSum = 0;
             document.querySelectorAll('tr.pt-30').forEach(function(row) {
@@ -173,7 +197,7 @@
         });
 
         $('.couponBtn').click(function() {
-            alert('쿠폰번호가 유효하지 않습니다.');
+            alert('쿠폰 번호가 유효하지 않습니다.');
         });
 
         $(document).ready(function() {
@@ -189,10 +213,39 @@
                     $('#deleteCartForm').show();
                 } else{
                     $('#deleteCartForm').hide();
-
                 }
             });
+
+            // 결제하기 버튼 클릭 이벤트 추가
+            $('#paymentButton').on('click', function(event) {
+                event.preventDefault(); // 기본 동작 막기
+
+                //주문생성을 위해 필요한 정보 생성
+                const sessionID = /*[[${session.S_ID}]]*/'';
+                console.log(sessionID);
+                const filteredCartList = testList.filter(item => item.omid === sessionID);
+                console.log(filteredCartList);
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/pharm/OrderPay',
+                    contentType: 'application/json',
+                    data: JSON.stringify(filteredCartList),
+                    success: function(response) {
+                        // 주문 정보 저장 성공 시 처리
+                        console.log('주문 정보가 성공적으로 저장되었습니다.');
+                        //requestPayment(); // 결제 요청 함수 호출
+                    },
+                    error: function(error) {
+                        // 에러 시 처리
+                        console.error('주문 정보 저장 중 오류 발생:', error);
+                    }
+                });
+            });
         });
+
+
     </script>
 
 </th:block>

@@ -30,10 +30,14 @@ public class PhShoppingCartService {
     public void addShoppingCart(ShoppingCart shoppingCart) {
         phShoppingCartMapper.addShoppingCart(shoppingCart);
     }
-
     // 삭제
     public void deleteShoppingCart(String goodsCode, String oMID) {
         phShoppingCartMapper.deleteShoppingCart(goodsCode, oMID);
     }
 
+    //특정아이디로 장바구니 조회
+    public List<ShoppingCart> getCartItemsByMemberId(String memberId) {
+        return phShoppingCartMapper.findByOMId(memberId);
+    }
 }
+

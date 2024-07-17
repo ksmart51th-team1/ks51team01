@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="team01.yaksutor.pharmacy.mapper.PhStockMapper">
+<mapper namespace="team01.yaksutor.admin.mapper.AdStockMapper">
 
     <resultMap id="medicineListMap" type="Medicine">
         <id column="medi_code"           property="mediCode" />
@@ -125,7 +125,138 @@
         </association>
     </resultMap>
 
-    <select id="getPharCodeById" parameterType="string" resultType="string">
+    <select id="getPharmStockList" resultMap="getStockList">
+        SELECT
+            p.stock_code,
+            p.medi_code,
+            p.phar_code,
+            p.pharm_name,
+            p.phar_qty,
+            p.expira_date,
+            p.stock_checked,
+            p.last_date,
+            m.medi_name
+        FROM
+            pharm_stock AS p
+            INNER join
+            medicine AS m
+            on
+            p.medi_code = m.medi_code
+        order BY phar_code;
+    </select>
+
+    <select id="getPharIdByPharCode" parameterType="string" resultType="string">
+        SELECT
+            p.phar_id
+        FROM
+            pharmacy AS p
+        WHERE
+            p.phar_code = #{pharCode};
+    </select>
+
+    <select id="getPharNameByPharCode" parameterType="string" resultType="string">
+        SELECT
+            p.p_name
+        FROM
+            pharmacy AS p
+        WHERE
+            p.phar_code = #{pharCode};
+    </select>
+
+    <select id="getPharmStockByStockCode" parameterType="string" resultMap="getStockInfo">
+        SELECT
+            p.*
+        FROM
+            pharm_stock AS p
+        WHERE
+            p.stock_code = #{stockCode};
+    </select>
+
+    <update id="updateMedicine" parameterType="Medicine">
+        UPDATE medicine
+        SET
+        reg_m_id=#{regMId},
+        medi_name=#{mediName},
+        medi_img=#{mediImg},
+        medi_drugform=#{mediDrugform},
+        medi_drugtype=#{mediDrugtype},
+        medi_state=#{mediState},
+        medi_usebydate=#{mediUsebydate}
+        WHERE medi_code=#{mediCode}
+    </update>
+
+    <delete id="deleteIngredient" parameterType="string">
+        DELETE FROM ingredient WHERE medi_code=#{mediCode}
+    </delete>
+
+    <delete id="deleteEfficacy" parameterType="string">
+        DELETE FROM efficacy WHERE medi_code=#{mediCode}
+    </delete>
+
+    <update id="updateStock" parameterType="PharmStock">
+        UPDATE pharm_stock
+        SET
+            company=#{company},
+            phar_qty=#{pharQty}
+        WHERE stock_code=#{stockCode}
+    </update>
+
+    <select id="getStockHistory" resultMap="getStockHistoryList">
+        SELECT
+            s.*,
+            m.*
+        FROM
+            stock_history AS s
+            INNER JOIN
+            medicine AS m
+            on
+            s.medi_code = m.medi_code
+        order BY s.phar_code;
+    </select>
+
+    <insert id="addStockHistory" parameterType="StockHistory">
+        <selectKey keyProperty="stockHistoryCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+                case
+                when COUNT(stock_history_code) = 0	then 'sh_code_1'
+                ELSE
+                CONCAT('sh_code_',
+                max(cast(SUBSTRING_INDEX(stock_history_code, 'sh_code_', -1) AS UNSIGNED))+1
+                )
+                END AS stockHistoryCode
+            FROM
+                stock_history;
+        </selectKey>
+        INSERT INTO stock_history
+        (stock_history_code, phar_code, medi_code, inout_qty, real_inout_qty, order_inout_qty, inout_type, after_qty, inout_date)
+        VALUES (#{stockHistoryCode}, #{pharCode}, #{mediCode}, #{inoutQty}, #{realInoutQty}, #{orderInoutQty}, #{inoutType}, #{afterQty}, CURDATE())
+    </insert>
+
+    <!--<update id="updateMedicine" parameterType="Medicine">
+        UPDATE medicine
+        SET
+        reg_m_id=#{regMId},
+        medi_name=#{mediName},
+        medi_img=#{mediImg},
+        medi_drugform=#{mediDrugform},
+        medi_drugtype=#{mediDrugtype},
+        medi_state=#{mediState},
+        medi_usebydate=#{mediUsebydate}
+        WHERE medi_code=#{mediCode}
+    </update>
+
+    <delete id="deleteIngredient" parameterType="string">
+        DELETE FROM ingredient WHERE medi_code=#{mediCode}
+    </delete>
+
+    <delete id="deleteEfficacy" parameterType="string">
+        DELETE FROM efficacy WHERE medi_code=#{mediCode}
+    </delete>-->
+
+    <!--<select id="getStockInfoByPharCode" parameterType="string" resultMap=""-->
+
+    <!--<select id="getPharCodeById" parameterType="string" resultType="string">
         SELECT
             p.phar_code
         FROM
@@ -343,21 +474,5 @@
             s.medi_code = m.medi_code
         WHERE
             s.phar_code = #{pharCode};
-    </select>
-
-    <select id="getOldStockCheck" parameterType="string" resultMap="getStockList">
-        <![CDATA[
-            SELECT
-                p.*,
-                m.*
-            FROM
-                pharm_stock AS p
-                INNER join
-                medicine AS m
-                on
-                m.medi_code = p.medi_code
-            WHERE
-                p.last_date <= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) AND p.phar_code = #{pharCode};
-        ]]>
-    </select>
+    </select>-->
 </mapper>

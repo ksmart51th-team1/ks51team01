@@ -15,4 +15,6 @@ public interface PhShoppingCartMapper {
     // 삭제
     int deleteShoppingCart(String goodsCode, String oMID);
 
+    //특정아이디로 장바구니 조회
+    List<ShoppingCart> findByOMId(String memberId);
 }

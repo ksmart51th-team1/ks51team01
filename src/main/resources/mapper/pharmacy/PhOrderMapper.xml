@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.pharmacy.mapper.PhOrderMapper">
+   <select id="getSellerInfoByGoodsCode" resultType="SellerInfo">
+       SELECT
+       s.supp_id AS 'suppId',
+       sm.supp_code AS 'suppCode'
+       FROM
+       sell_medicine AS sm
+       INNER JOIN
+       supplier AS s
+       ON
+       sm.supp_code = s.supp_code
+       WHERE
+       sm.goods_code = #{goodsCode};
+   </select>
+</mapper>

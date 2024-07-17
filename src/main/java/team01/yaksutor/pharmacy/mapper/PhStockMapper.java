@@ -38,4 +38,6 @@ public interface PhStockMapper {
     PharmStock getStockInfo(String stockCode);
 
     List<StockHistory> getStockHistory(String pharCode);
+
+    List<PharmStock> getOldStockCheck(String pharCode);
 }
