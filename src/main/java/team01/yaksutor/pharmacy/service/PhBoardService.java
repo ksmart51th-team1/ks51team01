@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import team01.yaksutor.pharmacy.dto.Board;
-import team01.yaksutor.pharmacy.dto.Notice;
-import team01.yaksutor.pharmacy.dto.QuestionCenter;
-import team01.yaksutor.pharmacy.dto.Repl;
+import team01.yaksutor.pharmacy.dto.*;
 import team01.yaksutor.pharmacy.mapper.PhBoardMapper;
 
 import java.util.List;
@@ -99,4 +96,26 @@ public class PhBoardService {
     public void deleteNotice(String noticeNum){
         phBoardMapper.deleteNotice(noticeNum);
     }
+
+    /* -----1:1문의---------*/
+    // 조회
+    public List<Qna> getQnaList(){
+        List<Qna> qnaList = phBoardMapper.getQnaList();
+        return qnaList;
+    }
+    public List<QnaReply> getQnaReplyList(){
+        List<QnaReply> qnaReplyList = phBoardMapper.getQnaReplyList();
+        return qnaReplyList;
+    }
+    // 추가
+    public void addQna(Qna qna) {
+        phBoardMapper.addQna(qna);
+
+    }
+    // 삭제
+    public void deleteQna(String qseq) {
+        phBoardMapper.deleteQna(qseq);
+    }
+
+
 }
