@@ -28,6 +28,7 @@ public class PhPharmStockController {
         String sid = request.getSession().getAttribute("S_ID").toString();
         String pharCode = phStockMapper.getPharCodeById(sid);
         List<PharmStock> oldStockList = phStockMapper.getOldStockCheck(pharCode);
+        log.info("여기보세요: {}", oldStockList);
 
         model.addAttribute("oldStockList", oldStockList);
         model.addAttribute("title","재고조사");
@@ -126,13 +127,27 @@ public class PhPharmStockController {
                                  @RequestParam(value="stockCode") String stockCode){
         phStockService.stockRelease(qty, stockCode);
 
-        return "/user/pharmacy/pharmstock/myStockSearchList";
+        return "user/pharmacy/pharmstock/myStockSearchList";
     }
 
     @PostMapping("/checkMedi")
     @ResponseBody
     public String checkMedi(@RequestBody StockClearance stockClearance){
         log.info("checkMedi: {}", stockClearance);
-        return "user/pharmacy/pharmstock/checkMedi";
+        int oldQty = stockClearance.getPreInveQty();
+        int newQty = stockClearance.getPostInveQty();
+        int abnormalQty = oldQty - newQty;
+        abnormalQty = Math.abs(abnormalQty);
+        stockClearance.setAdnormalQty(abnormalQty);
+        if(abnormalQty == 0) {
+            stockClearance.setAdnormalReason("없음");
+            stockClearance.setAdnormalChecked("정상");
+        } else {
+            stockClearance.setAdnormalChecked("비정상");
+        }
+        log.info("new checkMedi: {}", stockClearance);
+        phStockService.stockClearance(stockClearance);
+
+        return "redirect:user/pharmacy/pharmstock/checkMedi";
     }
 }

@@ -43,7 +43,7 @@
                                     <h6 class="text-brand" th:text="${s.pharQty + '개'}"></h6>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
-                                    <span class="stock-status in-stock mb-0" th:text="${s.stockChecked}"></span>
+                                    <span class="stock-status mb-0 stockChecked" th:text="${s.stockChecked}"></span>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15" th:text="${s.lastDate}">
@@ -69,6 +69,14 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+        $('.stockChecked').each(function(){
+            const value = $(this).text();
+            if(value == '조사함'){
+                $(this).addClass('in-stock');
+            } else{
+                $(this).addClass('out-stock')
+            }
+        });
 
     </script>
 </th:block>

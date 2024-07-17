@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.pharmacy.mapper.PhRefundMapper">
+
+    <resultMap id="RefundListMap" type="Refund">
+        <id column="refund_code"       property="refundCode" />
+        <result column="phar_id"       property="PharId" />
+        <result column="supp_id"       property="SuppId" />
+        <result column="o_code"        property="oCode" />
+        <result column="refund_money"  property="refundMoney" />
+        <result column="refund_reason" property="refundReason" />
+        <result column="refund_state"  property="refundState" />
+        <result column="refund_date"   property="refundDate" />
+
+
+        <association property="RDList" javaType="RefundDetail">
+            <id 	column="refund_detail_code" property="refundDetailCode"/>
+            <result column="refund_code" 	    property="refundCode"/>
+            <result column="medi_code" 	        property="mediCode"/>
+            <result column="refund_qty" 	    property="refundQty"/>
+            <result column="refund_money"       property="refundMoney"/>
+        </association>
+    </resultMap>
+    <select id="getRefundList" parameterType="string" resultMap="RefundListMap">
+        SELECT
+            r.refund_code,
+            r.refund_code,
+            r.o_code,
+            r.refund_money,
+            r.refund_date,
+            r.refund_state
+        FROM
+            refund AS r
+        WHERE
+            r.phar_id = #{sid};
+    </select>
+</mapper>
