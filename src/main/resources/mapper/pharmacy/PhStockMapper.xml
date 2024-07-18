@@ -360,4 +360,40 @@
                 p.last_date <= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) AND p.phar_code = #{pharCode};
         ]]>
     </select>
+
+    <insert id="insertStockClearance" parameterType="StockClearance">
+        <selectKey keyProperty="stockClearCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(stock_clear_code) = 0	then 'sc_code_1'
+            ELSE
+            CONCAT('sc_code_',
+            max(cast(SUBSTRING_INDEX(stock_clear_code, 'sc_code_', -1) AS UNSIGNED))+1
+            )
+            END AS stockClearCode
+            FROM
+            stock_clearance;
+        </selectKey>
+        INSERT INTO stock_clearance
+        (stock_clear_code, stock_code, pre_inve_qty, post_inve_qty, adnormal_qty, adnormal_checked, adnormal_reason, reg_date)
+        VALUES (#{stockClearCode}, #{stockCode}, #{preInveQty}, #{postInveQty}, #{adnormalQty}, #{adnormalChecked}, #{adnormalReason}, CURDATE())
+    </insert>
+
+    <update id="updateStockClearance" parameterType="PharmStock">
+        UPDATE pharm_stock
+        SET
+            phar_qty=#{pharQty},
+            stock_checked='조사함',
+            last_date=CURDATE()
+        WHERE stock_code=#{stockCode}
+    </update>
+
+    <update id="updateStockClear" parameterType="PharmStock">
+        UPDATE pharm_stock
+        SET
+        stock_checked='조사함',
+        last_date=CURDATE()
+        WHERE stock_code=#{stockCode}
+    </update>
 </mapper>
