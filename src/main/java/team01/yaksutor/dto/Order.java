@@ -6,9 +6,7 @@ import lombok.Data;
 public class Order {
     private String oCode; // 주문 코드
     private String mIdOrder; // 회원 아이디 (주문자)
-    private String mIdSeller; // 회원 아이디 (판매자)
     private String shoppingCartGroup; // 장바구니 그룹
-    private String suppPharCode; // 공급업체 코드
     private int orderTotalPrice; // 구매 총액
     private String deliveryState; // 배송 상태
     private String purchaseState; // 구매 상태
