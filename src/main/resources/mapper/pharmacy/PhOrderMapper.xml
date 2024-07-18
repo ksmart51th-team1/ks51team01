@@ -3,6 +3,97 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.pharmacy.mapper.PhOrderMapper">
+    <resultMap id="OrderResultMap" type="Order">
+        <id column="o_code" property="oCode" />
+        <result column="m_id_order" property="mIdOrder" />
+        <result column="shopping_cart_group" property="shoppingCartGroup" />
+        <result column="order_total_price" property="orderTotalPrice" />
+        <result column="delivery_state" property="deliveryState" />
+        <result column="purchase_state" property="purchaseState" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="request_term" property="requestTerm" />
+        <result column="order_type" property="orderType" />
+        <result column="purchase_date" property="purchaseDate" />
+    </resultMap>
+    <resultMap id="OrderDetailResultMap" type="OrderDetail">
+        <id column="order_detail_code" property="orderDetailCode"/>
+        <result column="o_code" property="oCode"/>
+        <result column="goods_code" property="goodsCode"/>
+        <result column="o_seller_id" property="oSellerId"/>
+        <result column="supp_code" property="orderQty"/>
+        <result column="order_qty" property="orderQty"/>
+        <result column="order_price" property="orderPrice"/>
+    </resultMap>
+
+    <select id="getOrderListById" parameterType="String" resultMap="OrderResultMap">
+        SELECT
+        o_code,
+        m_id_order,
+        shopping_cart_group,
+        order_total_price,
+        delivery_state,
+        purchase_state,
+        payment_method,
+        request_term,
+        order_type,
+        purchase_date
+        FROM `order` AS o
+        WHERE o.m_id_order = #{sessionId}
+    </select>
+
+    <update id="updateOrderPrice" parameterType="Order">
+        /*order 테이블 총주문금액 업데이트*/
+        UPDATE
+            `order`
+        SET
+            order_total_price=#{orderTotalPrice}
+        WHERE
+            o_code = #{oCode}
+    </update>
+
+    <insert id="addOrderDetail" parameterType="OrderDetail">
+        <selectKey keyColumn="orderDetailCode" keyProperty="orderDetailCode" resultType="String" order="BEFORE">
+            /*  order_detail_code 자동증가 코드  */
+            SELECT
+                CASE
+                WHEN COUNT(order_detail_code) = 0 THEN 'od_code_1'
+                ELSE CONCAT(
+                'od_code_',
+                MAX(CAST(SUBSTRING_INDEX(order_detail_code, '_', -1) AS UNSIGNED)) + 1
+                )
+                END AS orderDetailCode
+            FROM
+                order_detail
+        </selectKey>
+        INSERT INTO order_detail
+        (order_detail_code, o_code, goods_code, o_seller_id, supp_code, order_qty, order_price)
+        VALUES (#{orderDetailCode}, #{oCode}, #{goodsCode}, #{oSellerId}, #{suppCode}, #{orderQty}, #{orderPrice})
+    </insert>
+
+
+
+    <insert id="addOrder" parameterType="Order">
+        <selectKey keyProperty="oCode" resultType="String" order="BEFORE">
+        /*  o_code 자동증가 코드  */
+        SELECT
+        CASE
+        WHEN COUNT(o_code) = 0 THEN 'o_code_1'
+        ELSE CONCAT(
+        'o_code_',
+        MAX(CAST(SUBSTRING_INDEX(o_code, '_', -1) AS UNSIGNED)) + 1
+        )
+        END AS oCode
+        FROM
+        `order`;
+        </selectKey>
+        INSERT INTO `order`
+        (o_code, m_id_order, shopping_cart_group, order_total_price, delivery_state, purchase_state, payment_method, request_term, order_type, purchase_date)
+        VALUES (#{oCode}, #{mIdOrder}, #{shoppingCartGroup}, 0, #{deliveryState}, #{purchaseState}, #{paymentMethod}, #{requestTerm}, #{orderType}, CURDATE())
+    </insert>
+
+
+
+
    <select id="getSellerInfoByGoodsCode" resultType="SellerInfo">
        SELECT
        s.supp_id AS 'suppId',

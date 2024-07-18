@@ -28,8 +28,11 @@
                         <th>재고업데이트</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr th:each="o : ${oldStockList}">
+                    <tbody id="mediTbody">
+                    <tr th:if="${oldStockList != '[]'}">
+                        <td colspan="5">재고조사 대상 의약품이 없습니다.</td>
+                    </tr>
+                    <tr th:if="${oldStockList != null}" th:each="o : ${oldStockList}">
                         <td>
                             <input type="text" class="stockCode" name="stockCode" th:value="${o.stockCode}" hidden="hidden" />
                             <h6 class="mediName" th:text="${o.medicine.mediName}">타이레놀정 500mg</h6>
@@ -80,6 +83,8 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+        console.log([[${oldStockList}]]);
+
         $('.submitBtn').click(function(){
             const stockClearance = {};
             $(this).closest('tr').find('input').each(function(){
@@ -104,10 +109,11 @@
                 data : JSON.stringify(stockClearance),
                 dataType : 'json'
             });
-            request.done(element => {
-                return element;
-            });
-        })
+            $(this).closest('tr').remove();
+            if($('#mediTbody').children().length == 0){
+                $(location).attr('href', '/pharm/myStockSearchList');
+            }
+        });
     </script>
 </th:block>
 </html>

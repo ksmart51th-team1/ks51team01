@@ -76,4 +76,20 @@ public class PhStockService {
 
     }
 
+    @Transactional
+    public void stockClearance(StockClearance stockClearance){
+        phStockMapper.insertStockClearance(stockClearance);
+        String stockCode = stockClearance.getStockCode();
+        int isUpdate = stockClearance.getAdnormalQty();
+        int pharQty = stockClearance.getPostInveQty();
+        PharmStock pharmStock = new PharmStock();
+        pharmStock.setStockCode(stockCode);
+        pharmStock.setPharQty(pharQty);
+        if(isUpdate != 0){
+            phStockMapper.updateStockClearance(pharmStock);
+        } else{
+            phStockMapper.updateStockClear(pharmStock);
+        }
+    }
+
 }

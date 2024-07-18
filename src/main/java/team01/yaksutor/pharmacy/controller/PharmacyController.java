@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.dto.Member;
-import team01.yaksutor.pharmacy.dto.Qna;
-import team01.yaksutor.pharmacy.dto.QnaReply;
-import team01.yaksutor.pharmacy.service.PhBoardService;
 import team01.yaksutor.pharmacy.service.phMyPageService;
 
 import java.util.List;
@@ -91,8 +88,9 @@ public class PharmacyController {
     }*/
 
     @GetMapping("/myOrderList")
-    public String myOderList() {
-
+    public String myOderList(Model model) {
+        List<Order> orderList = phOrderService.getOrderListById();
+        model.addAttribute("orderList",orderList);
         return "user/pharmacy/myPage/myOrderList";
     }
     @GetMapping("/myDelivery")

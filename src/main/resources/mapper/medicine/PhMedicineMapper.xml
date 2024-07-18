@@ -39,11 +39,13 @@
             s.reg_date,
             i.file_path
         FROM
-          sell_medicine AS s
+            sell_medicine AS s
         INNER JOIN
-          img_data AS i
+            img_data AS i
         ON
-         s.medi_img = i.file_idx
+            s.medi_img = i.file_idx
+        WHERE
+            s.state = '판매중';
     </select>
 <!--    &lt;!&ndash;등록&ndash;&gt;
     <insert id="addBoard" parameterType="Board">
