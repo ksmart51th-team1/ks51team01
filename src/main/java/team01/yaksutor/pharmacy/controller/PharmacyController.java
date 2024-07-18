@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import team01.yaksutor.dto.Member;
+import team01.yaksutor.dto.Order;
+import team01.yaksutor.pharmacy.service.PhOrderService;
 import team01.yaksutor.pharmacy.service.phMyPageService;
+
+import java.util.List;
 
 @RequestMapping("/pharm")
 @RequiredArgsConstructor
@@ -17,6 +21,7 @@ public class PharmacyController {
 
     private static final Logger log = LoggerFactory.getLogger(PharmacyController.class);
     private final phMyPageService phMyPageService;
+    private final PhOrderService phOrderService;
 
     @GetMapping("/main")
     public String pharmMain(Model model) {
@@ -48,8 +53,9 @@ public class PharmacyController {
     }*/
 
     @GetMapping("/myOrderList")
-    public String myOderList() {
-
+    public String myOderList(Model model) {
+        List<Order> orderList = phOrderService.getOrderListById();
+        model.addAttribute("orderList",orderList);
         return "user/pharmacy/myPage/myOrderList";
     }
     @GetMapping("/myDelivery")
