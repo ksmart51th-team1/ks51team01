@@ -47,10 +47,14 @@ public interface PhBoardMapper {
 
     // 문의 등록
     int addQna(Qna qna);
-    // 문의 수정
-
     // 문의 삭제
     int deleteQna(String qseq);
 
+    // 문의답변 등록
+    int addQnaReply(QnaReply qnaReply);
+    // 문의답변 삭제
+    int deleteQnaReply(String qrSeq);
+    // 문의 업데이트
+    void updateQna(String qseq);
 
 }

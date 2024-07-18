@@ -107,14 +107,25 @@ public class PhBoardService {
         List<QnaReply> qnaReplyList = phBoardMapper.getQnaReplyList();
         return qnaReplyList;
     }
-    // 추가
+    // 문의 추가
     public void addQna(Qna qna) {
         phBoardMapper.addQna(qna);
-
     }
+    // 답변 추가
+    @Transactional
+    public void addQnaReply(QnaReply qnaReply) {
+        phBoardMapper.addQnaReply(qnaReply);
+        String qseq = qnaReply.getQseq();
+        phBoardMapper.updateQna(qseq);
+    }
+
+
     // 삭제
     public void deleteQna(String qseq) {
         phBoardMapper.deleteQna(qseq);
+    }
+    public void deleteQnaReply(String qrSeq){
+        phBoardMapper.deleteQnaReply(qrSeq);
     }
 
 

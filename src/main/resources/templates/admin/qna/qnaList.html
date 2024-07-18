@@ -98,8 +98,8 @@
 
                             <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${qr.outdate}">내용</p></div>
                             <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                <form  id="deleteQnaReplyForm" method="post" th:action="@{/admin/qna/delete}">
-                                    <input name="qseq" th:value="${qr.qseq}" type="hidden">
+                                <form  class="delete-form" id="deleteQnaReplyForm" method="post" th:action="@{/admin/qnaReply/delete}">
+                                    <input hidden="hidden" name="qrSeq" th:value="${qr.qrSeq}">
                                     <a class="btn btn-sm font-sm btn-light rounded delete-button" href="#"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
                                 </form>
 
@@ -132,7 +132,7 @@
 
 
 
-    <!-- 댓글 등록 모달 -->
+    <!-- 답변 등록 모달 -->
     <div aria-hidden="true" aria-labelledby="writeReplModalLabel" class="modal fade font-1" id="writeReplModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content community-modal">
@@ -140,7 +140,7 @@
                 <div class="modal-body">
                     <h5 class="modal-title font-1 m-1" id="writeReplModalLabel">답변 등록</h5>
 
-                    <form id="addReplForm" method="post" th:action="@{/admin/replAdd}">
+                    <form id="addQnaReplyForm" method="post" th:action="@{/admin/qnaReply/add}">
                         <div class="mt-3 commodal-info font-1">
 
 
@@ -160,11 +160,14 @@
                                        readonly style="background: none; border-radius: 20px; border: 1px solid darkgrey">
                             </div>
                         </div>
-                        <textarea class="form-control commodal-content" id="replContent" name="replContent" placeholder="답변 입력."
+                        <input  class="form-control mb-3" id="title"  name="title"
+                                placeholder="제목을 입력하세요."
+                                style="background: none; border-radius: 20px; border: 1px solid darkgrey" type="text">
+                        <textarea class="form-control commodal-content" id="replContent" name="content" placeholder="답변을 입력하세요."
                                   required rows="4"
                                   style="background: none; border-radius: 20px; border: 1px solid darkgrey"></textarea>
-                        <input class="form-control" hidden="hidden" id="mId" name="mId" th:value="${session.S_ID}">
-                        <input class="form-control"  hidden="hidden" id="cmNum" name="cmNum" >
+                        <input class="form-control" hidden="hidden" id="mId" name="responder" th:value="${session.S_ID}">
+                        <input class="form-control"  hidden="hidden" id="cmNum" name="qseq" >
 
 
 
