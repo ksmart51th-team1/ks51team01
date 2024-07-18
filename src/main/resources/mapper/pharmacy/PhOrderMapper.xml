@@ -25,6 +25,22 @@
         <result column="order_price" property="orderPrice"/>
     </resultMap>
 
+    <select id="getOrderListById" parameterType="String" resultMap="OrderResultMap">
+        SELECT
+        o_code,
+        m_id_order,
+        shopping_cart_group,
+        order_total_price,
+        delivery_state,
+        purchase_state,
+        payment_method,
+        request_term,
+        order_type,
+        purchase_date
+        FROM `order` AS o
+        WHERE o.m_id_order = #{sessionId}
+    </select>
+
     <update id="updateOrderPrice" parameterType="Order">
         /*order 테이블 총주문금액 업데이트*/
         UPDATE

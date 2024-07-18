@@ -30,7 +30,7 @@ public class PhOrderService {
         order.setMIdOrder(sessionId);
         order.setShoppingCartGroup("group1");
         order.setDeliveryState("배송대기");
-        order.setPurchaseState("결제중비중");
+        order.setPurchaseState("결제준비중");
         order.setPaymentMethod("카카오페이");
         order.setRequestTerm("파손주의");
         order.setOrderType("주문");
@@ -60,5 +60,10 @@ public class PhOrderService {
         phOrderMapper.updateOrderPrice(order);
 
 
+    }
+
+    public List<Order> getOrderListById() {
+        String sessionId = (String) request.getSession().getAttribute("S_ID");
+        return phOrderMapper.getOrderListById(sessionId);
     }
 }
