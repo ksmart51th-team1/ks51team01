@@ -46,7 +46,7 @@
                                     <h5 class="text-brand" th:text="${h.realInoutQty} + 개">50개</h5>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
-                                    <span class="stock-status in-stock mb-0" th:text="${h.inoutType}"> 입고 </span>
+                                    <span class="stock-status mb-0 stockType" th:text="${h.inoutType}"> 입고 </span>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15" th:text="${h.inoutDate}">
@@ -110,7 +110,14 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-
+        $('.stockType').each(function(){
+            const value = $(this).text();
+            if(value == '입고'){
+                $(this).addClass('in-stock');
+            } else {
+                $(this).addClass('out-stock');
+            }
+        });
     </script>
 </th:block>
 </html>

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.dto.Refund;
+import team01.yaksutor.dto.RefundDetail;
 import team01.yaksutor.pharmacy.mapper.PhRefundMapper;
 import team01.yaksutor.pharmacy.service.PhRefundService;
 
@@ -45,8 +47,15 @@ public class PhRefundController {
     }
 
     @GetMapping("/myRefundDetailView")
-    public String myRefundDetailView(Model model) {
+    public String myRefundDetailView(Model model,
+                                     @RequestParam(value="refundCode") String refundCode) {
+        log.info("refundCode: {}", refundCode);
+        List<Refund> refundDetailList = phRefundMapper.getRefundDetailList(refundCode);
+        log.info("refundDetailList: {}", refundDetailList);
+        Refund refundInfo = phRefundMapper.getRefundInfo(refundCode);
 
+        model.addAttribute("refundInfo", refundInfo);
+        model.addAttribute("refundDetailList", refundDetailList);
         model.addAttribute("title", "내 반품 상세");
         model.addAttribute("content", "내 반품 상세");
 

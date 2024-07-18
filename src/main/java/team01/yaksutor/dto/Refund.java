@@ -8,12 +8,14 @@ import java.util.List;
 public class Refund {
     private String refundCode;
     private String PharId;
-    private String SuppId;
     private String oCode;
-    private int refundMoney;
+    private int refundTotalMoney;
     private String refundReason;
     private String refundState;
     private String refundDate;
 
-    List<RefundDetail> RDList;
+    private RefundDetail RDList;
+    private Medicine mediList;
+    private ImgData imgList;
+    private Supplier suppList;
 }

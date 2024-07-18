@@ -9,4 +9,5 @@ public class RefundDetail {
     private String mediCode;
     private int refundQty;
     private int refundMoney;
+    private String suppCode;
 }

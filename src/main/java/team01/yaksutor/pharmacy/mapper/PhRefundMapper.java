@@ -8,4 +8,8 @@ import java.util.List;
 @Mapper
 public interface PhRefundMapper {
     List<Refund> getRefundList(String sid);
+
+    List<Refund> getRefundDetailList(String refundCode);
+
+    Refund getRefundInfo(String refundCode);
 }

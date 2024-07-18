@@ -36,13 +36,13 @@
                             <tbody>
                             <tr class="pt-30"  th:each="r : ${refundList}">
                                 <td class="product-des product-name pl-30">
-                                    <h6><a class="product-name mb-10" th:href="@{/pharm/myRefundDetailView}" th:text="${r.refundCode}">코드1</a></h6>
+                                    <h6><a class="product-name mb-10" th:href="@{/pharm/myRefundDetailView(refundCode=${r.refundCode})}" th:text="${r.refundCode}">코드1</a></h6>
                                 </td>
                                 <td class="price" data-title="Price">
-                                    <h3 class="text-brand" th:text="${r.oCode}">코드1</h3>
+                                    <h6 class="text-brand" th:text="${r.oCode}">코드1</h6>
                                 </td>
                                 <td class="text-right" data-title="Cart">
-                                    <span th:text="${r.refundMoney}">20000원</span>
+                                    <span th:text="${r.refundTotalMoney}">20000원</span>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15" th:text="${r.refundDate}">
@@ -50,7 +50,7 @@
                                     </div>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
-                                    <span class="stock-status in-stock mb-0"> 신청 승인 </span>
+                                    <span class="stock-status in-stock mb-0" th:text="${r.refundState}"> 신청 승인 </span>
                                 </td>
                             </tr>
                             </tbody>
