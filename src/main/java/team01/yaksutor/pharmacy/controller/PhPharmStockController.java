@@ -1,15 +1,13 @@
 package team01.yaksutor.pharmacy.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import team01.yaksutor.dto.Ingredient;
-import team01.yaksutor.dto.Medicine;
-import team01.yaksutor.dto.PharmStock;
-import team01.yaksutor.dto.StockInfo;
+import team01.yaksutor.dto.*;
 import team01.yaksutor.pharmacy.mapper.PhStockMapper;
 import team01.yaksutor.pharmacy.service.PhStockService;
 
@@ -27,6 +25,11 @@ public class PhPharmStockController {
 
     @GetMapping("/checkMedi")
     public String pharmStrock(Model model) {
+        String sid = request.getSession().getAttribute("S_ID").toString();
+        String pharCode = phStockMapper.getPharCodeById(sid);
+        List<PharmStock> oldStockList = phStockMapper.getOldStockCheck(pharCode);
+
+        model.addAttribute("oldStockList", oldStockList);
         model.addAttribute("title","재고조사");
         return "user/pharmacy/pharmstock/checkMedi";
     }
@@ -76,7 +79,9 @@ public class PhPharmStockController {
     public String myStockHistory(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
         String pharCode = phStockMapper.getPharCodeById(sid);
+        List<StockHistory> stockHistoryList = phStockMapper.getStockHistory(pharCode);
 
+        model.addAttribute("historyList", stockHistoryList);
         model.addAttribute("title", "입출고 기록");
         model.addAttribute("content", "입출고 기록");
 
@@ -122,5 +127,12 @@ public class PhPharmStockController {
         phStockService.stockRelease(qty, stockCode);
 
         return "/user/pharmacy/pharmstock/myStockSearchList";
+    }
+
+    @PostMapping("/checkMedi")
+    @ResponseBody
+    public String checkMedi(@RequestBody StockClearance stockClearance){
+        log.info("checkMedi: {}", stockClearance);
+        return "user/pharmacy/pharmstock/checkMedi";
     }
 }

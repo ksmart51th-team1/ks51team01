@@ -1,17 +1,35 @@
 package team01.yaksutor.security.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
+import team01.yaksutor.pharmacy.interceptor.CartInterceptor;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
     private static final String fileRealPath = "/home/yaksutor/";
+    private final CartInterceptor cartInterceptor;
+
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(cartInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/favicon.ico")
+                .excludePathPatterns("/resource/**")
+                .excludePathPatterns("/js/**")
+                .excludePathPatterns("/")
+                .excludePathPatterns("/pharm/assets/**")
+                .excludePathPatterns("/attachment/**");
+    }
 
     /**
      *

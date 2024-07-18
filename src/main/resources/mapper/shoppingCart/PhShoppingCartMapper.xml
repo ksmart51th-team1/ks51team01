@@ -26,6 +26,26 @@
 
     </resultMap>
 
+    <select id="findByOMId" resultMap="shoppingCartResultMap">
+        SELECT
+        SUM(s.qty) AS sumQty,
+        s.*,
+        sm.*,
+        i.*
+        FROM
+        shopping_cart AS s
+        INNER JOIN
+        sell_medicine AS sm
+        ON
+        s.goods_code = sm.goods_code
+        INNER JOIN
+        img_data AS i
+        ON
+        i.file_idx = sm.medi_img
+        WHERE s.o_m_id=#{memberId}
+        GROUP BY s.goods_code, s.o_m_id
+    </select>
+
     <select id="getShoppingCartList" resultMap="shoppingCartResultMap">
         SELECT
         SUM(s.qty) AS sumQty,
@@ -65,26 +85,11 @@
             (#{shoppingCartCode}, #{goodsCode}, #{oMId}, #{qty},#{shoppingCartGroup}, CURDATE());
         </insert>
 
-        <!-- 수정&ndash;&gt;
-        <update id="modifyBoard" parameterType="Board">
-            UPDATE community
-            <set>
-                <if test="boardTitle != null and boardTitle != ''">
-                    cm_title = #{boardTitle},
-                </if>
-                <if test="boardContent != null and boardContent != ''">
-                    cm_content = #{boardContent},
-                </if>
-            </set>
-            WHERE
-            cm_num = #{boardCode}
-        </update>
-
-        &lt;!&ndash;삭제&ndash;&gt;
-        <delete id="deleteBoard" parameterType="String">
-            DELETE FROM community
-            WHERE cm_num = #{boardCode}
-        </delete>-->
+        <!--삭제-->
+        <delete id="deleteShoppingCart" parameterType="String">
+            DELETE FROM shopping_cart
+            WHERE goods_code = #{goodsCode} AND o_m_id = #{oMID}
+        </delete>
 
 
 
