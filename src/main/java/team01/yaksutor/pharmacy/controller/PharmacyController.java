@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.dto.Member;
-import team01.yaksutor.dto.Order;
-import team01.yaksutor.pharmacy.service.PhOrderService;
 import team01.yaksutor.pharmacy.service.phMyPageService;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class PharmacyController {
 
     private static final Logger log = LoggerFactory.getLogger(PharmacyController.class);
     private final phMyPageService phMyPageService;
-    private final PhOrderService phOrderService;
+    private final PhBoardService phBoardService;
 
     @GetMapping("/main")
     public String pharmMain(Model model) {
@@ -35,11 +35,46 @@ public class PharmacyController {
         return "user/pharmacy/board/contact";
     }
 
-    @GetMapping("/qna")
-    public String qna() {
+    //  ====================
+    //         1:1문의
+    // ======================
 
+    // 조회
+    @GetMapping("/qna")
+    public String qna(Model model) {
+        List<Qna> qnaList = phBoardService.getQnaList();
+        model.addAttribute("qnaList", qnaList);
+        model.addAttribute("title", "문의하기");
         return "user/pharmacy/board/qna";
     }
+    @GetMapping("/qnaList")
+    public String qnaList(Model model) {
+        List<Qna> qnaList = phBoardService.getQnaList();
+        List<QnaReply> qnaReplyList = phBoardService.getQnaReplyList();
+        model.addAttribute("qnaList", qnaList);
+        model.addAttribute("qnaReplyList", qnaReplyList);
+        model.addAttribute("title", "문의내역");
+
+        return "user/pharmacy/board/qnaList";
+    }
+
+    // 추가
+    @PostMapping("/qna/add")
+    public String addQna(Qna qna){
+        phBoardService.addQna(qna);
+        return "redirect:/pharm/qna";
+    }
+    // 삭제
+    @PostMapping("/qna/delete")
+    public String deleteQna(@RequestParam String qseq){
+        phBoardService.deleteQna(qseq);
+        return "redirect:/pharm/qnaList";
+    }
+
+
+
+
+
     @GetMapping("/myPage")
     public String myPage(Model model) {
         Member member = phMyPageService.getMeberInfoById();
