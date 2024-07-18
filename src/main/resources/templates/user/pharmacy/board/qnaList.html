@@ -48,20 +48,12 @@
                                                         </div>
                                                         <!-- row .// -->
                                                         <div class="reply-list" style="display: none; background-color: rgba(0,0,255,0.03)" >
-                                                            <article class="itemlist">
-                                                                <div class="row align-items-center">
-                                                                    <div class="col-lg-12 col-sm-2 col-4 col-price"> <h6 class="mb-0"><i class="bi bi-arrow-return-right" style="color: red"></i> 답변</h6></div>
-                                                                </div>
-                                                                <!-- row .// -->
-                                                            </article>
-                                                            <div class="row align-items-center" th:each="qr : ${qnaReplyList}" th:if="${q.qseq} == ${qr.qseq}">
-
-                                                                <div class="col-lg-12 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${qr.content}"></p></div>
-
-
-                                                                <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${qr.outdate}"></p></div>
-
+                                                            <div class="row align-items-center p-3" th:each="qr : ${qnaReplyList}" th:if="${q.qseq} == ${qr.qseq}">
+                                                                <div class="col-lg-9 col-sm-2 col-4 col-price"> <p class="mb-0" style="font-size: 13px" th:text="${qr.content}"></p></div>
+                                                                <div class="col-lg-2 col-sm-2 col-4 col-price"> <span class="mb-0" th:text="${qr.outdate}"></span></div>
+                                                                <div class="col-lg-1 col-sm-2 col-4 col-price"> <span class="mb-0" th:text="${qr.responder}"></span></div>
                                                             </div>
+
                                                         </div>
                                                     </article>
 

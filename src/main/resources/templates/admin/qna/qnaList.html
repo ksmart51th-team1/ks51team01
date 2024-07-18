@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout/default}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+
+<th:block layout:fragment="customContent">
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title font-1">문의 목록</h2>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-sm rounded" th:href="@{/admin/boardAdd}"><i class="bi bi-pen"></i>문의등록</a>
+            </div>
+        </div>
+        <div class="card mb-4">
+
+            <div class="card-body">
+                <article class="itemlist">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">제목</h6></div>
+                        <div class="col-lg-3 col-sm-2 col-4 col-price"> <h6 class="mb-0">내용</h6></div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-price"> <h6 class="mb-0">작성자</h6></div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-status">
+                            <h6 class="mb-0">답변</h6>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-date">
+                            <h6 class="mb-0">등록일자</h6>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                            <h6 class="mb-0">삭제</h6>
+                        </div>
+                    </div>
+                    <!-- row .// -->
+                </article>
+                <!-- itemlist  .// -->
+                <article class="itemlist" th:each="q : ${qnaList}" th:if="${qnaList != null}">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${q.title}">제목</p></div>
+                        <div class="col-lg-3 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${q.content}">내용</p></div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${q.MId}">작성자</p></div>
+
+                        <div class="col-lg-1 col-sm-2 col-4 col-status">
+                            <p class="mb-0" th:text="${q.rep}">작성자</p>
+                            <span class="badge rounded-pill badge-soft-warning text-black-50 replyBtn" style="cursor: pointer">답변보기</span>
+                            <span class="badge rounded-pill badge-soft-info text-black-50 replyAddBtn" data-target="#writeReplModal"
+                                  data-toggle="modal" style="cursor: pointer"
+                                  th:data-board-content="${q.content}"
+                                  th:data-board-id="${q.qseq}"
+                                  th:data-board-mid="${q.MId}"
+                                  th:data-board-title="${q.title}">답변등록
+                                </span>
+                        </div>
+
+
+                        <div class="col-lg-2 col-sm-2 col-4 col-date">
+                            <span class="mb-0" th:text="${q.indate}"></span>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                            <form class="delete-form" id="deleteQnaForm" method="post" th:action="@{/admin/qna/delete}">
+                                <input name="qseq" th:value="${q.qseq}" type="hidden">
+                                <a class="btn btn-sm font-sm btn-light rounded delete-button" href="#" style="color: red"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                            </form>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="reply-list" style="display: none; background-color: rgba(0,0,255,0.03)" >
+                        <article class="itemlist">
+                            <div class="row align-items-center">
+                                <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">답변제목</h6></div>
+                                <div class="col-lg-3 col-sm-2 col-4 col-price"> <h6 class="mb-0">답변내용</h6></div>
+                                <div class="col-lg-2 col-sm-2 col-4 col-price"> <h6 class="mb-0">작성자</h6></div>
+
+
+                                <div class="col-lg-2 col-sm-2 col-4 col-date">
+                                    <h6 class="mb-0">등록일자</h6>
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                                    <h6 class="mb-0">삭제</h6>
+                                </div>
+                            </div>
+                            <!-- row .// -->
+                        </article>
+                        <div class="row align-items-center" th:each="qr : ${qnaReplyList}" th:if="${q.qseq} == ${qr.qseq}">
+
+                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${qr.title}">내용</p></div>
+                            <div class="col-lg-3 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${qr.content}">내용</p></div>
+                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${qr.responder}">작성자</p></div>
+
+
+                            <div class="col-lg-2 col-sm-2 col-4 col-price"> <p class="mb-0" th:text="${qr.outdate}">내용</p></div>
+                            <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                                <form  id="deleteQnaReplyForm" method="post" th:action="@{/admin/qna/delete}">
+                                    <input name="qseq" th:value="${qr.qseq}" type="hidden">
+                                    <a class="btn btn-sm font-sm btn-light rounded delete-button" href="#"> <i class="material-icons md-delete_forever"></i> 삭제 </a>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+
+
+            </div>
+            <!-- card-body end// -->
+        </div>
+        <!-- card end// -->
+        <div class="pagination-area mt-30 mb-50">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start">
+                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">16</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+
+
+    <!-- 댓글 등록 모달 -->
+    <div aria-hidden="true" aria-labelledby="writeReplModalLabel" class="modal fade font-1" id="writeReplModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content community-modal">
+
+                <div class="modal-body">
+                    <h5 class="modal-title font-1 m-1" id="writeReplModalLabel">답변 등록</h5>
+
+                    <form id="addReplForm" method="post" th:action="@{/admin/replAdd}">
+                        <div class="mt-3 commodal-info font-1">
+
+
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="bTitle" style="background: none; border: none">제목</label>
+                                <input aria-describedby="basic-addon1" class="form-control"  id="bTitle" readonly
+                                       style="background: none; border-radius: 20px; border: 1px solid darkgrey" type="text">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="bmId"  style="background: none; border: none">작성</label>
+                                <input aria-describedby="basic-addon1" class="form-control"  id="bmId" readonly
+                                       style="background: none; border-radius: 20px; border: 1px solid darkgrey" type="text">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="bContent"  style="background: none; border: none">내용</label>
+                                <input aria-label="With textarea" class="form-control" id="bContent"
+                                       readonly style="background: none; border-radius: 20px; border: 1px solid darkgrey">
+                            </div>
+                        </div>
+                        <textarea class="form-control commodal-content" id="replContent" name="replContent" placeholder="답변 입력."
+                                  required rows="4"
+                                  style="background: none; border-radius: 20px; border: 1px solid darkgrey"></textarea>
+                        <input class="form-control" hidden="hidden" id="mId" name="mId" th:value="${session.S_ID}">
+                        <input class="form-control"  hidden="hidden" id="cmNum" name="cmNum" >
+
+
+
+                        <button class="btn btn-success mt-3" id="commodal-btn" style="width: 100%; color: white" type="submit">글쓰기</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 수정 모달 -->
+    <div aria-hidden="true" aria-labelledby="editBoardModalLabel" class="modal fade" id="editBoardModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editBoardModalLabel">질문 수정</h5>
+                    <button aria-label="Close" class="btn-close" data-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editBoardForm" method="post" th:action="@{/admin/boardList/modify}">
+                        <input id="editBoardId" name="boardCode" type="hidden">
+                        <div class="form-group">
+                            <label for="editBoardTitle">제목</label>
+                            <input class="form-control" id="editBoardTitle" name="boardTitle" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="editBoardContent">내용</label>
+                            <textarea class="form-control" id="editBoardContent" name="boardContent" required rows="4"></textarea>
+                        </div>
+                        <button class="btn btn-primary mt-3" type="submit">수정</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 댓글 수정 모달 -->
+    <div aria-hidden="true" aria-labelledby="editReplModalLabel" class="modal fade" id="editReplModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editReplModalLabel">답변 수정</h5>
+                    <button aria-label="Close" class="btn-close" data-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editReplForm" method="post" th:action="@{/admin/boardList/modifyRepl}">
+                        <input id="editReplId" name="replNum" type="hidden">
+                        <div class="form-group">
+                            <label for="editReplContent">내용</label>
+                            <textarea class="form-control" id="editReplContent" name="replContent" required rows="4"></textarea>
+                        </div>
+                        <button class="btn btn-primary mt-3" type="submit">수정</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script>
+        $(document).ready(function () {
+            $('.replyBtn').on('click', function () {
+                $(this).closest('.itemlist').find('.reply-list').slideToggle();
+            });
+
+            $('#editBoardModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var boardId = button.data('board-id');
+                var boardTitle = button.data('board-title');
+                var boardContent = button.data('board-content');
+
+                var modal = $(this);
+                modal.find('#editBoardId').val(boardId);
+                modal.find('#editBoardTitle').val(boardTitle);
+                modal.find('#editBoardContent').val(boardContent);
+            });
+            $('#editReplModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var replId = button.data('repl-id');
+                var replContent = button.data('repl-content');
+
+                var modal = $(this);
+                modal.find('#editReplId').val(replId);
+                modal.find('#editReplContent').val(replContent);
+            });
+
+            document.querySelectorAll('.delete-button').forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    if (confirm('정말로 삭제할까요?')) {
+                        var form = event.target.closest('.delete-form');
+                        form.submit();
+                    }
+                });
+            });
+
+
+            $('.replyAddBtn').on('click', function() {
+                const boardId = $(this).data('board-id');
+                const boardTitle = $(this).data('board-title');
+                const boardContent = $(this).data('board-content');
+                const boardmId = $(this).data('board-mid');
+
+
+                if(boardId != null) {
+                    $('#cmNum').val(boardId);
+                    $('#bTitle').val(boardTitle);
+                    $('#bContent').val(boardContent);
+                    $('#bmId').val(boardmId);
+
+                    $('#addReplForm').show();
+                } else{
+                    $('#addReplForm').hide();
+                }
+            });
+        });
+    </script>
+</th:block>
+</html>
