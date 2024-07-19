@@ -41,6 +41,8 @@ public class PhOrderController {
     @GetMapping("/myOrderDetailView")
     public String myOrderDetailView(Model model) {
 
+
+
         model.addAttribute("title", "주문 상세");
         model.addAttribute("content", "주문 상세");
 
