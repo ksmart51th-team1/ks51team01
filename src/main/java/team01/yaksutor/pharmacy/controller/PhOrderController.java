@@ -1,15 +1,18 @@
 package team01.yaksutor.pharmacy.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import team01.yaksutor.admin.mapper.AdMemberMapper;
+import team01.yaksutor.admin.service.AdMemberService;
+import team01.yaksutor.common.mapper.MemberMapper;
+import team01.yaksutor.common.service.MemberService;
+import team01.yaksutor.dto.Member;
 import team01.yaksutor.dto.OrderDetail;
 import team01.yaksutor.dto.ShoppingCart;
 import team01.yaksutor.pharmacy.service.PhOrderService;
@@ -23,6 +26,19 @@ import java.util.List;
 public class PhOrderController {
 
     private final PhOrderService phOrderService;
+    private final HttpServletRequest request;
+    private final MemberMapper memberMapper;
+
+
+    @DeleteMapping("/deleteOrderDetail/{orderDetailCode}")
+    public ResponseEntity<Void> deleteOrderDetail(@PathVariable String orderDetailCode) {
+        boolean isDeleted = phOrderService.deleteOrderDetail(orderDetailCode);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @PostMapping("/OrderPay")
     public ResponseEntity<String> OrderPay(@RequestBody List<ShoppingCart> shoppingCart) {
@@ -39,12 +55,16 @@ public class PhOrderController {
     }
 
     @GetMapping("/myOrderDetailView")
-    public String myOrderDetailView(Model model) {
+    public String myOrderDetailView(@RequestParam("oCode") String oCode, Model model) {
 
-
+        String sId = (String) request.getSession().getAttribute("S_ID");
+        Member memberInfo = memberMapper.getMemberInfoById(sId);
+        List<OrderDetail> orderDetailList = phOrderService.getOrderDetailListByOCode(oCode);
 
         model.addAttribute("title", "주문 상세");
         model.addAttribute("content", "주문 상세");
+        model.addAttribute("orderDetailList", orderDetailList);
+        model.addAttribute("memberInfo", memberInfo);
 
         return "user/pharmacy/myPage/myOrderDetailView";
     }

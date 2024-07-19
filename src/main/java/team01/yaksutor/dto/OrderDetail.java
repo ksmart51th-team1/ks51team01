@@ -13,5 +13,6 @@ public class OrderDetail {
     private int orderQty; // 주문 수량
     private int orderPrice; // 구매 액수
 
-
+    private SellMedicine sellMedicine;
+    private ImgData imgData;
 }

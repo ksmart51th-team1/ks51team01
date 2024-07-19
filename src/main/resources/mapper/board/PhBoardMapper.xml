@@ -30,7 +30,8 @@
             SELECT COUNT(1) FROM repl AS r WHERE c.cm_num = r.cm_num
             ) AS replSize
         FROM
-            community AS c;
+            community AS c
+        order by c.cm_date desc;
     </select>
     <!--커뮤니티 등록-->
     <insert id="addBoard" parameterType="Board">
