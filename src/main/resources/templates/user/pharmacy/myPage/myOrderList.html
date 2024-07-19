@@ -44,7 +44,7 @@
                                 <h5 class="text-red">결제대기</h5>
                             </td>
                             <td class="action text-center" data-title="Remove">
-                                <a class="btn btn-sm" style="background-color: rgba(0,0,0,0.86); font-family: 'Pretendard-Regular'; border-radius: 15px;" href="/pharm/myOrderDetailView">상세</a>
+                                <a class="btn btn-sm" style="background-color: rgba(0,0,0,0.86); font-family: 'Pretendard-Regular'; border-radius: 15px;" th:href="@{/pharm/myOrderDetailView(oCode=${o.OCode})}" >상세</a>
                             </td>
                         </tr>
                         </tbody>
