@@ -255,5 +255,66 @@
         WHERE  notice_num = #{noticeNum}
     </delete>
 
+    <!-- =================1:1문의==========================-->
+    <!--문의 조회-->
+    <resultMap type="Qna" id="qnaResultMap">
+        <id column="qseq" 			property="qseq" />
+        <result column="m_id" 		property="mId"/>
+        <result column="title" 		property="title"/>
+        <result column="content" 		property="content"/>
+        <result column="rep" 	property="rep"/>
+        <result column="indate" 	property="indate"/>
+    </resultMap>
+
+    <resultMap type="QnaReply" id="qnaReplyResultMap">
+        <id column="qr_seq" 			property="qrSeq" />
+        <result column="qseq" 		property="qseq"/>
+        <result column="responder" 		property="responder"/>
+        <result column="title" 		property="title"/>
+        <result column="content" 	property="content"/>
+        <result column="outdate" 	property="outdate"/>
+    </resultMap>
+
+
+    <select id="getQnaList" resultMap="qnaResultMap">
+        SELECT
+            *
+        FROM
+        qna;
+    </select>
+    <select id="getQnaReplyList" resultMap="qnaReplyResultMap">
+        SELECT
+        *
+        FROM
+        qna_reply;
+    </select>
+    <!--등록-->
+     <insert id="addQna" parameterType="Qna">
+        <selectKey keyProperty="qseq" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(qseq) = 0 THEN 'qseq_1'
+            ELSE
+            CONCAT(
+            'qseq_',
+            MAX(CAST(SUBSTRING_INDEX(qseq, 'qseq_', -1) AS UNSIGNED)) +1)
+            END AS qseq
+            FROM
+            qna;
+        </selectKey>
+        INSERT INTO qna
+        (qseq, m_id, title, content, rep, indate)
+        values
+        (#{qseq}, #{mId}, #{title}, #{content}, #{rep}, CURDATE());
+
+    </insert>
+
+    <!--문의 삭제-->
+    <delete id="deleteQna" parameterType="String">
+        DELETE FROM qna
+        WHERE  qseq = #{qseq}
+    </delete>
+
+
 
 </mapper>
