@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.dto.Member;
+import team01.yaksutor.dto.Order;
+import team01.yaksutor.pharmacy.dto.Qna;
+import team01.yaksutor.pharmacy.dto.QnaReply;
+import team01.yaksutor.pharmacy.service.PhBoardService;
+import team01.yaksutor.pharmacy.service.PhOrderService;
 import team01.yaksutor.pharmacy.service.phMyPageService;
 
 import java.util.List;
@@ -22,6 +27,7 @@ public class PharmacyController {
     private static final Logger log = LoggerFactory.getLogger(PharmacyController.class);
     private final phMyPageService phMyPageService;
     private final PhBoardService phBoardService;
+    private final PhOrderService phOrderService;
 
     @GetMapping("/main")
     public String pharmMain(Model model) {
