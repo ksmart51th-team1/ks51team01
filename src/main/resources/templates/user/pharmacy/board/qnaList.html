@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html layout:decorate="~{user/pharmacy/layout/default}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+
+<th:block layout:fragment="customContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-10 col-lg-12 m-auto">
+                <section class="mb-50">
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <div class="contact-from-area padding-20-row-col font-1">
+                                <h5 class="text-brand mb-10"></h5>
+                                <h2 class="mb-10 pb-3" style="border-bottom: 2px solid black;"><mark th:text="${session.S_NAME}"></mark> 님의 문의내역입니다.</h2>
+                                <p class="text-muted mb-30 font-sm"></p>
+                                <form action="#" class="contact-form-style mt-30" id="contact-form" method="post">
+                                    <div class="row">
+
+                                        <div class="col-lg-12 col-md-12 font-1">
+                                            <div class="card mb-4">
+
+                                                <!-- card-header end// -->
+                                                <div class="card-body">
+                                                    <article class="itemlist m-3" th:each="q : ${qnaList}" th:if="${q.MId} == ${session.S_ID}">
+                                                        <div class="row align-items-center">
+
+                                                                <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                                                                    <a class="itemside" data-target="#noticeContentModal" data-toggle="modal" href="#" th:data-content="${q.content}" th:data-title="${q.title}">
+                                                                        <div class="info">
+                                                                            <h6 class="mb-0 replyBtn" th:text="${q.title}"></h6>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${q.rep}"></span></div>
+                                                                <div class="col-lg-2 col-sm-2 col-4 col-date">
+                                                                    <span th:text="${q.indate}"></span>
+                                                                </div>
+                                                                <div class="col-lg-1 col-sm-2 col-4 col-price">
+                                                                    <form id="deleteQnaForm" method="post" th:action="@{/pharm/qna/delete}">
+                                                                        <input hidden="hidden" id="qseq" name="qseq" th:value="${q.qseq}">
+                                                                        <button style="padding: 0; font-size: 13px;color: rgba(255,0,0,.7);background: none" type="submit">삭제</button>
+                                                                    </form>
+                                                                </div>
+                                                        </div>
+                                                        <!-- row .// -->
+                                                        <div class="reply-list" style="display: none; background-color: rgba(0,0,255,0.03)" >
+                                                            <div class="row align-items-center p-3" th:each="qr : ${qnaReplyList}" th:if="${q.qseq} == ${qr.qseq}">
+                                                                <div class="col-lg-9 col-sm-2 col-4 col-price"> <p class="mb-0" style="font-size: 13px" th:text="${qr.content}"></p></div>
+                                                                <div class="col-lg-2 col-sm-2 col-4 col-price"> <span class="mb-0" th:text="${qr.outdate}"></span></div>
+                                                                <div class="col-lg-1 col-sm-2 col-4 col-price"> <span class="mb-0" th:text="${qr.responder}"></span></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </article>
+
+                                                </div>
+                                                <!-- card-body end// -->
+                                            </div>
+
+                                            <h2 class="mb-10 pb-3" style="border-top:  2px solid black;"></h2>
+                                            <a class="btn submit-auto-width"
+                                               style="background-color: #4d5368;font-size: 17px;font-weight: 500;padding: 20px 40px;color: #ffffff;border: none;border-radius: 10px;"
+                                               th:href="@{/pharm/qna}"><i class="bi bi-chevron-double-left"></i> 돌아가기</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <p class="form-messege"></p>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 pl-50 d-lg-block d-none">
+                            <img alt="" class="border-radius-15" style="margin-top: 50%" th:src="@{/resource/logo/logo_pink.png}">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.replyBtn').on('click', function () {
+                $(this).closest('.itemlist').find('.reply-list').slideToggle();
+            });
+        });
+
+
+    </script>
+</th:block>
+</html>
+
+

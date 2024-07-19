@@ -82,7 +82,7 @@
                             <td class="text-center detail-info" data-title="Stock">
                                 <span class="stock-status in-stock mb-0" th:text="${s.state}"></span>
                             </td>
-                            <td th:text="${s.regQty}"></td>
+                            <td th:text="'남은수량: ' + ${s.regQty}"></td>
                             <td class="price" data-title="Price">
                                 <h6 th:text="${s.mediPrice} + '원'"></h6>
                             </td>
@@ -105,11 +105,7 @@
                                     <button class="btn btn-sm" style="background-color: rgba(0,0,0,.8); border: none" type="submit">담기</button>
                                 </form>
                             </td>
-
                         </tr>
-
-
-
                          </tbody>
                     </table>
 
