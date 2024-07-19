@@ -16,14 +16,7 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/user/assets/imgs/theme/favicon.svg}">
     <!-- Template CSS -->
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/main.css?v=5.6}">
-    <style>
-        .logoNew {
-            font-family: "Cafe24Ssurround";
-            color: pink;
-            font-size: 3rem;
-        }
-    </style>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 </head>
 
 <body style="overflow: visible;"><div class="body-overlay-1"></div>
@@ -31,6 +24,11 @@
 
 <!--End header-->
 <main class="main pages">
+    <div style="height: 70px;">
+        <div class="logo logo-width-1">
+            <img th:src="@{/resource/logo/logo_pink.png}" class="logo" style="width: 10rem; margin: 15px" alt="Nest Dashboard" />
+        </div>
+    </div>
 
     <div class="page-content pt-150 pb-150 indexBackground">
         <div class="container">
@@ -40,31 +38,33 @@
                         <div class="col-lg-6 pr-30 d-none d-lg-block">
                             <div class="guide-banner">
                                 <div class="list-banner-box">
-                                    <div class="logo logo-width-1 mb-3">
-                                        <a th:href="@{/member/memberInsert/owner}" class="logoNew" style="font-size:2rem">개국약사 가입 하러 가기</a>
+                                    <div class="logo logo-width-1 mb-3 regForm" th:onclick="|location.href='@{/member/memberInsert/owner}'|">
+                                        <div class="img-box">
+                                            <img th:src="@{/resource/logo/national.png}" alt="개국약사 image">
+                                        </div>
+                                        <div class="text-box">
+                                            <span class="name-text">개국약사 회원가입</span>
+                                            <span class="introduce-text">약국을 직접 운영하시는 약사님</span>
+                                        </div>
+                                        <i class="bi bi-chevron-right"></i>
                                     </div>
-                                <div class="banner-img-box" >
-                                    <div class="logo logo-width-1 mb-3" >
-                                        <a th:href="@{/member/memberInsert/staff}" class="logoNew" style="font-size:2rem">관리약사 가입 하러 가기</a>
+                                    <div class="logo logo-width-1 mb-3 regForm" th:onclick="|location.href='@{/member/memberInsert/staff}'|" >
+                                        <div class="img-box">
+                                            <img th:src="@{/resource/logo/management.png}" alt="관리약사 image">
+                                        </div>
+                                        <div class="text-box">
+                                            <span class="name-text">관리약사 회원가입</span>
+                                            <span class="introduce-text">약국, 병원, 회사 등에서 근무 중이신 약사님</span>
+                                        </div>
+                                        <i class="bi bi-chevron-right"></i>
                                     </div>
-                                </div>
-                                <div class="banner-img-box">
-                                    <div class="logo logo-width-1 mb-3">
-                                        <a th:href="@{https://forms.gle/1VRReEqFk24heS8q8}" class="logoNew" style="font-size:2rem">약수터 파트너 제휴 문의</a>
-                                    </div>
-                                </div>
-                            </div>
+                               </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-8">
-                            <div class="login_wrap widget-taber-content background-white">
-                                <div class="padding_eight_all bg-white" style="padding: 18px; border-radius: 25px">
-                                    <div class="heading_s1 row mb-3">
-                                        <div class="logo logo-width-1">
-                                            <img th:src="@{/resource/logo/logo_pink.png}" class="logo" style="width: 10rem" alt="Nest Dashboard" />
-                                        </div>
-                                        <p class="mb-30"><a></a></p>
-                                    </div>
+                            <div class="login_wrap widget-taber-content background-white" >
+                                <div class="padding_eight_all bg-white" style="padding: 23px; border-radius: 25px;">
+
                                     <form th:action="@{/login}" method="post">
                                         <input type="hidden" th:value="secret" name="secret_key" />
                                         <div class="form-group">
@@ -78,7 +78,7 @@
                                             <div class="chek-form">
                                                 <div class="custome-checkbox">
                                                     <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
-                                                    <label class="form-check-label" for="exampleCheckbox1"><span>로그인 상태 유지</span></label>
+                                                    <label class="form-check-label" for="exampleCheckbox1"><span>아이디저장</span></label>
                                                 </div>
                                             </div>
                                             <a class="text-muted" href="#">비밀번호를 잊었나요?</a>
@@ -89,10 +89,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-heading btn-block hover-up" name="login">로그인</button>
-                                        </div>
-                                        <div>
-                                            <a th:href="@{/admin/adminMain}">(테스트용 추후 삭제)관리자화면</a>
+                                            <button type="submit" class="btn btn-heading btn-block hover-up" name="login"
+                                                    style="width: 100%; background-color: #ff8c9f; font-family: 'Pretendard-Regular'; border-radius: 15px;">로그인</button>
                                         </div>
                                         <div>
                                             <a th:href="@{#}" class="shortCut" data-login-id="admin" data-login-pw="admin1234">관리자 메인 화면 바로가기</a>
@@ -105,6 +103,10 @@
                                         </div>
                                     </form>
                                 </div>
+                                <div class="padding_eight_all mt-3" style="padding: 23px; border-radius: 25px; background-color: #0d6efd; cursor:pointer" onclick="location.href='https://forms.gle/1VRReEqFk24heS8q8';">
+                                    <h5 style="color: white">파트너 제휴문의 > </h5>
+                                    <p style="color: white">약수터와 함께 전문 약사님을 만나보세요.<i>🤝</i></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +115,7 @@
         </div>
     </div>
     <div th:replace="~{user/pharmacy/fragments/footer :: teamIntroFragment}"></div>
-    </div>
+
 </main>
 
 <!-- Preloader Start -->
