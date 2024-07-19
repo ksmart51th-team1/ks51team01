@@ -57,4 +57,5 @@ public interface PhBoardMapper {
     // 문의 업데이트
     void updateQna(String qseq);
 
+    String getQnaListByKey(String qseq);
 }

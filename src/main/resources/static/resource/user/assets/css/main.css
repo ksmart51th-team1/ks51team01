@@ -125,7 +125,11 @@ li.hr span {
   margin: 20px 0;
   display: block;
 }
-
+.indexBackground {
+  background-image: url(../imgs/indexBg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 /*--- Common Classes---------------------*/
 ::-moz-selection {
   background: #3BB77E;

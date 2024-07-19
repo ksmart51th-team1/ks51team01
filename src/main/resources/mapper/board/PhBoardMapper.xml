@@ -353,5 +353,16 @@
         WHERE  qr_seq = #{qrSeq}
     </delete>
 
-
+    <!-- 문의글 기본키로 문의&답글조회  -->
+    <select id="getQnaListByKey" parameterType="String" resultType="String">
+        SELECT
+        qr.qr_seq As qrSeq
+        FROM qna AS q
+        INNER JOIN
+        qna_reply AS qr
+        ON
+        q.qseq = qr.qseq
+        WHERE
+        q.qseq = #{qseq}
+    </select>
 </mapper>

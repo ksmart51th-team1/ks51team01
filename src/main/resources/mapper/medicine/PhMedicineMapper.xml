@@ -22,30 +22,39 @@
         <result column="state" 	property="state"/>
         <result column="reg_date" 	property="regDate"/>
         <result column="file_path" 	property="filePath"/>
+        <result column="medi_drugform" 	property="mediDrugForm"/>
+        <result column="medi_drugtype" 	property="mediDrugType"/>
+        <result column="medi_state" 	property="mediState"/>
 
     </resultMap>
 
     <select id="getSellMedicineList" resultMap="sellMedicineResultMap">
         SELECT
-            s.goods_code,
-            s.supp_code,
-            s.medi_code,
-            s.medi_name,
-            s.medi_detail,
-            s.medi_price,
-            s.medi_img,
-            s.reg_qty,
-            s.state,
-            s.reg_date,
-            i.file_path
+        s.goods_code,
+        s.supp_code,
+        s.medi_code,
+        s.medi_name,
+        s.medi_detail,
+        s.medi_price,
+        s.medi_img,
+        s.reg_qty,
+        s.state,
+        s.reg_date,
+        i.file_path,
+        m.medi_drugform,
+        m.medi_drugtype,
+        m.medi_state
         FROM
-            sell_medicine AS s
+        sell_medicine AS s
         INNER JOIN
-            img_data AS i
+        img_data AS i
         ON
-            s.medi_img = i.file_idx
+        s.medi_img = i.file_idx
+        INNER JOIN
+        medicine AS m
+        ON s.medi_code = m.medi_code
         WHERE
-            s.state = '판매중';
+        s.state = '판매중';
     </select>
 <!--    &lt;!&ndash;등록&ndash;&gt;
     <insert id="addBoard" parameterType="Board">
