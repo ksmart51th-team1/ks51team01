@@ -3,11 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/pharmacy/layout/default}">
 <head>
+    <!-- Add necessary head elements here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 </head>
 
 <th:block layout:fragment="customContent">
-
     <div class="container mb-80 mt-50">
         <div class="row">
             <div class="col-lg-8 mb-40">
@@ -19,10 +21,8 @@
                 <div class="table-responsive shopping-summery">
                     <table class="table table-wishlist">
                         <thead>
-                        <tr class="main-heading">
-                            <th class="custome-checkbox start pl-30">
-
-                            </th>
+                        <tr class="main-heading text-center">
+                            <th class="custome-checkbox start pl-30"></th>
                             <th scope="col" colspan="2">상품명</th>
                             <th scope="col">단가</th>
                             <th scope="col">주문수량</th>
@@ -31,33 +31,36 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="pt-30">
-                            <td class="custome-checkbox pl-30">
-
+                        <tr class="pt-30" th:each="od : ${orderDetailList}"
+                            th:if="${orderDetailList != null}"
+                            th:attr="data-price=${od.sellMedicine.mediPrice}, data-quantity=${od.orderQty}, data-order-detail-code=${od.orderDetailCode}">
+                            <td class="custome-checkbox pl-30"></td>
+                            <td class="image product-thumbnail pt-40"><img src="#" alt="#"></td>
+                            <td class="product-des product-name text-center">
+                                <h6 class="mb-5"><a class="product-name mb-10 text-heading" th:text="${od.sellMedicine.mediName}"></a></h6>
                             </td>
-                            <td class="image product-thumbnail pt-40"><img src="assets/imgs/shop/product-1-1.jpg" alt="#"></td>
-                            <td class="product-des product-name">
-                                <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html">Field Roast Chao Cheese Creamy Original</a></h6>
-
+                            <td class="price text-center" data-title="Price">
+                                <h4 class="text-body" th:text="${od.sellMedicine.mediPrice}"></h4>
                             </td>
-                            <td class="price" data-title="Price">
-                                <h4 class="text-body">$2.51 </h4>
+                            <td class="price text-center" data-title="Stock">
+                                <h4 class="text-body" th:text="${od.orderQty}"></h4>
                             </td>
-                            <td class="price" data-title="Stock">
-                                <h4 class="text-body">4568 </h4>
+                            <td class="price text-center" data-title="Price">
+                                <h4 class="text-brand" th:text="${od.orderPrice}"></h4>
                             </td>
-                            <td class="price" data-title="Price">
-                                <h4 class="text-brand">$2.51 </h4>
+                            <td class="action text-center" data-title="Remove">
+                                <a href="#" class="text-body delete-order-detail">
+                                    <i class="fi-rs-trash"></i>삭제
+                                </a>
                             </td>
-                            <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="divider-2 mb-30"></div>
                 <div class="cart-action d-flex justify-content-between">
-                    <a class="btn" th:href="@{/pharm/myOrderList}"><i class="fi-rs-arrow-left mr-10"></i>돌아가기</a>
-                    <a class="btn mr-10 mb-sm-15" th:href="@{/pharm/myRefundInsert}"><i class="fi-rs-refresh mr-10"></i>반품하기</a>
+                    <a class="btn" th:href="@{/pharm/myOrderList}" style="background-color: rgba(0,0,0,0.85)"><i class="fi-rs-arrow-left mr-10"></i>돌아가기</a>
+                    <a class="btn mr-10 mb-sm-15" th:href="@{/pharm/myRefundInsert}" style="background-color: rgba(0,0,0,0.85)"><i class="fi-rs-refresh mr-10"></i>반품하기</a>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -67,10 +70,10 @@
                             <tbody>
                             <tr>
                                 <td class="cart_total_label">
-                                    <h6 class="text-muted">Subtotal</h6>
+                                    <h6 class="text-muted">합계</h6>
                                 </td>
                                 <td class="cart_total_amount">
-                                    <h4 class="text-brand text-end">$12.31</h4>
+                                    <h4 class="text-muted text-end" id="totalSum"></h4>
                                 </td>
                             </tr>
                             <tr>
@@ -80,31 +83,39 @@
                             </tr>
                             <tr>
                                 <td class="cart_total_label">
-                                    <h6 class="text-muted">Shipping</h6>
+                                    <h6 class="text-muted">배송비</h6>
                                 </td>
                                 <td class="cart_total_amount">
-                                    <h5 class="text-heading text-end">Free </h5></td></tr> <tr>
+                                    <h6 class="text-muted text-end">무료 </h6>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="cart_total_label">
-                                    <h6 class="text-muted">Estimate for</h6>
+                                    <h6 class="text-muted">도착지</h6>
                                 </td>
                                 <td class="cart_total_amount">
-                                    <h5 class="text-heading text-end">United Kingdom </h5></td></tr> <tr>
+                                    <h6 class="text-muted text-end" th:each="m : ${memberInfo}" th:if="${memberInfo}"
+                                        th:utext="${m.memberAddrSido} + ' ' + ${m.memberAddrSigungu} + '<br>' + ${m.memberAddrDong} + ' ' + ${m.memberAddr}"></h6>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td scope="col" colspan="2">
                                     <div class="divider-2 mt-10 mb-10"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="cart_total_label">
-                                    <h6 class="text-muted">Total</h6>
+                                    <h6 class="text-muted">결제요금</h6>
                                 </td>
                                 <td class="cart_total_amount">
-                                    <h4 class="text-brand text-end">$12.31</h4>
+                                    <h4 class="text-end" id="totalSum2"></h4>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <a th:href="@{/pharm/paymentMethod}" class="btn mb-20 w-100">결제 등록<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a class="btn mb-20 w-100" style="background-color: rgba(0,0,0,0.85)" id="paymentButton" th:href="@{#}" >결제하기<i class="fi-rs-sign-out ml-15"></i></a>
+                    <p>현재 카카오페이로만 결제가 가능합니다 추후 더많은 결제 서비스가 지원 될 예정입니다.</p>
                 </div>
             </div>
         </div>
@@ -112,13 +123,125 @@
 </th:block>
 
 <th:block layout:fragment="customJsFile">
+    <!-- Add necessary JS files here -->
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $(document).ready(function() {
+
+
+            // 삭제 버튼 클릭 이벤트 핸들러 설정
+            $(document).on('click', '.delete-order-detail', function(event) {
+                event.preventDefault(); // 링크 기본 동작 방지
+
+                const row = $(this).closest('tr.pt-30');
+                const orderDetailCode = row.data('order-detail-code');
+
+                if (!orderDetailCode) {
+                    console.error('Order detail code not found');
+                    return;
+                }
+
+                $.ajax({
+                    url: `/pharm/deleteOrderDetail/${orderDetailCode}`,
+                    type: 'DELETE',
+                    success: function(result) {
+                        row.remove();
+                        updateTotalSum();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to delete order detail:', error);
+                    }
+                });
+            });
+
+            // 합계 업데이트 함수
+            function updateTotalSum() {
+                let totalSum = 0;
+                $('tr.pt-30').each(function() {
+                    const price = parseInt($(this).data('price'), 10);
+                    const quantity = parseInt($(this).data('quantity'), 10);
+                    if (!isNaN(price) && !isNaN(quantity)) {
+                        totalSum += price * quantity;
+                    }
+                });
+                $('#totalSum').text(`${totalSum} 원`);
+                $('#totalSum2').text(`${totalSum} 원`);
+            }
+
+            // 초기 합계 계산
+            updateTotalSum();
+
+            // 결제하기 버튼 클릭 이벤트 핸들러 설정
+            $('#paymentButton').on('click', function(event) {
+                event.preventDefault();
+
+                const totalAmount = parseInt($('#totalSum2').text().replace(' 원', ''), 10);
+                const orderName = '약수터 의약품 구매'; // 실제 주문명으로 변경 필요
+                const merchantUid = 'order_' + new Date().getTime(); // 고유 주문 ID
+                console.log(totalAmount);
+                // 포트원 결제 데이터 설정
+                const data = {
+                    storeId: 'store-f4751201-4959-40a4-9738-f58651a60e01',
+                    channelKey: 'channel-key-75b2b89c-d62f-4285-bbc7-d378c03b94dc',
+                    name: orderName, // 주문명
+                    totalAmount: totalAmount, // 결제 금액
+                    paymentId: merchantUid, // 고유 주문 ID
+                    orderName: orderName, // 주문명 추가
+                    currency: 'KRW', // 통화 단위
+                    payMethod: "EASY_PAY",
+                    easyPay: {
+                        easyPayProvider: "KAKAOPAY"
+                    }
+                };
+
+                requestPayment(data);
+            });
+
+            async function requestPayment(data) {
+                try {
+                    console.log("Requesting payment with data: ", data);
+
+                    const response = await PortOne.requestPayment(data);
+                    console.log("Payment response: ", response);
+
+                    if (response.success) {
+                        alert('결제가 완료되었습니다.');
+                        // 결제 완료 후 서버로 결제 결과 전송
+                        const postData = {
+                            impUid: response.imp_uid,
+                            merchantUid: response.merchant_uid,
+                            paidAmount: response.paid_amount,
+                            applyNum: response.apply_num
+                        };
+
+                        console.log("Post data: ", postData);
+
+                        const validation = await $.ajax({
+                            url: "/pharm/paymentComplete",
+                            method: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(postData)
+                        });
+
+                        console.log("Validation response: ", validation);
+
+                        if (validation.status === "success") {
+                            alert("결제가 정상적으로 완료되었습니다.");
+                        } else {
+                            alert("결제 처리 중 오류가 발생했습니다.");
+                        }
+                    } else {
+                        alert('결제가 실패하였습니다. 에러 내용: ' + response.error_msg);
+                    }
+                } catch (error) {
+                    console.error("Error during payment process: ", error);
+                    alert("결제 처리 중 오류가 발생했습니다.");
+                }
+            }
+        });
+    </script>
 </th:block>
 </html>
-
-
-
-
-

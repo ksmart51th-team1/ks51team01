@@ -66,4 +66,41 @@ public class PhOrderService {
         String sessionId = (String) request.getSession().getAttribute("S_ID");
         return phOrderMapper.getOrderListById(sessionId);
     }
+
+
+    public List<OrderDetail> getOrderDetailListByOCode(String oCode) {
+        return phOrderMapper.getOrderDetailListByOCode(oCode);
+    }
+
+    @Transactional
+    public boolean deleteOrderDetail(String orderDetailCode) {
+        try {
+            // 삭제할 OrderDetail을 먼저 조회합니다.
+            OrderDetail orderDetail = phOrderMapper.getOrderDetailByCode(orderDetailCode);
+            if (orderDetail == null) {
+                return false;
+            }
+            // OrderDetail을 삭제합니다.
+            phOrderMapper.deleteOrderDetail(orderDetailCode);
+
+            // 해당 주문 코드(oCode)로 남아 있는 OrderDetail 목록을 조회합니다.
+            List<OrderDetail> remainingOrderDetails = phOrderMapper.getOrderDetailListByOCode(orderDetail.getOCode());
+
+            // 남아 있는 OrderDetail의 총 금액을 다시 계산합니다.
+            int totalPrice = remainingOrderDetails.stream()
+                    .mapToInt(OrderDetail::getOrderPrice)
+                    .sum();
+
+            // Order 객체를 업데이트합니다.
+            Order order = new Order();
+            order.setOCode(orderDetail.getOCode());
+            order.setOrderTotalPrice(totalPrice);
+
+            // Order 테이블의 총 주문 금액을 업데이트합니다.
+            phOrderMapper.updateOrderPrice(order);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
