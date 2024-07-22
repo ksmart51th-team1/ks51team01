@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team01.yaksutor.admin.controller.AdRefundController;
-import team01.yaksutor.dto.OrderDetailForRefund;
-import team01.yaksutor.dto.Refund;
-import team01.yaksutor.dto.RefundDetail;
-import team01.yaksutor.dto.RequestRefundInfo;
+import team01.yaksutor.dto.*;
 import team01.yaksutor.pharmacy.mapper.PhRefundMapper;
 
 import java.util.List;
@@ -55,7 +52,11 @@ public class PhRefundService {
             log.info("refundDetail: {}", rd);
             phRefundMapper.insertRefundDetail(rd);
         }
-
+        Order order = new Order();
+        order.setOCode(oCode);
+        String purState = "반품";
+        order.setPurchaseState(purState);
+        phRefundMapper.updateOrderState(order);
     }
 
 }

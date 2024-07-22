@@ -73,6 +73,6 @@ public class PhRefundController {
         log.info("refundInfo = {}", refundInfo);
         phRefundService.insertRefund(refundInfo);
 
-        return "user/pharmacy/refund/myRefundSearchList";
+        return "redirect:/pharm/myRefundSearchList";
     }
 }

@@ -101,8 +101,10 @@ public class PharmacyController {
     }*/
 
     @GetMapping("/myOrderList")
-    public String myOderList() {
-
+    public String myOderList(Model model) {
+        List<Order> orderList = phOrderService.getOrderListById();
+        model.addAttribute("orderListSize", orderList.size());
+        model.addAttribute("orderList",orderList);
         return "user/pharmacy/myPage/myOrderList";
     }
     @GetMapping("/myDelivery")
