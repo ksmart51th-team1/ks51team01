@@ -52,8 +52,7 @@ public class SecurityConfig {
                                 ).permitAll()  // index 페이지에 대한 접근 허용
                                    // /resources/** 하위 모든 경로에 대한 접근 허용
                                 .requestMatchers("/admin/**").hasAuthority("관리자")
-                                .requestMatchers("/pharm/**").hasAuthority("개국약사")
-                                .requestMatchers("/pharm/**").hasAuthority("관리약사")
+                                .requestMatchers("/pharm/**").hasAnyAuthority("개국약사","관리약사")
                                 .requestMatchers("/supplier/**").hasAuthority("납품업체")
                                 .anyRequest().authenticated()                // 그 외 모든 요청에는 인증이 필요함
                 )

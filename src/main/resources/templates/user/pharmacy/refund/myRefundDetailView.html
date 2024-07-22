@@ -21,32 +21,25 @@
                         <thead>
                         <tr class="main-heading">
                             <th scope="col" colspan="2" class="start pl-30">의약품 이름</th>
-                            <th scope="col" class="text-center">갯수</th>
+                            <th scope="col">갯수</th>
                             <th scope="col">판매자</th>
                             <th scope="col" class="end">가격</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="pt-30">
-                            <td class="image product-thumbnail pt-40"><img src="assets/imgs/shop/product-1-1.jpg" alt="#"></td>
+                        <tr class="pt-30" th:each="r : ${refundDetailList}">
+                            <td class="image product-thumbnail pt-40"><img th:src="${r.imgList.filePath}" alt="#"></td>
                             <td class="product-des product-name">
-                                <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="#">Field Roast Chao Cheese Creamy Original</a></h6>
-                            </td>
-                            <td class="text-center detail-info" data-title="Stock">
-                                <div class="detail-extralink mr-15">
-                                    <div class="detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <input type="text" name="quantity" class="qty-val" value="1" min="1">
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                    </div>
-                                </div>
+                                <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="#" th:text="${r.mediList.mediName}">Field Roast Chao Cheese Creamy Original</a></h6>
                             </td>
                             <td class="price" data-title="Price">
-                                <h4 class="text-body">$2.51 </h4>
+                                <h6 class="text-body" th:text="${r.RDList.refundQty}">$2.51 </h6>
                             </td>
-
                             <td class="price" data-title="Price">
-                                <h4 class="text-brand">$2.51 </h4>
+                                <h6 class="text-body" th:text="${r.suppList.supName}">$2.51 </h6>
+                            </td>
+                            <td class="price" data-title="Price">
+                                <h6 class="text-brand" th:text="${r.RDList.refundMoney} + '원'">$2.51 </h6>
                             </td>
                         </tr>
                         </tbody>
@@ -57,38 +50,33 @@
                 <div class="border p-md-4 cart-totals ml-30">
                     <div class="table-responsive">
                         <table class="table no-border">
-                            <tbody>
-                            <tr>
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">반품 총액</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <h4 class="text-brand text-end">$12.31</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td scope="col" colspan="2">
-                                    <div class="divider-2 mt-10 mb-10"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">반품사유</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <input type="text" class="text-heading text-end form-control" />
-                                </td>
-                            <tr>
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">반품상태</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <h5 class="text-heading text-end">반품승인 </h5></td></tr> <tr>
-                            </tr>
+                            <tbody th:object="${refundInfo}">
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">반품 총액</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end" th:text="*{refundTotalMoney} + '원'">$12.31</h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">반품 사유</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h6 class="text-heading text-end" th:text="*{refundReason}"></h6>
+                                    </td>
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">반품 상태</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h6 class="text-heading text-end" th:text="*{refundState}">반품승인 </h6></td></tr> <tr>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                    <a href="#" class="btn mb-20 w-100">반품취소<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a th:href="@{#}" class="btn mb-20 w-100">반품취소<i class="fi-rs-sign-out ml-15"></i></a>
                 </div>
             </div>
         </div>

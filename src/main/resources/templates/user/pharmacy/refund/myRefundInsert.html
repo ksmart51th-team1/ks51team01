@@ -27,26 +27,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="pt-30">
-                            <td class="image product-thumbnail pt-40"><img src="assets/imgs/shop/product-1-1.jpg" alt="#"></td>
+                        <tr class="pt-30" th:each="o : ${ODList}">
+                            <td class="image product-thumbnail pt-40"><img th:src="${o.imgData.filePath}" alt="#"></td>
                             <td class="product-des product-name">
-                                <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html">Field Roast Chao Cheese Creamy Original</a></h6>
+                                <h6 class="mb-5 product-name mb-10 text-heading" th:text="${o.sellMedicine.mediName}">Field Roast Chao Cheese Creamy Original</h6>
                             </td>
                             <td class="text-center detail-info" data-title="Stock">
-                                <div class="detail-extralink mr-15">
-                                    <div class="detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <input type="text" name="quantity" class="qty-val" value="1" min="1">
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                    </div>
-                                </div>
+                                <h6 class="mb-5 product-name mb-10 text-heading" th:text="${o.orderQty}"></h6>
                             </td>
                             <td class="price" data-title="Price">
-                                <h4 class="text-body">$2.51 </h4>
+                                <h6 class="text-body" th:text="${o.supplier.supName}">$2.51 </h6>
                             </td>
-
                             <td class="price" data-title="Price">
-                                <h4 class="text-brand">$2.51 </h4>
+                                <h6 class="text-brand" th:text="${o.orderPrice} + '원'">$2.51 </h6>
                             </td>
                         </tr>
                         </tbody>
@@ -56,33 +49,31 @@
             <div class="col-lg-4">
                 <div class="border p-md-4 cart-totals ml-30">
                     <div class="table-responsive">
-                        <table class="table no-border">
-                            <tbody>
-                            <tr>
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">반품 총액</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <h4 class="text-brand text-end">$12.31</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td scope="col" colspan="2">
-                                    <div class="divider-2 mt-10 mb-10"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart_total_label">
-                                    <h6 class="text-muted">반품사유</h6>
-                                </td>
-                                <td class="cart_total_amount">
-                                    <input type="text" class="text-heading text-end form-control" />
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <form>
+                            <table class="table no-border">
+                                <tbody th:object="${orderInfo}">
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 type="text" id="oCode" class="oCode" th:text="${orderInfo.oCode}"></h6>
+                                        <h6 class="text-muted">반품 총액</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h6 class="text-brand text-end" th:text="*{orderTotalPrice} + '원'">$12.31</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">반품사유</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <input type="text" id="refundReason" name="refundReason" class="text-heading text-end form-control" />
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
-                    <a href="#" class="btn mb-20 w-100">반품신청<i class="fi-rs-sign-out ml-15"></i></a>
+                    <button type="button" id="submitBtn" class="btn mb-20 w-100">반품신청<i class="fi-rs-sign-out ml-15"></i></button>
                 </div>
             </div>
         </div>
@@ -93,6 +84,27 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('#submitBtn').click(function(){
+            const order = {};
+            /*order['oCode'] = $('.oCode').text();*/
+            const refundReason = $('#refundReason').val();
+            const refund = {}
+            refund['refundReason'] = refundReason;
+            const requestRefundInfo = {}
+            const oCode = $('#oCode').text();
+            requestRefundInfo['orderCode'] = oCode;
+            requestRefundInfo['refundReason'] = refundReason;
+            console.log(JSON.stringify(requestRefundInfo))
+            const request = $.ajax({
+                url : '/pharm/myRefundInsert',
+                method : 'POST',
+                contentType : 'application/json',
+                data : JSON.stringify(requestRefundInfo),
+                dataType : 'json'
+            });
+        });
+    </script>
 </th:block>
 </html>
 

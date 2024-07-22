@@ -62,13 +62,13 @@
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-person"></i>
-                        <span class="text">문의 관리</span>
+                    <a class="menu-link" th:href="@{/supplier/qnaList}">
+                        <i class="icon bi-question-octagon-fill"></i>
+                        <span class="text">1:1 문의</span>
                     </a>
                     <div class="submenu">
-                        <a th:href="@{#}">문의 등록</a>
-                        <a th:href="@{#}">문의 내역 조회</a>
+                        <a th:href="@{/supplier/qnaAdd}">문의하기</a>
+                        <a th:href="@{/supplier/qnaList}">문의내역</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">

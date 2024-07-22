@@ -7,10 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import team01.yaksutor.pharmacy.dto.Board;
-import team01.yaksutor.pharmacy.dto.Notice;
-import team01.yaksutor.pharmacy.dto.QuestionCenter;
-import team01.yaksutor.pharmacy.dto.Repl;
+import team01.yaksutor.pharmacy.dto.*;
 import team01.yaksutor.pharmacy.service.PhBoardService;
 
 import java.util.List;
@@ -268,6 +265,81 @@ public class PhBoardController {
         phBoardService.deleteNotice(noticeNum);
         return "redirect:/admin/noticeList";
     }
+
+
+    /*문의*/
+    // 조회
+
+    @GetMapping("/admin/qnaList")
+    public String qnaList(Model model) {
+        List<Qna> qnaList = phBoardService.getQnaList();
+        List<QnaReply> qnaReplyList = phBoardService.getQnaReplyList();
+        model.addAttribute("qnaList", qnaList);
+        model.addAttribute("qnaReplyList", qnaReplyList);
+        model.addAttribute("title", "문의내역");
+
+        return "admin/qna/qnaList";
+    }
+    @GetMapping("/supplier/qnaList")
+    public String qnaList2(Model model) {
+        List<Qna> qnaList = phBoardService.getQnaList();
+        List<QnaReply> qnaReplyList = phBoardService.getQnaReplyList();
+        model.addAttribute("qnaList", qnaList);
+        model.addAttribute("qnaReplyList", qnaReplyList);
+        model.addAttribute("title", "문의내역");
+
+        return "user/supplier/board/qnaList";
+    }
+    // 추가 (관리자)
+    @PostMapping("/admin/qna/add")
+    public String addQna(Qna qna){
+        phBoardService.addQna(qna);
+        return "redirect:/admin/qnaList";
+    }
+    @GetMapping("/admin/qnaAdd")
+    public String qnaAdd(){
+        return "admin/qna/qnaAdd";
+    }
+    // 추가 (납품자)
+    @GetMapping("/supplier/qnaAdd")
+    public String qnaAdd2(){
+        return "user/supplier/board/qna";
+    }
+    @PostMapping("/supplier/qna/add")
+    public String addQna2(Qna qna){
+        phBoardService.addQna(qna);
+        return "redirect:/supplier/qnaList";
+    }
+
+    // 삭제 (관리자)
+    @PostMapping("/admin/qna/delete")
+    public String deleteQna(@RequestParam String qseq){
+        phBoardService.deleteQna(qseq);
+        return "redirect:/admin/qnaList";
+    }
+    // 삭제 (납품자)
+    @PostMapping("/supplier/qna/delete")
+    public String deleteQna2(@RequestParam String qseq){
+        phBoardService.deleteQna(qseq);
+        return "redirect:/supplier/qnaList";
+    }
+
+
+    /*문의 답글 */
+    // 추가
+    @PostMapping("/admin/qnaReply/add")
+    public String addQnaReply(QnaReply qnaReply){
+        phBoardService.addQnaReply(qnaReply);
+        return "redirect:/admin/qnaList";
+    }
+    // 삭제
+    @PostMapping("/admin/qnaReply/delete")
+    public String deleteQnaReply(@RequestParam String qrSeq){
+        phBoardService.deleteQnaReply(qrSeq);
+        return "redirect:/admin/qnaList";
+    }
+
+
 
 
 }

@@ -50,8 +50,7 @@ public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 
         switch (memberLevel){
             case "관리자" -> defaultPath = "/admin/adminMain";
-            case "개국약사" -> defaultPath = "/pharm/main";
-            case "관리약사" -> defaultPath = "/pharm/main";
+            case "개국약사", "관리약사" -> defaultPath = "/pharm/main";
             case "납품업체" -> defaultPath = "/supplier/supplierMain";
         }
         setDefaultTargetUrl(defaultPath);

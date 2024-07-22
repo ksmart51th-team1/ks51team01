@@ -40,4 +40,10 @@ public interface PhStockMapper {
     List<StockHistory> getStockHistory(String pharCode);
 
     List<PharmStock> getOldStockCheck(String pharCode);
+
+    void insertStockClearance(StockClearance stockClearance);
+
+    void updateStockClearance(PharmStock pharmStock);
+
+    void updateStockClear(PharmStock pharmStock);
 }

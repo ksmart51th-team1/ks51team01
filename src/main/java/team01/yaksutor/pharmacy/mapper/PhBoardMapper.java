@@ -2,10 +2,7 @@ package team01.yaksutor.pharmacy.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import team01.yaksutor.pharmacy.dto.Board;
-import team01.yaksutor.pharmacy.dto.Notice;
-import team01.yaksutor.pharmacy.dto.QuestionCenter;
-import team01.yaksutor.pharmacy.dto.Repl;
+import team01.yaksutor.pharmacy.dto.*;
 
 import java.util.List;
 
@@ -16,6 +13,8 @@ public interface PhBoardMapper {
     List<Repl> getReplList();
     List<QuestionCenter> getQuestionCenterList();
     List<Notice> getNoticeList();
+    List<Qna> getQnaList();
+    List<QnaReply> getQnaReplyList();
 
     // 커뮤니티 등록
     int addBoard(Board board);
@@ -45,4 +44,18 @@ public interface PhBoardMapper {
     int modifyNotice(Notice notice);
     // 공지사항 삭제
     int deleteNotice(String noticeNum);
+
+    // 문의 등록
+    int addQna(Qna qna);
+    // 문의 삭제
+    int deleteQna(String qseq);
+
+    // 문의답변 등록
+    int addQnaReply(QnaReply qnaReply);
+    // 문의답변 삭제
+    int deleteQnaReply(String qrSeq);
+    // 문의 업데이트
+    void updateQna(String qseq);
+
+    String getQnaListByKey(String qseq);
 }

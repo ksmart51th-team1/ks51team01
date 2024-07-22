@@ -27,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/resource/**")
                 .excludePathPatterns("/js/**")
                 .excludePathPatterns("/")
+                .excludePathPatterns("/error")
                 .excludePathPatterns("/pharm/assets/**")
                 .excludePathPatterns("/attachment/**");
     }
