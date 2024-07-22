@@ -303,4 +303,12 @@
         (refund_detail_code, refund_code, medi_code, refund_qty, refund_money, supp_code)
         VALUES (#{refundDetailCode}, #{refundCode}, #{mediCode}, #{refundQty}, #{refundMoney}, #{suppCode})
     </insert>
+
+    <update id="updateOrderState" parameterType="Order">
+        UPDATE `order`
+        SET
+        delivery_state='',
+        purchase_state=''
+        WHERE o_code='';
+    </update>
 </mapper>

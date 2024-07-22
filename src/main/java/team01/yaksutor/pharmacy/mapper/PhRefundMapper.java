@@ -26,4 +26,6 @@ public interface PhRefundMapper {
     String getMediCodeByGoodsCode(String goodsCode);
 
     void insertRefundDetail(RefundDetail refundDetail);
+
+    void updateOrderState(Order order);
 }
