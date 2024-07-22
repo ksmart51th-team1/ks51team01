@@ -8,14 +8,14 @@
 
 <th:block layout:fragment="customContent">
     <main class="main">
-        <div class="container mb-30 mt-50">
+        <div class="container mb-30 mt-50 font-1">
             <div class="row">
                 <div class="col-xl-10 col-lg-12 m-auto">
                     <div class="mb-50">
                         <h1 class="heading-2 mb-10" th:text="${content}"></h1>
                     </div>
-                    <a class="btn btn-sm float-end mb-5" th:href="@{/pharm/myStockInsert}">새 재고 등록</a>
-                    <table class="table table-wishlist">
+                    <a class="btn btn-sm" style="width: 30%; margin: 10px; font-size: 17px;background: #ff8c9f" th:href="@{/pharm/myStockInsert}">📝  재고등록</a>
+                    <table class="table table-wishlist" style="font-family: 'Pretendard-Regular'">
                             <thead>
                             <tr class="text-center fs-5">
                                 <th scope="col" class="custome-checkbox start pl-30">의약품 이름</th>
@@ -30,19 +30,19 @@
                                 <td class="product-des product-name">
                                     <h6><a class="mb-10" style="color: black" th:href="@{/pharm/stockDetailView(stockCode=${s.stockCode},mediCode=${s.mediCode})}" th:text="${s.medicine.mediName}"></a></h6>
                                 </td>
-                                <td class="price" data-title="Price">
-                                    <h6 th:text="${s.pharQty + '개'}"></h6>
+                                <td class="price text-end" data-title="Price">
+                                    <p th:text="${s.pharQty + '개'}"></p>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <span  th:text="${s.stockChecked}"></span>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15" th:text="${s.lastDate}">
-
                                     </div>
                                 </td>
-                                <td class="text-right" data-title="Cart">
-                                    <a class="btn btn-sm" th:href="@{/pharm/myStockRelease(stockCode=${s.stockCode},mediName=${s.medicine.mediName})}">출고</a>
+                                <td data-title="Cart" style="text-align: center">
+                                    <a class="btn btn-sm" style="background: black;"
+                                       th:href="@{/pharm/myStockRelease(stockCode=${s.stockCode},mediName=${s.medicine.mediName})}"><i class="bi bi-capslock-fill"></i> 출고</a>
                                 </td>
                             </tr>
                             </tbody>

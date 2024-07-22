@@ -5645,6 +5645,8 @@ table.no-border td, table.no-border th, table.no-border thead {
 
 .table-wishlist {
   border: 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .16);
+  border-radius: 15px;
 }
 
 .apply-coupon {
@@ -12446,4 +12448,21 @@ footer .hotline img {
   outline: 4px solid #a6c1ff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
   border-radius: 8px;
+}
+
+.shortCut {
+  background: #3BB77E;
+  color: white;
+  margin: 5px;
+  padding: 7px;
+  border-radius: 15px;
+  font-size: 15px;
+  font-family: 'Pretendard-Regular',"Quicksand", sans-serif;
+  font-weight: 500;
+  width: 34%;
+  text-align: center;
+}
+
+#indexLoginBtn:hover {
+  background: transparent linear-gradient(304deg, rgba(255, 175, 226, 0.79) 0, rgba(255, 216, 222, 0.8) 100%) 0 0 no-repeat padding-box;
 }
