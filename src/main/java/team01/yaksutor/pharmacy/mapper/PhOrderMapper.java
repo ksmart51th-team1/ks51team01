@@ -26,4 +26,8 @@ public interface PhOrderMapper {
     void deleteOrderDetail(String orderDetailCode);
 
     OrderDetail getOrderDetailByCode(String orderDetailCode);
+
+    void deleteOrder(String oCode);
+
+    void updateOrderStatus(String merchantUid, String status);
 }

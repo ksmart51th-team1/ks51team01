@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.supplier.mapper.SuOrderMapper">
+
+    <resultMap id="OrderResultMap" type="Order">
+        <id column="o_code" property="oCode"/>
+        <result column="m_id_order" property="mIdOrder" />
+        <result column="shopping_cart_group" property="shoppingCartGroup" />
+        <result column="order_total_price" property="orderTotalPrice" />
+        <result column="delivery_state" property="deliveryState" />
+        <result column="purchase_state" property="purchaseState" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="request_term" property="requestTerm" />
+        <result column="order_type" property="orderType" />
+        <result column="purchase_date" property="purchaseDate" />
+    </resultMap>
+
+    <select id="getOrderListById" parameterType="String" resultMap="OrderResultMap">
+        /* 특정 판매자의 주문내역 조회*/
+        SELECT
+            o.o_code,
+            o.m_id_order,
+            o.shopping_cart_group,
+            o.order_total_price,
+            o.delivery_state,
+            o.purchase_state,
+            o.payment_method,
+            o.request_term,
+            o.order_type,
+            o.purchase_date
+        FROM
+            `order` AS o
+        INNER JOIN
+            order_detail AS od
+        ON
+            o.o_code = od.o_code
+        WHERE
+            od.o_seller_id = 'id001'
+        GROUP by
+            o.o_code
+        order BY
+            o.purchase_date DESC;
+    </select>
+</mapper>

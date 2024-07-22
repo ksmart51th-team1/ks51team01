@@ -60,7 +60,9 @@ public class PhOrderController {
         String sId = (String) request.getSession().getAttribute("S_ID");
         Member memberInfo = memberMapper.getMemberInfoById(sId);
         List<OrderDetail> orderDetailList = phOrderService.getOrderDetailListByOCode(oCode);
+        String orderCode = oCode;
 
+        model.addAttribute("orderCode", orderCode);
         model.addAttribute("title", "주문 상세");
         model.addAttribute("content", "주문 상세");
         model.addAttribute("orderDetailList", orderDetailList);

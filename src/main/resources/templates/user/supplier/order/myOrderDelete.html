@@ -14,7 +14,7 @@
                         <h2 class="content-title" th:text="${content}"></h2>
                         <div>
                             <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">삭제취소</button>
-                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="주문 삭제" />
+                            <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="주문 삭제" disabled/>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                                 <div class="col-md-9">
                                     <div class="mb-4">
                                         <label class="form-label" for="mediName">주문 번호</label>
-                                        <input type="text" value="의약품이름" name="mediName" id="mediName" class="form-control" >
+                                        <input type="text"  name="mediName" id="mediName" class="form-control" th:value="${oCode}">
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label" for="writeName">삭제조건</label>
@@ -53,7 +53,23 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const submitBtn = document.getElementById("submitBtn");
+            const writeNameInput = document.getElementById("writeName");
+            const mediNameInput = document.getElementById("mediName");
 
+            // 초기 상태: 버튼 비활성화
+            submitBtn.disabled = true;
+
+            // 입력 필드의 값을 감시하여 조건 충족 시 버튼 활성화
+            writeNameInput.addEventListener("input", function() {
+                if (writeNameInput.value === mediNameInput.value) {
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.disabled = true;
+                }
+            });
+        });
     </script>
 </th:block>
 </html>
