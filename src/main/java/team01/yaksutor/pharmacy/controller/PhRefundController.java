@@ -5,11 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import team01.yaksutor.dto.Refund;
-import team01.yaksutor.dto.RefundDetail;
+import org.springframework.web.bind.annotation.*;
+import team01.yaksutor.dto.*;
 import team01.yaksutor.pharmacy.mapper.PhRefundMapper;
 import team01.yaksutor.pharmacy.service.PhRefundService;
 
@@ -25,8 +22,16 @@ public class PhRefundController {
     private final PhRefundService phRefundService;
 
     @GetMapping("/myRefundInsert")
-    public String myRefundInsert(Model model) {
+    public String myRefundInsert(Model model,
+                                 @RequestParam(value="orderCode") String orderCode) {
 
+        List<OrderDetailForRefund> ODList = phRefundMapper.getOrderDetailList(orderCode);
+        Order orderInfo = phRefundMapper.getOrderByOCode(orderCode);
+        log.info("orderInfo = {}", orderInfo);
+        log.info("ODList = {}", ODList);
+
+        model.addAttribute("ODList", ODList);
+        model.addAttribute("orderInfo", orderInfo);
         model.addAttribute("title", "내 주문 반품 신청");
         model.addAttribute("content", "내 주문 반품 신청");
 
@@ -60,5 +65,14 @@ public class PhRefundController {
         model.addAttribute("content", "내 반품 상세");
 
         return "user/pharmacy/refund/myRefundDetailView";
+    }
+
+    @PostMapping("/myRefundInsert")
+    @ResponseBody
+    public String myRefundInsert(@RequestBody RequestRefundInfo refundInfo){
+        log.info("refundInfo = {}", refundInfo);
+        phRefundService.insertRefund(refundInfo);
+
+        return "user/pharmacy/refund/myRefundSearchList";
     }
 }

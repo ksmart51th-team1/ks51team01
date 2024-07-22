@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Refund {
     private String refundCode;
-    private String PharId;
+    private String pharId;
     private String oCode;
     private int refundTotalMoney;
     private String refundReason;
