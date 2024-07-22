@@ -3,8 +3,7 @@ package team01.yaksutor.dto;
 import lombok.Data;
 
 @Data
-public class OrderDetail {
-
+public class OrderDetailForRefund {
     private String orderDetailCode; // 주문 상세 코드
     private String oCode; // 주문 코드
     private String goodsCode; // 등록 의약품 코드
@@ -14,5 +13,6 @@ public class OrderDetail {
     private int orderPrice; // 구매 액수
 
     private SellMedicine sellMedicine;
+    private Supplier supplier;
     private ImgData imgData;
 }

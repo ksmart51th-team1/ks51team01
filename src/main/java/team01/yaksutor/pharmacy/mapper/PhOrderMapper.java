@@ -20,4 +20,10 @@ public interface PhOrderMapper {
     void updateOrderPrice(Order order);
 
     List<Order> getOrderListById(String sessionId);
+
+    List<OrderDetail> getOrderDetailListByOCode(String oCode);
+
+    void deleteOrderDetail(String orderDetailCode);
+
+    OrderDetail getOrderDetailByCode(String orderDetailCode);
 }
