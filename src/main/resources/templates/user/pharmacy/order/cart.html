@@ -26,7 +26,7 @@
 
                             <td class="image product-thumbnail pt-40"><img alt="#" th:src="${s.filePath}"></td>
                             <td class="product-des product-name">
-                                <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html" th:text="${s.mediName}"></a></h6>
+                                <h6 class="mb-5"><a class="product-name mb-10 text-heading" th:text="${s.mediName}"></a></h6>
                                 <span th:text="${s.mediDetail}"></span>
                              </td>
                             <td data-title="Price" style="text-align: right">
@@ -84,7 +84,6 @@
                 <div class="divider-2 mb-30"></div>
                 <div class="cart-action d-flex justify-content-between">
                     <a class="btn"  style="background-color: rgba(0,0,0,0.86)" th:href="@{/pharm/order/orderMedicine}"><i class="fi-rs-arrow-left mr-10"></i>주문 계속하기</a>
-
                 </div>
                 <div class="row mt-50">
                     <div class="col-lg-5">
@@ -146,7 +145,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <a class="btn mb-20 w-100" id="paymentButton" th:href="@{/pharm/OrderPay}" style="background-color: rgba(0,0,0,0.85)">결제하기<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a class="btn mb-20 w-100" id="paymentButton" th:href="@{/pharm/OrderPay}" style="background-color: rgba(0,0,0,0.85)">주문하기<i class="fi-rs-sign-out ml-15"></i></a>
                     <button class="button" type="button" onclick="requestPayment()">test</button>
                 </div>
             </div>

@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team01.yaksutor.pharmacy.mapper.PhOrderMapper">
+
     <resultMap id="OrderResultMap" type="Order">
         <id column="o_code" property="oCode" />
         <result column="m_id_order" property="mIdOrder" />
@@ -15,16 +16,90 @@
         <result column="order_type" property="orderType" />
         <result column="purchase_date" property="purchaseDate" />
     </resultMap>
+
     <resultMap id="OrderDetailResultMap" type="OrderDetail">
         <id column="order_detail_code" property="orderDetailCode"/>
         <result column="o_code" property="oCode"/>
         <result column="goods_code" property="goodsCode"/>
         <result column="o_seller_id" property="oSellerId"/>
-        <result column="supp_code" property="orderQty"/>
+        <result column="supp_code" property="suppCode"/>
         <result column="order_qty" property="orderQty"/>
         <result column="order_price" property="orderPrice"/>
+
+        <association property="sellMedicine" javaType="SellMedicine">
+            <id     column="goods_code"  property="goodsCode"/>
+            <result column="supp_code"   property="suppCode"/>
+            <result column="medi_code"   property="mediCode"/>
+            <result column="medi_name"   property="mediName"/>
+            <result column="medi_detail" property="mediDetail"/>
+            <result column="medi_price"  property="mediPrice"/>
+            <result column="medi_img"    property="mediImg"/>
+            <result column="reg_qty"     property="regQty"/>
+            <result column="state"       property="state"/>
+            <result column="reg_date"    property="regDate"/>
+        </association>
+
+        <association property="imgData" javaType="ImgData">
+            <id     column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name"   property="fileOriginName"/>
+            <result column="file_new_name"      property="fileNewName"/>
+            <result column="file_path"          property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date"      property="fileRegDate"/>
+        </association>
     </resultMap>
 
+
+    <!-- 주문코드로 주문상세 조회  -->
+    <select id="getOrderDetailByCode" parameterType="String" resultMap="OrderDetailResultMap">
+        SELECT
+        order_detail_code,
+        o_code,
+        goods_code,
+        o_seller_id,
+        supp_code,
+        order_qty,
+        order_price
+        FROM
+        order_detail
+        WHERE
+        order_detail_code = #{orderDetailCode};
+    </select>
+    <!-- 주문상세 삭제  -->
+    <delete id="deleteOrderDetail" parameterType="String">
+        DELETE FROM order_detail
+        WHERE order_detail_code = #{orderDetailCode}
+    </delete>
+
+
+    <!-- 주문코드로 주문상세조회   -->
+    <select id="getOrderDetailListByOCode" parameterType="String" resultMap="OrderDetailResultMap">
+        SELECT
+        i.file_path,
+        sm.medi_name,
+        sm.medi_price,
+        od.order_detail_code,
+        od.o_code,
+        od.goods_code,
+        od.o_seller_id,
+        od.supp_code,
+        od.order_qty,
+        od.order_price
+
+        FROM order_detail as od
+        INNER JOIN
+        sell_medicine AS sm
+        ON
+        od.goods_code = sm.goods_code
+        INNER join
+        img_data AS i
+        ON
+        sm.medi_img = i.file_idx
+        WHERE
+            od.o_code = #{oCode}
+    </select>
+
+    <!-- 주문자ID로 주문내역을 조회   -->
     <select id="getOrderListById" parameterType="String" resultMap="OrderResultMap">
         SELECT
         o_code,
@@ -41,6 +116,7 @@
         WHERE o.m_id_order = #{sessionId}
     </select>
 
+    <!-- 총주문금액 업데이트   -->
     <update id="updateOrderPrice" parameterType="Order">
         /*order 테이블 총주문금액 업데이트*/
         UPDATE
@@ -51,6 +127,7 @@
             o_code = #{oCode}
     </update>
 
+    <!-- 주문상세 추가   -->
     <insert id="addOrderDetail" parameterType="OrderDetail">
         <selectKey keyColumn="orderDetailCode" keyProperty="orderDetailCode" resultType="String" order="BEFORE">
             /*  order_detail_code 자동증가 코드  */
@@ -71,7 +148,7 @@
     </insert>
 
 
-
+    <!-- 주문추가   -->
     <insert id="addOrder" parameterType="Order">
         <selectKey keyProperty="oCode" resultType="String" order="BEFORE">
         /*  o_code 자동증가 코드  */
@@ -93,7 +170,7 @@
 
 
 
-
+    <!-- 상품코드로부터 판매자정보 불러오기   -->
    <select id="getSellerInfoByGoodsCode" resultType="SellerInfo">
        SELECT
        s.supp_id AS 'suppId',

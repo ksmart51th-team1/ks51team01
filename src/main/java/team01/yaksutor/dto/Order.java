@@ -2,6 +2,8 @@ package team01.yaksutor.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Order {
     private String oCode; // 주문 코드
@@ -14,4 +16,5 @@ public class Order {
     private String requestTerm; // 요청 사항
     private String orderType; // 거래 타입
     private String purchaseDate; // 구매 일자
+
 }
