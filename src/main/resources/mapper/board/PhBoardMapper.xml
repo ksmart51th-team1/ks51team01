@@ -267,14 +267,6 @@
         <result column="indate" 	property="indate"/>
     </resultMap>
 
-    <resultMap type="QnaReply" id="qnaReplyResultMap">
-        <id column="qr_seq" 			property="qrSeq" />
-        <result column="qseq" 		property="qseq"/>
-        <result column="responder" 		property="responder"/>
-        <result column="title" 		property="title"/>
-        <result column="content" 	property="content"/>
-        <result column="outdate" 	property="outdate"/>
-    </resultMap>
 
 
     <select id="getQnaList" resultMap="qnaResultMap">
@@ -283,12 +275,7 @@
         FROM
         qna;
     </select>
-    <select id="getQnaReplyList" resultMap="qnaReplyResultMap">
-        SELECT
-        *
-        FROM
-        qna_reply;
-    </select>
+
     <!--등록-->
      <insert id="addQna" parameterType="Qna">
         <selectKey keyProperty="qseq" resultType="String" order="BEFORE">
@@ -316,6 +303,67 @@
         WHERE  qseq = #{qseq}
     </delete>
 
+    <resultMap type="QnaReply" id="qnaReplyResultMap">
+        <id column="qr_seq" 			property="qrSeq" />
+        <result column="qseq" 		property="qseq"/>
+        <result column="responder" 		property="responder"/>
+        <result column="title" 		property="title"/>
+        <result column="content" 	property="content"/>
+        <result column="outdate" 	property="outdate"/>
+    </resultMap>
 
+    <select id="getQnaReplyList" resultMap="qnaReplyResultMap">
+        SELECT
+        *
+        FROM
+        qna_reply;
+    </select>
+    <!--등록-->
+    <insert id="addQnaReply" parameterType="QnaReply">
+        <selectKey keyProperty="qrSeq" resultType="String" order="BEFORE">
+            SELECT
+            CASE
+            WHEN COUNT(qr_seq) = 0 THEN 'qr_seq_1'
+            ELSE
+            CONCAT(
+            'qr_seq_',
+            MAX(CAST(SUBSTRING_INDEX(qr_seq, 'qr_seq_', -1) AS UNSIGNED)) +1)
+            END AS qrSeq
+            FROM
+            qna_reply;
+        </selectKey>
+        INSERT INTO qna_reply
+        (qr_seq, qseq, responder, title, content, outdate)
+        values
+        (#{qrSeq}, #{qseq}, #{responder}, #{title}, #{content}, CURDATE());
+        
 
+    </insert>
+    <update id="updateQna" parameterType="string">
+    UPDATE
+        qna
+    SET
+        rep='완료'
+    WHERE qseq = #{qseq}
+    </update>
+    
+
+    <!--문의 답변 삭제-->
+    <delete id="deleteQnaReply" parameterType="String">
+        DELETE FROM qna_reply
+        WHERE  qr_seq = #{qrSeq}
+    </delete>
+
+    <!-- 문의글 기본키로 문의&답글조회  -->
+    <select id="getQnaListByKey" parameterType="String" resultType="String">
+        SELECT
+        qr.qr_seq As qrSeq
+        FROM qna AS q
+        INNER JOIN
+        qna_reply AS qr
+        ON
+        q.qseq = qr.qseq
+        WHERE
+        q.qseq = #{qseq}
+    </select>
 </mapper>

@@ -107,14 +107,31 @@ public class PhBoardService {
         List<QnaReply> qnaReplyList = phBoardMapper.getQnaReplyList();
         return qnaReplyList;
     }
-    // 추가
+    // 문의 추가
     public void addQna(Qna qna) {
         phBoardMapper.addQna(qna);
-
     }
+    // 답변 추가
+    @Transactional
+    public void addQnaReply(QnaReply qnaReply) {
+        phBoardMapper.addQnaReply(qnaReply);
+        String qseq = qnaReply.getQseq();
+        phBoardMapper.updateQna(qseq);
+    }
+
+
     // 삭제
+    @Transactional
     public void deleteQna(String qseq) {
+        //qseq로 조회를 해 먼저 근데 조인을해서 답글이랑 조인을해서
+        String qrseq = phBoardMapper.getQnaListByKey(qseq);
+        if(!qrseq.isEmpty()){
+            phBoardMapper.deleteQnaReply(qrseq);
         phBoardMapper.deleteQna(qseq);
+        }
+    }
+    public void deleteQnaReply(String qrSeq){
+        phBoardMapper.deleteQnaReply(qrSeq);
     }
 
 

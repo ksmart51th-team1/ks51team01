@@ -16,4 +16,7 @@ public class SellMedicine {
     private String regDate;
     private String filePath;
     private ImgData imgData;
+    private String mediDrugForm;
+    private String mediDrugType;
+    private String mediState;
 }

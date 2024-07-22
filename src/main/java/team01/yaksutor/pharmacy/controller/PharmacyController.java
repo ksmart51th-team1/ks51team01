@@ -15,6 +15,11 @@ import team01.yaksutor.pharmacy.dto.Qna;
 import team01.yaksutor.pharmacy.dto.QnaReply;
 import team01.yaksutor.pharmacy.service.PhBoardService;
 import team01.yaksutor.pharmacy.service.PhOrderService;
+import team01.yaksutor.dto.SellMedicine;
+import team01.yaksutor.pharmacy.dto.Qna;
+import team01.yaksutor.pharmacy.dto.QnaReply;
+import team01.yaksutor.pharmacy.service.PhBoardService;
+import team01.yaksutor.pharmacy.service.PhMedicineService;
 import team01.yaksutor.pharmacy.service.phMyPageService;
 
 import java.util.List;
@@ -28,10 +33,12 @@ public class PharmacyController {
     private final phMyPageService phMyPageService;
     private final PhBoardService phBoardService;
     private final PhOrderService phOrderService;
+    private final PhMedicineService phMedicineService;
 
     @GetMapping("/main")
     public String pharmMain(Model model) {
-        model.addAttribute("content", "유저 메인.");
+        List<SellMedicine> sellMedicineList = phMedicineService.getSellMedicineList();
+        model.addAttribute("sellMedicineList", sellMedicineList);
         return "user/pharmacy/pharmMain";
     }
 
@@ -94,9 +101,8 @@ public class PharmacyController {
     }*/
 
     @GetMapping("/myOrderList")
-    public String myOderList(Model model) {
-        List<Order> orderList = phOrderService.getOrderListById();
-        model.addAttribute("orderList",orderList);
+    public String myOderList() {
+
         return "user/pharmacy/myPage/myOrderList";
     }
     @GetMapping("/myDelivery")

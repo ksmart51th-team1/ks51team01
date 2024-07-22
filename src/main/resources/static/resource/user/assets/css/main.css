@@ -125,7 +125,11 @@ li.hr span {
   margin: 20px 0;
   display: block;
 }
-
+.indexBackground {
+  background-image: url(../imgs/indexBg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 /*--- Common Classes---------------------*/
 ::-moz-selection {
   background: #3BB77E;
@@ -3970,6 +3974,7 @@ table .product-thumbnail img {
 .product-cart-wrap .product-img-action-wrap .product-img-zoom a img {
   -webkit-transition: all 1.5s cubic-bezier(0, 0, 0.05, 1);
   transition: all 1.5s cubic-bezier(0, 0, 0.05, 1);
+  height: 120px;
 }
 
 .product-cart-wrap .product-action-1 {
@@ -12397,3 +12402,48 @@ footer .hotline img {
   }
 }
 
+.regForm {
+  color: black;
+  font-family: "Pretendard-Regular", sans-serif;
+  padding: 20px 32px;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  .img-box {
+    width: 80px;
+    img{
+      display: block;
+      width: 100%;
+    }
+  }
+  .text-box {
+    margin-left: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1 1;
+    .name-text {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 1.5;
+    }
+    .introduce-text {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  }
+}
+
+.regForm:hover {
+  background: #f6f9ff;
+  outline: 4px solid #a6c1ff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
+  border-radius: 8px;
+}
