@@ -1,0 +1,33 @@
+
+#main {
+    background: white;
+    font-family: 'Pretendard-Regular';
+    h1 {
+        font-family: 'Pretendard-Regular';
+        color: black;
+    }
+}
+
+.sup_slider {
+    a {
+        color: #1e2231;
+        font-size: 25px;
+        font-weight: 600;
+    }
+    span {
+        font-size: 18px;
+        background: rgba(30, 34, 49, 0.7);
+        border-radius: 20px;
+    }
+    li {
+        margin-bottom: 3rem;
+    }
+    li:hover {
+        span {
+            background: rgba(29, 29, 66, 0.88);
+        }
+        border-bottom: 3px solid rgba(29, 29, 66, 0.88);
+    }
+    display: flex;
+    justify-content: space-around;
+}

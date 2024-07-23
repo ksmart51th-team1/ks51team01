@@ -125,14 +125,17 @@
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
                                     <a th:href="@{/pharm/cart}">
-                                        <img th:src="@{/resource/user/assets/imgs/theme/icons/icon-cart.svg}"/>
+                                        <a th:href="@{/resource/user/assets/imgs/theme/icons/icon-cart.svg}"/>
+                                        <i class="bi bi-cart-fill"></i>
                                         <span class="pro-count blue" th:text="${cartItemCount}"></span>
+                                        </a>
+
                                     </a>
 
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" th:href="@{/pharm/myOrderList}">
-                                        <img th:src="@{/resource/user/assets/imgs/theme/icons/icon-heart.svg}"/>
+                                        <i class="bi bi-file-text-fill"></i>
                                     </a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
@@ -153,10 +156,12 @@
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a th:href="@{/pharm/myPage}">
-                                        <img alt="Nest" class="svgInject"
-                                             th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}"/>
+                                        <i class="bi bi-person-circle" >
+                                            <span class="p-1" style="font-family: 'Pretendard-Regular', 'sans-serif'; background: rgba(240, 240, 240, 0.8); color: black; border-radius: 10px" th:text="${session.S_ID} + '님'"></span>
+                                        </i>
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -204,8 +209,10 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <span class="bi bi-chat-quote"><br></span>
-                                        <a th:href="@{/pharm/board}">커뮤니티 </a>
+
+                                        <a th:href="@{/pharm/board}">
+                                            <span class="bi bi-chat-quote"><br></span>
+                                            커뮤니티 </a>
 
                                     </li>
                                     <li>
