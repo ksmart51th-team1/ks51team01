@@ -17,4 +17,8 @@ public class Order {
     private String orderType; // 거래 타입
     private String purchaseDate; // 구매 일자
 
+    private OrderDetail orderDetail;
+    private SellMedicine sellMedicine;
+    private ImgData imgData;
+
 }

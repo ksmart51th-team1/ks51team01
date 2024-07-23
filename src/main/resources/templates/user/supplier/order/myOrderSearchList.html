@@ -59,7 +59,7 @@
                 <article class="itemlist" th:each="ol : ${orderList}" th:if="${orderList != null}">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/supplier/myOrderDetailView}">
+                            <a class="itemside" th:href="@{/supplier/myOrderDetailView(oCode=${ol.OCode},purchaseState=${ol.purchaseState})}">
                                 <div class="info">
                                     <h6 class="mb-0" th:text="${ol.OCode}"></h6>
                                 </div>

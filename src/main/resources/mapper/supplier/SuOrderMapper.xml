@@ -15,7 +15,107 @@
         <result column="request_term" property="requestTerm" />
         <result column="order_type" property="orderType" />
         <result column="purchase_date" property="purchaseDate" />
+
+        <association property="orderDetail" javaType="OrderDetail">
+            <id column="order_detail_code" property="orderDetailCode"/>
+            <result column="o_code" property="oCode"/>
+            <result column="goods_code" property="goodsCode"/>
+            <result column="o_seller_id" property="oSellerId"/>
+            <result column="supp_code" property="suppCode"/>
+            <result column="order_qty" property="orderQty"/>
+            <result column="order_price" property="orderPrice"/>
+        </association>
+
+        <association property="sellMedicine" javaType="SellMedicine">
+            <id     column="goods_code"  property="goodsCode"/>
+            <result column="supp_code"   property="suppCode"/>
+            <result column="medi_code"   property="mediCode"/>
+            <result column="medi_name"   property="mediName"/>
+            <result column="medi_detail" property="mediDetail"/>
+            <result column="medi_price"  property="mediPrice"/>
+            <result column="medi_img"    property="mediImg"/>
+            <result column="reg_qty"     property="regQty"/>
+            <result column="state"       property="state"/>
+            <result column="reg_date"    property="regDate"/>
+        </association>
+
+        <association property="imgData" javaType="ImgData">
+            <id     column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name"   property="fileOriginName"/>
+            <result column="file_new_name"      property="fileNewName"/>
+            <result column="file_path"          property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date"      property="fileRegDate"/>
+        </association>
+
     </resultMap>
+
+    <resultMap id="OrderDetailResultMap" type="OrderDetail">
+        <id column="order_detail_code" property="orderDetailCode"/>
+        <result column="o_code" property="oCode"/>
+        <result column="goods_code" property="goodsCode"/>
+        <result column="o_seller_id" property="oSellerId"/>
+        <result column="supp_code" property="suppCode"/>
+        <result column="order_qty" property="orderQty"/>
+        <result column="order_price" property="orderPrice"/>
+
+        <association property="sellMedicine" javaType="SellMedicine">
+            <id     column="goods_code"  property="goodsCode"/>
+            <result column="supp_code"   property="suppCode"/>
+            <result column="medi_code"   property="mediCode"/>
+            <result column="medi_name"   property="mediName"/>
+            <result column="medi_detail" property="mediDetail"/>
+            <result column="medi_price"  property="mediPrice"/>
+            <result column="medi_img"    property="mediImg"/>
+            <result column="reg_qty"     property="regQty"/>
+            <result column="state"       property="state"/>
+            <result column="reg_date"    property="regDate"/>
+        </association>
+
+        <association property="imgData" javaType="ImgData">
+            <id     column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name"   property="fileOriginName"/>
+            <result column="file_new_name"      property="fileNewName"/>
+            <result column="file_path"          property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date"      property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <select id="getOrderDetailsBySellerIdAndOrderCode" parameterType="String" resultMap="OrderResultMap">
+        SELECT
+        sm.medi_code,
+        sm.medi_name,
+        od.order_qty,
+        sm.medi_price,
+        o.payment_method,
+        o.purchase_state,
+        od.order_price
+        FROM `order` AS o
+        INNER join
+        order_detail AS od
+        on
+        o.o_code = od.o_code
+        INNER JOIN
+        sell_medicine AS sm
+        on
+        sm.goods_code = od.goods_code
+        Where
+        od.o_seller_id = #{sId}
+        and
+        od.o_code = #{oCode}
+    </select>
+
+    <delete id="deleteOrderDetailById" parameterType="String">
+        /* 특정회원에 대한 특정주문의 주문상세 삭제 */
+        DELETE
+        FROM order_detail
+        WHERE
+        o_seller_id = #{sId}
+        and
+        o_code= #{oCode}
+    </delete>
+
 
     <select id="getOrderListById" parameterType="String" resultMap="OrderResultMap">
         /* 특정 판매자의 주문내역 조회*/
@@ -29,7 +129,14 @@
             o.payment_method,
             o.request_term,
             o.order_type,
-            o.purchase_date
+            o.purchase_date,
+            od.order_detail_code,
+            od.o_code,
+            od.goods_code,
+            od.o_seller_id,
+            od.supp_code,
+            od.order_qty,
+            od.order_price
         FROM
             `order` AS o
         INNER JOIN

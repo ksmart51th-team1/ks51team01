@@ -13,6 +13,7 @@ import team01.yaksutor.admin.service.AdMemberService;
 import team01.yaksutor.common.mapper.MemberMapper;
 import team01.yaksutor.common.service.MemberService;
 import team01.yaksutor.dto.Member;
+import team01.yaksutor.dto.Order;
 import team01.yaksutor.dto.OrderDetail;
 import team01.yaksutor.dto.ShoppingCart;
 import team01.yaksutor.pharmacy.service.PhOrderService;
@@ -55,13 +56,17 @@ public class PhOrderController {
     }
 
     @GetMapping("/myOrderDetailView")
-    public String myOrderDetailView(@RequestParam("oCode") String oCode, Model model) {
+    public String myOrderDetailView(@RequestParam("oCode") String oCode,
+                                    @RequestParam("perchaseState") String perchaseState,
+                                    Model model) {
 
         String sId = (String) request.getSession().getAttribute("S_ID");
         Member memberInfo = memberMapper.getMemberInfoById(sId);
         List<OrderDetail> orderDetailList = phOrderService.getOrderDetailListByOCode(oCode);
         String orderCode = oCode;
 
+
+        model.addAttribute("perchaseState", perchaseState);
         model.addAttribute("orderCode", orderCode);
         model.addAttribute("title", "주문 상세");
         model.addAttribute("content", "주문 상세");

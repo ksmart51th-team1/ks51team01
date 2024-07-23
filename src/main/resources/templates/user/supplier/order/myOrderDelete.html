@@ -7,13 +7,13 @@
 
 <th:block layout:fragment="customContent">
     <section class="content-main">
-        <form id="addMedicine" th:action="@{#}" method="post">
+        <form id="deleteOrder" th:action="@{#}" method="post">
             <div class="row">
                 <div class="col-6">
                     <div class="content-header">
                         <h2 class="content-title" th:text="${content}"></h2>
                         <div>
-                            <button id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up">삭제취소</button>
+                            <a th:href="@{/supplier/myOrderSearchList}"><button type="button" id="resetBtn" class="btn btn-light rounded font-sm mr-5 text-body hover-up" >삭제취소</button></a>
                             <input type="button" id="submitBtn" class="btn btn-md rounded font-sm hover-up" value="주문 삭제" disabled/>
                         </div>
                     </div>
@@ -54,21 +54,43 @@
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            const submitBtn = document.getElementById("submitBtn");
-            const writeNameInput = document.getElementById("writeName");
-            const mediNameInput = document.getElementById("mediName");
+            const submitBtn = $('#submitBtn');
+            const writeNameInput = $('#writeName');
+            const mediNameInput = $('#mediName');
 
             // 초기 상태: 버튼 비활성화
-            submitBtn.disabled = true;
+            submitBtn.prop('disabled', true);
 
             // 입력 필드의 값을 감시하여 조건 충족 시 버튼 활성화
-            writeNameInput.addEventListener("input", function() {
-                if (writeNameInput.value === mediNameInput.value) {
-                    submitBtn.disabled = false;
-                } else {
-                    submitBtn.disabled = true;
-                }
+            writeNameInput.blur(function() {
+                submitBtn.prop('disabled',(writeNameInput.val() !== mediNameInput.val()));
             });
+
+            submitBtn.click(function(){
+                const oCodevalue = mediNameInput.val();
+                const order = { oCode : oCodevalue };
+                console.log(JSON.stringify(order));
+                const request = $.ajax({
+                    url : '/supplier/deleteOrder',
+                    method : 'POST',
+                    contentType : 'application/json',
+                    data : JSON.stringify(order),
+                    dataType : 'json'
+                })
+                    request.done(response => {
+                        if(response === true){
+                            alert("주문 취소에 성공하였습니다.");
+                            window.location.href = "/supplier/myOrderSearchList";
+                        }
+                    })
+                    request.fail(function(xhr, status, error){
+                        console.error('Failed to delete order:', error);
+                        alert("주문 취소에 실패했습니다.");
+                        window.location.href = "/supplier/myOrderSearchList";
+                    })
+
+            });
+
         });
     </script>
 </th:block>

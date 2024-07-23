@@ -125,6 +125,8 @@
         purchase_date
         FROM `order` AS o
         WHERE o.m_id_order = #{sessionId}
+        and
+        o.purchase_state != '반품'
         ORDER BY purchase_date desc;
     </select>
 

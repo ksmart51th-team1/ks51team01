@@ -112,7 +112,6 @@ public class PhOrderService {
 
     @Transactional
     public void updateOrderStatus(String merchantUid, String status) {
-        System.out.println("여기ㅐ에ㅇ"+merchantUid + status);
         phOrderMapper.updateOrderStatus(merchantUid, status);
     }
 }
