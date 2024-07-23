@@ -8214,10 +8214,17 @@ h6.post-title {
 }
 
 /* Header style 1 */
-#headers {
+#headerTop {
   background-color: #fcc0c5;
   color: white;
 }
+#headerBody {
+  color: black;
+  box-shadow: 0 6px 10px rgba(11, 10, 10, 0.1);
+  background: rgba(240, 240, 240, 0.8);
+  border-top: 2px solid #dcdcdc;
+}
+
 .header-style-1 {
   position: relative;
   overflow-x: clip;
@@ -8422,7 +8429,7 @@ h6.post-title {
 }
 
 .header-style-1.header-style-5 .main-menu > nav > ul > li > a {
-  color: #fff;
+  color: white;
 }
 
 .header-style-1.header-style-5 .hotline p {
@@ -8464,7 +8471,7 @@ span.fi-rs-apps {
   display: inline-block;
   font-size: 16px;
   font-weight: normal;
-  color: white;
+  color: black;
   font-family: "Pretendard-Regular", sans-serif;
 }
 
@@ -8483,7 +8490,7 @@ span.fi-rs-apps {
   left: 0;
   top: 100%;
   background-color: #ffffff;
-  min-width: 250px;
+  min-width: 180px;
   padding: 25px 15px;
   -webkit-transition: all .25s ease 0s;
   transition: all .25s ease 0s;
@@ -8512,7 +8519,7 @@ span.fi-rs-apps {
   position: absolute;
   left: 100%;
   top: -110px;
-  background-color: #ffffff;
+  background-color: rgba(234, 234, 234, 0.79);
   width: 240px;
   padding: 33px 0 35px;
   -webkit-transition: all .25s ease 0s;
@@ -8531,7 +8538,7 @@ span.fi-rs-apps {
 }
 
 .main-menu > nav > ul > li ul.sub-menu li a i {
-  font-size: 9px;
+  font-size: 14px;
   float: right;
   position: relative;
   top: 4px;
@@ -8737,12 +8744,14 @@ span.fi-rs-apps {
 }
 
 .main-menu.main-menu-lh-2 > nav > ul > li {
-  line-height: 70px;
+  span{
+    color: black;
+    font-size: 21px;
+  }
+  text-align: center;
+  line-height: 32px;
 }
 
-.main-menu.main-menu-lh-3 > nav > ul > li {
-  line-height: 80px;
-}
 
 .main-menu.main-menu-grow {
   -webkit-box-flex: 1;
