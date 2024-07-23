@@ -7046,9 +7046,7 @@ h6.post-title {
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .header-wrap .header-nav {
@@ -7068,7 +7066,8 @@ h6.post-title {
 .header-wrap.header-space-between {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-evenly;
+  justify-content: space-around;
+
 }
 
 .header-wrap .header-right {
@@ -7082,7 +7081,6 @@ h6.post-title {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: flex-end;
-  margin-right: 5rem;
 }
 
 .logo a {
@@ -8223,6 +8221,12 @@ h6.post-title {
   box-shadow: 0 6px 10px rgba(11, 10, 10, 0.1);
   background: rgba(240, 240, 240, 0.8);
   border-top: 2px solid #dcdcdc;
+  @media only screen and (max-width: 768px) {
+      #headerBody {
+        font-size: 10px;
+      }
+    
+  }
 }
 
 .header-style-1 {
@@ -11291,20 +11295,12 @@ footer .hotline img {
   .header-action-2 .header-action-icon-2:last-child {
     padding: 0;
   }
-  .logo.logo-width-1 {
-    margin-right: 0;
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-  }
+
   .logo.logo-width-1 a img {
     width: 150px;
     min-width: 150px;
   }
-  .header-bottom {
-    padding: 20px 0;
-  }
+
   .header-action .header-action-icon {
     margin-right: 15px;
   }
@@ -11694,10 +11690,10 @@ footer .hotline img {
     line-height: 70px;
   }
   .main-menu.main-menu-padding-1 > nav > ul > li {
-    padding: 0 8px;
+    padding: 0 10px;
   }
   .main-menu.main-menu-padding-1.hm3-menu-padding > nav > ul > li {
-    padding: 0 6px;
+    padding: 0 10px;
   }
   .search-style-1 {
     margin-right: 15px;
@@ -11801,7 +11797,7 @@ footer .hotline img {
 
 @media only screen and (min-width: 1200px) and (max-width: 1365px) {
   .main-menu.main-menu-padding-1 > nav > ul > li {
-    padding: 0 14px;
+    padding: 0 10px;
   }
 }
 
@@ -12474,4 +12470,10 @@ footer .hotline img {
 
 #indexLoginBtn:hover {
   background: transparent linear-gradient(304deg, rgba(255, 175, 226, 0.79) 0, rgba(255, 216, 222, 0.8) 100%) 0 0 no-repeat padding-box;
+}
+
+@media only screen and (max-width: 1024px) {
+  .main-menu {
+    font-size: 10px;
+  }
 }
