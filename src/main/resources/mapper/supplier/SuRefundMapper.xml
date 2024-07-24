@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="team01.yaksutor.pharmacy.mapper.PhRefundMapper">
+<mapper namespace="team01.yaksutor.supplier.mapper.SuRefundMapper">
 
     <resultMap id="RefundListMap" type="Refund">
         <id     column="refund_code"        property="refundCode" />
@@ -128,14 +128,82 @@
         <result column="purchase_date"       property="purchaseDate" />
     </resultMap>
 
-    <resultMap id="refundDetailListMap" type="refundDetail">
-        <id 	column="refund_detail_code" property="refundDetailCode"/>
-        <result column="refund_code" 	    property="refundCode"/>
-        <result column="medi_code" 	        property="mediCode"/>
-        <result column="refund_qty" 	    property="refundQty"/>
-        <result column="refund_money"       property="refundMoney"/>
-        <result column="supp_code"          property="suppCode"/>
+    <resultMap id="shippingMap" type="Shipping">
+        <id     column="ship_code"           property="shipCode" />
+        <result column="o_code"              property="oCode" />
+        <result column="refund_code"         property="refundCode" />
+        <result column="return_order_status" property="returnOrderStatus" />
+        <result column="delivery_state"      property="deliveryState" />
+        <result column="transport_num"       property="transportNum" />
+        <result column="manager"             property="manager" />
+        <result column="delivery_location"   property="deliveryLocation" />
+        <result column="deli_date"           property="deliDate" />
+        <result column="arrival_date"        property="arrivalDate" />
     </resultMap>
+
+    <select id="getRefundTotal" parameterType="string" resultMap="RefundListMap">
+        SELECT
+            r.refund_code,
+            r.refund_total_money,
+            r.o_code
+        FROM
+            refund AS r
+        WHERE
+            r.refund_code = #{refundCode};
+    </select>
+
+    <select id="getPaymentMethod" parameterType="string" resultType="String">
+        SELECT
+            o.payment_method
+        FROM
+            `order` AS o
+        WHERE
+            o.o_code = #{oCode};
+    </select>
+
+    <select id="getRefundDetailByRefundCode" parameterType="string" resultMap="RefundDetailListMap">
+        SELECT
+            m.medi_name,
+            rd.medi_code,
+            rd.refund_qty,
+            rd.refund_money
+        FROM
+            refund_detail AS rd
+            INNER join
+            medicine AS m
+            on
+            rd.medi_code = m.medi_code
+        WHERE
+            rd.refund_code = #{refundCode} AND rd.supp_code = #{suppCode};
+    </select>
+
+    <select id="getRefundListBySuppCode" parameterType="string" resultMap="RefundListMap">
+        SELECT
+            r.refund_code,
+            r.phar_id,
+            r.o_code,
+            r.refund_total_money,
+            r.refund_reason,
+            r.refund_date
+        FROM
+            refund AS r
+            INNER join
+            refund_detail AS rd
+            on
+            r.refund_code = rd.refund_code
+        WHERE
+            rd.supp_code = #{suppCode}
+        GROUP BY rd.refund_code;
+    </select>
+
+    <select id="getSuppCodeById" parameterType="string">
+        SELECT
+            s.supp_code
+        FROM
+            supplier AS s
+        WHERE
+            s.supp_id = #{sid};
+    </select>
 
     <select id="getRefundList" parameterType="string" resultMap="RefundListMap">
         SELECT
@@ -197,7 +265,7 @@
         FROM
             refund AS r
         WHERE
-            r.refund_code = #{refundCode};
+            r.refund_code = 'refund_code_1';
     </select>
 
     <select id="getOrderDetailList" parameterType="string" resultMap="orderDetailListMap">
@@ -320,6 +388,19 @@
         WHERE o_code=#{oCode};
     </update>
 
+    <select id="getShippingDetail" parameterType="string" resultMap="shippingMap">
+        SELECT
+            s.ship_code,
+            s.transport_num,
+            s.manager,
+            s.delivery_state,
+            s.refund_code
+        FROM
+            shipping AS s
+        WHERE
+            s.refund_code = #{refundCode};
+    </select>
+
     <insert id="insertShipping" parameterType="Shipping">
         <selectKey keyProperty="shipCode" resultType="String" order="BEFORE">
             /* 상품 자동 증가 코드 */
@@ -335,30 +416,22 @@
                 shipping;
         </selectKey>
         INSERT INTO shipping
-        (ship_code, o_code, refund_code, return_order_status, delivery_state, transport_num, manager, delivery_location, deli_date, arrival_date)
-        VALUES (#{shipCode}, #{oCode}, #{refundCode}, #{returnOrderStatus}, #{deliveryState}, #{transportNum}, #{manager}, #{deliveryLocation}, CURDATE(), #{arrivalDate})
+        (ship_code, refund_code, return_order_status, delivery_state, transport_num, manager, delivery_location, deli_date, arrival_date)
+        VALUES (#{shipCode}, #{refundCode}, #{returnOrderStatus}, #{deliveryState}, #{transportNum}, #{manager}, #{deliveryLocation}, NOW(), DATE_ADD(CURDATE(), INTERVAL 3 DAY))
     </insert>
 
-    <delete id="deleteShipping" parameterType="string">
-        DELETE FROM shipping WHERE refund_code=#{refundCode}
-    </delete>
-
-    <delete id="deleteRefundDetail" parameterType="string">
-        DELETE FROM refund_detail WHERE refund_code=#{refundCode}
-    </delete>
-
-    <delete id="deleteRefund" parameterType="string">
-        DELETE FROM refund WHERE refund_code=#{refundCode}
-    </delete>
-
-    <update id="updateCancleRefund" parameterType="string">
-        UPDATE `order`
+    <update id="updateShipping" parameterType="Shipping">
+        UPDATE shipping
         SET
-        purchase_state='결제완료'
-        WHERE o_code=#{oCode}
+            delivery_state=#{deliveryState},
+            delivery_location=#{deliveryLocation}
+        WHERE refund_code=#{refundCode}
     </update>
 
-    <!--<select id="getRefundDetails" parameterType="string" resultMap="refundDetailListMap">
-
-    </select>-->
+    <update id="updateRefund" parameterType="string">
+        UPDATE refund
+        SET
+            refund_state='반품완료'
+        WHERE refund_code=#{refundCode};
+    </update>
 </mapper>

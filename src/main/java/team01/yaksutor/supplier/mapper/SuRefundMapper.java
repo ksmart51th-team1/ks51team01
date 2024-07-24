@@ -1,4 +1,4 @@
-package team01.yaksutor.pharmacy.mapper;
+package team01.yaksutor.supplier.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import team01.yaksutor.dto.*;
@@ -6,7 +6,17 @@ import team01.yaksutor.dto.*;
 import java.util.List;
 
 @Mapper
-public interface PhRefundMapper {
+public interface SuRefundMapper {
+    Refund getRefundTotal(String refundCode);
+
+    String getPaymentMethod(String oCode);
+
+    List<Refund> getRefundDetailByRefundCode(String refundCode, String suppCode);
+
+    String getSuppCodeById(String sid);
+
+    List<Refund> getRefundListBySuppCode(String suppCode);
+
     List<Refund> getRefundList(String sid);
 
     List<Refund> getRefundDetailList(String refundCode);
@@ -29,17 +39,11 @@ public interface PhRefundMapper {
 
     void updateOrderState(Order order);
 
-    // shipping 삭제
-    void deleteShipping(String refundCode);
+    Shipping getShippingDetail(String refundCode);
 
-    // refundDetail 삭제
-    void deleteRefundDetail(String refundCode);
+    void insertShipping(Shipping shipping);
 
-    // refund 삭제
-    void deleteRefund(String refundCode);
+    void updateShipping(Shipping shipping);
 
-    // order 상태 반품 -> 결제완료
-    void updateCancleRefund(String oCode);
-
-    // List<RefundDetail> getRefundDetails(String refundCode);
+    void updateRefund(String refundCode);
 }

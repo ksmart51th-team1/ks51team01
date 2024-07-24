@@ -22,31 +22,44 @@
                         <form>
                             <div class="mb-4">
                                 <div class="mb-4">
-                                    <label for="product_slug" class="form-label">총 반품 금액</label>
-                                    <input type="text" placeholder="Type here" class="form-control" />
+                                    <label class="form-label">반품 번호</label>
+                                    <input type="text" placeholder="10자리" class="form-control" th:value="${refund.refundCode}" readonly="readonly" />
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">총 반품 금액</label>
+                                    <input type="text" placeholder="Type here" class="form-control" th:value="${refund.refundTotalMoney}" readonly="readonly" />
                                 </div>
                                 <label class="form-label">결제수단</label>
                                 <!--<input type="text" placeholder="Type here" class="form-control" id="product_name" />-->
-                                <select class="form-select">
-                                    <option>--결제수단--</option>
-                                    <option>카드결제</option>
-                                    <option>계좌이체</option>
-                                </select>
+                                <input class="form-control" th:value="${paymentMethod}" readonly="readonly" />
                             </div>
-                            <div class="mb-4">
-                                <label for="product_slug" class="form-label">은행</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_slug" />
+                            <div th:if="${ship != null}">
+                                <div class="mb-4">
+                                    <label class="form-label">운송장 번호</label>
+                                    <input type="text" placeholder="10자리" class="form-control" th:value="${ship.transportNum}" readonly="readonly" />
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">담당자 이름</label>
+                                    <input type="text" placeholder="Type here" class="form-control" th:value="${ship.manager}" readonly="readonly" />
+                                </div>
+                                <div class="md-2">
+                                    <button class="btn btn-primary md-2" id="refundClear" type="button" th:if="${ship.deliveryState != '반품완료'}">반품 완료</button>
+                                    <!--button class="btn btn-primary md-2" id="submitBtn">배송등록</button>-->
+                                </div>
                             </div>
-                            <div class="mb-4">
-                                <label for="product_slug" class="form-label">운송장 번호</label>
-                                <input type="text" placeholder="10자리" class="form-control" />
-                            </div>
-                            <div class="mb-4">
-                                <label for="product_slug" class="form-label">담당자 이름</label>
-                                <input type="text" placeholder="Type here" class="form-control" />
-                            </div>
-                            <div class="d-grid">
-                                <button class="btn btn-primary">뒤로가기</button>
+                            <div th:unless="${ship != null}">
+                                <div class="mb-4">
+                                    <label class="form-label">운송장 번호</label>
+                                    <input type="text" placeholder="10자리" class="form-control" id="transNum" />
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">담당자 이름</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="manager" />
+                                </div>
+                                <div class="md-2">
+                                    <button class="btn btn-primary md-2" type="button">뒤로가기</button>
+                                    <button class="btn btn-primary md-2" id="submitBtn" type="button">배송등록</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -55,11 +68,6 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" />
-                                        </div>
-                                    </th>
                                     <th>판매의약품 코드</th>
                                     <th>의약품 이름</th>
                                     <th>주문 갯수</th>
@@ -68,17 +76,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td class="text-center">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" />
-                                        </div>
-                                    </td>
-                                    <td>21</td>
-                                    <td><b>Cake & Milk</b></td>
-                                    <td>Cake & Milk</td>
-                                    <td>판매자</td>
-                                    <td class="text-end">/cake</td>
+                                <tr th:each="r : ${refundDetailList}">
+                                    <td th:text="${r.mediList.mediCode}">21</td>
+                                    <td th:text="${r.mediList.mediName}"></td>
+                                    <td th:text="${r.RDList.refundQty} + '개'">Cake & Milk</td>
+                                    <td th:text="${r.suppList.supName}">판매자</td>
+                                    <td class="text-end" th:text="${r.RDList.refundMoney} + '원'">/cake</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -101,14 +104,9 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-        $('#resetBtn').click(e => {
-            e.preventDefault();
-            location.href = '/admin/adminMain';
-        });
-
         $('#submitBtn').click(function(){
             let isSubmit = true;
-            $('#addMedicine input, #addMedicine select').each((idx, element) => {
+            $('#transNum, #manager').each((idx, element) => {
                 const id = element.id;
                 const value = element.value;
                 if(!value){
@@ -118,73 +116,51 @@
                     return false;
                 }
             });
-            if(isSubmit) $('#addMedicine').submit();
+            if(isSubmit){
+                const shipping = {};
+                const transportNum = $('#transNum').val();
+                shipping['transportNum'] = transportNum;
+                const manager = $('#manager').val();
+                shipping['manager'] = manager;
+                const refundCode = $('#refundCode').val();
+                shipping['refundCode'] = refundCode;
+                console.log(shipping);
+                const request = $.ajax({
+                    url : '/supplier/myRefundShip',
+                    method : 'POST',
+                    contentType : 'application/json',
+                    data : JSON.stringify(shipping),
+                    dataType : 'json'
+                });
+                request.done(function(item){
+                    $(location).attr('href', '/supplier/myRefundSearchList');
+                })
+                request.fail(function(jqXHR, textStatus, error){
+                    console.log(error);
+                    $(location).attr('href', '/supplier/myRefundSearchList');
+                });
+            }
         });
 
-        const createIngrRow = () => {
-            const ingrContent = [
-                { 'tagName' : 'input', 'type' : 'text', 'name' : 'Ingredient' },
-                { 'tagName' : 'input', 'type' : 'text', 'name' : 'content' },
-                { 'tagName' : 'button', 'type' : 'button' }
-            ];
-            const $tr = $('<tr></tr>');
-            ingrContent.forEach(item => {
-                const $td = $('<td></td>');
-                const tagName = item.tagName;
-                delete item.tagName;
-                const $element = $('<' + tagName + ' />', item);
-                $td.append($element);
-                $tr.append($td);
+        $('#refundClear').click(function(){
+            const refundCode = $('#refundCode').val();
+            const ship = {};
+            ship['refundCode'] = refundCode;
+            const request = $.ajax({
+                url : '/supplier/refundClear',
+                method : 'POST',
+                contentType : 'application/json',
+                data : JSON.stringify(ship),
+                dataType : 'json'
             });
-            return $tr;
-        }
-        // 3. 행의 추가 버튼
-        $(document).on('click', '.ingrAddBtn', function(){
-            $('#ingrTbody button:last').addClass('ingrDelBtn')
-                .removeClass('ingrAddBtn')
-                .text('삭제');
-            const $row = createIngrRow();
-            $row.find('input').addClass('form-control');
-            $row.find('button').addClass('btn btn-md rounded font-sm hover-up ingrAddBtn')
-                .text('추가');
-            $('#ingrTbody').append($row);
-        });
-        // 4. 행의 삭제 버튼
-        $(document).on('click', '.ingrDelBtn', function(){
-            $(this).closest('tr').remove();
-        });
-
-        const createEffiRow = () => {
-            const ingrContent = [
-                { 'tagName' : 'input', 'type' : 'text', 'name' : 'efficacy' },
-                { 'tagName' : 'button', 'type' : 'button' }
-            ];
-            const $tr = $('<tr></tr>');
-            ingrContent.forEach(item => {
-                const $td = $('<td></td>');
-                const tagName = item.tagName;
-                delete item.tagName;
-                const $element = $('<' + tagName + ' />', item);
-                $td.append($element);
-                $tr.append($td);
+            request.done(function(item){
+                $(location).attr('href', '/supplier/myRefundSearchList');
+            })
+            request.fail(function(jqXHR, textStatus, error){
+                console.log(error);
+                $(location).attr('href', '/supplier/myRefundSearchList');
             });
-            return $tr;
-        }
-        // 3. 행의 추가 버튼
-        $(document).on('click', '.effiAddBtn', function(){
-            $('#effiTbody button:last').addClass('effiDelBtn')
-                .removeClass('effiAddBtn')
-                .text('삭제');
-            const $row = createEffiRow();
-            $row.find('input').addClass('form-control');
-            $row.find('button').addClass('btn btn-md rounded font-sm hover-up float-end effiAddBtn')
-                .text('추가');
-            $('#effiTbody').append($row);
-        });
-        // 4. 행의 삭제 버튼
-        $(document).on('click', '.effiDelBtn', function(){
-            $(this).closest('tr').remove();
-        });
+        })
     </script>
 </th:block>
 </html>

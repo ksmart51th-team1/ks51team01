@@ -42,32 +42,32 @@
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-sm-4 col-8 flex-grow-1 col-name">
                             <div class="info itemside">
-                                <h6 class="mb-0">반품번호</h6>
+                                <h6 class="mb-0">배송번호</h6>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>총 반품 금액</span></div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>반품 사유</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>운송장 번호</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>배송 상태</span></div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>반품 일자</span>
+                            <span>배송 일자</span>
                         </div>
                     </div>
                     <!-- row .// -->
                 </article>
-                <article class="itemlist" th:each="r : ${refundList}">
+                <article class="itemlist" th:each="s : ${shipList}">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/supplier/myRefundDetailView(refundCode=${r.refundCode})}">
+                            <a class="itemside" th:href="@{/supplier/myOrderDetailView(oCode=${s.oCode})}">
                                 <div class="info">
-                                    <h6 class="mb-0" th:text="${r.refundCode}"></h6>
+                                    <h6 class="mb-0" th:text="${s.shipCode}"></h6>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${r.refundTotalMoney}">$34.50</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${s.transportNum}">$34.50</span></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-success" th:text="${r.refundReason}">Active</span>
+                            <span class="badge rounded-pill alert-success" th:text="${s.deliveryState}">Active</span>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span th:text="${r.refundDate}">02.11.2021</span>
+                            <span th:text="${s.deliDate}">02.11.2021</span>
                         </div>
                     </div>
                     <!-- row .// -->
