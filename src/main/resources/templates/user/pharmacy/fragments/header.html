@@ -3,10 +3,11 @@
 <div id="header" th:fragment="headerFragment">
 
     <!-- Quick view -->
-    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+    <div aria-hidden="true" aria-labelledby="quickViewModalLabel" class="modal fade custom-modal" id="quickViewModal"
+         tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
@@ -15,36 +16,50 @@
                                 <!-- MAIN SLIDES -->
                                 <div class="product-image-slider">
                                     <figure class="border-radius-10">
-                                        <img th:src="@{/resource/user/assets/imgs/shop/product-16-2.jpg}" alt="product image" />
+                                        <img alt="product image"
+                                             th:src="@{/resource/user/assets/imgs/shop/product-16-2.jpg}"/>
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img th:src="@{/resource/user/assets/imgs/shop/product-16-1.jpg}" alt="product image" />
+                                        <img alt="product image"
+                                             th:src="@{/resource/user/assets/imgs/shop/product-16-1.jpg}"/>
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img th:src="@{/resource/user/assets/imgs/shop/product-16-3.jpg}" alt="product image" />
+                                        <img alt="product image"
+                                             th:src="@{/resource/user/assets/imgs/shop/product-16-3.jpg}"/>
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img th:src="@{/resource/user/assets/imgs/shop/product-16-4.jpg}" alt="product image" />
+                                        <img alt="product image"
+                                             th:src="@{/resource/user/assets/imgs/shop/product-16-4.jpg}"/>
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img th:src="@{/resource/user/assets/imgs/shop/product-16-5.jpg}" alt="product image" />
+                                        <img alt="product image"
+                                             th:src="@{/resource/user/assets/imgs/shop/product-16-5.jpg}"/>
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img th:src="@{/resource/user/assets/imgs/shop/product-16-6.jpg}" alt="product image" />
+                                        <img alt="product image"
+                                             th:src="@{/resource/user/assets/imgs/shop/product-16-6.jpg}"/>
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img th:src="@{/resource/user/assets/imgs/shop/product-16-7.jpg}" alt="product image" />
+                                        <img alt="product image"
+                                             th:src="@{/resource/user/assets/imgs/shop/product-16-7.jpg}"/>
                                     </figure>
                                 </div>
                                 <!-- THUMBNAILS -->
                                 <div class="slider-nav-thumbnails">
-                                    <div><img th:src="@{/resource/user/assets/imgs/shop/thumbnail-3.jpg}" alt="product image" /></div>
-                                    <div><img th:src="@{/resource/user/assets/imgs/shop/thumbnail-4.jpg}" alt="product image" /></div>
-                                    <div><img th:src="@{/resource/user/assets/imgs/shop/thumbnail-5.jpg}" alt="product image" /></div>
-                                    <div><img th:src="@{/resource/user/assets/imgs/shop/thumbnail-6.jpg}" alt="product image" /></div>
-                                    <div><img th:src="@{/resource/user/assets/imgs/shop/thumbnail-7.jpg}" alt="product image" /></div>
-                                    <div><img th:src="@{/resource/user/assets/imgs/shop/thumbnail-8.jpg}" alt="product image" /></div>
-                                    <div><img th:src="@{/resource/user/assets/imgs/shop/thumbnail-9.jpg}" alt="product image" /></div>
+                                    <div><img alt="product image"
+                                              th:src="@{/resource/user/assets/imgs/shop/thumbnail-3.jpg}"/></div>
+                                    <div><img alt="product image"
+                                              th:src="@{/resource/user/assets/imgs/shop/thumbnail-4.jpg}"/></div>
+                                    <div><img alt="product image"
+                                              th:src="@{/resource/user/assets/imgs/shop/thumbnail-5.jpg}"/></div>
+                                    <div><img alt="product image"
+                                              th:src="@{/resource/user/assets/imgs/shop/thumbnail-6.jpg}"/></div>
+                                    <div><img alt="product image"
+                                              th:src="@{/resource/user/assets/imgs/shop/thumbnail-7.jpg}"/></div>
+                                    <div><img alt="product image"
+                                              th:src="@{/resource/user/assets/imgs/shop/thumbnail-8.jpg}"/></div>
+                                    <div><img alt="product image"
+                                              th:src="@{/resource/user/assets/imgs/shop/thumbnail-9.jpg}"/></div>
                                 </div>
                             </div>
                             <!-- End Gallery -->
@@ -52,7 +67,8 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="detail-info pr-30 pl-30">
                                 <span class="stock-status out-stock"> Sale Off </span>
-                                <h3 class="title-detail"><a href="#" class="text-heading">Seeds of Change Organic Quinoa, Brown</a></h3>
+                                <h3 class="title-detail"><a class="text-heading" href="#">Seeds of Change Organic
+                                    Quinoa, Brown</a></h3>
                                 <div class="product-detail-rating">
                                     <div class="product-rate-cover text-end">
                                         <div class="product-rate d-inline-block">
@@ -72,12 +88,14 @@
                                 </div>
                                 <div class="detail-extralink mb-30">
                                     <div class="detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                        <a class="qty-down" href="#"><i class="fi-rs-angle-small-down"></i></a>
                                         <span class="qty-val">1</span>
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                        <a class="qty-up" href="#"><i class="fi-rs-angle-small-up"></i></a>
                                     </div>
                                     <div class="product-extra-link2">
-                                        <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                        <button class="button button-add-to-cart" type="submit"><i
+                                                class="fi-rs-shopping-cart"></i>Add to cart
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="font-xs">
@@ -94,68 +112,71 @@
             </div>
         </div>
     </div>
-    <header class="header-area header-style-1 header-height-2" id="headers">
-        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+    <header class="header-area header-style-1 header-height-2">
+        <div class="header-middle header-middle-ptb-1 d-lg-block" id="headerTop">
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a th:href="@{/pharm/main}"><img th:src="@{/resource/user/assets/imgs/logo.png}" alt="logo" /></a>
+                        <a th:href="@{/pharm/main}"><img alt="logo"
+                                                         th:src="@{/resource/user/assets/imgs/logo.png}"/></a>
                     </div>
                     <div class="header-right">
                         <div class="header-action-right">
                             <div class="header-action-2">
-
                                 <div class="header-action-icon-2">
                                     <a th:href="@{/pharm/cart}">
-                                        <img  th:src="@{/resource/user/assets/imgs/theme/icons/icon-cart.svg}" />
+                                        <i class="bi bi-cart-fill"></i>
                                         <span class="pro-count blue" th:text="${cartItemCount}"></span>
+                                        </a>
+
                                     </a>
 
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a th:href="@{/pharm/myOrderList}" class="mini-cart-icon">
-                                        <img th:src="@{/resource/user/assets/imgs/theme/icons/icon-heart.svg}" />
+                                    <a class="mini-cart-icon" th:href="@{/pharm/myOrderList}">
+                                        <i class="bi bi-file-text-fill"></i>
                                     </a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
-                                                <a th:href="@{/pharm/myOrderList}"><i class="fi fi-rs-receipt mr-10"></i>주문 목록</a>
+                                                <a th:href="@{/pharm/myOrderList}"><i
+                                                        class="fi fi-rs-receipt mr-10"></i>주문 목록</a>
                                             </li>
                                             <li>
-                                                <a th:href="@{/pharm/myRefundSearchList}"><i class="fi fi-rs-redo mr-10"></i>반품/취소</a>
+                                                <a th:href="@{/pharm/myRefundSearchList}"><i
+                                                        class="fi fi-rs-redo mr-10"></i>반품/취소</a>
                                             </li>
                                             <li>
-                                                <a th:href="@{/pharm/myDelivery}"><i class="fi fi-rs-rocket mr-10"></i>배송 조회</a>
+                                                <a th:href="@{/pharm/myDelivery}"><i class="fi fi-rs-rocket mr-10"></i>배송
+                                                    조회</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a th:href="@{/pharm/myPage}">
-                                        <img class="svgInject" alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}" />
+                                        <i class="bi bi-person-circle" >
+                                            <span class="p-1" style="font-family: 'Pretendard-Regular', 'sans-serif'; background: rgba(240, 240, 240, 0.8); color: black; border-radius: 10px" th:text="${session.S_ID} + '님'"></span>
+                                        </i>
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="header-bottom header-bottom-bg-color sticky-bar" >
+        <div class="header-bottom header-bottom-bg-color sticky-bar" id="headerBody">
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
-                    <div class="logo logo-width-1 d-block d-lg-none">
-                        <a th:href="@{/pharm/main}"><img th:src="@{/resource/logo/logo_white.png}" alt="logo"></a>
-                    </div>
-                    <div class="header-nav d-none d-lg-flex">
-
-                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
+                    <div class="header-nav d-lg-flex">
+                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-lg-block">
                             <nav>
                                 <ul>
-                                    <li class="hot-deals">
-                                        <img th:src="@{/resource/user/assets/imgs/theme/icons/icon-hot-white.svg}" alt="hot deals" /> <a th:href="@{/pharm/liveOrder}">긴급의약품요청</a>
-                                        <span class="alert-notification">5</span>
-
+                                    <li>
+                                        <a th:href="@{/pharm/liveOrder}">
+                                            <span class="bi bi-arrow-left-right"><br></span>긴급의약품요청</a>
                                         <ul class="sub-menu">
                                             <li>
                                                 <a th:href="@{/pharm/liveOrder}">실시간 요청 목록</a>
@@ -166,14 +187,14 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a th:href="@{/pharm/main}">　홈　</a>
+                                        <a th:href="@{/pharm/main}">
+                                            <span class="bi bi-house"></span><br>홈</a>
                                     </li>
+                                    <li>
 
-                                    <li>
-                                        <a href="https://www.health.kr/">약품정보</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">재고관리 </a>
+                                        <a th:href="@{/pharm/myStockSearchList}">
+                                            <span class="bi bi-box-seam"><br></span>
+                                            재고관리 </a>
                                         <ul class="sub-menu">
                                             <li><a th:href="@{/pharm/myStockSearchList}">재고관리</a></li>
                                             <li><a th:href="@{/pharm/myStockHistory}">입출고기록</a></li>
@@ -181,77 +202,29 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a th:href="@{/pharm/order/orderMedicine}">주문하기 </a>
+                                        <a th:href="@{/pharm/order/orderMedicine}">
+                                            <span class="bi bi-capsule"></span><br>
+                                            주문하기
+                                        </a>
                                     </li>
                                     <li>
-                                        <a th:href="@{/pharm/board}">커뮤니티 </a>
+
+                                        <a th:href="@{/pharm/board}">
+                                            <span class="bi bi-chat-quote"><br></span>
+                                            커뮤니티 </a>
 
                                     </li>
                                     <li>
-                                        <a th:href="@{/pharm/contact}">고객센터 </a>
+                                        <a th:href="@{/pharm/qna}">
+                                            <span class="bi bi-info-circle"></span><br>고객센터 </a>
                                         <ul class="sub-menu">
                                             <li><a th:href="@{/pharm/notice}">공지사항</a></li>
                                             <li><a th:href="@{/pharm/qna}">1:1문의</a></li>
                                             <li><a th:href="@{/pharm/faq}">자주하는 질문</a></li>
                                         </ul>
                                     </li>
-
                                 </ul>
                             </nav>
-                        </div>
-                    </div>
-
-                    <div class="header-action-right d-block d-lg-none">
-                        <div class="header-action-2">
-                            <div class="header-action-icon-2">
-                                <a href="shop-wishlist.html">
-                                    <img alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-heart.svg}" />
-                                    <span class="pro-count white">4</span>
-                                </a>
-                            </div>
-                            <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="#">
-                                    <img alt="Nest" th:src="@{/resource/user/assets/imgs/theme/icons/icon-cart.svg}" />
-                                    <span class="pro-count white">2</span>
-                                </a>
-                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                    <ul>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Nest" th:src="@{/resource/user/assets/imgs/shop/thumbnail-3.jpg}" /></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
-                                                <h3><span>1 × </span>$800.00</h3>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Nest" th:src="@{/resource/user/assets/imgs/shop/thumbnail-4.jpg}" /></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
-                                                <h3><span>1 × </span>$3500.00</h3>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="shopping-cart-footer">
-                                        <div class="shopping-cart-total">
-                                            <h4>Total <span>$383.00</span></h4>
-                                        </div>
-                                        <div class="shopping-cart-button">
-                                            <a href="shop-cart.html">View cart</a>
-                                            <a href="shop-checkout.html">Checkout</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

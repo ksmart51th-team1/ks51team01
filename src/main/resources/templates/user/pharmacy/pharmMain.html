@@ -9,15 +9,15 @@
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/main.css?v=5.6}" />
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/pharmMain.css}" />
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/footer.css}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- 헤더 -->
 <div th:replace="~{user/pharmacy/fragments/header :: headerFragment}"></div>
-<main class="main">
+<main class="main Pmain">
     <section class="home-slider position-relative mb-30">
-        <div class="container">
-            <div class="home-slide-cover mt-30">
+        <div class="home-slide-cover">
                 <div class="hero-slider-1 style-4 dot-style-1 dot-style-1-position-1">
                     <div class="single-hero-slider single-animation-wrap cover-1">
                         <img th:src="@{/resource/user/assets/imgs/lime.jpg}" style="margin: auto"/>
@@ -34,7 +34,6 @@
                 </div>
                 <div class="slider-arrow hero-slider-1-arrow"></div>
             </div>
-        </div>
     </section>
     <!--End hero slider-->
 
@@ -96,7 +95,7 @@
                                             <div class="sold mt-15 mb-15">
                                                 <span class="font-xs text-heading" th:text="'재고 : ' + ${s.regQty} + ' 개'">재고</span>
                                             </div>
-                                            <a class="btn w-100 hover-up" style="font-weight: normal;font-family: 'Pretendard-Regular';" th:href="@{/pharm/order/orderMedicine}"><i class="fi-rs-shopping-cart mr-5"></i>주문하기</a>
+                                            <a class="btn w-100 hover-up" style="font-weight: normal;font-family: 'Pretendard-Regular'; background: black;" th:href="@{/pharm/order/orderMedicine}"><i class="fi-rs-shopping-cart mr-5"></i>주문하기</a>
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +137,7 @@
                                             <div class="sold mt-15 mb-15">
                                                 <span class="font-xs text-heading" th:text="'재고 : ' + ${s.regQty} + ' 개'">재고</span>
                                             </div>
-                                            <a class="btn w-100 hover-up" style="font-weight: normal;font-family: 'Pretendard-Regular';" th:href="@{/pharm/order/orderMedicine}"><i class="fi-rs-shopping-cart mr-5"></i>주문하기</a>
+                                            <a class="btn w-100 hover-up" style="font-weight: normal;font-family: 'Pretendard-Regular';background: black;" th:href="@{/pharm/order/orderMedicine}"><i class="fi-rs-shopping-cart mr-5"></i>주문하기</a>
                                         </div>
                                     </div>
 

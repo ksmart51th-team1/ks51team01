@@ -5,24 +5,32 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import team01.yaksutor.dto.SellMedicine;
 import team01.yaksutor.security.handler.FormAuthenticationSuccessHandler;
+import team01.yaksutor.supplier.mapper.SuMedicineMapper;
+import team01.yaksutor.supplier.service.SuMedicineService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/supplier")
 @RequiredArgsConstructor
 @Slf4j
 public class SupplierController {
-
-
+    private final SuMedicineService suMedicineService;
+    private final SuMedicineMapper suMedicineMapper;
 
     @GetMapping("/supplierMain")
-    public String supplierMain(HttpServletRequest request) {
-        /* 아래 코드를 주석 해제하면 현재 저장된 세션 ID를 불러올 수 있음*/
-        //String S_ID = (String) request.getSession().getAttribute("S_ID");
-        //System.out.println("납품업체 메인페이지에 저장된 세션 ID : " + S_ID);
+    public String supplierMain(HttpServletRequest request, Model model) {
+        String sid = request.getSession().getAttribute("S_ID").toString();
+        String suppCode = suMedicineMapper.getSuppCode(sid);
+        List<SellMedicine> sellMediList = suMedicineService.getSellMediList(suppCode);
 
+
+        model.addAttribute("sellMediList", sellMediList);
         return "user/supplier/supplierMain";
     }
 }

@@ -16,7 +16,9 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/user/assets/imgs/theme/favicon.svg}">
     <!-- Template CSS -->
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/main.css?v=5.6}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/resource/user/assets/css/footer.css}" />
 </head>
 
 <body style="overflow: visible;"><div class="body-overlay-1"></div>
@@ -35,10 +37,10 @@
             <div class="row">
                 <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
                     <div class="row align-items-center">
-                        <div class="col-lg-6 pr-30 d-none d-lg-block">
+                        <div class="col-lg-6 pr-30 d-lg-block">
                             <div class="guide-banner">
                                 <div class="list-banner-box">
-                                    <div class="logo logo-width-1 mb-3 regForm" th:onclick="|location.href='@{/member/memberInsert/owner}'|">
+                                    <div class="logo logo-width-1 mb-3 regForm hover-up" th:onclick="|location.href='@{/member/memberInsert/owner}'|">
                                         <div class="img-box">
                                             <img th:src="@{/resource/logo/national.png}" alt="개국약사 image">
                                         </div>
@@ -48,7 +50,7 @@
                                         </div>
                                         <i class="bi bi-chevron-right"></i>
                                     </div>
-                                    <div class="logo logo-width-1 mb-3 regForm" th:onclick="|location.href='@{/member/memberInsert/staff}'|" >
+                                    <div class="logo logo-width-1 mb-3 regForm hover-up" th:onclick="|location.href='@{/member/memberInsert/staff}'|" >
                                         <div class="img-box">
                                             <img th:src="@{/resource/logo/management.png}" alt="관리약사 image">
                                         </div>
@@ -63,7 +65,7 @@
                         </div>
                         <div class="col-lg-6 col-md-8">
                             <div class="login_wrap widget-taber-content background-white" >
-                                <div class="padding_eight_all bg-white" style="padding: 23px; border-radius: 25px;">
+                                <div class="padding_eight_all bg-white" style="padding: 23px; border-radius: 25px; font-family: 'Pretendard-Regular';">
 
                                     <form th:action="@{/login}" method="post">
                                         <input type="hidden" th:value="secret" name="secret_key" />
@@ -89,23 +91,20 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-heading btn-block hover-up" name="login"
-                                                    style="width: 100%; background-color: #ff8c9f; font-family: 'Pretendard-Regular'; border-radius: 15px;">로그인</button>
+                                            <button class="btn btn-heading btn-block" id="indexLoginBtn" name="login" style="width: 100%; background: rgb(255,140,159); font-family: 'Pretendard-Regular'; border-radius: 15px; font-size: 20px; font-weight: 600"
+                                                    type="submit">로그인</button>
                                         </div>
-                                        <div>
-                                            <a th:href="@{#}" class="shortCut" data-login-id="admin" data-login-pw="admin1234">관리자 메인 화면 바로가기</a>
-                                        </div>
-                                        <div>
-                                            <a th:href="@{#}" class="shortCut" data-login-id="id007" data-login-pw="pw007">약사 메인 화면 바로가기</a>
-                                        </div>
-                                        <div>
-                                            <a th:href="@{#}" class="shortCut" data-login-id="id001" data-login-pw="pw001">납품업체 메인 화면 바로가기</a>
+                                        ※ 아래 버튼은 테스트용 입니다.
+                                        <div style="display: flex">
+                                            <a  class="shortCut hover-up" data-login-id="admin" data-login-pw="admin1234"><i class="bi bi-wrench"></i> 관리자 로그인</a>
+                                            <a  class="shortCut hover-up" data-login-id="id007" data-login-pw="pw007"><i class="bi bi-capsule"></i> 약사 로그인</a>
+                                            <a  class="shortCut hover-up" data-login-id="id001" data-login-pw="pw001"><i class="bi bi-truck"></i> 납품업체 로그인</a>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="padding_eight_all mt-3" style="padding: 23px; border-radius: 25px; background-color: #0d6efd; cursor:pointer" onclick="location.href='https://forms.gle/1VRReEqFk24heS8q8';">
+                                <div class="padding_eight_all mt-3 hover-up" onclick="location.href='https://forms.gle/1VRReEqFk24heS8q8';" style="padding: 23px; border-radius: 25px; background-color: rgba(13,110,253,0.76); cursor:pointer">
                                     <h5 style="color: white">파트너 제휴문의 > </h5>
-                                    <p style="color: white">약수터와 함께 전문 약사님을 만나보세요.<i>🤝</i></p>
+                                    <p style="color: white">약수터와 함께 전문 약사님을 만나보세요.<i class="fs-5">🤝</i></p>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +113,7 @@
             </div>
         </div>
     </div>
-    <div th:replace="~{user/pharmacy/fragments/footer :: teamIntroFragment}"></div>
+    <div th:replace="~{user/pharmacy/fragments/footer :: footerFragment}"></div>
 
 </main>
 
