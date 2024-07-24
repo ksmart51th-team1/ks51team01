@@ -8,16 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import team01.yaksutor.admin.mapper.AdMemberMapper;
-import team01.yaksutor.admin.service.AdMemberService;
 import team01.yaksutor.common.mapper.MemberMapper;
-import team01.yaksutor.common.service.MemberService;
 import team01.yaksutor.dto.Member;
-import team01.yaksutor.dto.Order;
 import team01.yaksutor.dto.OrderDetail;
 import team01.yaksutor.dto.ShoppingCart;
 import team01.yaksutor.pharmacy.service.PhOrderService;
-
 import java.util.List;
 
 @Controller
@@ -30,7 +25,11 @@ public class PhOrderController {
     private final HttpServletRequest request;
     private final MemberMapper memberMapper;
 
-
+    /**
+     * 주문상세코드를 이용해 주문상세를 삭제하는 기능
+     * @param orderDetailCode
+     * @return ResponseEntity
+     */
     @DeleteMapping("/deleteOrderDetail/{orderDetailCode}")
     public ResponseEntity<Void> deleteOrderDetail(@PathVariable String orderDetailCode) {
         boolean isDeleted = phOrderService.deleteOrderDetail(orderDetailCode);
@@ -41,6 +40,11 @@ public class PhOrderController {
         }
     }
 
+    /**
+     * 장바구니로부터 주문을 생성
+     * @param shoppingCart
+     * @return ResponseEntity
+     */
     @PostMapping("/OrderPay")
     public ResponseEntity<String> OrderPay(@RequestBody List<ShoppingCart> shoppingCart) {
         log.info(shoppingCart.toString());
@@ -55,6 +59,13 @@ public class PhOrderController {
 
     }
 
+    /**
+     * 주문상세 페이지로 이동
+     * @param oCode
+     * @param perchaseState
+     * @param model
+     * @return url주소
+     */
     @GetMapping("/myOrderDetailView")
     public String myOrderDetailView(@RequestParam("oCode") String oCode,
                                     @RequestParam("perchaseState") String perchaseState,

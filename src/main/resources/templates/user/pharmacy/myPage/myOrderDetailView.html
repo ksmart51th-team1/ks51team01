@@ -35,7 +35,7 @@
                             th:if="${orderDetailList != null}"
                             th:attr="data-price=${od.sellMedicine.mediPrice}, data-quantity=${od.orderQty}, data-order-detail-code=${od.orderDetailCode}">
                             <td class="custome-checkbox pl-30"></td>
-                            <td class="image product-thumbnail pt-40"><img src="#" alt="#"></td>
+                            <td class="image product-thumbnail pt-40"><img th:src="${od.imgData.filePath}" ></td>
                             <td class="product-des product-name text-center">
                                 <h6 class="mb-5"><a class="product-name mb-10 text-heading" th:text="${od.sellMedicine.mediName}"></a></h6>
                             </td>
