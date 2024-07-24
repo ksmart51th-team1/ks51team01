@@ -11,38 +11,35 @@
             <div>
                 <h2 class="content-title card-title" th:text="${content}"></h2>
             </div>
-            <div>
-                <input type="text" placeholder="Search Categories" class="form-control bg-white" />
-            </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <div class="row" >
                     <div class="col-md-3">
                         <form>
-                            <div class="mb-4">
+                            <div class="mb-4" >
                                 <div class="mb-4">
                                     <label for="product_slug" class="form-label">총 주문 금액</label>
-                                    <input type="text" placeholder="Type here" class="form-control" />
+                                    <input type="text"  class="form-control" th:value="${order.orderTotalPrice}" readonly/>
                                 </div>
                                 <label class="form-label">결제수단</label>
                                 <!--<input type="text" placeholder="Type here" class="form-control" id="product_name" />-->
-                                <select class="form-select">
-                                    <option>--결제수단--</option>
-                                    <option>카드결제</option>
-                                    <option>계좌이체</option>
-                                </select>
+                                <input type="text" class="form-control" th:value="${order.paymentMethod}" readonly/>
                             </div>
                             <div class="mb-4">
                                 <label for="product_slug" class="form-label">은행</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_slug" />
+                                <input type="text"  class="form-control" id="product_slug" value="카카오뱅크" readonly/>
                             </div>
                             <div class="mb-4">
                                 <label for="product_slug" class="form-label">결제상태</label>
-                                <input type="text" placeholder="Type here" class="form-control" />
+                                <input type="text"  class="form-control" th:value="${order.purchaseState}" readonly/>
                             </div>
-                            <div class="d-grid">
-                                <button class="btn btn-primary">배송시작</button>
+                            <div class="d-grid" th:if="${purchaseState}== '결제완료' ">
+                                <label for="product_slug" class="form-label">송장번호입력</label>
+                                <input type="text" class="form-control mb-4" />
+                                <label for="product_slug" class="form-label">담당자이름</label>
+                                <input type="text" class="form-control mb-4" />
+                                <button type="button" class="btn btn-primary mb-4">배송시작</button>
                             </div>
                         </form>
                     </div>
@@ -50,29 +47,26 @@
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                <tr>
+                                <tr >
                                     <th class="text-center">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" />
-                                        </div>
                                     </th>
                                     <th>판매의약품 코드</th>
                                     <th>의약품 이름</th>
                                     <th>주문 갯수</th>
-                                    <th class="text-end">가격</th>
+                                    <th class="text-center">단가</th>
+                                    <th class="text-center">합계금액</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="ol : ${orderList}">
                                     <td class="text-center">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" />
-                                        </div>
                                     </td>
-                                    <td>21</td>
-                                    <td><b>Cake & Milk</b></td>
-                                    <td>Cake & Milk</td>
-                                    <td class="text-end">/cake</td>
+                                    <td th:text="${ol.sellMedicine.mediCode}"></td>
+                                    <td ><b th:text="${ol.sellMedicine.mediName}"></b></td>
+                                    <td th:text="${ol.orderDetail.orderQty}">Cake & Milk</td>
+                                    <td class="text-center" th:text="${ol.sellMedicine.mediPrice}"></td>
+                                    <td class="text-center" th:text="${ol.orderDetail.orderPrice}"></td>
+
                                 </tr>
                                 </tbody>
                             </table>

@@ -40,4 +40,6 @@ public interface AdMemberMapper {
     int deleteSupplier(Supplier supplier);
     //납품업체수정
     int modifySupplier(Supplier supplier);
+
+    Pharmacy getPharmacyById(String sId);
 }

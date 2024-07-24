@@ -1,5 +1,6 @@
 package team01.yaksutor.pharmacy.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import team01.yaksutor.dto.Pharmacy;
 @Slf4j
 public class PhMemberService {
 
+    private final HttpServletRequest request;
     private final AdMemberMapper adMemberMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -47,5 +49,12 @@ public class PhMemberService {
         adMemberMapper.memberInsert(member);
         adMemberMapper.licenseInsert(license);
         adMemberMapper.pharmacyInsert(pharmacy);
+    }
+
+    public Pharmacy getPharmacyById() {
+        String sId = (String)request.getSession().getAttribute("S_ID");
+        return adMemberMapper.getPharmacyById(sId);
+
+
     }
 }

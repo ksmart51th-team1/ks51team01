@@ -103,6 +103,13 @@
                 data : JSON.stringify(requestRefundInfo),
                 dataType : 'json'
             });
+            request.done(function(item){
+                $(location).attr('href', '/pharm/myRefundSearchList');
+            })
+            request.fail(function(jqXHR, textStatus, error){
+                console.log(error);
+                $(location).attr('href', '/pharm/myRefundSearchList');
+            });
         });
     </script>
 </th:block>

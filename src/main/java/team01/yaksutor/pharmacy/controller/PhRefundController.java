@@ -73,6 +73,16 @@ public class PhRefundController {
         log.info("refundInfo = {}", refundInfo);
         phRefundService.insertRefund(refundInfo);
 
-        return "user/pharmacy/refund/myRefundSearchList";
+        return "redirect:/pharm/myRefundSearchList";
+    }
+
+    @PostMapping("/cancleRefund")
+    @ResponseBody
+    public String cancleRefund(@RequestBody Refund refundCode){
+        log.info("refundCode: {}", refundCode);
+        String value = refundCode.getRefundCode();
+        phRefundService.cancleRefund(value);
+
+        return "redirect:/pharm/myRefundSearchList";
     }
 }
