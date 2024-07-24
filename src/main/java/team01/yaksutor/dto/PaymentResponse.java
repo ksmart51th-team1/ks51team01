@@ -1,8 +1,16 @@
 package team01.yaksutor.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+@Data
 public class PaymentResponse {
-    private String impUid; // 아임포트 결제 고유 ID
-    private String merchantUid; // 상점에서 생성한 고유 주문 ID
-    private int paidAmount; // 결제 금액
-    private String applyNum; // 카드 승인 번호
+
+    private String impUid;
+    private String merchantUid;
+    private int paidAmount;
+    private String applyNum;
+
+
 }

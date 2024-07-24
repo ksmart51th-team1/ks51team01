@@ -95,6 +95,33 @@
         m.`level` = l.level_num
     </sql>
 
+    <select id="getPharmacyById" parameterType="String" resultMap="pharmacyResultMap">
+        /* 회원아이디로 약국 조회*/
+        SELECT
+        p.phar_code,
+        p.phar_id,
+        p.p_name,
+        p.busin_num,
+        p.p_addr_do,
+        p.p_addr_si,
+        p.p_addr_dong,
+        p.p_post_code,
+        p.p_addr,
+        p.open_date,
+        p.p_state
+        FROM
+        pharmacy AS p
+        INNER join
+        manage_pharmacy AS mp
+        on
+        p.phar_code = mp.phar_code
+        WHERE
+        p.phar_id = 'id013'
+        OR
+        mp.phar_id = 'id013'
+        GROUP BY p.phar_code;
+    </select>
+
     <update id="modifySupplier" parameterType="Supplier">
         /* 납품업체 수정 */
         UPDATE supplier

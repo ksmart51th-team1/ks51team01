@@ -49,7 +49,18 @@
         </association>
     </resultMap>
 
-
+    <!-- 결제완료시 결제상태 업데이트   -->
+    <update id="updateOrderStatus" parameterType="String">
+        UPDATE `order`
+        SET
+        purchase_state=#{status}
+        WHERE
+        o_code = #{merchantUid}
+    </update>
+    <!-- 주문코드로 주문삭제  -->
+    <delete id="deleteOrder" parameterType="String">
+        DELETE FROM `order` WHERE o_code=#{oCode}
+    </delete>
     <!-- 주문코드로 주문상세 조회  -->
     <select id="getOrderDetailByCode" parameterType="String" resultMap="OrderDetailResultMap">
         SELECT
@@ -114,6 +125,9 @@
         purchase_date
         FROM `order` AS o
         WHERE o.m_id_order = #{sessionId}
+        and
+        o.purchase_state != '반품'
+        ORDER BY purchase_date desc;
     </select>
 
     <!-- 총주문금액 업데이트   -->
