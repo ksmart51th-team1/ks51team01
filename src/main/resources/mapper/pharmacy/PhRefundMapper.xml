@@ -128,6 +128,15 @@
         <result column="purchase_date"       property="purchaseDate" />
     </resultMap>
 
+    <resultMap id="refundDetailListMap" type="refundDetail">
+        <id 	column="refund_detail_code" property="refundDetailCode"/>
+        <result column="refund_code" 	    property="refundCode"/>
+        <result column="medi_code" 	        property="mediCode"/>
+        <result column="refund_qty" 	    property="refundQty"/>
+        <result column="refund_money"       property="refundMoney"/>
+        <result column="supp_code"          property="suppCode"/>
+    </resultMap>
+
     <select id="getRefundList" parameterType="string" resultMap="RefundListMap">
         SELECT
             r.refund_code,
@@ -188,7 +197,7 @@
         FROM
             refund AS r
         WHERE
-            r.refund_code = 'refund_code_1';
+            r.refund_code = #{refundCode};
     </select>
 
     <select id="getOrderDetailList" parameterType="string" resultMap="orderDetailListMap">
@@ -307,8 +316,49 @@
     <update id="updateOrderState" parameterType="Order">
         UPDATE `order`
         SET
-        delivery_state='',
-        purchase_state=''
-        WHERE o_code='';
+        purchase_state=#{purchaseState}
+        WHERE o_code=#{oCode};
     </update>
+
+    <insert id="insertShipping" parameterType="Shipping">
+        <selectKey keyProperty="shipCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+                case
+                    when COUNT(ship_code) = 0	then 'ship_code_1'
+                ELSE
+                    CONCAT('ship_code_',
+                    max(cast(SUBSTRING_INDEX(ship_code, 'ship_code_', -1) AS UNSIGNED))+1
+                    )
+                END AS shipCode
+            FROM
+                shipping;
+        </selectKey>
+        INSERT INTO shipping
+        (ship_code, o_code, refund_code, return_order_status, delivery_state, transport_num, manager, delivery_location, deli_date, arrival_date)
+        VALUES (#{shipCode}, #{oCode}, #{refundCode}, #{returnOrderStatus}, #{deliveryState}, #{transportNum}, #{manager}, #{deliveryLocation}, CURDATE(), #{arrivalDate})
+    </insert>
+
+    <delete id="deleteShipping" parameterType="string">
+        DELETE FROM shipping WHERE refund_code=#{refundCode}
+    </delete>
+
+    <delete id="deleteRefundDetail" parameterType="string">
+        DELETE FROM refund_detail WHERE refund_code=#{refundCode}
+    </delete>
+
+    <delete id="deleteRefund" parameterType="string">
+        DELETE FROM refund WHERE refund_code=#{refundCode}
+    </delete>
+
+    <update id="updateCancleRefund" parameterType="string">
+        UPDATE `order`
+        SET
+        purchase_state='결제완료'
+        WHERE o_code=#{oCode}
+    </update>
+
+    <!--<select id="getRefundDetails" parameterType="string" resultMap="refundDetailListMap">
+
+    </select>-->
 </mapper>

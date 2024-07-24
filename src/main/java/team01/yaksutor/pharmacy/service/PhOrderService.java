@@ -86,21 +86,32 @@ public class PhOrderService {
             // 해당 주문 코드(oCode)로 남아 있는 OrderDetail 목록을 조회
             List<OrderDetail> remainingOrderDetails = phOrderMapper.getOrderDetailListByOCode(orderDetail.getOCode());
 
+
             // 남아 있는 OrderDetail의 총 금액을 다시 계산
             int totalPrice = remainingOrderDetails.stream()
                     .mapToInt(OrderDetail::getOrderPrice)
                     .sum();
 
-            // Order 객체를 업데이트
-            Order order = new Order();
-            order.setOCode(orderDetail.getOCode());
-            order.setOrderTotalPrice(totalPrice);
+            if (remainingOrderDetails.isEmpty()) {
+                // 남아 있는 OrderDetail이 없으면 Order를 삭제
+                phOrderMapper.deleteOrder(orderDetail.getOCode());
+            } else {
+                // Order 객체를 업데이트
+                Order order = new Order();
+                order.setOCode(orderDetail.getOCode());
+                order.setOrderTotalPrice(totalPrice);
 
-            // Order 테이블의 총 주문 금액을 업데이트
-            phOrderMapper.updateOrderPrice(order);
+                // Order 테이블의 총 주문 금액을 업데이트
+                phOrderMapper.updateOrderPrice(order);
+            }
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Transactional
+    public void updateOrderStatus(String merchantUid, String status) {
+        phOrderMapper.updateOrderStatus(merchantUid, status);
     }
 }

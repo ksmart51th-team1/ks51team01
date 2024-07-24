@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team01.yaksutor.admin.controller.AdRefundController;
-import team01.yaksutor.dto.OrderDetailForRefund;
-import team01.yaksutor.dto.Refund;
-import team01.yaksutor.dto.RefundDetail;
-import team01.yaksutor.dto.RequestRefundInfo;
+import team01.yaksutor.dto.*;
 import team01.yaksutor.pharmacy.mapper.PhRefundMapper;
 
 import java.util.List;
@@ -55,7 +52,25 @@ public class PhRefundService {
             log.info("refundDetail: {}", rd);
             phRefundMapper.insertRefundDetail(rd);
         }
+        Order order = new Order();
+        order.setOCode(oCode);
+        String purState = "반품";
+        order.setPurchaseState(purState);
+        phRefundMapper.updateOrderState(order);
+    }
 
+    /**
+     * 반품 취소하는 트랜젝션
+     */
+    @Transactional
+    public void cancleRefund(String refundCode){
+        Refund refund = phRefundMapper.getRefundInfo(refundCode);
+        String oCode = refund.getOCode();
+
+        phRefundMapper.deleteShipping(refundCode);
+        phRefundMapper.deleteRefundDetail(refundCode);
+        phRefundMapper.deleteRefund(refundCode);
+        phRefundMapper.updateCancleRefund(oCode);
     }
 
 }

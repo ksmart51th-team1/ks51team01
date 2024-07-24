@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.supplier.mapper.SuShippingMapper">
+    <resultMap id="shippingListMap" type="Shipping">
+        <id     column="ship_code"           property="shipCode" />
+        <result column="o_code"              property="oCode" />
+        <result column="refund_code"         property="refundCode" />
+        <result column="return_order_status" property="returnOrderStatus" />
+        <result column="delivery_state"      property="deliveryState" />
+        <result column="transport_num"       property="transportNum" />
+        <result column="manager"             property="manager" />
+        <result column="delivery_location"   property="deliveryLocation" />
+        <result column="deli_date"           property="deliDate" />
+        <result column="arrival_date"        property="arrivalDate" />
+
+        <association property="order" javaType="Order">
+            <id     column="o_code"              property="oCode" />
+            <result column="m_id_order"          property="mIdOrder" />
+            <result column="shopping_cart_group" property="shoppingCartGroup" />
+            <result column="order_total_price"   property="orderTotalPrice" />
+            <result column="delivery_state"      property="deliveryState" />
+            <result column="purchase_state"      property="purchaseState" />
+            <result column="payment_method"      property="paymentMethod" />
+            <result column="request_term"        property="requestTerm" />
+            <result column="order_type"          property="orderType" />
+            <result column="purchase_date"       property="purchaseDate" />
+        </association>
+
+        <association property="refund" javaType="Refund">
+            <id     column="refund_code"        property="refundCode" />
+            <result column="phar_id"            property="pharId" />
+            <result column="supp_id"            property="suppId" />
+            <result column="o_code"             property="oCode" />
+            <result column="refund_total_money" property="refundTotalMoney" />
+            <result column="refund_reason"      property="refundReason" />
+            <result column="refund_state"       property="refundState" />
+            <result column="refund_date"        property="refundDate" />
+        </association>
+
+    </resultMap>
+
+    <select id="getSuppCode" parameterType="string" resultType="string">
+        SELECT
+            s.supp_code
+        FROM
+            supplier AS s
+        WHERE
+            s.supp_id = #{sid};
+    </select>
+
+    <select id="getShippingList" parameterType="string" resultMap="shippingListMap">
+        SELECT
+            s.ship_code,
+            s.transport_num,
+            s.delivery_state,
+            s.deli_date,
+            o.o_code
+        FROM
+            order_detail AS od
+            INNER join
+            `order` AS o
+            on
+            od.o_code = o.o_code
+            INNER join
+            shipping AS s
+            on
+            s.o_code = o.o_code
+        WHERE
+            od.supp_code = 'supp_code_1'
+        GROUP BY o.o_code
+    </select>
+
+    <select id="getRefundShippingList" parameterType="string" resultMap="shippingListMap">
+        SELECT
+            s.ship_code,
+            s.transport_num,
+            s.delivery_state,
+            s.deli_date,
+            r.refund_code
+        FROM
+            refund_detail AS rd
+            INNER join
+            refund AS r
+            on
+            rd.refund_code = r.refund_code
+            INNER join
+            shipping AS s
+            on
+            s.refund_code = rd.refund_code
+        WHERE
+            rd.supp_code = 'supp_code_1'
+        GROUP BY r.refund_code;
+    </select>
+</mapper>

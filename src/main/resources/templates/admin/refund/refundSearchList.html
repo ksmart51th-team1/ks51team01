@@ -50,37 +50,30 @@
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
                             <span>반품 일자</span>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{#}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 취소 </a>
-                        </div>
                     </div>
                     <!-- row .// -->
                 </article>
-                <article class="itemlist">
+                <article class="itemlist" th:each="r : ${refundList}">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/admin/refundDetailView}">
+                            <a class="itemside" th:href="@{/admin/refundDetailView(refundCode=${r.refundCode})}">
                                 <div class="info">
-                                    <h6 class="mb-0">Seeds of Change Organic Quinoa</h6>
+                                    <h6 class="mb-0" th:text="${r.refundCode}">Seeds of Change Organic Quinoa</h6>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span>$34.50</span></div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"><span th:text="${r.refundTotalMoney} + '원'">$34.50</span></div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
-                            <span class="badge rounded-pill alert-success">Active</span>
+                            <span class="badge rounded-pill alert-success" th:text="${r.refundState}">Active</span>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span>02.11.2021</span>
-                        </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a th:href="@{/admin/refundDelete}" class="btn btn-sm font-sm btn-light rounded"> <i class="material-icons md-delete_forever"></i> 취소 </a>
-
+                            <span th:text="${r.refundDate}">02.11.2021</span>
                         </div>
                     </div>
                     <!-- row .// -->
                 </article>
                 <!-- itemlist  .// -->
-                <article class="itemlist">
+                <!--<article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" th:href="@{/admin/refundDetailView}">
@@ -101,9 +94,9 @@
 
                         </div>
                     </div>
-                    <!-- row .// -->
+                    &lt;!&ndash; row .// &ndash;&gt;
                 </article>
-                <!-- itemlist  .// -->
+                &lt;!&ndash; itemlist  .// &ndash;&gt;
                 <article class="itemlist">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
@@ -125,8 +118,8 @@
 
                         </div>
                     </div>
-                    <!-- row .// -->
-                </article>
+                    &lt;!&ndash; row .// &ndash;&gt;
+                </article>-->
                 <!-- itemlist  .// -->
             </div>
             <!-- card-body end// -->

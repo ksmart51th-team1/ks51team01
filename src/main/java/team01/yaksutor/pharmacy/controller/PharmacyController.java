@@ -5,22 +5,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import team01.yaksutor.dto.Member;
 import team01.yaksutor.dto.Order;
+import team01.yaksutor.dto.Shipping;
+import team01.yaksutor.dto.Pharmacy;
 import team01.yaksutor.pharmacy.dto.Qna;
 import team01.yaksutor.pharmacy.dto.QnaReply;
+import team01.yaksutor.pharmacy.mapper.PhShippingMapper;
 import team01.yaksutor.pharmacy.service.PhBoardService;
 import team01.yaksutor.pharmacy.service.PhOrderService;
+import team01.yaksutor.pharmacy.service.*;
 import team01.yaksutor.dto.SellMedicine;
+import team01.yaksutor.pharmacy.service.PhMedicineService;
+import team01.yaksutor.pharmacy.service.phMyPageService;
 import team01.yaksutor.pharmacy.dto.Qna;
 import team01.yaksutor.pharmacy.dto.QnaReply;
 import team01.yaksutor.pharmacy.service.PhBoardService;
-import team01.yaksutor.pharmacy.service.PhMedicineService;
-import team01.yaksutor.pharmacy.service.phMyPageService;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class PharmacyController {
     private final PhBoardService phBoardService;
     private final PhOrderService phOrderService;
     private final PhMedicineService phMedicineService;
+    private final PhMemberService phMemberService;
+    private final PhShippingMapper phShipMapper;
 
     @GetMapping("/main")
     public String pharmMain(Model model) {
@@ -91,6 +94,11 @@ public class PharmacyController {
     @GetMapping("/myPage")
     public String myPage(Model model) {
         Member member = phMyPageService.getMeberInfoById();
+        List<Order> orderList = phOrderService.getOrderListById();
+        Pharmacy pharmacy = phMemberService.getPharmacyById();
+        model.addAttribute("pharmacy", pharmacy);
+        model.addAttribute("orderListSize", orderList.size());
+        model.addAttribute("orderList",orderList);
         model.addAttribute("member",member);
         return "user/pharmacy/myPage/myPage";
     }
@@ -101,8 +109,10 @@ public class PharmacyController {
     }*/
 
     @GetMapping("/myOrderList")
-    public String myOderList() {
-
+    public String myOderList(Model model) {
+        List<Order> orderList = phOrderService.getOrderListById();
+        model.addAttribute("orderListSize", orderList.size());
+        model.addAttribute("orderList",orderList);
         return "user/pharmacy/myPage/myOrderList";
     }
     @GetMapping("/myDelivery")
@@ -124,6 +134,18 @@ public class PharmacyController {
     public String hotDeal() {
 
         return "user/pharmacy/order/hotDeal";
+    }
+
+    @PostMapping("/searchDeli")
+    @ResponseBody
+    public List<Shipping> searchDeli(Model model,
+                            @RequestBody Shipping ship){
+        log.info("ship: {}", ship);
+        String portNum = ship.getTransportNum();
+        log.info("portNum: {}", portNum);
+        log.info("ship: {}", phShipMapper.getShipInfoByNum(portNum));
+
+        return phShipMapper.getShipInfoByNum(portNum);
     }
 
 
