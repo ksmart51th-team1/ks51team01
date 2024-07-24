@@ -22,7 +22,6 @@ import java.util.List;
 public class PhOrderController {
 
     private final PhOrderService phOrderService;
-    private final HttpServletRequest request;
     private final MemberMapper memberMapper;
 
     /**
@@ -69,6 +68,7 @@ public class PhOrderController {
     @GetMapping("/myOrderDetailView")
     public String myOrderDetailView(@RequestParam("oCode") String oCode,
                                     @RequestParam("perchaseState") String perchaseState,
+                                    HttpServletRequest request,
                                     Model model) {
 
         String sId = (String) request.getSession().getAttribute("S_ID");
