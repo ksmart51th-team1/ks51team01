@@ -44,4 +44,6 @@ public interface SuRefundMapper {
     void insertShipping(Shipping shipping);
 
     void updateShipping(Shipping shipping);
+
+    void updateRefund(String refundCode);
 }

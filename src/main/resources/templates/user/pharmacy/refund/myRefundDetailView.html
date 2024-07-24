@@ -52,6 +52,7 @@
                         <table class="table no-border">
                             <tbody th:object="${refundInfo}">
                                 <tr>
+                                    <td hidden="hidden"><h6 th:text="*{refundCode}" id="refundCode"></h6></td>
                                     <td class="cart_total_label">
                                         <h6 class="text-muted">반품 총액</h6>
                                     </td>
@@ -76,7 +77,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <a th:href="@{#}" class="btn mb-20 w-100">반품취소<i class="fi-rs-sign-out ml-15"></i></a>
+                    <a th:href="@{#}" class="btn mb-20 w-100" id="cancelBtn">반품취소<i class="fi-rs-sign-out ml-15"></i></a>
                 </div>
             </div>
         </div>
@@ -87,6 +88,26 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('#cancelBtn').click(function(){
+            const refundCode = $('#refundCode').text();
+            console.log(refundCode);
+            const request = $.ajax({
+                url : '/pharm/cancleRefund',
+                method : 'POST',
+                contentType : 'application/json',
+                data : JSON.stringify({'refundCode' : refundCode}),
+                dataType : 'json'
+            });
+            request.done(function(item){
+                $(location).attr('href', '/pharm/myRefundSearchList');
+            })
+            request.fail(function(jqXHR, textStatus, error){
+                console.log(error);
+                $(location).attr('href', '/pharm/myRefundSearchList');
+            });
+        });
+    </script>
 </th:block>
 </html>
 

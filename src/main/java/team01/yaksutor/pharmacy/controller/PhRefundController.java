@@ -75,4 +75,14 @@ public class PhRefundController {
 
         return "redirect:/pharm/myRefundSearchList";
     }
+
+    @PostMapping("/cancleRefund")
+    @ResponseBody
+    public String cancleRefund(@RequestBody Refund refundCode){
+        log.info("refundCode: {}", refundCode);
+        String value = refundCode.getRefundCode();
+        phRefundService.cancleRefund(value);
+
+        return "redirect:/pharm/myRefundSearchList";
+    }
 }

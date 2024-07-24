@@ -81,7 +81,11 @@ public class SuRefundController {
         String locationClear = "반품완료";
         ship.setDeliveryLocation(locationClear);
         log.info("ship: {}", ship);
+        String shipCode = ship.getShipCode();
+        Shipping shipInfo = suRefundMapper.getShippingDetail(shipCode);
+        String refundCode = shipInfo.getRefundCode();
 
+        suRefundMapper.updateRefund(refundCode);
         suRefundMapper.updateShipping(ship);
         return "redirect:/supplier/myRefundSearchList";
     }

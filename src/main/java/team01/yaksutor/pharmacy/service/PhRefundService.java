@@ -59,5 +59,19 @@ public class PhRefundService {
         phRefundMapper.updateOrderState(order);
     }
 
+    /**
+     * 반품 취소하는 트랜젝션
+     */
+    @Transactional
+    public void cancleRefund(String refundCode){
+        Refund refund = phRefundMapper.getRefundInfo(refundCode);
+        String oCode = refund.getOCode();
+
+        phRefundMapper.deleteShipping(refundCode);
+        phRefundMapper.deleteRefundDetail(refundCode);
+        phRefundMapper.deleteRefund(refundCode);
+        phRefundMapper.updateCancleRefund(oCode);
+    }
+
 }
 

@@ -14,4 +14,7 @@ public class Shipping {
     private String deliveryLocation;
     private String deliDate;
     private String arrivalDate;
+
+    private Order order;
+    private Refund refund;
 }

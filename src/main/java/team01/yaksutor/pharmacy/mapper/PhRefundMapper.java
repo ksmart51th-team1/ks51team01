@@ -29,5 +29,17 @@ public interface PhRefundMapper {
 
     void updateOrderState(Order order);
 
-    void insertShipping(Shipping shipping);
+    // shipping 삭제
+    void deleteShipping(String refundCode);
+
+    // refundDetail 삭제
+    void deleteRefundDetail(String refundCode);
+
+    // refund 삭제
+    void deleteRefund(String refundCode);
+
+    // order 상태 반품 -> 결제완료
+    void updateCancleRefund(String oCode);
+
+    // List<RefundDetail> getRefundDetails(String refundCode);
 }

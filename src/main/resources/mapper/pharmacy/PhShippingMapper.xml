@@ -2,8 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="team01.yaksutor.supplier.mapper.SuShippingMapper">
-    <resultMap id="shippingListMap" type="Shipping">
+<mapper namespace="team01.yaksutor.pharmacy.mapper.PhShippingMapper">
+
+    <resultMap id="shippingMap" type="Shipping">
         <id     column="ship_code"           property="shipCode" />
         <result column="o_code"              property="oCode" />
         <result column="refund_code"         property="refundCode" />
@@ -38,59 +39,18 @@
             <result column="refund_state"       property="refundState" />
             <result column="refund_date"        property="refundDate" />
         </association>
-
     </resultMap>
 
-    <select id="getSuppCode" parameterType="string" resultType="string">
-        SELECT
-            s.supp_code
-        FROM
-            supplier AS s
-        WHERE
-            s.supp_id = #{sid};
-    </select>
-
-    <select id="getShippingList" parameterType="string" resultMap="shippingListMap">
+    <select id="getShipInfoByNum" parameterType="string" resultMap="shippingMap">
         SELECT
             s.ship_code,
             s.transport_num,
             s.delivery_state,
-            s.deli_date,
-            o.o_code
+            s.return_order_status,
+            s.deli_date
         FROM
-            order_detail AS od
-            INNER join
-            `order` AS o
-            on
-            od.o_code = o.o_code
-            INNER join
             shipping AS s
-            on
-            s.o_code = o.o_code
         WHERE
-            od.supp_code = 'supp_code_1'
-        GROUP BY o.o_code
-    </select>
-
-    <select id="getRefundShippingList" parameterType="string" resultMap="shippingListMap">
-        SELECT
-            s.ship_code,
-            s.transport_num,
-            s.delivery_state,
-            s.deli_date,
-            r.refund_code
-        FROM
-            refund_detail AS rd
-            INNER join
-            refund AS r
-            on
-            rd.refund_code = r.refund_code
-            INNER join
-            shipping AS s
-            on
-            s.refund_code = rd.refund_code
-        WHERE
-            rd.supp_code = 'supp_code_1'
-        GROUP BY r.refund_code;
+            s.transport_num = #{portNum};
     </select>
 </mapper>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="team01.yaksutor.supplier.mapper.SuRefundMapper">
+<mapper namespace="team01.yaksutor.admin.mapper.AdRefundMapper">
 
     <resultMap id="RefundListMap" type="Refund">
         <id     column="refund_code"        property="refundCode" />
@@ -141,81 +141,17 @@
         <result column="arrival_date"        property="arrivalDate" />
     </resultMap>
 
-    <select id="getRefundTotal" parameterType="string" resultMap="RefundListMap">
-        SELECT
-            r.refund_code,
-            r.refund_total_money,
-            r.o_code
-        FROM
-            refund AS r
-        WHERE
-            r.refund_code = #{refundCode};
-    </select>
-
-    <select id="getPaymentMethod" parameterType="string" resultType="String">
-        SELECT
-            o.payment_method
-        FROM
-            `order` AS o
-        WHERE
-            o.o_code = #{oCode};
-    </select>
-
-    <select id="getRefundDetailByRefundCode" parameterType="string" resultMap="RefundDetailListMap">
-        SELECT
-            m.medi_name,
-            rd.medi_code,
-            rd.refund_qty,
-            rd.refund_money
-        FROM
-            refund_detail AS rd
-            INNER join
-            medicine AS m
-            on
-            rd.medi_code = m.medi_code
-        WHERE
-            rd.refund_code = #{refundCode} AND rd.supp_code = #{suppCode};
-    </select>
-
-    <select id="getRefundListBySuppCode" parameterType="string" resultMap="RefundListMap">
+    <select id="getRefundList" resultMap="RefundListMap">
         SELECT
             r.refund_code,
             r.phar_id,
             r.o_code,
             r.refund_total_money,
             r.refund_reason,
+            r.refund_state,
             r.refund_date
         FROM
             refund AS r
-            INNER join
-            refund_detail AS rd
-            on
-            r.refund_code = rd.refund_code
-        WHERE
-            rd.supp_code = #{suppCode}
-        GROUP BY rd.refund_code;
-    </select>
-
-    <select id="getSuppCodeById" parameterType="string">
-        SELECT
-            s.supp_code
-        FROM
-            supplier AS s
-        WHERE
-            s.supp_id = #{sid};
-    </select>
-
-    <select id="getRefundList" parameterType="string" resultMap="RefundListMap">
-        SELECT
-            r.refund_code,
-            r.o_code,
-            r.refund_total_money,
-            r.refund_date,
-            r.refund_state
-        FROM
-            refund AS r
-        WHERE
-            r.phar_id = #{sid};
     </select>
 
     <select id="getRefundDetailList" parameterType="string" resultMap="RefundDetailListMap">
@@ -255,183 +191,35 @@
             rd.refund_code = #{refundCode};
     </select>
 
-    <select id="getRefundInfo" parameterType="string" resultMap="RefundListMap">
-        SELECT
-            r.refund_code,
-            r.o_code,
-            r.refund_total_money,
-            r.refund_reason,
-            r.refund_state
-        FROM
-            refund AS r
-        WHERE
-            r.refund_code = 'refund_code_1';
-    </select>
-
-    <select id="getOrderDetailList" parameterType="string" resultMap="orderDetailListMap">
-        SELECT
-            od.o_code,
-            od.goods_code,
-            od.supp_code,
-            od.order_qty,
-            od.order_price,
-            s.medi_name,
-            s.medi_code,
-            su.sup_name,
-            i.file_path
-        FROM
-            order_detail AS od
-            INNER JOIN
-            sell_medicine AS s
-            on
-            od.goods_code = s.goods_code
-            INNER join
-            supplier AS su
-            on
-            s.supp_code = su.supp_code
-            INNER join
-            img_data AS i
-            on
-            s.medi_img = i.file_idx
-        WHERE
-            od.o_code = #{oCode};
-    </select>
-
-    <select id="getOrderByOCode" parameterType="string" resultMap="orderListMap">
-        SELECT
-            o.o_code,
-            o.order_total_price
-        FROM
-            `order` AS o
-        WHERE
-            o.o_code = #{oCode};
-    </select>
-
-    <select id="getRefundOrderList" parameterType="string" resultMap="orderDetailListMap">
-        SELECT
-            od.o_code,
-            od.goods_code,
-            od.o_seller_id,
-            od.supp_code,
-            od.order_qty,
-            od.order_price
-        FROM
-            order_detail AS od
-        WHERE
-            od.o_code = #{oCode};
-    </select>
-
-    <select id="getPharId" parameterType="string" resultType="string">
-        SELECT
-            o.m_id_order
-        FROM
-            `order` AS o
-        WHERE
-            o.o_code = #{oCode};
-    </select>
-
-    <insert id="insertRefund" parameterType="Refund">
-        <selectKey keyProperty="refundCode" resultType="String" order="BEFORE">
-            /* 상품 자동 증가 코드 */
-            SELECT
-                case
-                when COUNT(refund_code) = 0	then 'refund_code_1'
-                ELSE
-                CONCAT('refund_code_',
-                max(cast(SUBSTRING_INDEX(refund_code, 'refund_code_', -1) AS UNSIGNED))+1
-                )
-                END AS refundCode
-            FROM
-                refund;
-        </selectKey>
-        INSERT INTO refund
-        (refund_code, phar_id, o_code, refund_total_money, refund_reason, refund_state, refund_date)
-        VALUES (#{refundCode}, #{pharId}, #{oCode}, #{refundTotalMoney}, #{refundReason}, #{refundState}, CURDATE())
-    </insert>
-
-    <select id="getMediCodeByGoodsCode" parameterType="string" resultType="string">
-        SELECT
-            m.medi_code
-        FROM
-            sell_medicine AS sm
-            INNER join
-            medicine AS m
-            on
-            sm.medi_code = m.medi_code
-        WHERE
-            sm.goods_code = #{goodsCode};
-    </select>
-
-    <insert id="insertRefundDetail" parameterType="RefundDetail">
-        <selectKey keyProperty="refundDetailCode" resultType="String" order="BEFORE">
-            /* 상품 자동 증가 코드 */
-            SELECT
-            case
-            when COUNT(refund_detail_code) = 0	then 'rd_code_1'
-            ELSE
-            CONCAT('rd_code_',
-            max(cast(SUBSTRING_INDEX(refund_detail_code, 'rd_code_', -1) AS UNSIGNED))+1
-            )
-            END AS refundDetailCode
-            FROM
-            refund_detail;
-        </selectKey>
-        INSERT INTO refund_detail
-        (refund_detail_code, refund_code, medi_code, refund_qty, refund_money, supp_code)
-        VALUES (#{refundDetailCode}, #{refundCode}, #{mediCode}, #{refundQty}, #{refundMoney}, #{suppCode})
-    </insert>
-
-    <update id="updateOrderState" parameterType="Order">
-        UPDATE `order`
-        SET
-        purchase_state=#{purchaseState}
-        WHERE o_code=#{oCode};
-    </update>
-
     <select id="getShippingDetail" parameterType="string" resultMap="shippingMap">
         SELECT
-            s.ship_code,
-            s.transport_num,
-            s.manager,
-            s.delivery_state,
-            s.refund_code
+        s.ship_code,
+        s.transport_num,
+        s.manager,
+        s.delivery_state
         FROM
-            shipping AS s
+        shipping AS s
         WHERE
-            s.refund_code = #{refundCode};
+        s.refund_code = #{refundCode};
     </select>
 
-    <insert id="insertShipping" parameterType="Shipping">
-        <selectKey keyProperty="shipCode" resultType="String" order="BEFORE">
-            /* 상품 자동 증가 코드 */
-            SELECT
-                case
-                    when COUNT(ship_code) = 0	then 'ship_code_1'
-                ELSE
-                    CONCAT('ship_code_',
-                    max(cast(SUBSTRING_INDEX(ship_code, 'ship_code_', -1) AS UNSIGNED))+1
-                    )
-                END AS shipCode
-            FROM
-                shipping;
-        </selectKey>
-        INSERT INTO shipping
-        (ship_code, refund_code, return_order_status, delivery_state, transport_num, manager, delivery_location, deli_date, arrival_date)
-        VALUES (#{shipCode}, #{refundCode}, #{returnOrderStatus}, #{deliveryState}, #{transportNum}, #{manager}, #{deliveryLocation}, NOW(), DATE_ADD(CURDATE(), INTERVAL 3 DAY))
-    </insert>
+    <select id="getRefundTotal" parameterType="string" resultMap="RefundListMap">
+        SELECT
+        r.refund_code,
+        r.refund_total_money,
+        r.o_code
+        FROM
+        refund AS r
+        WHERE
+        r.refund_code = #{refundCode};
+    </select>
 
-    <update id="updateShipping" parameterType="Shipping">
-        UPDATE shipping
-        SET
-            delivery_state=#{deliveryState},
-            delivery_location=#{deliveryLocation}
-        WHERE refund_code=#{refundCode}
-    </update>
-
-    <update id="updateRefund" parameterType="string">
-        UPDATE refund
-        SET
-            refund_state='반품완료'
-        WHERE refund_code=#{refundCode};
-    </update>
+    <select id="getPaymentMethod" parameterType="string" resultType="String">
+        SELECT
+        o.payment_method
+        FROM
+        `order` AS o
+        WHERE
+        o.o_code = #{oCode};
+    </select>
 </mapper>

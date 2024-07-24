@@ -131,8 +131,12 @@
                     data : JSON.stringify(shipping),
                     dataType : 'json'
                 });
-                request.done(item => {
-                    return item;
+                request.done(function(item){
+                    $(location).attr('href', '/supplier/myRefundSearchList');
+                })
+                request.fail(function(jqXHR, textStatus, error){
+                    console.log(error);
+                    $(location).attr('href', '/supplier/myRefundSearchList');
                 });
             }
         });
@@ -147,6 +151,13 @@
                 contentType : 'application/json',
                 data : JSON.stringify(ship),
                 dataType : 'json'
+            });
+            request.done(function(item){
+                $(location).attr('href', '/supplier/myRefundSearchList');
+            })
+            request.fail(function(jqXHR, textStatus, error){
+                console.log(error);
+                $(location).attr('href', '/supplier/myRefundSearchList');
             });
         })
     </script>
