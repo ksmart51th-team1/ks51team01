@@ -25,7 +25,7 @@
                                         <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>배송</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker mr-10"></i>주소</a>
+                                        <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker mr-10"></i>약국정보</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>계정</a>
@@ -54,45 +54,56 @@
                                 </div>
                                 <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                     <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="mb-0">Your Orders</h3>
-                                        </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Order</th>
-                                                        <th>Date</th>
-                                                        <th>Status</th>
-                                                        <th>Total</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>#1357</td>
-                                                        <td>March 45, 2020</td>
-                                                        <td>Processing</td>
-                                                        <td>$125.00 for 2 item</td>
-                                                        <td><a href="#" class="btn-small d-block">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>#2468</td>
-                                                        <td>June 29, 2020</td>
-                                                        <td>Completed</td>
-                                                        <td>$364.00 for 5 item</td>
-                                                        <td><a href="#" class="btn-small d-block">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>#2366</td>
-                                                        <td>August 02, 2020</td>
-                                                        <td>Completed</td>
-                                                        <td>$280.00 for 3 item</td>
-                                                        <td><a href="#" class="btn-small d-block">View</a></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                                <main class="main">
+                                                    <div class="container mb-30 mt-50" >
+                                                        <div class="row">
+                                                            <div class="col-xl-10 col-lg-12 m-auto">
+                                                                <div class="mb-50">
+                                                                    <h1 class="heading-2 mb-10" style="font-family: 'Pretendard-Regular';">나의 주문 내역입니다.</h1>
+                                                                    <h6 class="text-body" style="font-family: 'Pretendard-Regular';" >총 <span class="text-brand"th:text="${orderListSize}"></span> 건의 내역이 있습니다.</h6>
+
+                                                                </div>
+
+                                                                <div class="table-responsive shopping-summery">
+                                                                    <div class="table-wishlist" style="font-family: 'Pretendard-Regular'">
+                                                                        <table class="table table-wishlist">
+                                                                            <thead >
+                                                                            <tr class="main-heading text-center">
+                                                                                <th scope="col">주문번호</th>
+                                                                                <th scope="col">총 주문 금액</th>
+                                                                                <th scope="col">주문일자</th>
+                                                                                <th scope="col">주문상태</th>
+                                                                                <th scope="col" class="end">상세보기</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody >
+                                                                            <tr class="pt-30" th:each="o : ${orderList}" th:if="${orderList != null}">
+                                                                                <td class="product text-center">
+                                                                                    <h6><a class="product-name mb-10" th:text="${o.OCode}"></a></h6>
+                                                                                </td>
+                                                                                <td class="price text-center" data-title="Price">
+                                                                                    <h5 class="text-brand" th:text="${o.orderTotalPrice + ' 원'}"> 원</h5>
+                                                                                </td>
+                                                                                <td class="text-center detail-info" data-title="Stock" th:text="${o.purchaseDate}">
+                                                                                    <p>2024/06/01</p>
+                                                                                </td>
+                                                                                <td class="text-right text-center" data-title="Cart" th:text="${o.purchaseState}">
+                                                                                    <h5 class="text-red">결제대기</h5>
+                                                                                </td>
+                                                                                <td class="action text-center" data-title="Remove">
+                                                                                    <a class="btn btn-sm" style="background-color: rgba(0,0,0,0.86); font-family: 'Pretendard-Regular'; border-radius: 15px;" th:href="@{/pharm/myOrderDetailView(oCode=${o.OCode})}" >상세</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </main>
                                             </div>
                                         </div>
                                     </div>
@@ -127,34 +138,40 @@
                                         <div class="col-lg-6">
                                             <div class="card mb-3 mb-lg-0">
                                                 <div class="card-header">
-                                                    <h3 class="mb-0">Billing Address</h3>
+                                                    <h3 class="mb-0">약국 정보</h3>
                                                 </div>
                                                 <div class="card-body">
-                                                    <address>
-                                                        3522 Interstate<br>
-                                                        75 Business Spur,<br>
-                                                        Sault Ste. <br>Marie, MI 49783
-                                                    </address>
-                                                    <p>New York</p>
-                                                    <a href="#" class="btn-small">Edit</a>
+                                                    <!-- 여기에 약국 정보  -->
+                                                    <div class="col-md-9">
+                                                        <div class="mb-4">
+                                                            <label class="form-label fs-6" for="pName">약국이름</label>
+                                                            <input type="text"   name="pName"  id="pName" class="form-control w-50" th:value="${pharmacy.PName}" readonly>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label class="form-label fs-6" for="businNum">약국사업자번호</label>
+                                                            <input type="text"   name="businNum"  id="businNum" class="form-control w-50" th:value="${pharmacy.businNum}" readonly>
+                                                        </div>
+                                                        <div >
+                                                            <div class="mb-4 d-flex">
+                                                                <label class="form-label mr-30 fs-6" >약국주소</label>
+                                                            </div>
+                                                            <input class="form-control mb-3 w-50" type="text" name="pPostCode" id="pPostCode" th:value="${pharmacy.PPostCode}" readonly/>
+                                                            <input class="form-control mb-3" type="text" name="targetPharAddr" id="targetPharAddr" th:value="${pharmacy.PAddrDo} +' '+${pharmacy.PAddrSi}+' '+${pharmacy.PAddrDong}" readonly />
+                                                            <input class="form-control mb-3" type="text" name="targetPharAddrDetail" id="targetPharAddrDetail" th:value="${pharmacy.PAddr}" readonly/>
+                                                            <input type="hidden" name="pAddrDo" id="pAddrDo" />
+                                                            <input type="hidden" name="pAddrSi" id="pAddrSi" />
+                                                            <input type="hidden" name="pAddrDong" id="pAddrDong" />
+                                                            <input type="hidden" name="pAddr" id="pAddr" />
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label class="form-label fs-6" for="openDate">약국개업일자</label>
+                                                            <input type="date"  name="openDate"  id="openDate" class="form-control w-50" th:value="${pharmacy.openDate}" readonly>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h5 class="mb-0">Shipping Address</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <address>
-                                                        4299 Express Lane<br>
-                                                        Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444
-                                                    </address>
-                                                    <p>Sarasota</p>
-                                                    <a href="#" class="btn-small">Edit</a>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">

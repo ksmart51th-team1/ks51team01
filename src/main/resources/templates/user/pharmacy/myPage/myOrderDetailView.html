@@ -35,7 +35,7 @@
                             th:if="${orderDetailList != null}"
                             th:attr="data-price=${od.sellMedicine.mediPrice}, data-quantity=${od.orderQty}, data-order-detail-code=${od.orderDetailCode}">
                             <td class="custome-checkbox pl-30"></td>
-                            <td class="image product-thumbnail pt-40"><img src="#" alt="#"></td>
+                            <td class="image product-thumbnail pt-40"><img th:src="${od.imgData.filePath}" ></td>
                             <td class="product-des product-name text-center">
                                 <h6 class="mb-5"><a class="product-name mb-10 text-heading" th:text="${od.sellMedicine.mediName}"></a></h6>
                             </td>
@@ -130,7 +130,8 @@
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
         $(document).ready(function() {
-
+            const orderCode = /*[[${orderCode}]]*/'';
+            console.log(orderCode);
 
             // 삭제 버튼 클릭 이벤트 핸들러 설정
             $(document).on('click', '.delete-order-detail', function(event) {
@@ -174,14 +175,13 @@
             // 초기 합계 계산
             updateTotalSum();
 
-            // 결제하기 버튼 클릭 이벤트 핸들러 설정
             $('#paymentButton').on('click', function(event) {
                 event.preventDefault();
 
                 const totalAmount = parseInt($('#totalSum2').text().replace(' 원', ''), 10);
                 const orderName = '약수터 의약품 구매'; // 실제 주문명으로 변경 필요
-                const merchantUid = 'order_' + new Date().getTime(); // 고유 주문 ID
-                console.log(totalAmount);
+                const merchantUid = orderCode; // model에서 받은 orderCode 사용
+
                 // 포트원 결제 데이터 설정
                 const data = {
                     storeId: 'store-f4751201-4959-40a4-9738-f58651a60e01',
@@ -206,24 +206,43 @@
 
                     const response = await PortOne.requestPayment(data);
                     console.log("Payment response: ", response);
+                    if (response.code != null) {
+                        // 오류 발생
+                        return alert(response.message);
+                    }
+                    const postData = {
+                        merchantUid: data.paymentId,
+                        paidAmount: data.totalAmount
+                    };
 
-                    if (response.success) {
+                    const validation = $.ajax({
+                        async : false,
+                        url: "/pharm/paymentComplete",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(postData),
+                        dataType: 'json'
+                    });
+                    /*
+                    if (response.code) {
                         alert('결제가 완료되었습니다.');
                         // 결제 완료 후 서버로 결제 결과 전송
                         const postData = {
-                            impUid: response.imp_uid,
-                            merchantUid: response.merchant_uid,
-                            paidAmount: response.paid_amount,
-                            applyNum: response.apply_num
+                            impUid: response.impUid, // response.imp_uid
+                            merchantUid: response.merchantUid, // response.merchant_uid
+                            paidAmount: response.paidAmount, // response.paid_amount
+                            applyNum: response.applyNum // response.apply_num
                         };
 
                         console.log("Post data: ", postData);
 
-                        const validation = await $.ajax({
+                        const validation = $.ajax({
+                            async : false,
                             url: "/pharm/paymentComplete",
                             method: "POST",
                             contentType: "application/json",
-                            data: JSON.stringify(postData)
+                            data: JSON.stringify(postData),
+                            dataType: 'json'
                         });
 
                         console.log("Validation response: ", validation);
@@ -236,6 +255,8 @@
                     } else {
                         alert('결제가 실패하였습니다. 에러 내용: ' + response.error_msg);
                     }
+
+                     */
                 } catch (error) {
                     console.error("Error during payment process: ", error);
                     alert("결제 처리 중 오류가 발생했습니다.");

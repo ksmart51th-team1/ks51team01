@@ -11,16 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team01.yaksutor.dto.Member;
 import team01.yaksutor.dto.Order;
+import team01.yaksutor.dto.Pharmacy;
 import team01.yaksutor.pharmacy.dto.Qna;
 import team01.yaksutor.pharmacy.dto.QnaReply;
-import team01.yaksutor.pharmacy.service.PhBoardService;
-import team01.yaksutor.pharmacy.service.PhOrderService;
+import team01.yaksutor.pharmacy.service.*;
 import team01.yaksutor.dto.SellMedicine;
 import team01.yaksutor.pharmacy.dto.Qna;
 import team01.yaksutor.pharmacy.dto.QnaReply;
 import team01.yaksutor.pharmacy.service.PhBoardService;
-import team01.yaksutor.pharmacy.service.PhMedicineService;
-import team01.yaksutor.pharmacy.service.phMyPageService;
 
 import java.util.List;
 
@@ -34,6 +32,7 @@ public class PharmacyController {
     private final PhBoardService phBoardService;
     private final PhOrderService phOrderService;
     private final PhMedicineService phMedicineService;
+    private final PhMemberService phMemberService;
 
     @GetMapping("/main")
     public String pharmMain(Model model) {
@@ -91,6 +90,11 @@ public class PharmacyController {
     @GetMapping("/myPage")
     public String myPage(Model model) {
         Member member = phMyPageService.getMeberInfoById();
+        List<Order> orderList = phOrderService.getOrderListById();
+        Pharmacy pharmacy = phMemberService.getPharmacyById();
+        model.addAttribute("pharmacy", pharmacy);
+        model.addAttribute("orderListSize", orderList.size());
+        model.addAttribute("orderList",orderList);
         model.addAttribute("member",member);
         return "user/pharmacy/myPage/myPage";
     }

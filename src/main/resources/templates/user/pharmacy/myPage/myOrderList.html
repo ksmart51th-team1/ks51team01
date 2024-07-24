@@ -8,12 +8,12 @@
 
 <th:block layout:fragment="customContent">
 <main class="main">
-    <div class="container mb-30 mt-50">
+    <div class="container mb-30 mt-50" >
         <div class="row">
             <div class="col-xl-10 col-lg-12 m-auto">
                 <div class="mb-50">
                     <h1 class="heading-2 mb-10" style="font-family: 'Pretendard-Regular';">나의 주문 내역입니다.</h1>
-                    <h6 class="text-body" style="font-family: 'Pretendard-Regular';">총 <span class="text-brand">9</span> 건의 내역이 있습니다.</h6>
+                    <h6 class="text-body" style="font-family: 'Pretendard-Regular';" >총 <span class="text-brand"th:text="${orderListSize}"></span> 건의 내역이 있습니다.</h6>
 
                 </div>
 
@@ -44,7 +44,7 @@
                                 <h5 class="text-red">결제대기</h5>
                             </td>
                             <td class="action text-center" data-title="Remove">
-                                <a class="btn btn-sm" style="background-color: rgba(0,0,0,0.86); font-family: 'Pretendard-Regular'; border-radius: 15px;" th:href="@{/pharm/myOrderDetailView(oCode=${o.OCode})}" >상세</a>
+                                <a class="btn btn-sm" style="background-color: rgba(0,0,0,0.86); font-family: 'Pretendard-Regular'; border-radius: 15px;" th:href="@{/pharm/myOrderDetailView(oCode=${o.OCode},perchaseState=${o.purchaseState})}" >상세</a>
                             </td>
                         </tr>
                         </tbody>
