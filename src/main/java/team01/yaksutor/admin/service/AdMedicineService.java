@@ -21,8 +21,13 @@ import java.util.Map;
 @Slf4j
 public class AdMedicineService {
     private final AdMedicineMapper adMedicineMapper;
-    private final FileUtils fileUtils;
 
+    /**
+     * 의약품 리스트 출력
+     * 작성자: 길범진
+     * @param currentPage
+     * @return
+     */
     public Map<String, Object> getMedicineList(int currentPage){
         // 보여줄 행의 갯수
         int rowPerPage = 10;
@@ -63,25 +68,38 @@ public class AdMedicineService {
 
         return resultMap;
     }
+
+    /**
+     * 의약품 등록 트랜젝션
+     * 작성자: 길범진
+     * @param requestMedicine
+     * @param fileRequestList
+     */
     @Transactional
     public void insertMedicine(RequestMedicine requestMedicine,
                                List<FileRequest> fileRequestList){
         MedicalInfo medicalInfo = requestMedicine.getMedicalInfo();
         SellMediInfo sellMediInfo = requestMedicine.getSellMediInfo();
+        // 이미지 가공
         for(FileRequest fileRequest : fileRequestList){
             adMedicineMapper.insertImg(fileRequest);
         }
+
         log.info("adMedicine: {}" , medicalInfo);
         adMedicineMapper.insertMedicine(medicalInfo);
         log.info("adMedicine: {}" , medicalInfo);
         String regMId = requestMedicine.getMedicalInfo().getRegMId();
         String mediCode = requestMedicine.getMedicalInfo().getMediCode();
+
+        // 효능 불특정 다수 등록
         List<AdEfficacy> effiList = requestMedicine.getMedicalInfo().getEffiList();
         effiList.forEach(effi -> {
             effi.setRegMId(regMId);
             effi.setMediCode(mediCode);
             adMedicineMapper.insertEfficacy(effi);
         });
+
+        // 성분 불특정 다수 등록
         List<AdIngredient> ingrList = requestMedicine.getMedicalInfo().getIngrList();
         log.info("ingrList: {}" , ingrList);
         ingrList.forEach(ingr -> {
@@ -99,6 +117,12 @@ public class AdMedicineService {
         adMedicineMapper.insertSellMedicine(sellMediInfo);
     }
 
+    /**
+     * 수정할 의약품의 정보 검색 및 리턴
+     * 작성자: 길범진
+     * @param goodsCode
+     * @return
+     */
     public Map<String, Object> getMedicalInfo(String goodsCode){
         MedicalInfo medicalInfo = adMedicineMapper.getMedicineInfo(goodsCode);
         String suppName = adMedicineMapper.getSuppName(goodsCode);
@@ -120,12 +144,17 @@ public class AdMedicineService {
         return mediObj;
     }
 
+    /**
+     * 의약품 수정 트랜젝션
+     * 작성자: 길범진
+     * @param requestMedicine
+     * @param fileRequestList
+     */
     @Transactional
     public void modifyMedicine(RequestMedicine requestMedicine,
                                @RequestParam(value="fileList") List<FileRequest> fileRequestList){
         String regMId = requestMedicine.getMedicalInfo().getRegMId();
         String suppCode = adMedicineMapper.getSuppCode(regMId);
-        String goodsCode = requestMedicine.getSellMediInfo().getGoodsCode();
         String mediCode = requestMedicine.getMedicalInfo().getMediCode();
 
         MedicalInfo medicalInfo = requestMedicine.getMedicalInfo();
@@ -165,6 +194,11 @@ public class AdMedicineService {
         adMedicineMapper.updateSellMedicine(sellMediInfo);
     }
 
+    /**
+     * 의약품 수정 트랜젝션
+     * 작성자: 길범진
+     * @param mediCode
+     */
     @Transactional
     public void deleteMedicine(String mediCode){
         adMedicineMapper.deleteSellMedicine(mediCode);

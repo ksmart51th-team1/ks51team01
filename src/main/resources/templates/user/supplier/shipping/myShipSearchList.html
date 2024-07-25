@@ -56,7 +56,7 @@
                 <article class="itemlist" th:each="s : ${shipList}">
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                            <a class="itemside" th:href="@{/supplier/myOrderDetailView(oCode=${s.oCode})}">
+                            <a class="itemside" th:href="@{/supplier/myOrderDetailView(oCode=${s.oCode},purchaseState=${s.order.purchaseState})}">
                                 <div class="info">
                                     <h6 class="mb-0" th:text="${s.shipCode}"></h6>
                                 </div>

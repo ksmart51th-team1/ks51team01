@@ -17,28 +17,6 @@ public interface SuRefundMapper {
 
     List<Refund> getRefundListBySuppCode(String suppCode);
 
-    List<Refund> getRefundList(String sid);
-
-    List<Refund> getRefundDetailList(String refundCode);
-
-    Refund getRefundInfo(String refundCode);
-
-    List<OrderDetailForRefund> getOrderDetailList(String oCode);
-
-    Order getOrderByOCode(String oCode);
-
-    List<OrderDetailForRefund> getRefundOrderList(String oCode);
-
-    String getPharId(String oCode);
-
-    void insertRefund(Refund refund);
-
-    String getMediCodeByGoodsCode(String goodsCode);
-
-    void insertRefundDetail(RefundDetail refundDetail);
-
-    void updateOrderState(Order order);
-
     Shipping getShippingDetail(String refundCode);
 
     void insertShipping(Shipping shipping);

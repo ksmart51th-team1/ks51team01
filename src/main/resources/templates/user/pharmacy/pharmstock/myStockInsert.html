@@ -133,9 +133,10 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-
+        // 데이터 ajax요청
         $('#submitBtn').click(function(){
             let isSubmit = true;
+            // 인풋박스에 정보가 담겨있는지 확인
             $('#addMedicine input, #addMedicine select').each((idx, element) => {
                 const id = element.id;
                 const value = element.value;
@@ -146,9 +147,10 @@
                     return false;
                 }
             });
+            // 인풋박스에 정보가 빠짐없이 있다면 ajax요청 시작
             if(isSubmit) {
                 const medicine = {};
-
+                // medicine에 필요한 정보를 객체에 담음
                 $('.medical-info input, .medical-info select').not('.ingredient, .content, .efficacy #pharQty #company').each((idx, item) => {
                     const id = item.id;
                     const value = $(item).val();
@@ -156,6 +158,7 @@
                 });
                 const ingrList = [];
                 const effiList = [];
+                // ingredient에 필요한 정보를 객체에 담음
                 $('#ingrBox div.row').each((idx, item) => {
                     const ingrObj = {};
                     $(item).find('input').each((idx, item) => {
@@ -165,6 +168,7 @@
                     });
                     ingrList.push(ingrObj);
                 });
+                // efficacy에 필요한 정보를 객체에 담음
                 $('#effiBox div.row').each((idx, item) => {
                     const effiObj = {};
                     $(item).find('input').each((idx, item) => {
@@ -174,17 +178,17 @@
                     });
                     effiList.push(effiObj);
                 })
-                //medicalInfo['ingrList'] = ingrList;
-                //medicalInfo['effiList'] = effiList;
                 console.log(medicine);
 
                 const pharmStock = {};
+                // PharmStock에 필요한 정보를 객체에 담음
                 $('#pharQty, #company').each((idx, item) => {
                     const id = item.id;
                     const value = $(item).val();
                     pharmStock[id] = value;
                 });
                 console.log(pharmStock);
+                // 정보를 담은 객체 4개를 한개의 객체에 담음
                 const requestObj = {medicine, pharmStock, ingrList, effiList};
 
                 const formData = new FormData();
@@ -192,6 +196,7 @@
 
                 console.log(requestObj);
                 console.log(JSON.stringify(requestObj));
+                // ajax요청 시작
                 const request = $.ajax({
                     url : '/pharm/myStockInsert',
                     method : 'POST',

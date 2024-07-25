@@ -12,8 +12,6 @@ import team01.yaksutor.admin.service.AdMedicineService;
 import team01.yaksutor.file.dto.FileRequest;
 import team01.yaksutor.file.util.FileUtils;
 
-import java.nio.channels.MulticastChannel;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +23,13 @@ public class AdMedicineController {
     private final FileUtils fileUtils;
     private final AdMedicineMapper adMedicineMapper;
     private final AdMedicineService adMedicineService;
-    List<AdIngredient> newAdIngredientList = new ArrayList<AdIngredient>();
-    List<AdEfficacy> newAdEfficacyList = new ArrayList<AdEfficacy>();
 
+    /**
+     * 의약품 등록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/medicineInsert")
     public String medicineInsert(Model model) {
         model.addAttribute("title", "의약품 등록");
@@ -35,6 +37,13 @@ public class AdMedicineController {
         return "admin/medicine/medicineInsert";
     }
 
+    /**
+     * 의약품 목록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param currentPage
+     * @return
+     */
     @GetMapping("/medicineSearchList")
     public String medicineSearchList(Model model,
                                      @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
@@ -57,6 +66,13 @@ public class AdMedicineController {
         return "admin/medicine/medicineSearchList";
     }
 
+    /**
+     * 의약품 수정 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param goodsCode
+     * @return
+     */
     @GetMapping("/medicineModify")
     public String medicineModify(Model model,
                                  @RequestParam(value="goodsCode") String goodsCode) {
@@ -71,6 +87,13 @@ public class AdMedicineController {
         return "admin/medicine/medicineModify";
     }
 
+    /**
+     * 의약품 삭제 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param goodsCode
+     * @return
+     */
     @GetMapping("/medicineDelete")
     public String medicineDelete(Model model,
                                  @RequestParam(value="goodsCode") String goodsCode) {
@@ -86,6 +109,13 @@ public class AdMedicineController {
         return "admin/medicine/medicineDelete";
     }
 
+    /**
+     * 의약품 상세 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param goodsCode
+     * @return
+     */
     @GetMapping("/medicineDetailView")
     public String medicineDetailView(Model model,
                                      @RequestParam(value="goodsCode") String goodsCode) {
@@ -95,6 +125,7 @@ public class AdMedicineController {
         String effies ="";
         List<AdEfficacy> efficacyList = requestMedicine.getMedicalInfo().getEffiList();
         boolean first = true;
+        // 의약품 효능 한줄 출력
         for (AdEfficacy adEfficacy : efficacyList) {
             if(!first){
                 effies += ", ";
@@ -113,6 +144,13 @@ public class AdMedicineController {
         return "admin/medicine/medicineDetailView";
     }
 
+    /**
+     * 판매자 아이디 확인 ajax요청
+     * 작성자: 길범진
+     * @param regMId
+     * @param model
+     * @return
+     */
     @PostMapping("/checkLevel")
     @ResponseBody
     public int checkLevel(@RequestParam(value="regMId") String regMId,
@@ -124,18 +162,14 @@ public class AdMedicineController {
         return idLevel;
     }
 
-    /*@PostMapping("/medicineInsert")
-    public String medicineInsert(Model model,
-                                 MedicalInfo medicalInfo,
-                                 SellMediInfo sellMediInfo) {
-
-        log.info("의약품 등록 Medicine: {}", medicalInfo);
-        log.info("의약품 등록 SellMedicine: {}", sellMediInfo);
-
-
-        return "redirect:/admin/adminMain";
-    }*/
-
+    /**
+     * 의약품 및 판매 의약품 등록 ajax요청
+     * 작성자: 길범진
+     * @param model
+     * @param requestMedicine
+     * @param multipartFile
+     * @return
+     */
     @PostMapping("/medicineInsert")
     @ResponseBody
     public String medicineInsert(Model model,
@@ -155,6 +189,14 @@ public class AdMedicineController {
         return "redirect:/admin/medicine/medicineSearchList";
     }
 
+    /**
+     * 의약품 수정 ajax요청
+     * 작성자: 길범진
+     * @param model
+     * @param requestMedicine
+     * @param multipartFile
+     * @return
+     */
     @PostMapping("/medicineModify")
     @ResponseBody
     public String medicineModify(Model model,
@@ -173,6 +215,12 @@ public class AdMedicineController {
         return "redirect:/admin/medicine/medicineSearchList";
     }
 
+    /**
+     * 의약품 삭제 ajax요청 기능-판매 의약품 판매상태 수정
+     * 작성자: 길범진
+     * @param mediCode
+     * @return
+     */
     @PostMapping("/medicineDelete")
     public String medicineDelete(@RequestParam(value="mediCode") String mediCode){
         adMedicineService.deleteMedicine(mediCode);
