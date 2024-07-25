@@ -21,50 +21,63 @@
 
 </div>
 <div th:fragment="teamIntroFragment">
-    <footer class="footer" id="footer">
-        <div class="container pt-15 pb-20">
-            <div class="row text-center">
-                <div class="col-4">
-                    <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
-                        <div class="logo mb-30">
-                            <a href="index.html" class="mb-15"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}" alt="logo" /></a>
-                            <p class="font-lg text-heading">팀장: 박중연</p>
-                        </div>
-                        <ul class="contact-infor">
-                            <li>간단한 자기소개</li>
-                            <li>본인 기능</li>
-                            <li><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-email-2.svg}" alt="" /><strong>Email:</strong><span>sale@Nest.com</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
-                        <div class="logo mb-30">
-                            <a href="index.html" class="mb-15"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}" alt="logo" /></a>
-                            <p class="font-lg text-heading">팀원: 길범진</p>
-                        </div>
-                        <ul class="contact-infor">
-                            <li>간단한 자기소개</li>
-                            <li>본인 기능</li>
-                            <li><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-email-2.svg}" alt="" /><strong>Email:</strong><span>sale@Nest.com</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
-                        <div class="logo mb-30">
-                            <a href="index.html" class="mb-15"><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-user.svg}" alt="logo" /></a>
-                            <p class="font-lg text-heading">팀원: 최성식</p>
-                        </div>
-                        <ul class="contact-infor">
-                            <li>간단한 자기소개</li>
-                            <li>본인 기능</li>
-                            <li><img th:src="@{/resource/user/assets/imgs/theme/icons/icon-email-2.svg}" alt="" /><strong>Email:</strong><span>sale@Nest.com</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <footer class="footer IntroFooter" id="footer">
+        <table 	style="table-layout: fixed;">
+            <tr class="text-center" style="font-size: 23px;">
+                <th><strong>길범진</strong> 팀원</th>
+                <th><strong>박중연</strong> 팀장</th>
+                <th><strong>최성식</strong> 팀원</th>
+            </tr>
+            <tr style="font-size: 18px">
+                <td class="PJY">
+                 <ul>
+                     <li>본인 기능</li>
+                     <li>본인 기능</li>
+                     <li>본인 기능</li>
+                     <li>본인 기능</li>
+                     <li>본인 기능</li>
+                     <li>본인 기능</li>
+                 </ul>
+                </td>
+                <td class="GBJ">
+                    <ul>
+                        <li>본인 기능</li>
+                        <li>본인 기능</li>
+                        <li>본인 기능</li>
+                        <li>본인 기능</li>
+                        <li>본인 기능</li>
+                        <li>본인 기능</li>
+                    </ul>
+                </td>
+                <td class="CSS">
+                    <ul>
+                        <li>메인화면(Index)</li>
+                        <li>사용자 메인화면</li>
+                        <li>커뮤니티 페이지</li>
+                        <li>공지사항 페이지</li>
+                        <li>1:1 문의 페이지</li>
+                        <li>자주하는 질문 페이지</li>
+                        <li>장바구니 페이지</li>
+                        <li>주문하기 페이지</li>
+                        <li>레이아웃(fragment)</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td class="GBJ">
+                    <a href="https://github.com/Gil-seven" target='_blank'><i class="bi bi-github"></i></a>
+                </td>
+                <td class="PJY">
+                    <a href="https://github.com/jyPark4321" target='_blank'><i class="bi bi-github"></i></a>
+                </td>
+                <td class="CSS">
+                    <a href="https://github.com/sssungsik" target='_blank'><i class="bi bi-github"></i></a>
+                    <a href="https://sssungsik.github.io/" target='_blank'><i class="bi bi-person-vcard"></i></a>
+                </td>
+            </tr>
+
+
+        </table>
     </footer>
 </div>
 
