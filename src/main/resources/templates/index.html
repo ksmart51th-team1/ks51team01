@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html   xmlns:th="http://www.thymeleaf.org"
-        class="js sizes websockets customelements history postmessage webworkers picture pointerevents webanimations webgl srcset flexbox cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside" lang="en">
+<html   class="js sizes websockets customelements history postmessage webworkers picture pointerevents webanimations webgl srcset flexbox cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside"
+        lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title th:text="${title}"></title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="" property="og:title">
+    <meta content="" property="og:type">
+    <meta content="" property="og:url">
+    <meta content="" property="og:image">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/user/assets/imgs/theme/favicon.svg}">
+    <link rel="shortcut icon" th:href="@{/resource/user/assets/imgs/theme/favicon.svg}" type="image/x-icon">
     <!-- Template CSS -->
     <link rel="stylesheet" th:href="@{/resource/user/assets/css/main.css?v=5.6}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
 <main class="main pages">
     <div style="height: 70px;">
         <div class="logo logo-width-1">
-            <img th:src="@{/resource/logo/logo_pink.png}" class="logo" style="width: 10rem; margin: 15px" alt="Nest Dashboard" />
+            <img alt="Nest Dashboard" class="logo" style="width: 10rem; margin: 15px" th:src="@{/resource/logo/logo_pink.png}" />
         </div>
     </div>
 
@@ -42,7 +42,7 @@
                                 <div class="list-banner-box">
                                     <div class="logo logo-width-1 mb-3 regForm hover-up" th:onclick="|location.href='@{/member/memberInsert/owner}'|">
                                         <div class="img-box">
-                                            <img th:src="@{/resource/logo/national.png}" alt="개국약사 image">
+                                            <img alt="개국약사 image" th:src="@{/resource/logo/national.png}">
                                         </div>
                                         <div class="text-box">
                                             <span class="name-text">개국약사 회원가입</span>
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="logo logo-width-1 mb-3 regForm hover-up" th:onclick="|location.href='@{/member/memberInsert/staff}'|" >
                                         <div class="img-box">
-                                            <img th:src="@{/resource/logo/management.png}" alt="관리약사 image">
+                                            <img alt="관리약사 image" th:src="@{/resource/logo/management.png}">
                                         </div>
                                         <div class="text-box">
                                             <span class="name-text">관리약사 회원가입</span>
@@ -67,19 +67,19 @@
                             <div class="login_wrap widget-taber-content background-white" >
                                 <div class="padding_eight_all bg-white" style="padding: 23px; border-radius: 25px; font-family: 'Pretendard-Regular';">
 
-                                    <form th:action="@{/login}" method="post">
-                                        <input type="hidden" th:value="secret" name="secret_key" />
+                                    <form method="post" th:action="@{/login}">
+                                        <input name="secret_key" th:value="secret" type="hidden" />
                                         <div class="form-group">
-                                            <input type="text"  name="memberId" id="memberId" placeholder="회원아이디를 입력하세요. *" value="id006">
+                                            <input id="memberId"  name="memberId" placeholder="회원아이디를 입력하세요. *" type="text" value="id006">
                                         </div>
                                         <div class="form-group">
-                                            <input  type="password" name="memberPw" id="memberPw" placeholder="비밀번호를 입력하세요 *" value="pw006">
+                                            <input  id="memberPw" name="memberPw" placeholder="비밀번호를 입력하세요 *" type="password" value="pw006">
                                         </div>
 
                                         <div class="login_footer form-group mb-50">
                                             <div class="chek-form">
                                                 <div class="custome-checkbox">
-                                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
+                                                    <input class="form-check-input" id="exampleCheckbox1" name="checkbox" type="checkbox" value="">
                                                     <label class="form-check-label" for="exampleCheckbox1"><span>아이디저장</span></label>
                                                 </div>
                                             </div>
@@ -113,8 +113,10 @@
             </div>
         </div>
     </div>
+    <div style="background: #fafafa;">
+    <div th:replace="~{user/pharmacy/fragments/footer :: teamIntroFragment}"></div>
     <div th:replace="~{user/pharmacy/fragments/footer :: footerFragment}"></div>
-
+    </div>
 </main>
 
 <!-- Preloader Start -->
@@ -122,7 +124,7 @@
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-inner position-relative">
             <div class="text-center">
-                <img th:src="@{/resource/user/assets/imgs/theme/loading.gif}" alt="">
+                <img alt="" th:src="@{/resource/user/assets/imgs/theme/loading.gif}">
             </div>
         </div>
     </div>
@@ -148,7 +150,7 @@
 <script th:src="@{/resource/user/assets/js/plugins/jquery.theia.sticky.js}"></script>
 <script th:src="@{/resource/user/assets/js/plugins/jquery.elevatezoom.js}"></script>
 <!-- Template  JS -->
-<script th:src="@{/resource/user/assets/js/main.js?v=5.6}"></script><a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none;"><i class="fi-rs-arrow-small-up"></i></a>
+<script th:src="@{/resource/user/assets/js/main.js?v=5.6}"></script><a href="#top" id="scrollUp" style="position: fixed; z-index: 2147483647; display: none;"><i class="fi-rs-arrow-small-up"></i></a>
 <script th:src="@{/resource/user/assets/js/shop.js?v=5.6}"></script>
 
 <script>

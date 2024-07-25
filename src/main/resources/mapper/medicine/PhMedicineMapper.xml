@@ -56,47 +56,6 @@
         WHERE
         s.state = '판매중';
     </select>
-<!--    &lt;!&ndash;등록&ndash;&gt;
-    <insert id="addBoard" parameterType="Board">
-        <selectKey keyProperty="boardCode" resultType="String" order="BEFORE">
-            SELECT
-            CASE
-            WHEN COUNT(cm_num) = 0 THEN 'comm_1'
-            ELSE
-            CONCAT(
-            'comm_',
-            MAX(CAST(SUBSTRING_INDEX(cm_num, 'comm_', -1) AS UNSIGNED)) +1)
-            END AS boardCode
-            FROM
-            community;
-        </selectKey>
-        INSERT INTO community
-        (cm_num, m_id, cm_title, cm_content, cm_view, cm_date)
-        values
-        (#{boardCode}, #{mId}, #{boardTitle}, #{boardContent},#{boardView}, CURDATE());
-    </insert>
-
-    &lt;!&ndash;수정&ndash;&gt;
-    <update id="modifyBoard" parameterType="Board">
-        UPDATE community
-        <set>
-            <if test="boardTitle != null and boardTitle != ''">
-                cm_title = #{boardTitle},
-            </if>
-            <if test="boardContent != null and boardContent != ''">
-                cm_content = #{boardContent},
-            </if>
-        </set>
-        WHERE
-        cm_num = #{boardCode}
-    </update>
-
-    &lt;!&ndash;삭제&ndash;&gt;
-    <delete id="deleteBoard" parameterType="String">
-        DELETE FROM community
-        WHERE cm_num = #{boardCode}
-    </delete>-->
-
 
 
 
