@@ -23,6 +23,12 @@ public class SuMedicineController {
     private final SuMedicineService suMedicineService;
     private final SuMedicineMapper suMedicineMapper;
 
+    /**
+     * 판매 의약품 등록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/myMedicineInsert")
     public String myMedicineInsert(Model model) {
         model.addAttribute("title", "내 의약품 등록");
@@ -31,6 +37,11 @@ public class SuMedicineController {
         return "user/supplier/medicine/myMedicineInsert";
     }
 
+    /**
+     * 납품업자 별 판매 의약품 목록 페이지 맵핑
+     * @param model
+     * @return
+     */
     @GetMapping("/myMedicineSearchList")
     public String myMedicineSearchList(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -46,6 +57,13 @@ public class SuMedicineController {
         return "user/supplier/medicine/myMedicineSearchList";
     }
 
+    /**
+     * 내 의약품 수정 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param goodsCode
+     * @return
+     */
     @GetMapping("/myMedicineModify")
     public String myMedicineModify(Model model,
                                    @RequestParam(value="goodsCode") String goodsCode) {
@@ -68,6 +86,12 @@ public class SuMedicineController {
         return "user/supplier/medicine/myMedicineModify";
     }
 
+    /**
+     * 내 의약품 판매상태 -> '삭제'로 수정
+     * @param model
+     * @param goodsCode
+     * @return
+     */
     @GetMapping("/myMedicineDelete")
     public String myMedicineDelete(Model model,
                                    @RequestParam(value="goodsCode") String goodsCode) {
@@ -84,6 +108,12 @@ public class SuMedicineController {
         return "user/supplier/medicine/myMedicineDelete";
     }
 
+    /**
+     * 내 판매 의약품 상세 페이지 맵핑
+     * @param model
+     * @param goodsCode
+     * @return
+     */
     @GetMapping("/myMedicineDetailView")
     public String myMedicineDetailView(Model model,
                                        @RequestParam(value="goodsCode") String goodsCode) {
@@ -116,6 +146,14 @@ public class SuMedicineController {
         return "user/supplier/medicine/myMedicineDetailView";
     }
 
+    /**
+     * 내 판매 의약품 등록 ajax요청
+     * 작성자: 길범진
+     * @param model
+     * @param medicineInfo
+     * @param multipartFile
+     * @return
+     */
     @PostMapping("/insertMedicine")
     @ResponseBody
     public String insertMedicine(Model model,
@@ -128,6 +166,14 @@ public class SuMedicineController {
         return "redirect:/supplier/myMedicineSearchList";
     }
 
+    /**
+     * 내 판매 의약품 수정 ajax요청
+     * 작성자: 길범진
+     * @param model
+     * @param medicineInfo
+     * @param multipartFile
+     * @return
+     */
     @PostMapping("/modifyMedicine")
     @ResponseBody
     public String modifyMedicine(Model model,
@@ -141,6 +187,12 @@ public class SuMedicineController {
         return "redirect:/supplier/myMedicineSearchList";
     }
 
+    /**
+     * 내 의약품 상태 -> '삭제'로 수정 ajax요청
+     * 작성자: 길범진
+     * @param mediCode
+     * @return
+     */
     @PostMapping("/myMedicineDelete")
     public String deleteMedicine(@RequestParam(value="mediCode") String mediCode){
         suMedicineMapper.deleteSellMedicine(mediCode);

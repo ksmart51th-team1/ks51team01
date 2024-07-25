@@ -21,7 +21,12 @@ public class SuShippingController {
     private final HttpServletRequest request;
     private final SuShippingMapper suShippingMapper;
 
-
+    /**
+     * 내 주문 배송 목록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/shipSearchList")
     public String shipSearchList(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -36,6 +41,11 @@ public class SuShippingController {
         return "user/supplier/shipping/myShipSearchList";
     }
 
+    /**
+     * 내 반품 배송 목록 페이지 맵핑
+     * @param model
+     * @return
+     */
     @GetMapping("/refundShipList")
     public String refundShipList(Model model){
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -48,13 +58,5 @@ public class SuShippingController {
         model.addAttribute("content", "반품 배송 목록");
 
         return "user/supplier/shipping/myRefundShipList";
-    }
-
-    @GetMapping("/myShippingView")
-    public String shippingDetailView(@RequestParam(value="shipCode") String shipCode){
-        log.info("shipCode: {}", shipCode);
-
-
-        return null;
     }
 }

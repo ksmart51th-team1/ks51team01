@@ -21,6 +21,13 @@ public class PhRefundController {
     private final PhRefundMapper phRefundMapper;
     private final PhRefundService phRefundService;
 
+    /**
+     * 내 주문 반품등록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param orderCode
+     * @return
+     */
     @GetMapping("/myRefundInsert")
     public String myRefundInsert(Model model,
                                  @RequestParam(value="orderCode") String orderCode) {
@@ -38,6 +45,12 @@ public class PhRefundController {
         return "user/pharmacy/refund/myRefundInsert";
     }
 
+    /**
+     * 내 반품 목록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/myRefundSearchList")
     public String myRefundSearchList(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -51,6 +64,13 @@ public class PhRefundController {
         return "user/pharmacy/refund/myRefundSearchList";
     }
 
+    /**
+     * 내 반품 상세 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param refundCode
+     * @return
+     */
     @GetMapping("/myRefundDetailView")
     public String myRefundDetailView(Model model,
                                      @RequestParam(value="refundCode") String refundCode) {
@@ -67,6 +87,12 @@ public class PhRefundController {
         return "user/pharmacy/refund/myRefundDetailView";
     }
 
+    /**
+     * 내 반품 등록 ajax요청
+     * 작성자: 길범진
+     * @param refundInfo
+     * @return
+     */
     @PostMapping("/myRefundInsert")
     @ResponseBody
     public String myRefundInsert(@RequestBody RequestRefundInfo refundInfo){
@@ -76,6 +102,12 @@ public class PhRefundController {
         return "redirect:/pharm/myRefundSearchList";
     }
 
+    /**
+     * 내 반품 취소 ajax요청
+     * 작성자: 길범진
+     * @param refundCode
+     * @return
+     */
     @PostMapping("/cancleRefund")
     @ResponseBody
     public String cancleRefund(@RequestBody Refund refundCode){

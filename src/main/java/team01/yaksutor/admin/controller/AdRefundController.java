@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import team01.yaksutor.admin.mapper.AdRefundMapper;
 import team01.yaksutor.dto.Refund;
-import team01.yaksutor.dto.RefundDetail;
 import team01.yaksutor.dto.Shipping;
-import team01.yaksutor.supplier.mapper.SuShippingMapper;
 
 import java.util.List;
 
@@ -19,9 +17,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class AdRefundController {
-    private final HttpServletRequest request;
     private final AdRefundMapper adRefundMapper;
 
+    /**
+     * 반품 신청 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/refundRequest")
     public String refundRequest(Model model) {
 
@@ -31,6 +34,12 @@ public class AdRefundController {
         return "admin/refund/refundRequest";
     }
 
+    /**
+     * 반품 목록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/refundSearchList")
     public String refundSearchList(Model model) {
         List<Refund> refundList = adRefundMapper.getRefundList();
@@ -42,6 +51,13 @@ public class AdRefundController {
         return "admin/refund/refundSearchList";
     }
 
+    /**
+     * 반품 상세 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param refundCode
+     * @return
+     */
     @GetMapping("/refundDetailView")
     public String refundDetailView(Model model,
                                    @RequestParam(value="refundCode") String refundCode) {
@@ -61,15 +77,12 @@ public class AdRefundController {
         return "admin/refund/refundDetailView";
     }
 
-    @GetMapping("/refundDelete")
-    public String refundDelete(Model model) {
-
-        model.addAttribute("title", "반품 신청 취소");
-        model.addAttribute("content", "반품 신청 취소");
-
-        return "admin/refund/refundDelete";
-    }
-
+    /**
+     * 반품 배송 등록 ajax요청
+     * 작성자: 길범진
+     * @param ship
+     * @return
+     */
     @PostMapping("/myRefundShip")
     @ResponseBody
     public String myRefundShip(@RequestBody Shipping ship){
@@ -80,11 +93,17 @@ public class AdRefundController {
         ship.setDeliveryState(deliState);
         ship.setDeliveryLocation(deliState);
         log.info("new ship: {}", ship);
-        //adRefundMapper.insertShipping(ship);
+        adRefundMapper.insertShipping(ship);
 
         return "redirect:/supplier/myRefundSearchList";
     }
 
+    /**
+     * 반품 완료 ajax요청
+     * 작성자: 길범진
+     * @param ship
+     * @return
+     */
     @PostMapping("/refundClear")
     @ResponseBody
     public String updateForClear(@RequestBody Shipping ship){
@@ -99,8 +118,8 @@ public class AdRefundController {
         Shipping shipInfo = adRefundMapper.getShippingDetail(shipCode);
         String refundCode = shipInfo.getRefundCode();
 
-        //adRefundMapper.updateRefund(refundCode);
-        //adRefundMapper.updateShipping(ship);
+        adRefundMapper.updateRefund(refundCode);
+        adRefundMapper.updateShipping(ship);
         return "redirect:/supplier/myRefundSearchList";
     }
 }
