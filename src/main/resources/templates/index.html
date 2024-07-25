@@ -13,120 +13,282 @@
     <meta property="og:image" content="">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resource/user/assets/imgs/theme/favicon.svg}">
     <!-- Template CSS -->
-    <link rel="stylesheet" th:href="@{/resource/user/assets/css/main.css?v=5.6}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" th:href="@{/resource/user/assets/css/footer.css}" />
+
 </head>
+<style>
+    #wrap {
+        margin: 50px 0;
 
-<body style="overflow: visible;"><div class="body-overlay-1"></div>
+    }
+    * {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .info-title-area h3 {
+        color: var(--maincolor);
+    }
+    table, tr, td {
+        border: 1px solid var(--borderColor);
+        border-collapse : collapse;
+        font-size: 13px;
+    }
+    td {
+        padding: 20px;
+    }
+    li {
+        margin: 5px 0;
+    }
+    ul, li,
+    ul p, ul h5 {
+        text-align : left;
 
+    }
+    ul p {
+        color: #858585;
+    }
+    .sub-list {
+        padding-left: 30px;
+    }
+    .sub-list li {
+        color: #adadad;
+        font-weight: 300;
+    }
+    ul h5 {
+        font-size: 14px;
+        margin: 5px 0;
+    }
+    .info-table {
+        width: 600px;
+        margin: 0 auto;
+    }
+    .table-th {
+        background: #f5f6fa;
+        width: 20%;
+        font-weight: 700;
+    }
+    #title {
+        font-size: 42px;
+        line-height: 1.2;
+        margin: 15px 0 35px;
+        color: #191919;
+        font-weight: 800;
+    }
+    .menu-title {
+        font-size: 16px;
+        margin: 10px 0 10px;
+        display: block;
+        text-align: left;
+        font-weight: 700;
+    }
+    .title-li {
+        margin-bottom: 20px;
+    }
+</style>
+<style>
+    :root {
+        --maincolor: #235fd9;
+        --borderColor: #dee1e8;
+        --errorColor: #ef3e3e;
+    }
+    a {
+        cursor: pointer;
+    }
+    .error-message {
+        color: var(--errorColor);
+    }
+    .payments-form input {
+        text-align: right;
+    }
+    .payments-form label {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
 
-<!--End header-->
-<main class="main pages">
-    <div style="height: 70px;">
-        <div class="logo logo-width-1">
-            <img th:src="@{/resource/logo/logo_pink.png}" class="logo" style="width: 10rem; margin: 15px" alt="Nest Dashboard" />
-        </div>
+    root{
+
+    }
+    #wrap {
+        text-align: center;
+    }
+    #title span {
+        font-size: 4vw;
+        /*animation: titleAni 4s infinite both;*/
+        /*animation-delay: var(--delay);*/
+        /*text-align: center;*/
+        /*--delay: calc((var(--variable-index) + 1) * 0.075s);*/
+    }
+    #title {
+        /*max-width: 100%;*/
+        /*text-align: center;*/
+        /*font-size: 6vw;*/
+        /*line-height: 1.25;*/
+        /*position: absolute;*/
+        /*top: 0;*/
+        /*left: 0;*/
+        /*width: 100%;*/
+        /*will-change: scroll-position;*/
+        /*content-visibility: auto;*/
+    }
+    /* title animation css */
+    @keyframes titleAni {
+        0% {font-weight: 45;}
+        50% {font-weight: 930;}
+        100% {font-weight: 45;}
+    }
+
+</style>
+<body>
+<div id="wrap">
+    <div class="info-title-area">
+        <h3>한국스마트정보교육원 51기 1팀</h3>
+        <h1 id="title">
+            문화·예술 산업 크리에이터를 위한
+            <br>
+            크라우드 펀딩 플랫폼 프로젝트
+        </h1>
     </div>
 
-    <div class="page-content pt-150 pb-150 indexBackground">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 pr-30 d-lg-block">
-                            <div class="guide-banner">
-                                <div class="list-banner-box">
-                                    <div class="logo logo-width-1 mb-3 regForm hover-up" th:onclick="|location.href='@{/member/memberInsert/owner}'|">
-                                        <div class="img-box">
-                                            <img th:src="@{/resource/logo/national.png}" alt="개국약사 image">
-                                        </div>
-                                        <div class="text-box">
-                                            <span class="name-text">개국약사 회원가입</span>
-                                            <span class="introduce-text">약국을 직접 운영하시는 약사님</span>
-                                        </div>
-                                        <i class="bi bi-chevron-right"></i>
-                                    </div>
-                                    <div class="logo logo-width-1 mb-3 regForm hover-up" th:onclick="|location.href='@{/member/memberInsert/staff}'|" >
-                                        <div class="img-box">
-                                            <img th:src="@{/resource/logo/management.png}" alt="관리약사 image">
-                                        </div>
-                                        <div class="text-box">
-                                            <span class="name-text">관리약사 회원가입</span>
-                                            <span class="introduce-text">약국, 병원, 회사 등에서 근무 중이신 약사님</span>
-                                        </div>
-                                        <i class="bi bi-chevron-right"></i>
-                                    </div>
-                               </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-8">
-                            <div class="login_wrap widget-taber-content background-white" >
-                                <div class="padding_eight_all bg-white" style="padding: 23px; border-radius: 25px; font-family: 'Pretendard-Regular';">
 
-                                    <form th:action="@{/login}" method="post">
-                                        <input type="hidden" th:value="secret" name="secret_key" />
-                                        <div class="form-group">
-                                            <input type="text"  name="memberId" id="memberId" placeholder="회원아이디를 입력하세요. *" value="id006">
-                                        </div>
-                                        <div class="form-group">
-                                            <input  type="password" name="memberPw" id="memberPw" placeholder="비밀번호를 입력하세요 *" value="pw006">
-                                        </div>
+    <table class="info-table" style="margin-top: 15px;">
+        <tbody>
+        <tr>
+            <td class="table-th">
+                관리자 계정
 
-                                        <div class="login_footer form-group mb-50">
-                                            <div class="chek-form">
-                                                <div class="custome-checkbox">
-                                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
-                                                    <label class="form-check-label" for="exampleCheckbox1"><span>아이디저장</span></label>
-                                                </div>
-                                            </div>
-                                            <a class="text-muted" href="#">비밀번호를 잊었나요?</a>
-                                        </div>
+            </td>
+            <td class="table-th">
+                판매자 계정
+            </td>
+            <td class="table-th">
+                구매자 계정
+            </td>
+        </tr>
+        <tr>
+            <td style="color: #858585;">
+                아이디 : admin<br>
+                비밀번호 : admin1234<br>
+            </td>
+            <td style="color: #858585;">
+                아이디 : id001<br>
+                비밀번호 : pw001<br>
+            </td>
+            <td style="color: #858585;">
+                아이디 : id007<br>
+                비밀번호 : pw007<br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="info-table" style="margin-top: 30px;">
+        <tbody>
+        <tr>
+            <td class="table-th">
+                최성식
+            </td>
+            <td colspan="2">
+                <ul>
+                    <li><a href="./user/reward" target="_blank">!메인화면(index)</a></li>
+                    <p>-판매 상품 조회 기능 </p>
+                    <li><a href="./user/reward" target="_blank">!사용자 메인 페이지</a></li>
+                    <p>-판매 상품 조회 기능 </p>
+                    <li><a href="./user/projectRegistration/reward" target="_blank">!로그인 페이지</a></li>
+                    <p>-[써머노트 API, 데이트피커 API] 프로젝트 등록 기능- </p>
+                    <li><a href="./user/reward/order?rewardProjectCode=RWD_20231128_1" target="_blank">!커뮤니티 페이지</a></li>
+                    <p>-[토스 API, 다음 주소 API] 주문, 결제, 기존 배송지 추가, 쿠폰과 포인트 사용, 회원 등급에 따른 할인과 포인트 적립 기능-</p>
+                    <li><a href="./user/reward/detail?rewardProjectCode=RWD_20231128_1&amp;searchCnt=true" target="_blank">!공지 페이지</a></li>
+                    <p>-상품 상세정보 조회, 조회수, 찜하기 기능-</p>
+                    <li><a href="./user/reward/detail/news?rewardProjectCode=rwd_20231128_1" target="_blank">!1:1 문의 페이지</a></li>
+                    <p>-판매자가 등록한 새소식 조회-</p>
+                    <li><a href="./user/reward/detail/preReview?rewardProjectCode=rwd_20231128_1" target="_blank">!자주하는 질문 페이지</a></li>
+                    <p>-판매자가 등록한 사전체험단 회원이라면 후기 등록, 삭제 가능.-</p>
+                    <li><a href="./user/reward/detail/comment?rewardProjectCode=rwd_20231128_1" target="_blank">!장바구니 페이지</a></li>
+                    <p>-댓글, 대댓글 기능-</p>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                김상민
+            </td>
+            <td colspan="2">
+                <ul>
+                    <li><a href="./user/reward" target="_blank">!리워드 메인 페이지</a></li>
+                    <p>-카테고리, 현황, 조건 별 프로젝트 목록 조회 기능-</p>
+                    <li><a href="./user/projectRegistration/reward" target="_blank">!리워드 프로젝트 등록 페이지</a></li>
+                    <p>-[써머노트 API, 데이트피커 API] 프로젝트 등록 기능-</p>
+                    <li><a href="./user/reward/order?rewardProjectCode=RWD_20231128_1" target="_blank">!리워드 주문 페이지</a></li>
+                    <p>-[토스 API, 다음 주소 API] 주문, 결제, 기존 배송지 추가, 쿠폰과 포인트 사용, 회원 등급에 따른 할인과 포인트 적립 기능-</p>
+                    <li><a href="./user/reward/detail?rewardProjectCode=RWD_20231128_1&amp;searchCnt=true" target="_blank">!리워드 상세 페이지</a></li>
+                    <p>-상품 상세정보 조회, 조회수, 찜하기 기능-</p>
+                    <li><a href="./user/reward/detail/news?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 새소식 페이지</a></li>
+                    <p>-판매자가 등록한 새소식 조회-</p>
+                    <li><a href="./user/reward/detail/preReview?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 사전체험 후기 페이지</a></li>
+                    <p>-판매자가 등록한 사전체험단 회원이라면 후기 등록, 삭제 가능.-</p>
+                    <li><a href="./user/reward/detail/comment?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 댓글 페이지</a></li>
+                    <p>-댓글, 대댓글 기능-</p>
+                    <li><a href="./user/reward/detail/refundPolicy?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 환불 정책 페이지</a></li>
+                    <p>-환불 정책 페이지-</p>
+                    <li><a href="./user/mypage/?selectFund=reward" target="_blank">!마이페이지</a></li>
+                    <p>-주문확정, 주문취소, 결제내역, 취소내역, 찜한 리워드 조회-</p>
+                    <li><a href="./seller/reward/products" target="_blank">!판매자 리워드 목록 페이지</a></li>
+                    <p>-판매자가 등록한 리워드 목록 조회-</p>
+                    <li><a href="./seller/reward/news" target="_blank">!판매자 새소식 관리 페이지</a></li>
+                    <p>-새소식 등록, 삭제, 수정 기능-</p>
+                    <li><a href="./seller/reward/products/preExperienceRecruit" target="_blank">!판매자 사전체험단 관리 페이지</a></li>
+                    <p>-사전체험단 추가, 삭제 기능-</p>
+                    <li><a href="./admin/reward/judgement" target="_blank">!관리자 프로젝트 심사 페이지</a></li>
+                    <p>-프로젝트 심사 승인, 거부 기능-</p>
 
-                                        <div class="form-group" th:if="${error}">
-                                            <label class="form-label text-danger" th:text="${exception}"></label>
-                                        </div>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                김상민
+            </td>
+            <td colspan="2">
+                <ul>
+                    <li><a href="./user/reward" target="_blank">!리워드 메인 페이지</a></li>
+                    <p>-카테고리, 현황, 조건 별 프로젝트 목록 조회 기능-</p>
+                    <li><a href="./user/projectRegistration/reward" target="_blank">!리워드 프로젝트 등록 페이지</a></li>
+                    <p>-[써머노트 API, 데이트피커 API] 프로젝트 등록 기능-</p>
+                    <li><a href="./user/reward/order?rewardProjectCode=RWD_20231128_1" target="_blank">!리워드 주문 페이지</a></li>
+                    <p>-[토스 API, 다음 주소 API] 주문, 결제, 기존 배송지 추가, 쿠폰과 포인트 사용, 회원 등급에 따른 할인과 포인트 적립 기능-</p>
+                    <li><a href="./user/reward/detail?rewardProjectCode=RWD_20231128_1&amp;searchCnt=true" target="_blank">!리워드 상세 페이지</a></li>
+                    <p>-상품 상세정보 조회, 조회수, 찜하기 기능-</p>
+                    <li><a href="./user/reward/detail/news?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 새소식 페이지</a></li>
+                    <p>-판매자가 등록한 새소식 조회-</p>
+                    <li><a href="./user/reward/detail/preReview?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 사전체험 후기 페이지</a></li>
+                    <p>-판매자가 등록한 사전체험단 회원이라면 후기 등록, 삭제 가능.-</p>
+                    <li><a href="./user/reward/detail/comment?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 댓글 페이지</a></li>
+                    <p>-댓글, 대댓글 기능-</p>
+                    <li><a href="./user/reward/detail/refundPolicy?rewardProjectCode=rwd_20231128_1" target="_blank">!리워드 환불 정책 페이지</a></li>
+                    <p>-환불 정책 페이지-</p>
+                    <li><a href="./user/mypage/?selectFund=reward" target="_blank">!마이페이지</a></li>
+                    <p>-주문확정, 주문취소, 결제내역, 취소내역, 찜한 리워드 조회-</p>
+                    <li><a href="./seller/reward/products" target="_blank">!판매자 리워드 목록 페이지</a></li>
+                    <p>-판매자가 등록한 리워드 목록 조회-</p>
+                    <li><a href="./seller/reward/news" target="_blank">!판매자 새소식 관리 페이지</a></li>
+                    <p>-새소식 등록, 삭제, 수정 기능-</p>
+                    <li><a href="./seller/reward/products/preExperienceRecruit" target="_blank">!판매자 사전체험단 관리 페이지</a></li>
+                    <p>-사전체험단 추가, 삭제 기능-</p>
+                    <li><a href="./admin/reward/judgement" target="_blank">!관리자 프로젝트 심사 페이지</a></li>
+                    <p>-프로젝트 심사 승인, 거부 기능-</p>
 
-                                        <div class="form-group">
-                                            <button class="btn btn-heading btn-block" id="indexLoginBtn" name="login" style="width: 100%; background: rgb(255,140,159); font-family: 'Pretendard-Regular'; border-radius: 15px; font-size: 20px; font-weight: 600"
-                                                    type="submit">로그인</button>
-                                        </div>
-                                        ※ 아래 버튼은 테스트용 입니다.
-                                        <div style="display: flex">
-                                            <a  class="shortCut hover-up" data-login-id="admin" data-login-pw="admin1234"><i class="bi bi-wrench"></i> 관리자 로그인</a>
-                                            <a  class="shortCut hover-up" data-login-id="id007" data-login-pw="pw007"><i class="bi bi-capsule"></i> 약사 로그인</a>
-                                            <a  class="shortCut hover-up" data-login-id="id001" data-login-pw="pw001"><i class="bi bi-truck"></i> 납품업체 로그인</a>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="padding_eight_all mt-3 hover-up" onclick="location.href='https://forms.gle/1VRReEqFk24heS8q8';" style="padding: 23px; border-radius: 25px; background-color: rgba(13,110,253,0.76); cursor:pointer">
-                                    <h5 style="color: white">파트너 제휴문의 > </h5>
-                                    <p style="color: white">약수터와 함께 전문 약사님을 만나보세요.<i class="fs-5">🤝</i></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div th:replace="~{user/pharmacy/fragments/footer :: footerFragment}"></div>
+                </ul>
+            </td>
+        </tr>
 
-</main>
 
-<!-- Preloader Start -->
-<div id="preloader-active" style="display: none;">
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-inner position-relative">
-            <div class="text-center">
-                <img th:src="@{/resource/user/assets/imgs/theme/loading.gif}" alt="">
-            </div>
-        </div>
-    </div>
+        </tbody>
+    </table>
 </div>
+
 <!-- Vendor JS-->
 <script th:src="@{/resource/user/assets/js/vendor/modernizr-3.6.0.min.js}"></script>
 <script th:src="@{/resource/user/assets/js/vendor/jquery-3.6.0.min.js}"></script>
