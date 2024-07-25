@@ -7,13 +7,12 @@ import java.util.List;
 
 @Mapper
 public interface AdStockMapper {
+
     List<PharmStock> getPharmStockList();
 
     String getPharIdByPharCode(String pharCode);
 
     String getPharNameByPharCode(String pharCode);
-
-    /*StockInfo getStockInfoByPharCode(String stockCode);*/
 
     PharmStock getPharmStockByStockCode(String stockCode);
 

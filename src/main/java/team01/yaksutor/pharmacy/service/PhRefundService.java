@@ -20,6 +20,11 @@ public class PhRefundService {
     private final HttpServletRequest request;
     private final AdRefundController adRefundController;
 
+    /**
+     * 반품 등록 트랜젝션
+     * 작성자: 길범진
+     * @param rri
+     */
     @Transactional
     public void insertRefund(RequestRefundInfo rri){
         Refund refund = new Refund();
@@ -60,7 +65,9 @@ public class PhRefundService {
     }
 
     /**
-     * 반품 취소하는 트랜젝션
+     * 반품 취소 트랜젝션
+     * 작성자: 길범진
+     * @param refundCode
      */
     @Transactional
     public void cancleRefund(String refundCode){

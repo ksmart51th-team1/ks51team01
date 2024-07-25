@@ -23,7 +23,7 @@
                             <div class="mb-4">
                                 <div class="mb-4">
                                     <label class="form-label">반품 번호</label>
-                                    <input type="text" placeholder="10자리" class="form-control" th:value="${refund.refundCode}" readonly="readonly" />
+                                    <input type="text" placeholder="10자리" class="form-control" id="refundCode" th:value="${refund.refundCode}" readonly="readonly" />
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">총 반품 금액</label>
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="md-2">
                                     <button class="btn btn-primary md-2" id="refundClear" type="button" th:if="${ship.deliveryState != '반품완료'}">반품 완료</button>
-                                    <!--button class="btn btn-primary md-2" id="submitBtn">배송등록</button>-->
+                                    <button class="btn btn-primary md-2" id="cancleRefund" th:if="${ship.deliveryState != '반품완료'}">반품 취소</button>
                                 </div>
                             </div>
                             <div th:unless="${ship != null}">
@@ -145,7 +145,7 @@
         $('#refundClear').click(function(){
             const refundCode = $('#refundCode').val();
             const ship = {};
-            ship['refundCode'] = refundCode;
+            ship['refundCode'] = refundCode
             const request = $.ajax({
                 url : '/supplier/refundClear',
                 method : 'POST',
@@ -154,13 +154,32 @@
                 dataType : 'json'
             });
             request.done(function(item){
-                $(location).attr('href', '/supplier/myRefundSearchList');
+                $(location).attr('href', '/admin/refundSearchList');
             })
             request.fail(function(jqXHR, textStatus, error){
                 console.log(error);
-                $(location).attr('href', '/supplier/myRefundSearchList');
+                $(location).attr('href', '/admin/refundSearchList');
+            });
+        });
+        // 반품 취소 ajax요청
+        $('#cancleRefund').click(function(){
+            const value = $('#refundCode').val();
+            const request = $.ajax({
+                url : '/admin/cancleRefund',
+                method : 'POST',
+                contentType : 'application/json',
+                data : JSON.stringify({'refundCode' : value}),
+                dataType : 'json'
+            });
+            request.done(function(item){
+                $(location).attr('href', '/admin/refundSearchList');
+            })
+            request.fail(function(jqXHR, textStatus, error){
+                console.log(error);
+                $(location).attr('href', '/admin/refundSearchList');
             });
         })
+
     </script>
 </th:block>
 </html>
