@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team01.yaksutor.admin.mapper.AdOrderMapper">
+
+    <resultMap id="OrderResultMap" type="Order">
+        <id column="o_code" property="oCode"/>
+        <result column="m_id_order" property="mIdOrder" />
+        <result column="shopping_cart_group" property="shoppingCartGroup" />
+        <result column="order_total_price" property="orderTotalPrice" />
+        <result column="delivery_state" property="deliveryState" />
+        <result column="purchase_state" property="purchaseState" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="request_term" property="requestTerm" />
+        <result column="order_type" property="orderType" />
+        <result column="purchase_date" property="purchaseDate" />
+
+        <association property="orderDetail" javaType="OrderDetail">
+            <id column="order_detail_code" property="orderDetailCode"/>
+            <result column="o_code" property="oCode"/>
+            <result column="goods_code" property="goodsCode"/>
+            <result column="o_seller_id" property="oSellerId"/>
+            <result column="supp_code" property="suppCode"/>
+            <result column="order_qty" property="orderQty"/>
+            <result column="order_price" property="orderPrice"/>
+        </association>
+
+        <association property="sellMedicine" javaType="SellMedicine">
+            <id     column="goods_code"  property="goodsCode"/>
+            <result column="supp_code"   property="suppCode"/>
+            <result column="medi_code"   property="mediCode"/>
+            <result column="medi_name"   property="mediName"/>
+            <result column="medi_detail" property="mediDetail"/>
+            <result column="medi_price"  property="mediPrice"/>
+            <result column="medi_img"    property="mediImg"/>
+            <result column="reg_qty"     property="regQty"/>
+            <result column="state"       property="state"/>
+            <result column="reg_date"    property="regDate"/>
+        </association>
+
+        <association property="imgData" javaType="ImgData">
+            <id     column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name"   property="fileOriginName"/>
+            <result column="file_new_name"      property="fileNewName"/>
+            <result column="file_path"          property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date"      property="fileRegDate"/>
+        </association>
+
+    </resultMap>
+
+    <resultMap id="OrderDetailResultMap" type="OrderDetail">
+        <id column="order_detail_code" property="orderDetailCode"/>
+        <result column="o_code" property="oCode"/>
+        <result column="goods_code" property="goodsCode"/>
+        <result column="o_seller_id" property="oSellerId"/>
+        <result column="supp_code" property="suppCode"/>
+        <result column="order_qty" property="orderQty"/>
+        <result column="order_price" property="orderPrice"/>
+
+        <association property="sellMedicine" javaType="SellMedicine">
+            <id     column="goods_code"  property="goodsCode"/>
+            <result column="supp_code"   property="suppCode"/>
+            <result column="medi_code"   property="mediCode"/>
+            <result column="medi_name"   property="mediName"/>
+            <result column="medi_detail" property="mediDetail"/>
+            <result column="medi_price"  property="mediPrice"/>
+            <result column="medi_img"    property="mediImg"/>
+            <result column="reg_qty"     property="regQty"/>
+            <result column="state"       property="state"/>
+            <result column="reg_date"    property="regDate"/>
+        </association>
+
+        <association property="imgData" javaType="ImgData">
+            <id     column="file_idx"           property="fileIdx"/>
+            <result column="file_origin_name"   property="fileOriginName"/>
+            <result column="file_new_name"      property="fileNewName"/>
+            <result column="file_path"          property="filePath"/>
+            <result column="file_size"          property="fileSize"/>
+            <result column="file_reg_date"      property="fileRegDate"/>
+        </association>
+    </resultMap>
+
+    <select id="getOrderList" resultMap="OrderResultMap">
+        /* 전체 주문 조회 */
+        SELECT
+            o_code,
+            m_id_order,
+            shopping_cart_group,
+            order_total_price,
+            delivery_state,
+            purchase_state,
+            payment_method,
+            request_term,
+            order_type,
+            purchase_date
+        FROM
+            `order`
+        order BY
+            purchase_date DESC;
+    </select>
+
+    <delete id="deleteOrderDetailById" parameterType="String">
+        /*특정 주문코드로 주문상세 삭제*/
+        DELETE
+        FROM order_detail
+        WHERE
+        o_code = #{oCode};
+    </delete>
+
+    <select id="getOrderDetailsByoCode" parameterType="String" resultMap="OrderResultMap">
+        /*관리자화면에서 주문코드로 주문상세 조회*/
+        SELECT
+        o.order_total_price,
+        sm.medi_code,
+        sm.medi_name,
+        od.order_qty,
+        sm.medi_price,
+        o.payment_method,
+        o.purchase_state,
+        od.order_price
+        FROM `order` AS o
+        INNER join
+        order_detail AS od
+        on
+        o.o_code = od.o_code
+        INNER JOIN
+        sell_medicine AS sm
+        on
+        sm.goods_code = od.goods_code
+        Where
+
+        od.o_code = #{oCode}
+    </select>
+</mapper>
