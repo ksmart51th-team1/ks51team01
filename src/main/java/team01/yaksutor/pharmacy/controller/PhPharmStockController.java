@@ -23,6 +23,12 @@ public class PhPharmStockController {
     private final HttpServletRequest request;
 
 
+    /**
+     * 재고조사 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/checkMedi")
     public String pharmStrock(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -35,6 +41,11 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/checkMedi";
     }
 
+    /**
+     * 재고 등록의 GetMapping
+     * @param model
+     * @return
+     */
     @GetMapping("/myStockInsert")
     public String myStockInsert(Model model) {
 
@@ -44,6 +55,12 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/myStockInsert";
     }
 
+    /**
+     * 내 재고 목록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/myStockSearchList")
     public String myStockSearchList(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -58,6 +75,14 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/myStockSearchList";
     }
 
+    /**
+     * 내 재고 출고 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param stockCode
+     * @param mediName
+     * @return
+     */
     @GetMapping("/myStockRelease")
     public String myStockRelease(Model model,
                                  @RequestParam(value="stockCode") String stockCode,
@@ -76,6 +101,12 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/myStockRelease";
     }
 
+    /**
+     * 내 재고 입출고 기록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/myStockHistory")
     public String myStockHistory(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -89,6 +120,13 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/myStockHistory";
     }
 
+    /**
+     * 내 재고 상세페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param mediCode
+     * @return
+     */
     @GetMapping("/stockDetailView")
     public String stockDetailView(Model model,
                                   @RequestParam(value="mediCode") String mediCode) {
@@ -112,16 +150,29 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/stockDetailView";
     }
 
+    /**
+     * 재고 등록 ajax요청을 받는 메소드
+     * @param stockInfo
+     * @return
+     */
     @PostMapping("/myStockInsert")
     @ResponseBody
     public String myStockInsert(@RequestPart(value="stockInfo") StockInfo stockInfo){
         String sid = request.getSession().getAttribute("S_ID").toString();
         log.info("stockInfo: {}", stockInfo);
+        // 세션 아이디와 화면에서 받은 정보를 트랜젝션 실행을 위해 서비스에 정의된 메소드에 전달
         phStockService.stockInsert(stockInfo, sid);
 
         return "user/pharmacy/pharmstock/myStockInsert";
     }
 
+    /**
+     * 내 재고 출고 submit 맵핑
+     * 작성자: 길범진
+     * @param qty
+     * @param stockCode
+     * @return
+     */
     @PostMapping("/myStockRelease")
     public String myStockRelease(@RequestParam(value="qty") String qty,
                                  @RequestParam(value="stockCode") String stockCode){
@@ -130,6 +181,12 @@ public class PhPharmStockController {
         return "user/pharmacy/pharmstock/myStockSearchList";
     }
 
+    /**
+     * 내 재고 조사 ajax요청
+     * 작성자: 길범진
+     * @param stockClearance
+     * @return
+     */
     @PostMapping("/checkMedi")
     @ResponseBody
     public String checkMedi(@RequestBody StockClearance stockClearance){

@@ -23,12 +23,24 @@ public class SuMedicineService {
     private final FileUtils fileUtils;
     private final HttpServletRequest request;
 
+    /**
+     * 내 판매 의약품 목록 조회
+     * 작성자: 길범진
+     * @param suppCode
+     * @return
+     */
     public List<SellMedicine> getSellMediList(String suppCode){
         List<SellMedicine> sellMediList = suMedicineMapper.getListSellMedicine(suppCode);
 
         return sellMediList;
     }
 
+    /**
+     * 내 판매 의약품 등록 트렌젝션
+     * 작성자: 길범진
+     * @param medicineInfo
+     * @param multipartFile
+     */
     @Transactional
     public void insertMedicine(MedicineInfo medicineInfo,
                                List<MultipartFile> multipartFile) {
@@ -67,6 +79,12 @@ public class SuMedicineService {
         });
     }
 
+    /**
+     * 내 판매 의약품 수정 트렌젝션
+     * 작성자: 길범진
+     * @param medicineInfo
+     * @param multipartFile
+     */
     @Transactional
     public void modifyMedicine(MedicineInfo medicineInfo,
                                List<MultipartFile> multipartFile){

@@ -16,6 +16,12 @@ import java.util.List;
 public class PhStockService {
     private final PhStockMapper phStockMapper;
 
+    /**
+     * medicine, PharmStock, Ingredient, Efficacy에 값을 담아서 쿼리문을 실행하는 트랜젝션
+     * 작성자: 길범진
+     * @param stockInfo
+     * @param sid
+     */
     @Transactional
     public void stockInsert(StockInfo stockInfo,
                             String sid){
@@ -48,6 +54,12 @@ public class PhStockService {
         }
     }
 
+    /**
+     * 재고 출고 트랜젝션
+     * 작성자: 길범진
+     * @param qty
+     * @param stockCode
+     */
     @Transactional
     public void stockRelease(String qty,
                              String stockCode){
@@ -76,6 +88,11 @@ public class PhStockService {
 
     }
 
+    /**
+     * 재고조사 후 등록 트랜젝션
+     * 작성자: 길범진
+     * @param stockClearance
+     */
     @Transactional
     public void stockClearance(StockClearance stockClearance){
         phStockMapper.insertStockClearance(stockClearance);

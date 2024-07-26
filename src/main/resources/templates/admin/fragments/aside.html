@@ -67,11 +67,7 @@
                     </a>
                     <div class="submenu">
                         <a th:href="@{/admin/addShoppingCart}">장바구니 관리</a>
-                        <a th:href="@{/admin/orderInsert}">주문 등록</a>
-                        <a th:href="@{/admin/orderSearchList}">주문 검색</a>
-                        <a th:href="@{#}">주문 취소</a>
-                        <a th:href="@{#}">결제 수단 등록</a>
-                        <a th:href="@{#}">결제 확인</a>
+                        <a th:href="@{/admin/orderSearchList}">주문 관리</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
@@ -82,7 +78,6 @@
                     <div class="submenu">
                         <a th:href="@{#}">반품 신청</a>
                         <a th:href="@{/admin/refundSearchList}">반품 신청 내역 조회</a>
-                        <a th:href="@{#}">반품 요청 수락</a>
                     </div>
                     </li>
                     <li class="menu-item has-submenu">
@@ -91,8 +86,8 @@
                         <span class="text">배송 관리</span>
                     </a>
                     <div class="submenu">
-                        <a th:href="@{#}">배송 등록</a>
-                        <a th:href="@{#}">배송 조회</a>
+                        <a th:href="@{/admin/orderShip}">주문 배송 조회</a>
+                        <a th:href="@{/admin/refundShip}">반품 배송 조회</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
@@ -105,16 +100,6 @@
                         <a th:href="@{/admin/stockSearchList}">재고 조회</a>
                         <a th:href="@{/admin/stockHistoryList}">입출고 기록</a>
                         <a th:href="@{#}">약국 재고조사 후 실수량 입력</a>
-                    </div>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" th:href="@{#}">
-                        <i class="icon material-icons md-person"></i>
-                        <span class="text">약국 간 긴급 의약품 거래</span>
-                    </a>
-                    <div class="submenu">
-                        <a th:href="@{#}">긴급 의약품 요청</a>
-                        <a th:href="@{#}">긴급 의약품 요청 조회</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">

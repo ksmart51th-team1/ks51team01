@@ -222,4 +222,38 @@
         WHERE
         o.o_code = #{oCode};
     </select>
+
+    <insert id="insertShipping" parameterType="Shipping">
+        <selectKey keyProperty="shipCode" resultType="String" order="BEFORE">
+            /* 상품 자동 증가 코드 */
+            SELECT
+            case
+            when COUNT(ship_code) = 0	then 'ship_code_1'
+            ELSE
+            CONCAT('ship_code_',
+            max(cast(SUBSTRING_INDEX(ship_code, 'ship_code_', -1) AS UNSIGNED))+1
+            )
+            END AS shipCode
+            FROM
+            shipping;
+        </selectKey>
+        INSERT INTO shipping
+        (ship_code, refund_code, return_order_status, delivery_state, transport_num, manager, delivery_location, deli_date, arrival_date)
+        VALUES (#{shipCode}, #{refundCode}, #{returnOrderStatus}, #{deliveryState}, #{transportNum}, #{manager}, #{deliveryLocation}, NOW(), DATE_ADD(CURDATE(), INTERVAL 3 DAY))
+    </insert>
+
+    <update id="updateShipping" parameterType="Shipping">
+        UPDATE shipping
+        SET
+        delivery_state=#{deliveryState},
+        delivery_location=#{deliveryLocation}
+        WHERE refund_code=#{refundCode}
+    </update>
+
+    <update id="updateRefund" parameterType="string">
+        UPDATE refund
+        SET
+        refund_state='반품완료'
+        WHERE refund_code=#{refundCode};
+    </update>
 </mapper>

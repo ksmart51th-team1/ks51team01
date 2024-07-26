@@ -18,10 +18,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class SuRefundController {
-    private final SuRefundService suRefundService;
     private final SuRefundMapper suRefundMapper;
     private final HttpServletRequest request;
 
+    /**
+     * 내 반품 목록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/myRefundSearchList")
     public String myRefundSearchList(Model model) {
         String sid = request.getSession().getAttribute("S_ID").toString();
@@ -35,6 +40,13 @@ public class SuRefundController {
         return "user/supplier/refund/myRefundSearchList";
     }
 
+    /**
+     * 내 반품 상세 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param refundCode
+     * @return
+     */
     @GetMapping("/myRefundDetailView")
     public String myRefundDetailView(Model model,
                                      @RequestParam(value="refundCode") String refundCode) {
@@ -56,6 +68,12 @@ public class SuRefundController {
         return "user/supplier/refund/myRefundDetailView";
     }
 
+    /**
+     * 내 반품 배송 등록 ajax요청
+     * 작성자: 길범진
+     * @param ship
+     * @return
+     */
     @PostMapping("/myRefundShip")
     @ResponseBody
     public String myRefundShip(@RequestBody Shipping ship){
@@ -71,6 +89,12 @@ public class SuRefundController {
         return "redirect:/supplier/myRefundSearchList";
     }
 
+    /**
+     * 내 반품 상태 -> '반품완료'로 변경 ajax요청
+     * 작성자: 길범진
+     * @param ship
+     * @return
+     */
     @PostMapping("/refundClear")
     @ResponseBody
     public String updateForClear(@RequestBody Shipping ship){

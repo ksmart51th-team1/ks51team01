@@ -22,6 +22,11 @@ public class AdStockService {
     private final PhStockMapper phStockMapper;
     private final AdStockMapper adStockMapper;
 
+    /**
+     * 재고 등록 트랜젝션
+     * 작성자: 길범진
+     * @param stockInfo
+     */
     @Transactional
     public void insertStock(StockInfo stockInfo){
         Medicine medicine = stockInfo.getMedicine();
@@ -58,6 +63,11 @@ public class AdStockService {
         });
     }
 
+    /**
+     * 재고 수정 트랜젝션
+     * 작성자: 길범진
+     * @param stockInfo
+     */
     @Transactional
     public void modifyStock(StockInfo stockInfo){
         Medicine medicine = stockInfo.getMedicine();

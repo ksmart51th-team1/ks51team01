@@ -19,10 +19,15 @@ import java.util.List;
 @Slf4j
 public class AdStockController {
     private final PhStockMapper phStockMapper;
-    private final HttpServletRequest request;
     private final AdStockService adStockService;
     private final AdStockMapper adStockMapper;
 
+    /**
+     * 재고 등록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/stockInsert")
     public String stockInsert(Model model) {
         model.addAttribute("title", "재고 등록");
@@ -31,12 +36,14 @@ public class AdStockController {
         return "admin/pharmStock/stockInsert";
     }
 
+    /**
+     * 재고 목록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/stockSearchList")
     public String stockSearchList(Model model) {
-        /*String sid = request.getSession().getAttribute("S_ID").toString();
-        log.info("sid: {}", sid);
-        String pharCode = phStockMapper.getPharCodeById(sid);
-        List<PharmStock> stockList = phStockMapper.getPharmStockList(pharCode);*/
 
         List<PharmStock> stockList = adStockMapper.getPharmStockList();
 
@@ -47,6 +54,13 @@ public class AdStockController {
         return "admin/pharmStock/stockSearchList";
     }
 
+    /**
+     * 재고 수정 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @param stockCode
+     * @return
+     */
     @GetMapping("/stockModify")
     public String stockModify(Model model,
                               @RequestParam(value="stockCode") String stockCode) {
@@ -60,7 +74,7 @@ public class AdStockController {
         stockInfo.setPharmStock(pharmStock);
         stockInfo.setIngrList(ingrList);
         stockInfo.setEffiList(effiList);
-
+        // 재고의 기존 상태
         model.addAttribute("stockInfo", stockInfo);
 
         model.addAttribute("title", "재고 수정");
@@ -69,15 +83,22 @@ public class AdStockController {
         return "admin/pharmStock/stockModify";
     }
 
-    @GetMapping("/stockDelete")
+
+    /*@GetMapping("/stockDelete")
     public String stockDelete(Model model) {
 
         model.addAttribute("title", "재고 삭제");
         model.addAttribute("content", "재고 삭제");
 
         return "admin/pharmStock/stockDelete";
-    }
+    }*/
 
+    /**
+     * 입출고 기록 페이지 맵핑
+     * 작성자: 길범진
+     * @param model
+     * @return
+     */
     @GetMapping("/stockHistoryList")
     public String stockHistoryList(Model model) {
         List<StockHistory> stockHistoryList = adStockMapper.getStockHistory();
@@ -88,34 +109,13 @@ public class AdStockController {
 
         return "admin/pharmStock/stockHistoryList";
     }
-    
-    @GetMapping("/stockHistoryInsert")
-    public String stockHistoryInsert(Model model) {
 
-        model.addAttribute("title", "입출고 기록 추가");
-        model.addAttribute("content", "입출고 기록 추가");
-        
-        return "admin/pharmStock/stockHistoryInsert";
-    }
-
-    @GetMapping("/stockHistoryModify")
-    public String stockHistoryModify(Model model) {
-
-        model.addAttribute("title", "입출고 기록 수정");
-        model.addAttribute("content", "입출고 기록 수정");
-
-        return "admin/pharmStock/stockHistoryModify";
-    }
-
-    @GetMapping("/stockHistoryDelete")
-    public String stockHistoryDelete(Model model) {
-
-        model.addAttribute("title", "입출고 기록 삭제");
-        model.addAttribute("content", "입출고 기록 삭제");
-
-        return "admin/pharmStock/stockHistoryDelete";
-    }
-
+    /**
+     * 재고 추가 ajax요청
+     * 작성자: 길범진
+     * @param stockInfo
+     * @return
+     */
     @PostMapping("/stockInsert")
     @ResponseBody
     public String insertStock(@RequestPart(value="stockInfo") StockInfo stockInfo){
@@ -125,6 +125,12 @@ public class AdStockController {
         return "admin/pharmStock/stockSearchList";
     }
 
+    /**
+     * 재고 수정 ajax요청
+     * 작성자: 길범진
+     * @param stockInfo
+     * @return
+     */
     @PostMapping("/stockModify")
     @ResponseBody
     public String modifyStock(@RequestPart(value="stockInfo") StockInfo stockInfo){
