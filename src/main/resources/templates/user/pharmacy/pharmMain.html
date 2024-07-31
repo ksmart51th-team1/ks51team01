@@ -67,15 +67,10 @@
                                     <div class="product-cart-wrap" th:each="s : ${sellMedicineList}" th:if="${s.mediDrugType} == '일반의약품'">
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
-                                                <a href="shop-product-right.html">
+                                                <a>
                                                     <img class="default-img" th:src="${s.filePath}" />
                                                     <img class="hover-img"   th:src="${s.filePath}" />
                                                 </a>
-                                            </div>
-                                            <div class="product-action-1">
-                                                <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"> <i class="fi-rs-eye"></i></a>
-                                                <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                                <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                             </div>
                                             <div class="product-badges product-badges-position product-badges-mrg">
                                                 <span class="sale" th:text="${s.mediDrugType}">타입</span>
@@ -85,7 +80,7 @@
                                             <div class="product-category">
                                                 <a th:text="${s.mediDrugForm}"></a>
                                             </div>
-                                            <h2><a href="shop-product-right.html" th:text="${s.mediName}">약품명</a></h2>
+                                            <h2><a href="#" th:text="${s.mediName}">약품명</a></h2>
 
                                             <p th:text="${s.mediDetail}">효능</p>
                                             <div class="product-price mt-10">
