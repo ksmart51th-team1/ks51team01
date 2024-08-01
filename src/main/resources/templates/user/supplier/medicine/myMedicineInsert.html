@@ -217,9 +217,9 @@
                     dataType : 'json'
                 });
                 request.done(element => {
-                    return element;
+                    $(location).attr('href', '/supplier/myMedicineSearchList');
                 });
-                $(location).attr('href', '/supplier/medicineSearchList');
+                $(location).attr('href', '/supplier/myMedicineSearchList');
             }
         });
 
