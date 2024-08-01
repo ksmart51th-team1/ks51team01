@@ -40,7 +40,7 @@ public class SuOrderController {
         model.addAttribute("content", "내 주문 목록");
         model.addAttribute("orderList", orderList);
 
-        return "/user/supplier/order/myOrderSearchList";
+        return "user/supplier/order/myOrderSearchList";
     }
 
     @GetMapping("/myOrderDetailView")
@@ -63,7 +63,7 @@ public class SuOrderController {
         model.addAttribute("title", "내 주문 상세");
         model.addAttribute("content", "내 주문 상세");
 
-        return "/user/supplier/order/myOrderDetailView";
+        return "user/supplier/order/myOrderDetailView";
     }
 
     @GetMapping("/myOrderDelete")
@@ -73,6 +73,6 @@ public class SuOrderController {
         model.addAttribute("title", "내 주문 삭제");
         model.addAttribute("content", "내 주문 삭제");
 
-        return "/user/supplier/order/myOrderDelete";
+        return "user/supplier/order/myOrderDelete";
     }
 }
